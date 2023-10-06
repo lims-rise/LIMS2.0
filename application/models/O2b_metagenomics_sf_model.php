@@ -1,0 +1,283 @@
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class O2b_metagenomics_sf_model extends CI_Model
+{
+
+    public $table = 'obj2b_meta_sediment';
+    public $id = 'barcode_sample';
+    public $order = 'DESC';
+
+    function __construct()
+    {
+        parent::__construct();
+    }
+    // date_format(obj2b_meta_sediment.time_started,"%H:%i") AS time_started,
+    // date_format(obj2b_meta_sediment.time_finished,"%H:%i") AS time_finished,
+
+    // datatables
+    function json() {
+        $this->datatables->select('a.barcode_sample, a.date_conduct, 
+        a.barcode_dna1, a.weight_sub1, a.barcode_storage1, a.position_tube1,
+        concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS location1, 
+        a.barcode_dna2, a.weight_sub2, a.barcode_storage2, a.position_tube2, 
+        concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS location2,
+        a.comments, a.id_location_801, a.id_location_802, a.lab, a.flag
+        ');
+        $this->datatables->from('obj2b_meta_sediment a');
+        $this->datatables->join('ref_location_80 b', 'a.id_location_801 = b.id_location_80', 'left');
+        $this->datatables->join('ref_location_80 c', 'a.id_location_802 = c.id_location_80', 'left');
+        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->where('a.flag', '0');
+        // $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-primary btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_sample');
+        $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
+                ".anchor(site_url('O2b_metagenomics_sf/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'a.barcode_sample');
+        return $this->datatables->generate();
+    }
+
+    function get_all()
+    {
+        $q = $this->db->query('
+        SELECT a.barcode_sample, a.date_conduct, a.barcode_dna1, a.weight_sub1, a.barcode_storage1, a.position_tube1,
+        concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS Location_tube1,
+        a.barcode_dna2, a.weight_sub2, a.barcode_storage2, a.position_tube2,
+        concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS Location_tube2,
+        a.comments
+        from ((obj2b_meta_sediment a 
+        left join ref_location_80 b on((a.id_location_801 = b.id_location_80))) 
+        left join ref_location_80 c on((a.id_location_802 = c.id_location_80)))     
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0 
+        ');
+        $response = $q->result();
+        return $response;    
+    }
+
+    function get_by_id($id)
+    {
+        $this->db->where($this->id, $id);
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        return $this->db->get($this->table)->row();
+    }
+
+
+
+    // function get_by_id_detail($id)
+    // {
+    //     $this->db->where('id_delivery_det', $id);
+    //     return $this->db->get('tbl_delivery_det')->row();
+    // }
+
+    // get total rows
+    // function total_rows($q = NULL) {
+    //     $this->db->like('id_delivery', $q);
+	// $this->db->or_like('date_delivery', $q);
+	// $this->db->or_like('delivery_number', $q);
+	// $this->db->or_like('customer_name', $q);
+	// $this->db->or_like('city', $q);
+	// $this->db->or_like('phone', $q);
+	// $this->db->or_like('notes', $q);
+	// $this->db->from($this->table);
+    //     return $this->db->count_all_results();
+    // }
+
+    // get data with limit and search
+    // function get_limit_data($limit, $start = 0, $q = NULL) {
+    //     $this->db->order_by($this->id, $this->order);
+    //     $this->db->like('id_delivery', $q);
+	// $this->db->or_like('date_delivery', $q);
+	// $this->db->or_like('delivery_number', $q);
+	// $this->db->or_like('customer_name', $q);
+	// $this->db->or_like('city', $q);
+	// $this->db->or_like('phone', $q);
+	// $this->db->or_like('notes', $q);
+	// $this->db->limit($limit, $start);
+    //     return $this->db->get($this->table)->result();
+    // }
+
+    // insert data
+    function insert($data)
+    {
+        $this->db->insert($this->table, $data);
+    }
+    
+    // update data
+    function update($id, $data)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
+
+    // delete data
+    // function delete($id_user, $data)
+    // {
+    //     $this->db->where($this->id, $id);
+    //     $this->db->update($this->table, $data);
+    // }
+
+    // function delete($id)
+    // {
+        // $this->db->where($this->id, $id);
+        // $this->db->delete($this->table);
+    // }
+
+    // function getLabtech(){
+    //     $response = array();
+    //     $this->db->select('*');
+    //     $this->db->where('position', 'Lab Tech');
+    //     $q = $this->db->get('ref_person');
+    //     $response = $q->result_array();
+    
+    //     return $response;
+    //   }
+
+    //   function getSampleType(){
+
+    //     $response = array();
+    //     // Select record
+    //     $this->db->select('*');
+    //     $this->db->where('obj', 'O2B');
+    //     $q = $this->db->get('ref_sampletype');
+    //     $response = $q->result_array();
+    
+    //     return $response;
+    //   }
+
+    function getLabtech(){
+        $response = array();
+        $this->db->select('*');
+        $this->db->where('position', 'Lab Tech');
+        $q = $this->db->get('ref_person');
+        $response = $q->result_array();
+        return $response;
+      }
+
+
+    function load_freez($id){
+        // $this->db->where('barcode_sample', $id);
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $q = $this->db->get($this->table);
+        $q = $this->db->query('
+        SELECT freezer, shelf, rack, rack_level FROM ref_location_80
+        WHERE id_location_80 = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+        // return $this->db->get('ref_location_80')->row();
+      }      
+
+    function get_freez($freez, $shelf, $rack, $draw){
+        // $this->db->where('barcode_sample', $id);
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $q = $this->db->get($this->table);
+        $q = $this->db->query('
+        SELECT id_location_80 FROM ref_location_80
+        WHERE freezer = "'.$freez.'"
+        AND shelf = "'.$shelf.'"
+        AND rack = "'.$rack.'"
+        AND rack_level = "'.$draw.'"
+        AND flag = 0 
+        ');        
+        $response = $q->result_array();
+        return $response;
+        // return $this->db->get('ref_location_80')->row();
+      }            
+
+      function validate1($id){
+        // $this->db->where('barcode_sample', $id);
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $q = $this->db->get($this->table);
+        // WHERE barcode_falcon = "'.$id.'"
+
+        $q = $this->db->query('
+        SELECT barcode_sample FROM obj2b_receipt 
+        WHERE barcode_sample = "'.$id.'"
+        AND id_type2b IN (7,8)
+        AND barcode_sample NOT IN (SELECT barcode_sample FROM obj2b_meta_sediment)
+        AND flag = 0 
+        ');        
+        $response = $q->result_array();
+        return $response;
+        // return $this->db->get('ref_location_80')->row();
+      }
+
+      function validate2($id){
+        $q = $this->db->query('
+        SELECT cryobarcode, barcode_sample FROM (
+            SELECT barcode_p1a AS cryobarcode, barcode_sample
+            FROM obj3_edta_aliquots
+            WHERE flag = 0 
+            UNION ALL
+            SELECT barcode_p2a AS cryobarcode, barcode_sample
+            FROM obj3_edta_aliquots
+            WHERE flag = 0 
+            UNION ALL
+            SELECT barcode_p3a AS cryobarcode, barcode_sample
+            FROM obj3_edta_aliquots
+            WHERE flag = 0 
+            UNION ALL
+            SELECT packed_cells AS cryobarcode, barcode_sample
+            FROM obj3_edta_aliquots
+            WHERE flag = 0 
+            UNION ALL
+            SELECT barcode_sst1 AS cryobarcode, barcode_sample
+            FROM obj3_sst_aliquots
+            WHERE flag = 0 
+            UNION ALL
+            SELECT barcode_sst2 AS cryobarcode, barcode_sample
+            FROM obj3_sst_aliquots
+            WHERE flag = 0 
+            UNION ALL
+            SELECT barcode_wb AS cryobarcode, barcode_sample
+            FROM obj3_edta_wholeblood
+            WHERE flag = 0 
+            UNION ALL
+            SELECT aliquot1 AS cryobarcode, barcode_sample
+            FROM obj3_faliquot
+            WHERE flag = 0 
+            UNION ALL
+            SELECT aliquot2 AS cryobarcode, barcode_sample
+            FROM obj3_faliquot
+            WHERE flag = 0 
+            UNION ALL
+            SELECT aliquot3 AS cryobarcode, barcode_sample
+            FROM obj3_faliquot
+            WHERE flag = 0 
+            UNION ALL
+            SELECT aliquot_zymo AS cryobarcode, barcode_sample
+            FROM obj3_faliquot
+            WHERE flag = 0 
+            UNION ALL
+            SELECT bar_macsweep1 AS cryobarcode, bar_macconkey AS barcode_sample
+            FROM obj3_fmac2
+            WHERE flag = 0 
+            UNION ALL
+            SELECT bar_macsweep2 AS cryobarcode, bar_macconkey AS barcode_sample
+            FROM obj3_fmac2
+            WHERE flag = 0 
+            UNION ALL
+            SELECT barcode_dna1 AS cryobarcode, barcode_sample
+            FROM obj2b_meta_sediment
+            WHERE flag = 0 
+            UNION ALL
+            SELECT barcode_dna2 AS cryobarcode, barcode_sample
+            FROM obj2b_meta_sediment
+            WHERE flag = 0 
+            UNION ALL
+            SELECT barcode_dna_bag AS cryobarcode, barcode_sample
+            FROM obj2b_metagenomics
+            WHERE flag = 0) x
+            WHERE x.cryobarcode = "'.$id.'"
+            ');        
+        $response = $q->result_array();
+        return $response;
+      }      
+}
+
+/* End of file Tbl_delivery_model.php */
+/* Location: ./application/models/Tbl_delivery_model.php */
+/* Please DO NOT modify this information : */
+/* Generated by Harviacode Codeigniter CRUD Generator 2022-12-14 03:38:42 */
+/* http://harviacode.com */
