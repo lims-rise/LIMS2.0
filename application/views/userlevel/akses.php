@@ -2,7 +2,7 @@
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
-                <?php echo alert('alert-info', 'Perhatian', 'Silahkan Cheklist Pada Menu Yang Akan Diberikan Akses') ?>
+                <?php echo alert('alert-info', 'Information', 'Please mark the cheklist below for grandted access') ?>
                 <div class="box box-warning box-solid">
 
                     <div class="box-header">
@@ -18,7 +18,7 @@
                                         <th width="30px">No</th>
                                         <th>Module Name</th>
                                         <th>URL</th>
-                                        <th width="100px">Beri Akses</th>
+                                        <th width="100px">Access</th>
                                     </tr>
                                     <?php
                                     $no = 1;

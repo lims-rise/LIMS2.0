@@ -15,14 +15,6 @@ class O2b_idexx_out_model extends CI_Model
         parent::__construct();
     }
 
-    // datatables
-            // obj2b_idexx1.date_conduct AS date_in_wat, obj2b_idexx1.time_incubation AS time_in_wat,
-            // obj2b_idexx1.dilution as dil_in_wat,
-            // obj2b_bs_stomacher.date_conduct AS date_in_bot, obj2b_subbs_idexx.time_incubation AS time_in_bot,
-            // obj2b_subbs_idexx.dilution as dil_in_bot,
-            // obj2b_sediment_prep.date_conduct AS date_in_sed, obj2b_subsd_idexx.time_incubation AS time_in_sed,
-            // obj2b_subsd_idexx.dilution as dil_in_sed
-
     function json() {
         $this->datatables->select('obj2b_idexx2.barcode_colilert, obj2b_idexx2.date_conduct,
             date_format(obj2b_idexx2.timeout_incubation,"%H:%i") AS timeout_incubation,
@@ -31,16 +23,20 @@ class O2b_idexx_out_model extends CI_Model
             obj2b_idexx2.coliforms_smallwells, obj2b_idexx2.coliforms_mpn, obj2b_idexx2.comments, 
             ');
         $this->datatables->from('obj2b_idexx2');
-        // $this->datatables->join('obj2b_idexx1', 'obj2b_idexx1.barcode_colilert = obj2b_idexx2.barcode_colilert', 'left');
-        // $this->datatables->join('obj2b_subbs_idexx', 'obj2b_subbs_idexx.barcode_colilert = obj2b_idexx2.barcode_colilert', 'left');
-        // $this->datatables->join('obj2b_subsd_idexx', 'obj2b_subsd_idexx.barcode_colilert = obj2b_idexx2.barcode_colilert', 'left');
-        // $this->datatables->join('obj2b_bs_stomacher', 'obj2b_bs_stomacher.barcode_bootsock = obj2b_subbs_idexx.barcode_sample', 'left');
-        // $this->datatables->join('obj2b_sediment_prep', 'obj2b_sediment_prep.barcode_sample = obj2b_subsd_idexx.barcode_sample', 'left');
         $this->datatables->where('obj2b_idexx2.lab', $this->session->userdata('lab'));
         $this->datatables->where('obj2b_idexx2.flag', '0');
-        // $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-primary btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_sample');
-        $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                ".anchor(site_url('O2b_idexx_out/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'obj2b_idexx2`.barcode_colilert');
+
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl == 7){
+            $this->datatables->add_column('action', '', 'obj2b_idexx2.barcode_colilert');
+        }
+        else if (($lvl == 2) | ($lvl == 3)){
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'obj2b_idexx2.barcode_colilert');
+        }
+        else {
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
+                ".anchor(site_url('O2b_idexx_out/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'obj2b_idexx2.barcode_colilert');
+        }
         return $this->datatables->generate();
     }
 

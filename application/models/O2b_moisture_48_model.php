@@ -21,9 +21,17 @@ class O2b_moisture_48_model extends CI_Model
         $this->datatables->from('obj2b_moisture3');
         $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
-        // $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-primary btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_sample');
-        $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                ".anchor(site_url('O2b_moisture_48/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'barcode_sample');
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl == 7){
+            $this->datatables->add_column('action', '', 'barcode_foil');
+        }
+        else if (($lvl == 2) | ($lvl == 3)){
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_foil');
+        }
+        else {
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
+                ".anchor(site_url('O2b_moisture_48/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'barcode_foil');
+        }
         return $this->datatables->generate();
     }
 

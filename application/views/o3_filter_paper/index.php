@@ -9,8 +9,15 @@
                     </div>
         
         <div class="box-body">
-        <div style="padding-bottom: 10px;"'>
-        <button class='btn btn-primary' id='addtombol'><i class="fa fa-wpforms" aria-hidden="true"></i> New Filter Paper </button>
+        <div style="padding-bottom: 10px;">
+<?php
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl != 7){
+            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Filter Paper </button>";
+        }
+?>
+
+        
         <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
         <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
 		<?php echo anchor(site_url('o3_filter_paper/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?></div>
@@ -333,37 +340,37 @@
             });
         }
 
-        function loadLoc(data1) {
-            $.ajax({
-                type: "GET",
-                url: "o3_filter_paper/load_loc?id1="+data1,
-                data:data1,
-                dataType: "json",
-                success: function(data) {
-                    var freez = '';
-                    var shelf = '';
-                    var rack = '';
-                    var rack_level = '';
-                    $("#freezer").val('');
-                    $("#shelf").val('');
-                    $("#rack").val('');
-                    $("#rack_level").val('');                    
-                    if (data) {
-                        freez = data[0].freezer;
-                        shelf = data[0].shelf;
-                        rack = data[0].rack;
-                        rack_level = data[0].rack_level;
-                        // console.log(data);
-                        // $("#comments").val(data[0].rack_level);
-                    }
+        // function loadLoc(data1) {
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "o3_filter_paper/load_loc?id1="+data1,
+        //         data:data1,
+        //         dataType: "json",
+        //         success: function(data) {
+        //             var freez = '';
+        //             var shelf = '';
+        //             var rack = '';
+        //             var rack_level = '';
+        //             $("#freezer").val('');
+        //             $("#shelf").val('');
+        //             $("#rack").val('');
+        //             $("#rack_level").val('');                    
+        //             if (data) {
+        //                 freez = data[0].freezer;
+        //                 shelf = data[0].shelf;
+        //                 rack = data[0].rack;
+        //                 rack_level = data[0].rack_level;
+        //                 // console.log(data);
+        //                 // $("#comments").val(data[0].rack_level);
+        //             }
 
-                    $("#freezer").val(freez);
-                    $("#shelf").val(shelf);
-                    $("#rack").val(rack);
-                    $("#rack_level").val(rack_level);                    
-                }
-            });
-        }
+        //             $("#freezer").val(freez);
+        //             $("#shelf").val(shelf);
+        //             $("#rack").val(rack);
+        //             $("#rack_level").val(rack_level);                    
+        //         }
+        //     });
+        // }
         
     //     function loadLoc(data1) {
     //     // $("#my-another-cool-loader").html('<img src="img/719.gif" />');
@@ -487,11 +494,7 @@
             $('#barcode_sample').val(data.barcode_sample);
             $('#date_process').val(data.date_process);
             $('#time_process').val(data.time_process);
-            // $('#time_receipt').clockpicker({'default': data.time_receipt});
-            // $("#date_receipt").datepicker("setDate",'now');
-            // $('#time_receipt').timepicker('setTime', new Date());
             $('#id_person').val(data.id_person).trigger('change');
-            // $('#id_type').val(data.id_type).trigger('change');
             $('#freezer_bag').val(data.freezer_bag);
             $('#idfrez').val(data.id_location_80);
             // loadLoc(data.id_location_80);
@@ -499,14 +502,6 @@
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });  
-
-        // #tblEmployee tbody tr.even:hover {
-        //     background-color: cadetblue;
-        //     cursor: pointer;
-        // }
-        // $('#myTable').DataTable( {
-        //     select: true
-        // } );
 
         $('#mytable tbody').on('click', 'tr', function () {
             if ($(this).hasClass('active')) {
@@ -516,24 +511,6 @@
                 $(this).addClass('active');
             }
         })   
-
-        // $('[data-dismiss=modal]').on('click', function(e) {
-        //     var $t = $(this),
-        //         target = $t[0].href || $t.data("target") || $t.parents('.modal') || [];
-        //     $(target)
-        //         .find("input,textarea,select")
-        //         .val('')
-        //         .end()
-        //         .find("input[type=checkbox], input[type=radio]")
-        //         .prop("checked", "")
-        //         .end();
-        // });
-        // $('.modal').on('hidden.bs.modal', function() {
-        //     $(this).find('form')[0].reset();
-        // });
-        // $('.modal').on('shown.bs.modal', function() {
-        //     lastfocus = $(this);
-        //     $('input:enabled:visible:not([readonly="readonly"])', this).get(0).select();
-        // });                                
+                          
     });
 </script>

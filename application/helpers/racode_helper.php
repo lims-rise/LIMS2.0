@@ -40,8 +40,8 @@ function datalist_dinamis($name,$table,$field,$value=null){
 }
 
 function rename_string_is_aktif($string){
-        return $string=='y'?'Aktif':'Tidak Aktif';
-    }
+        return $string=='y'?'Active':'Non Active';
+}
     
 
 function is_login(){

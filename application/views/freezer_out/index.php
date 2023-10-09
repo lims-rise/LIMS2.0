@@ -9,10 +9,14 @@
                     </div>
         
         <div class="box-body">
-        <div style="padding-bottom: 10px;"'>
-        <button class='btn btn-primary' id='addtombol'><i class="fa fa-wpforms" aria-hidden="true"></i> New Sample</button>
-        <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
-        <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
+        <div style="padding-bottom: 10px;">
+<?php
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl != 7){
+            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample</button>";
+        }
+?>
+        
 		<?php echo anchor(site_url('Freezer_out/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?></div>
         <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
             <thead>
@@ -424,7 +428,7 @@
         $('#addtombol').click(function() {
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> DNA - New DNA Control<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Freezer Management - New sample out<span id="my-another-cool-loader"></span>');
             // $('#barcode_dna').attr('readonly', false);
             $('#id_freez').val('');
             // $('#date_out').val('');
@@ -448,7 +452,7 @@
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> DNA - Update DNA Control<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Freezer Management - Update sample out<span id="my-another-cool-loader"></span>');
             // $('#barcode_dna').attr('readonly', true);
             $('#id_freez').val(data.id);
             // $('#date_out').val('');

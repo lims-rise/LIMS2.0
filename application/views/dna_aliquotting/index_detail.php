@@ -11,16 +11,6 @@
 			<tr>
 				<td width='15%' height = '10px'>Date aliquot</td>
 				<td width='35%'><?php echo $date_aliquot; ?></td>
-				<!-- <td width='10%' rowspan='7'>Receipt</td>
-				<td width='40%' rowspan='7'><?php 
-					// if (empty($receipt)) {
-					// 	$photo = "./img/white.jpg";
-					// }
-					// else {
-					// 	$photo = base_url("assets/receipt/". $receipt);
-					// }
-					// echo "<img style='width : 400px' id='preview' src='$photo' class='img-thumbnail' alt='Image Receipt'>";
-				?></td> -->
 			</tr>
 	
 			<tr>
@@ -83,10 +73,12 @@
                     </div>
                         <div class="box-body">
                         <div style="padding-bottom: 10px;">
-                            <button class='btn btn-danger btn-sm' id='addtombol'> Add DNA aliquot </button>
-                            <?php //echo anchor(site_url('dna_aliquotting/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
-                            <?php //echo anchor(site_url('dna_aliquotting/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> Add Delivery', 'class="btn btn-danger btn-sm"'); ?>
-                            <?php //echo anchor(site_url('dna_aliquotting/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?>
+<?php
+                        $lvl = $this->session->userdata('id_user_level');
+                        if ($lvl != 7){
+                            echo "<button class='btn btn-danger btn-sm' id='addtombol'> Add DNA aliquot </button>";
+                        }
+?>                            
                         </div>
                         <table class="table table-bordered table-striped" id="mytable1" style="width:100%">
                             <thead>

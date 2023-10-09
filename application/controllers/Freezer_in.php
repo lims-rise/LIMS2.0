@@ -12,7 +12,7 @@ class Freezer_in extends CI_Controller
     {
         parent::__construct();
         is_login();
-        $this->load->model('Freezer_in_model');
+        $this->load->model(['Freezer_in_model', 'O3_filter_paper_model']);
         $this->load->library('form_validation');        
 	    $this->load->library('datatables');
 	    $this->load->library('uuid');
@@ -22,6 +22,11 @@ class Freezer_in extends CI_Controller
     {
         // $this->load->model('Freezer_in_model');
         $data['person'] = $this->Freezer_in_model->getLabtech();
+        $data['vessel'] = $this->Freezer_in_model->getVesselType();
+        $data['freezer'] = $this->O3_filter_paper_model->getFreezer();
+        $data['shelf'] = $this->O3_filter_paper_model->getShelf();
+        $data['rack'] = $this->O3_filter_paper_model->getRack();
+        $data['rack_level'] = $this->O3_filter_paper_model->getDrawer();
         // $data['type'] = $this->Freezer_in_model->getSampleType();
         $this->template->load('template','Freezer_in/index', $data);
     } 
@@ -34,19 +39,30 @@ class Freezer_in extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_sample',TRUE);
+        $id = $this->input->post('id',TRUE);
+        $f = $this->input->post('freezer',TRUE);
+        $s = $this->input->post('shelf',TRUE);
+        $r = $this->input->post('rack',TRUE);
+        $rl = $this->input->post('rack_level',TRUE);
+
+        $freezerloc = $this->Freezer_in_model->getFreezLoc($f,$s,$r,$rl);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
-            'barcode_vessel' => $this->input->post('barcode_vessel',TRUE),
-            'sample_type' => $this->input->post('sample_type',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
-            'lab' => $this->session->userdata('lab'),
-            'user_created' => $this->session->userdata('id_users'),
-            'date_created' => $dt->format('Y-m-d H:i:s'),
+                'date_in' => $this->input->post('date_in',TRUE),
+                'time_in' => $this->input->post('time_in',TRUE),
+                'id_person' => $this->input->post('id_person',TRUE),
+                'id_vessel' => $this->input->post('id_vessel',TRUE),
+                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'id_location_80' => $freezerloc->id_location_80,
+                'need_cryobox' => $this->input->post('need_cryobox',TRUE),
+                'cryobox' => $this->input->post('cryobox',TRUE),
+                'comments' => $this->input->post('comments',TRUE),
+                'uuid' => $this->uuid->v4(),
+                'lab' => $this->session->userdata('lab'),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
             );
  
             $this->Freezer_in_model->insert($data);
@@ -54,14 +70,19 @@ class Freezer_in extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
-            'barcode_vessel' => $this->input->post('barcode_vessel',TRUE),
-            'sample_type' => $this->input->post('sample_type',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
-            'lab' => $this->session->userdata('lab'),
-            'user_updated' => $this->session->userdata('id_users'),
-            'date_updated' => $dt->format('Y-m-d H:i:s'),
+                'date_in' => $this->input->post('date_in',TRUE),
+                'time_in' => $this->input->post('time_in',TRUE),
+                'id_person' => $this->input->post('id_person',TRUE),
+                'id_vessel' => $this->input->post('id_vessel',TRUE),
+                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'id_location_80' => $freezerloc->id_location_80,
+                'need_cryobox' => $this->input->post('need_cryobox',TRUE),
+                'cryobox' => $this->input->post('cryobox',TRUE),
+                'comments' => $this->input->post('comments',TRUE),
+                'uuid' => $this->uuid->v4(),
+                'lab' => $this->session->userdata('lab'),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
             $this->Freezer_in_model->update($id, $data);
@@ -91,17 +112,15 @@ class Freezer_in extends CI_Controller
         }
     }
 
-    public function get_dna_type() 
+    public function load_frez() 
     {
-        $id = $this->input->get('id1');
-        // echo $id;
-        $data = $this->Freezer_in_model->getDNAType($id);
+        $id = $this->input->get('idfrez');
+        $data = $this->Freezer_in_model->find_freez($id);
 
         header('Content-Type: application/json');
         echo json_encode($data);
-        // return $this->response->setJSON($data);
-        // $data['location'] = $this->O3_filter_paper_model->find_loc($id);
     }
+
 
     public function valid_bs() 
     {
@@ -144,8 +163,10 @@ class Freezer_in extends CI_Controller
         $sheet->setCellValue('D1', "Lab_tech");
         $sheet->setCellValue('E1', "Vessel");
         $sheet->setCellValue('F1', "Barcode_vessel");
-        $sheet->setCellValue('G1', "Location");
-        $sheet->setCellValue('H1', "Comments");
+        $sheet->setCellValue('G1', "Associated_cryobox");
+        $sheet->setCellValue('H1', "Barcode_cryobox");
+        $sheet->setCellValue('I1', "Location");
+        $sheet->setCellValue('J1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -160,8 +181,10 @@ class Freezer_in extends CI_Controller
           $sheet->setCellValue('D'.$numrow, $data->initial);
           $sheet->setCellValue('E'.$numrow, $data->vessel);
           $sheet->setCellValue('F'.$numrow, $data->barcode_sample);
-          $sheet->setCellValue('G'.$numrow, $data->location);
-          $sheet->setCellValue('H'.$numrow, $data->comments);
+          $sheet->setCellValue('G'.$numrow, $data->need_cryobox);
+          $sheet->setCellValue('H'.$numrow, $data->cryobox);
+          $sheet->setCellValue('I'.$numrow, $data->location);
+          $sheet->setCellValue('J'.$numrow, $data->comments);
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

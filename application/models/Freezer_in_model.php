@@ -6,8 +6,8 @@ if (!defined('BASEPATH'))
 class Freezer_in_model extends CI_Model
 {
 
-    public $table = 'freezer_transaction';
-    public $id = 'barcode_sample';
+    public $table = 'freezer_in';
+    public $id = 'id';
     public $order = 'DESC';
 
     function __construct()
@@ -17,13 +17,22 @@ class Freezer_in_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('*');
+        $this->datatables->select('id, date_in, time_in, initial, vessel, barcode_sample, location, 
+                comments, id_person, id_vessel, id_location_80, need_cryobox, cryobox, lab, flag');
         $this->datatables->from('v_freez_in');
         $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
-        // $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-primary btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_sample');
-        $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                ".anchor(site_url('dna_sample_control/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'barcode_sample');
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl == 7){
+            $this->datatables->add_column('action', '', 'id');
+        }
+        else if (($lvl == 2) | ($lvl == 3)){
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'id');
+        }
+        else {
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
+                ".anchor(site_url('Freezer_in/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id');
+        }
         return $this->datatables->generate();
     }
 
@@ -111,25 +120,94 @@ class Freezer_in_model extends CI_Model
         return $response;
       }
 
-      function getDNAType($id){
+      function getVesselType(){
         $response = array();
         // Select record
-        $this->db->select('sampletype');
-        $this->db->where('barcode_dna', $id);
-        $q = $this->db->get('dna_extraction');
+        $this->db->select('id_vessel, vessel');
+        // $this->db->where('barcode_dna', $id);
+        $q = $this->db->get('ref_vessel');
         $response = $q->result_array();
     
         return $response;
       }
 
-      function validate1($id){
-        $this->db->where('barcode_dna', $id);
-        // $this->db->where('lab', $this->session->userdata('lab'));
-        $q = $this->db->get($this->table);
+
+      function getFreezer(){
+        $response = array();
+        $this->db->select('freezer');
+        $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
+        $this->db->where('flag', '0');
+        $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
         return $response;
-        // return $this->db->get('ref_location_80')->row();
       }
+
+      function getShelf(){
+        $response = array();
+        $this->db->select('shelf');
+        $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
+        $this->db->where('flag', '0');
+        $q = $this->db->get('ref_location_80');
+        $response = $q->result_array();
+        return $response;
+      }
+
+      function getRack(){
+        $response = array();
+        $this->db->select('rack');
+        $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
+        $this->db->where('flag', '0');
+        $q = $this->db->get('ref_location_80');
+        $response = $q->result_array();
+        return $response;
+      }
+      
+      function getDrawer(){
+        $response = array();
+        $this->db->select('rack_level');
+        $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
+        $this->db->where('flag', '0');
+        $q = $this->db->get('ref_location_80');
+        $response = $q->result_array();
+        return $response;
+      }
+
+      function find_freez($id){
+        $q = $this->db->query('
+        SELECT id_location_80, freezer, shelf, rack, rack_level
+        FROM ref_location_80
+        WHERE id_location_80 = '.$id);
+        $response = $q->result_array();
+        return $response;    
+      }
+
+      function getFreezLoc($f,$s,$r,$rl){
+        $this->db->select('id_location_80');
+        $this->db->where('freezer', $f);
+        $this->db->where('shelf', $s);
+        $this->db->where('rack', $r);
+        $this->db->where('rack_level', $rl);
+        $this->db->where('lab', $this->session->userdata('lab'));
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // return $this->db->get('ref_location_80');
+        // $response = $q->result_array();
+        // return $response;
+        return $this->db->get('ref_location_80')->row();
+      }
+
+    //   function validate1($id){
+    //     $this->db->where('barcode_dna', $id);
+    //     // $this->db->where('lab', $this->session->userdata('lab'));
+    //     $q = $this->db->get($this->table);
+    //     $response = $q->result_array();
+    //     return $response;
+    //     // return $this->db->get('ref_location_80')->row();
+    //   }
 
 }
 

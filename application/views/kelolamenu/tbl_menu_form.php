@@ -7,8 +7,7 @@
             </div>
             <form action="<?php echo $action; ?>" method="post">
             
-<table class='table table-bordered>'        
-
+<table class='table table-bordered>'>    
 	    <tr><td width='200'>Title <?php echo form_error('title') ?></td><td><input type="text" class="form-control" name="title" id="title" placeholder="Title" value="<?php echo $title; ?>" /></td></tr>
 	    <tr><td width='200'>Url <?php echo form_error('url') ?></td><td><input type="text" class="form-control" name="url" id="url" placeholder="Url" value="<?php echo $url; ?>" /></td></tr>
 	    <tr><td width='200'>Icon <?php echo form_error('icon') ?></td><td><input type="text" class="form-control" name="icon" id="icon" placeholder="Icon" value="<?php echo $icon; ?>" /></td></tr>
@@ -23,10 +22,10 @@
                                 }
                                 ?>
                             </select></td></tr>
-            <tr><td width='200'>Is Aktif <?php echo form_error('is_aktif') ?></td><td><?php echo form_dropdown('is_aktif',array('y'=>'AKTIF','n'=>'TIDAK'),$is_aktif,array('class'=>'form-control'))?></td></tr>
+            <tr><td width='200'>Is Aktif <?php echo form_error('is_aktif') ?></td><td><?php echo form_dropdown('is_aktif',array('y'=>'Active','n'=>'Non Active'),$is_aktif,array('class'=>'form-control'))?></td></tr>
 	    <tr><td></td><td><input type="hidden" name="id_menu" value="<?php echo $id_menu; ?>" /> 
-	    <button type="submit" class="btn btn-danger"><i class="fa fa-floppy-o"></i> <?php echo $button ?></button> 
-	    <a href="<?php echo site_url('kelolamenu') ?>" class="btn btn-info"><i class="fa fa-sign-out"></i> Kembali</a></td></tr>
+	    <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> <?php echo $button ?></button> 
+	    <a href="<?php echo site_url('kelolamenu') ?>" class="btn btn-warning"><i class="fa fa-sign-out"></i> Close</a></td></tr>
 	</table></form>        </div>
 </div>
 </div>

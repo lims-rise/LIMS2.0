@@ -10,7 +10,13 @@
         
         <div class="box-body">
         <div style="padding-bottom: 10px;">
-        <button class='btn btn-primary' id='addtombol'><i class="fa fa-wpforms" aria-hidden="true"></i> New water sample </button>
+<?php
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl != 7){
+            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New water sample </button>";
+        }
+?>
+        
         <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
         <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
 		<?php echo anchor(site_url('O2b_other_lab/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?></div>

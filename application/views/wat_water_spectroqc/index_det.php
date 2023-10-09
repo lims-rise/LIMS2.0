@@ -145,7 +145,13 @@
                                 <h3 class="box-title">Detail Spectro</h3>
                             </div>
 							<div class="box-body pad table-responsive">
-							<button class='btn btn-primary' id='addtombol_det'><i class="fa fa-wpforms" aria-hidden="true"></i> New Data</button>
+<?php
+							$lvl = $this->session->userdata('id_user_level');
+							if ($lvl != 7){
+								echo "<button class='btn btn-primary' id='addtombol_det'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
+							}
+?>
+							
 							<!-- <button class='btn btn-warning' id='addtombol'><i class="fa fa-wpforms" aria-hidden="true"></i> New Data</button> -->
 							<table id="example2" class="table display table-bordered table-striped" width="100%">
 								<thead>

@@ -6,7 +6,12 @@
                     <div class="box-header"> <h3 class="box-title">Objective 2B - SEDIMENT - Sample Prep</h3> </div>        
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
-                            <button class='btn btn-primary' id='addtombol'><i class="fa fa-wpforms" aria-hidden="true"></i> New Sediment Sample</button>
+<?php
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl != 7){
+            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sediment Sample</button>";
+        }
+?>                            
                             <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
                             <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
                             <?php echo anchor(site_url('O2b_sample_prep/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?>
@@ -36,7 +41,13 @@
                 <div class="box-header"> <h3 class="box-title">Sample - Endetec</h3> </div>                     
                 <div class="box-body">
                     <div style="padding-bottom: 10px;">
-                        <button class='btn btn-primary' id='addtomboldet'><i class="fa fa-wpforms" aria-hidden="true"></i> New Sample Endetec </button>
+<?php
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl != 7){
+            echo "<button class='btn btn-primary' id='addtomboldet'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample Endetec </button>";
+        }
+?>
+                        
                         <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
                         <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
                         <?php //echo anchor(site_url('O2b_sample_prep/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?>
@@ -64,7 +75,13 @@
                 <div class="box-header"> <h3 class="box-title">Sample - IDEXX</h3> </div>                     
                 <div class="box-body">
                     <div style="padding-bottom: 10px;">
-                        <button class='btn btn-primary' id='addtomboldet2'><i class="fa fa-wpforms" aria-hidden="true"></i> New Sample IDEXX </button>
+<?php
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl != 7){
+            echo "<button class='btn btn-primary' id='addtomboldet2'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample IDEXX </button>";
+        }
+?>
+                        
                         <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
                         <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
                         <?php //echo anchor(site_url('O2b_sample_prep/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?>

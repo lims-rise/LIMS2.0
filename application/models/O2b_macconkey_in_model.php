@@ -23,9 +23,18 @@ class O2b_macconkey_in_model extends CI_Model
         $this->datatables->join('ref_person', 'obj2b_mac1.id_person = ref_person.id_person', 'left');
         $this->datatables->where('obj2b_mac1.lab', $this->session->userdata('lab'));
         $this->datatables->where('obj2b_mac1.flag', '0');
-        // $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-primary btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_sample');
-        $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
+
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl == 7){
+            $this->datatables->add_column('action', '', 'bar_macconkey');
+        }
+        else if (($lvl == 2) | ($lvl == 3)){
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'bar_macconkey');
+        }
+        else {
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
                 ".anchor(site_url('O2b_macconkey_in/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'bar_macconkey');
+        }
         return $this->datatables->generate();
     }
 
