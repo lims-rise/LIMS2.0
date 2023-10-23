@@ -17,11 +17,22 @@ class Freezer_in_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id, date_in, time_in, initial, vessel, barcode_sample, location, 
-                comments, id_person, id_vessel, id_location_80, need_cryobox, cryobox, lab, flag');
-        $this->datatables->from('v_freez_in');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('id, date_in, time_in, initial, vessel, barcode_sample, location, 
+        //         comments, id_person, id_vessel, id_location_80, need_cryobox, cryobox, lab, flag');
+        // $this->datatables->from('v_freez_in');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('a.id, a.date_in, DATE_FORMAT(a.time_in, "%H:%i") AS time_in, b.initial, c.vessel, a.barcode_sample, 
+        concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS location, a.comments,
+        a.id_person, a.id_vessel, a.id_location_80, a.need_cryobox, a.cryobox, a.lab, a.flag');
+        $this->datatables->from('freezer_in a');
+        $this->datatables->join('ref_person b', 'a.id_person=b.id_person', 'left');
+        $this->datatables->join('ref_vessel c', 'a.id_vessel=c.id_vessel', 'left');
+        $this->datatables->join('ref_location_80 d', 'a.id_location_80=d.id_location_80', 'left');
+        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->where('a.flag', '0');
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'id');

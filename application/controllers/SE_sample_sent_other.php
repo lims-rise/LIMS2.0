@@ -132,11 +132,14 @@ class SE_sample_sent_other extends CI_Controller
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', "Barcode_sample"); 
-        $sheet->setCellValue('B1', "Date_shipped"); 
-        $sheet->setCellValue('C1', "Volume");
-        $sheet->setCellValue('D1', "Destination");
-        $sheet->setCellValue('E1', "Custodian");
-        $sheet->setCellValue('F1', "Comments");
+        $sheet->setCellValue('B1', "New_barcode"); 
+        $sheet->setCellValue('C1', "Sample_type"); 
+        $sheet->setCellValue('D1', "Date_shipped"); 
+        $sheet->setCellValue('E1', "Volume");
+        $sheet->setCellValue('F1', "Sent_from");
+        $sheet->setCellValue('G1', "Destination");
+        $sheet->setCellValue('H1', "Custodian");
+        $sheet->setCellValue('I1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -146,11 +149,14 @@ class SE_sample_sent_other extends CI_Controller
         $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
           $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
-          $sheet->setCellValue('B'.$numrow, $data->date_shipped);
-          $sheet->setCellValue('C'.$numrow, $data->volume);
-          $sheet->setCellValue('D'.$numrow, $data->destination);
-          $sheet->setCellValue('E'.$numrow, $data->custodian);
-          $sheet->setCellValue('F'.$numrow, $data->comments);
+          $sheet->setCellValue('B'.$numrow, $data->new_barcode);
+          $sheet->setCellValue('C'.$numrow, $data->sample_type);
+          $sheet->setCellValue('D'.$numrow, $data->date_shipped);
+          $sheet->setCellValue('E'.$numrow, $data->volume);
+          $sheet->setCellValue('F'.$numrow, $data->sent_from);
+          $sheet->setCellValue('G'.$numrow, $data->destination);
+          $sheet->setCellValue('H'.$numrow, $data->custodian);
+          $sheet->setCellValue('I'.$numrow, $data->comments);
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

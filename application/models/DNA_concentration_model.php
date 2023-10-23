@@ -17,11 +17,20 @@ class DNA_concentration_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_dna, date_concentration, initial, sampletype, dna_concentration, comments,
-        id_person, lab, flag');
-        $this->datatables->from('v_dna_conc');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('barcode_dna, date_concentration, initial, sampletype, dna_concentration, comments,
+        // id_person, lab, flag');
+        // $this->datatables->from('v_dna_conc');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('a.barcode_dna, a.date_concentration, c.initial, b.sampletype, 
+        a.dna_concentration, a.comments, a.id_person, a.lab, a.flag');
+        $this->datatables->from('dna_concentration a');
+        $this->datatables->join('dna_extraction b', 'a.barcode_dna=b.barcode_dna', 'left');
+        $this->datatables->join('ref_person c', 'a.id_person=c.id_person', 'left');
+        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->where('a.flag', '0');
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'barcode_sample');

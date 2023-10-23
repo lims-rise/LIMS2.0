@@ -3,12 +3,11 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
-    
                     <div class="box-header">
                         <h3 class="box-title">DNA Module - DNA Aliquotting</h3>
                     </div>
-        
         <div class="box-body">
+        <div style="padding-bottom: 10px;">
 <?php
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl != 7){
@@ -19,23 +18,24 @@
         <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
             <thead>
                 <tr>
-                    <!-- <th width="30px">No</th> -->
-		    <th>ID</th>
-		    <th>Date aliquot</th>
-		    <th>Lab tech</th>
-		    <th>Barcode Monash</th>
-		    <th>Barcode Cambridge</th>
-		    <th>#Aliquot</th>
-		    <th>Comments</th>
-		    <th>Action</th>
+                        <!-- <th width="30px">No</th> -->
+                    <th>ID</th>
+                    <th>Date aliquot</th>
+                    <th>Lab tech</th>
+                    <th>Barcode Monash</th>
+                    <th>Barcode Cambridge</th>
+                    <th>#Aliquot</th>
+                    <th>Comments</th>
+                    <th>Action</th>
                 </tr>
             </thead>
-	    
+            
         </table>
-        </div>
+            </div>
                     </div>
+                </div>
             </div>
-            </div>
+        </div>
     </section>
 <style>
 

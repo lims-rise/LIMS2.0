@@ -17,10 +17,18 @@ class O3_blood_centrifuge_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id, date_process, initial, centrifuge_time, comments, id_person, lab');
-        $this->datatables->from('v_obj3bcentrifuge');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('id, date_process, initial, centrifuge_time, comments, id_person, lab');
+        // $this->datatables->from('v_obj3bcentrifuge');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('obj3_blood_centrifuge.id, obj3_blood_centrifuge.date_process, ref_person.initial, 
+        obj3_blood_centrifuge.centrifuge_time, obj3_blood_centrifuge.comments, obj3_blood_centrifuge.id_person, 
+        obj3_blood_centrifuge.lab, obj3_blood_centrifuge.flag');
+        $this->datatables->from('obj3_blood_centrifuge');
+        $this->datatables->join('ref_person', 'obj3_blood_centrifuge.id_person = ref_person.id_person', 'left');
+        $this->datatables->where('obj3_blood_centrifuge.lab', $this->session->userdata('lab'));
+        $this->datatables->where('obj3_blood_centrifuge.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){

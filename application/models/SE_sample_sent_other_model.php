@@ -17,7 +17,7 @@ class SE_sample_sent_other_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_shipped, volume, destination, custodian, comments');
+        $this->datatables->select('barcode_sample, new_barcode, sample_type, date_shipped, volume, sent_from, destination, custodian, comments');
         $this->datatables->from('se_sample_sent');
         $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');

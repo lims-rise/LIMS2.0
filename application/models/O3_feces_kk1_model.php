@@ -17,10 +17,17 @@ class O3_feces_kk1_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_process, time_process, initial, bar_kkslide, comments, id_person, lab, flag');
-        $this->datatables->from('v_obj3fkk1');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('barcode_sample, date_process, time_process, initial, bar_kkslide, comments, id_person, lab, flag');
+        // $this->datatables->from('v_obj3fkk1');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('obj3_fkk1.barcode_sample, obj3_fkk1.date_process, obj3_fkk1.time_process, ref_person.initial, 
+        obj3_fkk1.bar_kkslide, obj3_fkk1.comments, obj3_fkk1.id_person, obj3_fkk1.lab, obj3_fkk1.flag');
+        $this->datatables->from('obj3_fkk1');
+        $this->datatables->join('ref_person', 'obj3_fkk1.id_person = ref_person.id_person', 'left');
+        $this->datatables->where('obj3_fkk1.lab', $this->session->userdata('lab'));
+        $this->datatables->where('obj3_fkk1.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){

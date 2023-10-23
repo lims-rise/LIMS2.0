@@ -17,12 +17,23 @@ class O3_blood_edta_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_process, initial, hemolysis, barcode_wb, vol_aliquotwb, cryoboxwb, 
-                                    barcode_p1a, vol_aliquot1, cryobox1, barcode_p2a, vol_aliquot2, cryobox2,
-                                    barcode_p3a, vol_aliquot3, cryobox3, packed_cells, cryobox_pc, comments, id_person, lab');
-        $this->datatables->from('v_obj3bedta_al');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('barcode_sample, date_process, initial, hemolysis, barcode_wb, vol_aliquotwb, cryoboxwb, 
+        //                             barcode_p1a, vol_aliquot1, cryobox1, barcode_p2a, vol_aliquot2, cryobox2,
+        //                             barcode_p3a, vol_aliquot3, cryobox3, packed_cells, cryobox_pc, comments, id_person, lab');
+        // $this->datatables->from('v_obj3bedta_al');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('obj3_edta_aliquots.barcode_sample, obj3_edta_aliquots.date_process, ref_person.initial, 
+        obj3_edta_aliquots.hemolysis, obj3_edta_aliquots.barcode_wb, obj3_edta_aliquots.vol_aliquotwb, obj3_edta_aliquots.cryoboxwb, 
+        obj3_edta_aliquots.barcode_p1a, obj3_edta_aliquots.vol_aliquot1, obj3_edta_aliquots.cryobox1, obj3_edta_aliquots.barcode_p2a, 
+        obj3_edta_aliquots.vol_aliquot2, obj3_edta_aliquots.cryobox2, obj3_edta_aliquots.barcode_p3a, obj3_edta_aliquots.vol_aliquot3, 
+        obj3_edta_aliquots.cryobox3, obj3_edta_aliquots.packed_cells, obj3_edta_aliquots.cryobox_pc, obj3_edta_aliquots.comments, 
+        obj3_edta_aliquots.id_person, obj3_edta_aliquots.lab, obj3_edta_aliquots.flag');
+        $this->datatables->from('obj3_edta_aliquots');
+        $this->datatables->join('ref_person', 'obj3_edta_aliquots.id_person = ref_person.id_person', 'left');
+        $this->datatables->where('obj3_edta_aliquots.lab', $this->session->userdata('lab'));
+        $this->datatables->where('obj3_edta_aliquots.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){

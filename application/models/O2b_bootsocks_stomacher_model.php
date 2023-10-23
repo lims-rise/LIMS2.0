@@ -18,7 +18,7 @@ class O2b_bootsocks_stomacher_model extends CI_Model
     // datatables
     function json() {
         $this->datatables->select('barcode_sample, date_conduct, elution_no, barcode_bootsock, elution, elu_comments, barcode_falcon, volume_stomacher, lab, flag');
-        $this->datatables->from('v_obj2bbs_stom');
+        $this->datatables->from('obj2b_bs_stomacher');
         $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
 
@@ -39,7 +39,7 @@ class O2b_bootsocks_stomacher_model extends CI_Model
 
     function subjson($id) {
         $this->datatables->select('barcode_sample, barcode_endetec, barcode_falcon1, volume_falcon1, barcode_falcon2, volume_falcon2, dilution, time_incubation, comments');
-        $this->datatables->from('v_obj2bbsendet');
+        $this->datatables->from('obj2b_subbs_endetec');
         $this->datatables->where('barcode_sample', $id);
         $this->datatables->where('flag', '0');
         
@@ -60,7 +60,7 @@ class O2b_bootsocks_stomacher_model extends CI_Model
 
     function subjson2($id) {
         $this->datatables->select('barcode_sample, barcode_colilert, barcode_falcon1, volume_falcon1, barcode_falcon2, volume_falcon2, dilution, time_incubation, comments');
-        $this->datatables->from('v_obj2bbsidexx');
+        $this->datatables->from('obj2b_subbs_idexx');
         $this->datatables->where('barcode_sample', $id);
         $this->datatables->where('flag', '0');
 

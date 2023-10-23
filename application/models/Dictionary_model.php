@@ -18,11 +18,16 @@ class Dictionary_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id, module, subheadings, col_name,
-        var_label, var_type, description, start_date,
-        end_date, detail, comments, dictionary_id
-        ');
-        $this->datatables->from('v_dictionary');
+        // $this->datatables->select('id, module, subheadings, col_name,
+        // var_label, var_type, description, start_date,
+        // end_date, detail, comments, dictionary_id');
+        // $this->datatables->from('v_dictionary');
+
+        $this->datatables->select('id, module, subheadings, col_name, var_label, var_type, 
+        description, start_date, end_date, if((dictionary_id is not null),"Yes","No") AS detail, 
+        comments, dictionary_id');
+        $this->datatables->from('dictionary');
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', anchor(site_url('dictionary/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"> Detail</i>', array('class' => 'btn btn-info btn-sm')), 'id');

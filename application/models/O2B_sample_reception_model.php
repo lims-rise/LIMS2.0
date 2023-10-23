@@ -17,8 +17,15 @@ class O2B_sample_reception_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_arrival, time_arrival, sampletype2b, png_control, barcode_tinytag, comments, id_type2b, lab, flag');
-        $this->datatables->from('v_obj2brecept');
+        // $this->datatables->select('barcode_sample, date_arrival, time_arrival, sampletype2b, png_control, barcode_tinytag, comments, id_type2b, lab, flag');
+        // $this->datatables->from('v_obj2brecept');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('a.barcode_sample, a.date_arrival, a.time_arrival, b.sampletype AS sampletype2b, 
+        a.png_control, a.barcode_tinytag, a.comments, a.id_type2b, a.lab, a.flag');
+        $this->datatables->from('obj2b_receipt a');
+        $this->datatables->join('ref_sampletype b', 'a.id_type2b = b.id_sampletype', 'left');
         $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
 

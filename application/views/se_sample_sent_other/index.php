@@ -23,6 +23,8 @@
                 <tr>
                     <!-- <th width="30px">No</th> -->
 		    <th>Barcode sample</th>
+		    <th>New barcode</th>
+		    <th>Sample type</th>
 		    <th>Date shipped</th>
 		    <th>Volume</th>
 		    <th>Destination</th>
@@ -67,6 +69,21 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="new_barcode" class="col-sm-4 control-label">New barcode</label>
+                            <div class="col-sm-8">
+                                <input id="new_barcode" name="new_barcode" type="text" class="form-control" placeholder="New barcode">
+                                <!-- <div class="val1tip"></div> -->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sample_type" class="col-sm-4 control-label">Sample type</label>
+                            <div class="col-sm-8">
+                                <input id="sample_type" name="sample_type" type="text" class="form-control" placeholder="Sample type" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="date_shipped" class="col-sm-4 control-label">Date shipped</label>
                             <div class="col-sm-8">
                                 <input id="date_shipped" name="date_shipped" type="date" class="form-control" placeholder="Date shipped" value="<?php echo date("Y-m-d"); ?>">
@@ -77,6 +94,13 @@
                             <label for="volume" class="col-sm-4 control-label">Volume</label>
                             <div class="col-sm-8">
                                 <input id="volume" name="volume" type="text" class="form-control" placeholder="Volume" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sent_from" class="col-sm-4 control-label">Sent from</label>
+                            <div class="col-sm-8">
+                                <input id="sent_from" name="sent_from" type="text" class="form-control" placeholder="Sent from" required>
                             </div>
                         </div>
 
@@ -278,6 +302,8 @@
                 //     "orderable": false
                 // },
                 {"data": "barcode_sample"},
+                {"data": "new_barcode"},
+                {"data": "sample_type"},
                 {"data": "date_shipped"},
                 {"data": "volume"},
                 {"data": "destination"},
@@ -306,8 +332,11 @@
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample External - New sent to other lab<span id="my-another-cool-loader"></span>');
             $('#barcode_sample').attr('readonly', false);
             $('#barcode_sample').val('');
+            $('#new_barcode').val('');
+            $('#sample_type').val('');
             // $("#date_shipped").datepicker("setDate",'now');
             $('#volume').val('');
+            $('#sent_from').val('');
             $('#destination').val('');
             $('#custodian').val('');
             $('#comments').val('');
@@ -324,8 +353,11 @@
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample External - Update sent to other lab<span id="my-another-cool-loader"></span>');
             $('#barcode_sample').attr('readonly', true);
             $('#barcode_sample').val(data.barcode_sample);
+            $('#new_barcode').val(data.new_barcode);
+            $('#sample_type').val(data.sample_type);
             $('#date_shipped').val(data.date_shipped);
             $('#volume').val(data.volume);
+            $('#sent_from').val(data.sent_from);
             $('#destination').val(data.destination);
             $('#custodian').val(data.custodian);
             $('#comments').val(data.comments);

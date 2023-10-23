@@ -17,10 +17,18 @@ class O2a_sample_logging_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id_samplelog, date_collection, initial, bar_samplebag, bar_eclosion, id_person, lab, flag');
-        $this->datatables->from('v_obj2asam_log');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('id_samplelog, date_collection, initial, bar_samplebag, bar_eclosion, id_person, lab, flag');
+        // $this->datatables->from('v_obj2asam_log');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('obj2a_samplelog.id_samplelog, obj2a_samplelog.date_collection, ref_person.initial, 
+        obj2a_samplelog.bar_samplebag, obj2a_samplelog.bar_eclosion, obj2a_samplelog.id_person, obj2a_samplelog.lab, obj2a_samplelog.flag');
+        $this->datatables->from('obj2a_samplelog');
+        $this->datatables->join('ref_person', 'obj2a_samplelog.id_person = ref_person.id_person', 'left');
+        $this->datatables->where('obj2a_samplelog.lab', $this->session->userdata('lab'));
+        $this->datatables->where('obj2a_samplelog.flag', '0');
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'id_samplelog');

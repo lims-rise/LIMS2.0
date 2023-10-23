@@ -17,11 +17,19 @@ class O2a_sample_reception_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id_receipt, date_receipt, delivered, received, sample_type, id_delivered, id_received, lab, flag');
-        $this->datatables->from('v_obj2arecept');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('id_receipt, date_receipt, delivered, received, sample_type, id_delivered, id_received, lab, flag');
+        // $this->datatables->from('v_obj2arecept');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
 
+        $this->datatables->select('a.id_receipt, a.date_receipt, b.initial AS delivered, c.initial AS received, 
+        a.sample_type, a.id_delivered, a.id_received, a.lab, a.flag');
+        $this->datatables->from('obj2a_receipt a');
+        $this->datatables->join('ref_person b', 'a.id_delivered = b.id_person', 'left');
+        $this->datatables->join('ref_person c', 'a.id_received = c.id_person', 'left');
+        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->where('a.flag', '0');
+        
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'id_receipt');

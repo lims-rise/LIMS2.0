@@ -17,15 +17,26 @@ class O2a_mosquito_identifications_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('bar_storagebag, date_ident, initial, catch_met, no_mosquito, aedes_aegypt_male, aedes_aegypt_female, 
-        aedes_albopictus_male, aedes_albopictus_female, aedes_polynesiensis_male, aedes_polynesiensis_female, 
-        aedes_other_male, aedes_other_female, culex_male, culex_female, culex_sitiens_male, culex_sitiens_female, 
-        culexann_male, culexann_female, culex_other_male, culex_other_female, anopheles_male, anopheles_female,
-        uranotaenia_male, uranotaenia_female, mansonia_male, mansonia_female, other_male, other_female,
-        culex_larvae, aedes_larvae, unidentify, notes, id_person, lab, flag');
-        $this->datatables->from('v_obj2aiden');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('bar_storagebag, date_ident, initial, catch_met, no_mosquito, aedes_aegypt_male, aedes_aegypt_female, 
+        // aedes_albopictus_male, aedes_albopictus_female, aedes_polynesiensis_male, aedes_polynesiensis_female, 
+        // aedes_other_male, aedes_other_female, culex_male, culex_female, culex_sitiens_male, culex_sitiens_female, 
+        // culexann_male, culexann_female, culex_other_male, culex_other_female, anopheles_male, anopheles_female,
+        // uranotaenia_male, uranotaenia_female, mansonia_male, mansonia_female, other_male, other_female,
+        // culex_larvae, aedes_larvae, unidentify, notes, id_person, lab, flag');
+        // $this->datatables->from('v_obj2aiden');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('a.bar_storagebag, a.date_ident, b.initial, a.catch_met, a.no_mosquito, a.aedes_aegypt_male, a.aedes_aegypt_female, 
+        a.aedes_albopictus_male, a.aedes_albopictus_female, a.aedes_polynesiensis_male, a.aedes_polynesiensis_female, 
+        a.aedes_other_male, a.aedes_other_female, a.culex_male, a.culex_female, a.culex_sitiens_male, a.culex_sitiens_female, 
+        a.culexann_male, a.culexann_female, a.culex_other_male, a.culex_other_female, a.anopheles_male, a.anopheles_female,
+        a.uranotaenia_male, a.uranotaenia_female, a.mansonia_male, a.mansonia_female, a.other_male, a.other_female,
+        a.culex_larvae, a.aedes_larvae, a.unidentify, a.notes, a.id_person, a.lab, a.flag');
+        $this->datatables->from('obj2a_identification a');
+        $this->datatables->join('ref_person b', 'a.id_person = b.id_person', 'left');
+        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->where('a.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){

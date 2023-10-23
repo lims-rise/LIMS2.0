@@ -1,5 +1,5 @@
 <style>
-    ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
@@ -57,7 +57,7 @@
             let t
             $(document).ready(function() {
 
-        Highcharts.chart('chart_container', {
+            Highcharts.chart('chart_container', {
                 chart: {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
@@ -133,7 +133,7 @@
                             categories: 
                             // ['sub1', 'sub2', 'sub3'],
                             [
-                                <?php foreach ($inventory as $row) {
+                                <?php foreach ($obj as $row) {
                                     echo "'$row->type'" . ',';      
                                 } ?>
                             ],
@@ -177,7 +177,7 @@
                                 // [{name: 'sub1', y: 100},{name: 'sub2', y: 70},{name: 'sub3', y: 30},]
 
                                 [
-                                    <?php foreach ($inventory as $row) {
+                                    <?php foreach ($obj as $row) {
                                         echo "{name: '$row->type',y: $row->val},";
                                     }?>
                                 ]

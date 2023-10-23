@@ -150,7 +150,7 @@ class Dictionary extends CI_Controller
         $host = 'localhost';
         $user = 'root';
         $password = '';
-        $database = 'lims23';
+        $database = 'lims_fj';
 
         // Create a database connection
         $mysqli = new mysqli($host, $user, $password, $database);

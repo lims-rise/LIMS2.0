@@ -12,17 +12,19 @@ class Welcome extends CI_Controller {
 
 
     public function index() {
+        // $row = "";
         //$this->load->view('table');
         $row = $this->Welcome_model->get_by_id();
         // $this->template->load('template', 'welcome', $row);
         if ($row) {
             $row->item = $this->Welcome_model->get_sum();
-            $row->inventory = $this->Welcome_model->get_subsum();
+            $row->obj = $this->Welcome_model->get_subsum();
             $this->template->load('template', 'welcome', $row);
         }
         else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(base_url('staff'));
+            // $this->template->load('template', 'welcome', $row);
+            // redirect(base_url('staff'));
         }
     }
 
@@ -54,9 +56,9 @@ class Welcome extends CI_Controller {
         // setting jenis font yang akan digunakan
         $pdf->SetFont('Arial', 'B', 16);
         // mencetak string 
-        $pdf->Cell(190, 7, 'CANDY HOUSE APPLICATION', 0, 1, 'C');
+        $pdf->Cell(190, 7, 'LIMS RISE', 0, 1, 'C');
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(190, 7, 'CANDY HOUSE APPLICATION', 0, 1, 'C');
+        $pdf->Cell(190, 7, 'LIMS RISE', 0, 1, 'C');
         $pdf->Output();
     }
 

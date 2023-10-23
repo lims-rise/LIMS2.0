@@ -17,10 +17,19 @@ class O3_sample_reception_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_receipt, time_receipt, initial, sample_type, png_control, cold_chain, cont_intact, comments, id_person, id_type');
-        $this->datatables->from('v_obj3sample');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('barcode_sample, date_receipt, time_receipt, initial, sample_type, png_control, cold_chain, cont_intact, comments, id_person, id_type');
+        // $this->datatables->from('v_obj3sample');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('obj3_sam_rec.barcode_sample, obj3_sam_rec.date_receipt, obj3_sam_rec.time_receipt,
+        ref_person.initial, ref_sampletype.sampletype AS sample_type, obj3_sam_rec.png_control, obj3_sam_rec.cold_chain,
+         obj3_sam_rec.cont_intact, obj3_sam_rec.comments, obj3_sam_rec.id_person, obj3_sam_rec.lab, obj3_sam_rec.flag');
+        $this->datatables->from('obj3_sam_rec');
+        $this->datatables->join('ref_person', 'obj3_sam_rec.id_person = ref_person.id_person', 'left');
+        $this->datatables->join('ref_sampletype', 'obj3_sam_rec.id_type = ref_sampletype.id_sampletype', 'left');
+        $this->datatables->where('obj3_sam_rec.lab', $this->session->userdata('lab'));
+        $this->datatables->where('obj3_sam_rec.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){

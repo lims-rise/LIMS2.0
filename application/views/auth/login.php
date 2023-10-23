@@ -64,6 +64,8 @@
             
     </style>
     </head>
+
+    <!-- <img src="../img/black.jpg" class="user-image" alt="User Image"> -->
     
     <video autoplay muted loop id="myVideo">
         <source src="../img/dna.mp4" type="video/mp4">

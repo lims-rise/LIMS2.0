@@ -50,7 +50,7 @@ class Welcome_model extends CI_Model
             WHEN a.id_type IN (1,2,3,5) THEN "Human Blood"
             WHEN a.id_type = 4 THEN "Human Feces"
             ELSE "Unidentify"
-        END AS type,
+        END AS "type",
         COUNT(*) AS val
         FROM obj3_sam_rec a
         LEFT JOIN ref_sampletype b ON a.id_type=b.id_sampletype

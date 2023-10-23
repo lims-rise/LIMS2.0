@@ -17,11 +17,21 @@ class O3_blood_sst_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_process, initial, barcode_sst1, vol_aliquot1, cryobox1, 
-                                    barcode_sst2, vol_aliquot2, cryobox2, comments, id_person, lab');
-        $this->datatables->from('v_obj3sstal');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('barcode_sample, date_process, initial, barcode_sst1, vol_aliquot1, cryobox1, 
+        //                             barcode_sst2, vol_aliquot2, cryobox2, comments, id_person, lab');
+        // $this->datatables->from('v_obj3sstal');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('obj3_sst_aliquots.barcode_sample, obj3_sst_aliquots.date_process, ref_person.initial, 
+        obj3_sst_aliquots.barcode_sst1, obj3_sst_aliquots.vol_aliquot1, obj3_sst_aliquots.cryobox1, 
+        obj3_sst_aliquots.barcode_sst2, obj3_sst_aliquots.vol_aliquot2, obj3_sst_aliquots.cryobox2, 
+        obj3_sst_aliquots.comments, obj3_sst_aliquots.id_person, obj3_sst_aliquots.lab, obj3_sst_aliquots.flag');
+        $this->datatables->from('obj3_sst_aliquots');
+        $this->datatables->join('ref_person', 'obj3_sst_aliquots.id_person = ref_person.id_person', 'left');
+        $this->datatables->where('obj3_sst_aliquots.lab', $this->session->userdata('lab'));
+        $this->datatables->where('obj3_sst_aliquots.flag', '0');
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'barcode_sample');

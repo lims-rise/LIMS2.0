@@ -17,11 +17,34 @@ class Wat_water_microbiology_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_process, water_lab, parent_barcode, sampletype, 
-        total_coliforms, volume_ecoli, comments, id_type2bwat, lab, flag');
-        $this->datatables->from('v_obj2bwat_microby');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('barcode_sample, date_process, water_lab, parent_barcode, sampletype, 
+        // total_coliforms, volume_ecoli, comments, id_type2bwat, lab, flag');
+        // $this->datatables->from('v_obj2bwat_microby');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('a.barcode_sample, a.date_process, c.lab AS water_lab,
+        c.barcode_sample AS parent_barcode, b.sampletype, a.total_coliforms, 
+        a.volume_ecoli, a.comments, c.id_type2bwat, a.lab, a.flag');
+        $this->datatables->from('obj2b_wat_microby a');
+        $this->datatables->join('(SELECT barcode_nitro AS barcode, "BTKL Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+        where LENGTH(barcode_nitro) > 0
+        UNION ALL
+        SELECT barcode_nitro2 AS barcode, "BBLK Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+        where LENGTH(barcode_nitro2) > 0
+        UNION ALL
+        SELECT barcode_microbiology AS barcode, "BTKL Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+        where LENGTH(barcode_microbiology) > 0
+        UNION ALL
+        SELECT barcode_microbiology2 AS barcode, "BBLK Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+        where LENGTH(barcode_microbiology2) > 0
+        UNION ALL
+        SELECT barcode_rise_lab AS barcode, "RISE Lab" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+        where LENGTH(barcode_rise_lab) > 0 ) c', 'a.barcode_sample = c.barcode', 'left');
+        $this->datatables->join('ref_sampletype b', 'c.id_type2bwat = b.id_sampletype', 'left');
+        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->where('a.flag', '0');
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'barcode_sample');

@@ -17,10 +17,18 @@ class O2b_other_lab_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, sampletype2bwat, barcode_nitro, 3rdparty_lab as rdparty_lab, barcode_nitro2, 3rdparty_lab2 as rdparty_lab2, barcode_microbiology, 3rdparty_lab3 as rdparty_lab3, barcode_microbiology2, 3rdparty_lab4 as rdparty_lab4, barcode_rise_lab, comments, id_type2bwat, lab, flag');
-        $this->datatables->from('v_obj2bchemistry');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('barcode_sample, sampletype2bwat, barcode_nitro, 3rdparty_lab as rdparty_lab, barcode_nitro2, 3rdparty_lab2 as rdparty_lab2, barcode_microbiology, 3rdparty_lab3 as rdparty_lab3, barcode_microbiology2, 3rdparty_lab4 as rdparty_lab4, barcode_rise_lab, comments, id_type2bwat, lab, flag');
+        // $this->datatables->from('v_obj2bchemistry');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('a.barcode_sample, b.sampletype AS sampletype2bwat, a.barcode_nitro, a.3rdparty_lab as rdparty_lab, 
+        a.barcode_nitro2, a.3rdparty_lab2 as rdparty_lab2, a.barcode_microbiology, a.3rdparty_lab3 as rdparty_lab3, 
+        a.barcode_microbiology2, a.3rdparty_lab4 as rdparty_lab4, a.barcode_rise_lab, a.comments, a.id_type2bwat, a.lab, a.flag');
+        $this->datatables->from('obj2b_chemistry a');
+        $this->datatables->join('ref_sampletype b', 'a.id_type2bwat = b.id_sampletype', 'left');
+        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->where('a.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){

@@ -17,10 +17,21 @@ class O3_filter_paper_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_process, time_process, initial, freezer_bag, location, comments, id_person, id_location_80, lab');
-        $this->datatables->from('v_obj3bfilterpaper');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('barcode_sample, date_process, time_process, initial, freezer_bag, location, comments, id_person, id_location_80, lab');
+        // $this->datatables->from('v_obj3bfilterpaper');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('obj3_bfilterpaper.barcode_sample, obj3_bfilterpaper.date_process, obj3_bfilterpaper.time_process, 
+        initial, obj3_bfilterpaper.freezer_bag, 
+        concat("F",ref_location_80.freezer,"-","S",ref_location_80.shelf,"-","R",ref_location_80.rack,"-","DRW",ref_location_80.rack_level) AS location,
+        obj3_bfilterpaper.comments, obj3_bfilterpaper.id_person, 
+        obj3_bfilterpaper.id_location_80, obj3_bfilterpaper.lab, obj3_bfilterpaper.flag');
+        $this->datatables->from('obj3_bfilterpaper');
+        $this->datatables->join('ref_person', 'obj3_bfilterpaper.id_person = ref_person.id_person', 'left');
+        $this->datatables->join('ref_location_80', 'obj3_bfilterpaper.id_location_80 = ref_location_80.id_location_80', 'left');
+        $this->datatables->where('obj3_bfilterpaper.lab', $this->session->userdata('lab'));
+        $this->datatables->where('obj3_bfilterpaper.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
@@ -197,12 +208,39 @@ class O3_filter_paper_model extends CI_Model
       }
 
       function find_cryo($id){
-        $this->db->where('cryobox', $id);
-        $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
-        $q = $this->db->get('v_findcryo');
+        // $this->db->where('cryobox', $id);
+        // $this->db->where('flag', '0');
+        // // $this->db->where('lab', $this->session->userdata('lab'));
+        // $q = $this->db->get('v_findcryo');
+        // $response = $q->result_array();
+        // return $response;
+
+        $q = $this->db->query('SELECT x.id, x.cryobox, x.id_location_80, b.freezer, b.shelf, b.rack, b.rack_level, x.lab, x.flag FROM
+        (SELECT a.id, a.cryobox, b.id_location_80, a.lab, a.flag 
+        FROM
+          (SELECT MAX(id) id, cryobox, lab, flag
+          FROM freezer_in
+          GROUP BY cryobox) a
+          LEFT JOIN (SELECT id, id_location_80, lab, flag FROM freezer_in) b ON a.id = b.id
+          UNION ALL
+          SELECT a.id, a.cryobox, b.id_location_80, a.lab, a.flag FROM
+            (SELECT MAX(id) id, barcode_sample AS cryobox, lab, flag
+            FROM freezer_in
+            WHERE id_vessel <> 1
+            GROUP BY barcode_sample) a
+          LEFT JOIN (SELECT id, id_location_80, lab, flag FROM freezer_in) b ON a.id = b.id
+          ) x
+        LEFT JOIN ref_location_80 b ON x.id_location_80 = b.id_location_80
+        WHERE x.lab = "'.$this->session->userdata('lab').'" 
+        AND x.flag = 0
+        AND x.cryobox = "'.$id.'" 
+        GROUP BY x.cryobox
+        ORDER BY id 
+        ');
+        //$url = $this->db->where('id_user_level',$user['id_user_level'])->get('tbl_user_level')->row();
         $response = $q->result_array();
         return $response;
+
         // return $this->db->get('ref_location_80')->row();
       }
 

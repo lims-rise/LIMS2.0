@@ -17,12 +17,23 @@ class O3_feces_kk2_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('bar_kkslide, date_process, person_read, person_write, duration, start_time, end_time, 
-        ascaris, ascaris_com, hookworm, hookworm_com, trichuris, trichuris_com, strongyloides, strongyloides_com, taenia,
-        taenia_com, other, other_com, comments, finalized, id_person, id_person2, lab, flag');
-        $this->datatables->from('v_obj3fkk2');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('bar_kkslide, date_process, person_read, person_write, duration, start_time, end_time, 
+        // ascaris, ascaris_com, hookworm, hookworm_com, trichuris, trichuris_com, strongyloides, strongyloides_com, taenia,
+        // taenia_com, other, other_com, comments, finalized, id_person, id_person2, lab, flag');
+        // $this->datatables->from('v_obj3fkk2');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('a.bar_kkslide, a.date_process, b.initial AS person_read, c.initial AS person_write, 
+        a.duration, a.start_time, a.end_time, a.ascaris, a.ascaris_com, a.hookworm, a.hookworm_com, a.trichuris, 
+        a.trichuris_com, a.strongyloides, a.strongyloides_com, a.taenia,
+        a.taenia_com, a.other, a.other_com, a.comments, a.finalized, a.id_person, a.id_person2, a.lab, a.flag');
+        $this->datatables->from('obj3_fkk2 a');
+        $this->datatables->join('ref_person b', 'a.id_person = b.id_person', 'left');
+        $this->datatables->join('ref_person c', 'a.id_person2 = c.id_person', 'left');
+        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->where('a.flag', '0');
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'barcode_sample');

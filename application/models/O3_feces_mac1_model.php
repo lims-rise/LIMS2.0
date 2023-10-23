@@ -17,10 +17,18 @@ class O3_feces_mac1_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_process, time_process, initial, bar_macconkey, comments, id_person, lab, flag');
-        $this->datatables->from('v_obj3fmac1');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('barcode_sample, date_process, time_process, initial, bar_macconkey, comments, id_person, lab, flag');
+        // $this->datatables->from('v_obj3fmac1');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('obj3_fmac1.barcode_sample, obj3_fmac1.date_process, obj3_fmac1.time_process, 
+        ref_person.initial, obj3_fmac1.bar_macconkey, obj3_fmac1.comments, obj3_fmac1.id_person, obj3_fmac1.lab, obj3_fmac1.flag');
+        $this->datatables->from('obj3_fmac1');
+        $this->datatables->join('ref_person', 'obj3_fmac1.id_person = ref_person.id_person', 'left');
+        $this->datatables->where('obj3_fmac1.lab', $this->session->userdata('lab'));
+        $this->datatables->where('obj3_fmac1.flag', '0');
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'barcode_sample');

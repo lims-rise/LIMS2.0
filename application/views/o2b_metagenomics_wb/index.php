@@ -30,9 +30,9 @@
                     <th>Volume filtered (mL)</th>
                     <th>Time started filtering</th>
                     <th>Time finished filtering</th>
-                    <th>Duration of filtering (minutes)</th>
-                    <th>Barcode of DNA storage bag</th>
-                    <th>Barcode of storage box</th>
+                    <th>Duration filtering (minutes)</th>
+                    <th>Barcode DNA storage</th>
+                    <th>Barcode storage box</th>
                     <th>Freezer Location</th>
                     <th>Comments</th>
                     <th>Action</th>

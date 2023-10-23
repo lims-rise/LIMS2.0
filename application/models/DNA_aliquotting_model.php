@@ -17,11 +17,20 @@ class DNA_aliquotting_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id_dna, date_aliquot, initial, barcode_monash, barcode_cambridge, comments, aliq,
-        id_person, lab, flag');
-        $this->datatables->from('v_dna_aliq');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        // $this->datatables->select('id_dna, date_aliquot, initial, barcode_monash, barcode_cambridge, comments, aliq,
+        // id_person, lab, flag');
+        // $this->datatables->from('v_dna_aliq');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+
+        $this->datatables->select('a.id_dna, a.date_aliquot, b.initial, a.barcode_monash, a.barcode_cambridge, 
+        a.comments, a.id_person, a.lab, a.flag, count(c.id_dna_det) AS aliq');
+        $this->datatables->from('dna_aliquot a');
+        $this->datatables->join('ref_person b', 'a.id_person=b.id_person', 'left');
+        $this->datatables->join('dna_aliquot_det c', 'a.id_dna=c.id_dna', 'left');
+        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->where('a.flag', '0');
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'id_dna');
@@ -39,11 +48,18 @@ class DNA_aliquotting_model extends CI_Model
     }
 
     function subjson($id) {
-        $this->datatables->select('row_id, column_id, barcode_dna, comments, id_dna_det, id_dna, lab, flag');
-        $this->datatables->from('v_dna_aliq_det');
+        // $this->datatables->select('row_id, column_id, barcode_dna, comments, id_dna_det, id_dna, lab, flag');
+        // $this->datatables->from('v_dna_aliq_det');
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('flag', '0');
+        // $this->datatables->where('id_dna', $id);
+
+        $this->datatables->select('id_dna_det, row_id, column_id, barcode_dna, comments, id_dna, lab, flag');
+        $this->datatables->from('dna_aliquot_det');
         $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
         $this->datatables->where('id_dna', $id);
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'id_dna_det');
