@@ -19,7 +19,7 @@
                     <th width="30px">No</th>
 		    <th>Full Name</th>
 		    <th>Email</th>
-		    <th>Level Name</th>
+		    <th>Level</th>
 		    <th>Status</th>
 		    <th width="200px">Action</th>
                 </tr>

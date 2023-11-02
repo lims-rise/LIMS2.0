@@ -51,10 +51,23 @@ class O3_feces_kk2_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by($this->id, 'ASC');
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_obj3fkk2')->result();
+        $q = $this->db->query('SELECT 
+        a.bar_kkslide, a.date_process, b.initial AS person_read, c.initial AS person_write, a.duration, a.start_time, a.end_time, a.ascaris, a.ascaris_com, a.hookworm, a.hookworm_com, a.trichuris, a.trichuris_com,
+        a.strongyloides, a.strongyloides_com, a.taenia, a.taenia_com, other, other_com, a.comments, a.id_person, a.finalized, a.id_person2, a.lab, a.flag
+        from obj3_fkk2 a
+        left join ref_person b on a.id_person = b.id_person
+        left join ref_person c on a.id_person2 = c.id_person 
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0
+        ORDER BY a.bar_kkslide, a.date_process
+        ');
+        $response = $q->result();
+        return $response;
+
+        // $this->db->order_by($this->id, 'ASC');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_obj3fkk2')->result();
     }
 
     function get_by_id($id)
@@ -128,7 +141,6 @@ class O3_feces_kk2_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('position', 'Lab Tech');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();

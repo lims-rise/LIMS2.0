@@ -51,10 +51,41 @@ class O3_filter_paper_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by($this->id, $this->order);
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_obj3bfilterpaper')->result();
+      $q = $this->db->query('SELECT 
+      a.barcode_sample AS barcode_sample,a.date_process AS date_process,date_format(a.time_process,"%H:%i") AS time_process,b.initial AS initial,a.freezer_bag AS freezer_bag,
+      concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS location,
+      a.comments AS comments,a.id_person AS id_person,a.id_location_80 AS id_location_80, a.lab, a.flag
+      from obj3_bfilterpaper a 
+      left join ref_person b on a.id_person = b.id_person 
+      LEFT JOIN (SELECT x.id, x.cryobox, x.id_location_80, b.freezer, b.shelf, b.rack, b.rack_level, x.lab, x.flag  FROM
+          (SELECT a.id, a.cryobox, b.id_location_80, a.lab, a.flag 
+            FROM
+              (SELECT MAX(id) id, cryobox, lab, flag
+              FROM freezer_in
+              GROUP BY cryobox) a
+              LEFT JOIN (SELECT id, id_location_80, lab, flag FROM freezer_in) b ON a.id = b.id
+              UNION ALL
+              SELECT a.id, a.cryobox, b.id_location_80, a.lab, a.flag FROM
+                (SELECT MAX(id) id, barcode_sample AS cryobox, lab, flag
+                FROM freezer_in
+                WHERE id_vessel <> 1
+                GROUP BY barcode_sample) a
+              LEFT JOIN (SELECT id, id_location_80, lab, flag FROM freezer_in) b ON a.id = b.id
+              ) x
+            LEFT JOIN ref_location_80 b ON x.id_location_80 = b.id_location_80
+            GROUP BY x.cryobox
+            ORDER BY id) d on a.freezer_bag = d.cryobox 
+      WHERE a.lab = "'.$this->session->userdata('lab').'" 
+      AND a.flag = 0
+      ORDER BY  a.barcode_sample, a.date_process
+      ');
+      $response = $q->result();
+      return $response;
+
+        // $this->db->order_by($this->id, $this->order);
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_obj3bfilterpaper')->result();
     }
 
     function get_by_id($id)
@@ -144,7 +175,6 @@ class O3_filter_paper_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('position', 'Lab Tech');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();
@@ -156,7 +186,6 @@ class O3_filter_paper_model extends CI_Model
         $response = array();
         $this->db->select('freezer');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -167,7 +196,6 @@ class O3_filter_paper_model extends CI_Model
         $response = array();
         $this->db->select('shelf');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -178,7 +206,6 @@ class O3_filter_paper_model extends CI_Model
         $response = array();
         $this->db->select('rack');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -189,7 +216,6 @@ class O3_filter_paper_model extends CI_Model
         $response = array();
         $this->db->select('rack_level');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -250,7 +276,6 @@ class O3_filter_paper_model extends CI_Model
         $this->db->where('shelf', $s);
         $this->db->where('rack', $r);
         $this->db->where('rack_level', $rl);
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
         // return $this->db->get('ref_location_80');

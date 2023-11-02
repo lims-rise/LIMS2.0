@@ -157,14 +157,27 @@ class O2b_other_lab extends CI_Controller
         $sheet->setCellValue('A1', "Barcode_sample"); 
         $sheet->setCellValue('B1', "Sample_watertype"); 
         $sheet->setCellValue('C1', "RISE_Lab_Barcode");
-        $sheet->setCellValue('D1', "BTKL_chems_Barcode");
-        $sheet->setCellValue('E1', "BTKL_chems_Deliver");
-        $sheet->setCellValue('F1', "BBLK_chems_Barcode");
-        $sheet->setCellValue('G1', "BBLK_chems_Deliver");
-        $sheet->setCellValue('H1', "BTKL_micro_Barcode");
-        $sheet->setCellValue('I1', "BTKL_micro_Deliver");
-        $sheet->setCellValue('J1', "BBLK_micro_Barcode");
-        $sheet->setCellValue('K1', "BBLK_micro_Deliver");
+
+        if ($this->session->userdata('lab') == 1) {
+            $sheet->setCellValue("D1", "BTKL_chems_Barcode");
+            $sheet->setCellValue("E1", "BTKL_chems_Deliver");
+            $sheet->setCellValue("F1", "BBLK_chems_Barcode");
+            $sheet->setCellValue("G1", "BBLK_chems_Deliver");
+            $sheet->setCellValue("H1", "BTKL_micro_Barcode");
+            $sheet->setCellValue("I1", "BTKL_micro_Deliver");
+            $sheet->setCellValue("J1", "BBLK_micro_Barcode");
+            $sheet->setCellValue("K1", "BBLK_micro_Deliver");                
+        }
+        else {
+            $sheet->setCellValue("D1", "WAF_chems_Barcode");
+            $sheet->setCellValue("E1", "WAF_chems_Deliver");
+            $sheet->setCellValue("F1", "Other_chems_Barcode");
+            $sheet->setCellValue("G1", "Other_chems_Deliver");
+            $sheet->setCellValue("H1", "WAF_micro_Barcode");
+            $sheet->setCellValue("I1", "WAF_micro_Deliver");
+            $sheet->setCellValue("J1", "Other_micro_Barcode");
+            $sheet->setCellValue("K1", "Other_micro_Deliver");                            
+        }
         $sheet->setCellValue('L1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 

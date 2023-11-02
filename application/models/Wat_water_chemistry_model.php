@@ -31,23 +31,41 @@ class Wat_water_chemistry_model extends CI_Model
         a.lead, a.cod, a.tds, a.tss, a.phosphate, a.oilgrease, a.sulfide,
         a.tot_nitrogen, a.tot_phosphorous, a.notes, c.id_type2bwat, a.lab, a.flag');
         $this->datatables->from('obj2b_chemistry_lab a');
-        $this->datatables->join('(SELECT barcode_nitro AS barcode, "BTKL Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-        where LENGTH(barcode_nitro) > 0
-        UNION ALL
-        SELECT barcode_nitro2 AS barcode, "BBLK Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-        where LENGTH(barcode_nitro2) > 0
-        UNION ALL
-        SELECT barcode_microbiology AS barcode, "BTKL Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-        where LENGTH(barcode_microbiology) > 0
-        UNION ALL
-        SELECT barcode_microbiology2 AS barcode, "BBLK Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-        where LENGTH(barcode_microbiology2) > 0
-        UNION ALL
-        SELECT barcode_rise_lab AS barcode, "RISE Lab" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-        where LENGTH(barcode_rise_lab) > 0 ) c', 'a.barcode_sample = c.barcode', 'left');
+        if ($this->session->userdata('lab') == 1) {
+            $this->datatables->join('(SELECT barcode_nitro AS barcode, "BTKL Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_nitro) > 0
+            UNION ALL
+            SELECT barcode_nitro2 AS barcode, "BBLK Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_nitro2) > 0
+            UNION ALL
+            SELECT barcode_microbiology AS barcode, "BTKL Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_microbiology) > 0
+            UNION ALL
+            SELECT barcode_microbiology2 AS barcode, "BBLK Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_microbiology2) > 0
+            UNION ALL
+            SELECT barcode_rise_lab AS barcode, "RISE Lab" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_rise_lab) > 0 ) c', 'a.barcode_sample = c.barcode', 'left');
+        }
+        else {
+            $this->datatables->join('(SELECT barcode_nitro AS barcode, "WAF Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_nitro) > 0
+            UNION ALL
+            SELECT barcode_nitro2 AS barcode, "Other Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_nitro2) > 0
+            UNION ALL
+            SELECT barcode_microbiology AS barcode, "WAF Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_microbiology) > 0
+            UNION ALL
+            SELECT barcode_microbiology2 AS barcode, "Other Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_microbiology2) > 0
+            UNION ALL
+            SELECT barcode_rise_lab AS barcode, "RISE Lab" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_rise_lab) > 0 ) c', 'a.barcode_sample = c.barcode', 'left');    
+        }
         $this->datatables->join('ref_sampletype b', 'c.id_type2bwat = b.id_sampletype', 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
-        $this->datatables->where('a.flag', '0');        
+        $this->datatables->where('a.flag', '0');     
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
@@ -65,10 +83,65 @@ class Wat_water_chemistry_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by('date_process', 'ASC');
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_lab_chemistry')->result();
+        $q = $this->db->query('SELECT 
+        a.barcode_sample AS barcode_sample,
+        a.date_process AS date_process,
+        c.lab AS water_lab,
+        c.barcode_sample AS parent_barcode,
+        b.sampletype AS sampletype2bwat,
+        a.ammonia AS ammonia,
+        a.nitrate AS nitrate,
+        a.nitrite AS nitrite,
+        a.ph AS ph,
+        a.bod AS bod,
+        a.aluminium AS aluminium,
+        a.barium AS barium,
+        a.iron AS iron,
+        a.chrome AS chrome,
+        a.cadmium AS cadmium,
+        a.manganese AS manganese,
+        a.nickel AS nickel,
+        a.zinc AS zinc,
+        a.copper AS copper,
+        a.lead AS lead,
+        a.cod AS cod,
+        a.tds AS tds,
+        a.tss AS tss,
+        a.phosphate AS phosphate,
+        a.oilgrease AS oilgrease,
+        a.sulfide AS sulfide,
+        a.tot_nitrogen AS tot_nitrogen,
+        a.tot_phosphorous AS tot_phosphorous,
+        a.notes AS notes,
+        c.id_type2bwat AS id_type2bwat,
+        a.lab, a.flag
+        from obj2b_chemistry_lab a 
+        LEFT JOIN (SELECT barcode_nitro AS barcode, "BTKL Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_nitro) > 0
+            UNION ALL
+            SELECT barcode_nitro2 AS barcode, "BBLK Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_nitro2) > 0
+            UNION ALL
+            SELECT barcode_microbiology AS barcode, "BTKL Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_microbiology) > 0
+            UNION ALL
+            SELECT barcode_microbiology2 AS barcode, "BBLK Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_microbiology2) > 0
+            UNION ALL
+            SELECT barcode_rise_lab AS barcode, "RISE Lab" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            where LENGTH(barcode_rise_lab) > 0) c ON a.barcode_sample = c.barcode 
+        left join ref_sampletype b on c.id_type2bwat = b.id_sampletype
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0
+        ORDER BY a.barcode_sample, a.date_process
+        ');
+        $response = $q->result();
+        return $response;
+        
+        // $this->db->order_by('date_process', 'ASC');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_lab_chemistry')->result();
     }
 
     function get_by_id($id)

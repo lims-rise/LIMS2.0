@@ -127,14 +127,9 @@ class Ref_unproc_sample extends CI_Controller
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', "Barcode_sample"); 
-        $sheet->setCellValue('B1', "Date_receipt"); 
-        $sheet->setCellValue('C1', "Time_receipt");
-        $sheet->setCellValue('D1', "Lab_tech");
-        $sheet->setCellValue('E1', "Sample_type");
-        $sheet->setCellValue('F1', "P&G_control");
-        $sheet->setCellValue('G1', "Cold_chain");
-        $sheet->setCellValue('H1', "Cont_intact");
-        $sheet->setCellValue('I1', "Comments");
+        $sheet->setCellValue('B1', "Date_entry"); 
+        $sheet->setCellValue('C1', "Time_entry");
+        $sheet->setCellValue('D1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -144,19 +139,15 @@ class Ref_unproc_sample extends CI_Controller
         $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
           $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
-          $sheet->setCellValue('B'.$numrow, $data->date_receipt);
-          $sheet->setCellValue('C'.$numrow, $data->time_receipt);
-          $sheet->setCellValue('D'.$numrow, $data->initial);
-          $sheet->setCellValue('E'.$numrow, $data->sample_type);
-          $sheet->setCellValue('F'.$numrow, $data->png_control);
-          $sheet->setCellValue('G'.$numrow, $data->cold_chain);
-          $sheet->setCellValue('H'.$numrow, $data->cont_intact);
-          $sheet->setCellValue('I'.$numrow, $data->comments);
+          $sheet->setCellValue('B'.$numrow, $data->date_entry);
+          $sheet->setCellValue('C'.$numrow, $data->time_entry);
+          $sheet->setCellValue('D'.$numrow, $data->comments);
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
-    $fileName = 'O3-Sample_Reception.csv';
+    $datenow=date("Ymd");
+    $fileName = 'MASTER_Unprocessed_sample_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya

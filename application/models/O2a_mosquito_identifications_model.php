@@ -56,10 +56,26 @@ class O2a_mosquito_identifications_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by('date_ident', 'ASC');
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_obj2aiden')->result();
+        $q = $this->db->query('SELECT 
+        a.bar_storagebag, a.date_ident, b.initial, a.catch_met, a.no_mosquito, a.aedes_aegypt_male, a.aedes_aegypt_female, 
+        a.aedes_albopictus_male, a.aedes_albopictus_female, a.aedes_polynesiensis_male, a.aedes_polynesiensis_female, 
+        a.aedes_other_male, a.aedes_other_female, a.culex_male, a.culex_female, a.culex_sitiens_male, a.culex_sitiens_female, 
+        a.culexann_male, a.culexann_female, a.culex_other_male, a.culex_other_female, a.anopheles_male, a.anopheles_female,
+        a.uranotaenia_male, a.uranotaenia_female, a.mansonia_male, a.mansonia_female, a.other_male, a.other_female,
+        a.culex_larvae, a.aedes_larvae, a.unidentify, a.notes, a.id_person, a.lab, a.flag
+        FROM obj2a_identification a 
+        LEFT JOIN ref_person b ON a.id_person = b.id_person
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0
+        ORDER BY a.date_ident
+        ');
+        $response = $q->result();
+        return $response;
+
+        // $this->db->order_by('date_ident', 'ASC');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_obj2aiden')->result();
     }
 
     function get_by_id($id)
@@ -132,7 +148,6 @@ class O2a_mosquito_identifications_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('position', 'Lab Tech');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();

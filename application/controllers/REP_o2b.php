@@ -57,6 +57,8 @@ class REP_o2b extends CI_Controller
             $sheet->setCellValue('F1', "reception_comment");
             $sheet->setCellValue('G1', "chemistry_barcode_sample");
             $sheet->setCellValue('H1', "chemistry_sampletype2bwat");
+
+        if ($this->session->userdata('lab') == 1) {
             $sheet->setCellValue('I1', "chems_BTKL_barcode");
             $sheet->setCellValue('J1', "chems_BTKL_deliver");
             $sheet->setCellValue('K1', "chems_BBLK_barcode");
@@ -65,6 +67,17 @@ class REP_o2b extends CI_Controller
             $sheet->setCellValue('N1', "micro_BTKL_deliver");
             $sheet->setCellValue('O1', "micro_BBLK_barcode");
             $sheet->setCellValue('P1', "micro_BBLK_deliver");
+        }
+        else {
+            $sheet->setCellValue('I1', "chems_WAF_barcode");
+            $sheet->setCellValue('J1', "chems_WAF_deliver");
+            $sheet->setCellValue('K1', "chems_Other_barcode");
+            $sheet->setCellValue('L1', "chems_Other_deliver");
+            $sheet->setCellValue('M1', "micro_WAF_barcode");
+            $sheet->setCellValue('N1', "micro_WAF_deliver");
+            $sheet->setCellValue('O1', "micro_Other_barcode");
+            $sheet->setCellValue('P1', "micro_Other_deliver");
+        }
             $sheet->setCellValue('Q1', "chemistry_comment");
             $sheet->setCellValue('R1', "endetec_in_barcode_sample");
             $sheet->setCellValue('S1', "endetec_in_date_conduct");

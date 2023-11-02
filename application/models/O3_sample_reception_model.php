@@ -48,10 +48,19 @@ class O3_sample_reception_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by('date_receipt, time_receipt, barcode_sample', $this->order);
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_obj3sample')->result();
+        $q = $this->db->query('SELECT 
+        obj3_sam_rec.barcode_sample, obj3_sam_rec.date_receipt, obj3_sam_rec.time_receipt,
+        ref_person.initial, ref_sampletype.sampletype AS sample_type, obj3_sam_rec.png_control, obj3_sam_rec.cold_chain,
+        obj3_sam_rec.cont_intact, obj3_sam_rec.comments, obj3_sam_rec.id_person, obj3_sam_rec.lab, obj3_sam_rec.flag        
+        FROM obj3_sam_rec
+        LEFT JOIN ref_person ON obj3_sam_rec.id_person = ref_person.id_person
+        LEFT JOIN ref_sampletype ON obj3_sam_rec.id_type = ref_sampletype.id_sampletype
+        WHERE obj3_sam_rec.lab = "'.$this->session->userdata('lab').'" 
+        AND obj3_sam_rec.flag = 0
+        ORDER BY obj3_sam_rec.date_receipt, obj3_sam_rec.time_receipt, obj3_sam_rec.barcode_sample
+        ');
+        $response = $q->result();
+        return $response;
     }
 
     function get_by_id($id)
@@ -125,7 +134,6 @@ class O3_sample_reception_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('position', 'Lab Tech');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();
@@ -139,7 +147,6 @@ class O3_sample_reception_model extends CI_Model
         // Select record
         $this->db->select('*');
         $this->db->where('obj', 'O3');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_sampletype');
         $response = $q->result_array();

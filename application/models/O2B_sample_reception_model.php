@@ -26,8 +26,8 @@ class O2B_sample_reception_model extends CI_Model
         a.png_control, a.barcode_tinytag, a.comments, a.id_type2b, a.lab, a.flag');
         $this->datatables->from('obj2b_receipt a');
         $this->datatables->join('ref_sampletype b', 'a.id_type2b = b.id_sampletype', 'left');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->where('a.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
@@ -46,10 +46,24 @@ class O2B_sample_reception_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by('date_arrival, time_arrival', 'ASC');
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_obj2brecept')->result();
+        $q = $this->db->query('SELECT 
+        a.barcode_sample AS barcode_sample,a.date_arrival AS date_arrival,
+        date_format(a.time_arrival,"%H:%i") AS time_arrival,b.sampletype AS sampletype2b,
+        a.png_control AS png_control,
+        a.barcode_tinytag AS barcode_tinytag,a.comments AS comments,a.id_type2b AS id_type2b, a.lab, a.flag
+        from obj2b_receipt a 
+        left join ref_sampletype b on a.id_type2b = b.id_sampletype
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0
+        ORDER BY a.barcode_sample, a.date_arrival
+        ');
+        $response = $q->result();
+        return $response;
+
+        // $this->db->order_by('date_arrival, time_arrival', 'ASC');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_obj2brecept')->result();
     }
 
     function get_by_id($id)
@@ -135,7 +149,6 @@ class O2B_sample_reception_model extends CI_Model
         // Select record
         $this->db->select('*');
         $this->db->where('obj', 'O2B');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_sampletype');
         $response = $q->result_array();

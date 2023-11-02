@@ -132,7 +132,6 @@ class Freezer_out_model extends CI_Model
     function getSampleType(){
         $response = array();
         $this->db->select('*');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_sample');
         $response = $q->result_array();
@@ -143,7 +142,6 @@ class Freezer_out_model extends CI_Model
       function getVessel(){
         $response = array();
         $this->db->select('*');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_vessel');
         $response = $q->result_array();
@@ -154,7 +152,6 @@ class Freezer_out_model extends CI_Model
       function getDestination(){
         $response = array();
         $this->db->select('*');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_destination');
         $response = $q->result_array();
@@ -165,7 +162,6 @@ class Freezer_out_model extends CI_Model
       function getShipping(){
         $response = array();
         $this->db->select('*');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_shipping');
         $response = $q->result_array();

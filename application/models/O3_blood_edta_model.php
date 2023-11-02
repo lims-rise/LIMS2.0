@@ -54,10 +54,20 @@ class O3_blood_edta_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by($this->id, $this->order);
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_obj3bedta_al')->result();
+        $q = $this->db->query('SELECT 
+        a.barcode_sample AS barcode_sample,a.date_process AS date_process,b.initial AS initial,a.hemolysis AS hemolysis,a.barcode_wb, a.vol_aliquotwb, a.cryoboxwb, a.barcode_p1a AS barcode_p1a,a.vol_aliquot1 AS vol_aliquot1,a.cryobox1 AS cryobox1,a.barcode_p2a AS barcode_p2a,a.vol_aliquot2 AS vol_aliquot2,a.cryobox2 AS cryobox2,a.barcode_p3a AS barcode_p3a,a.vol_aliquot3 AS vol_aliquot3,a.cryobox3 AS cryobox3,a.packed_cells AS packed_cells,a.cryobox_pc AS cryobox_pc,a.comments AS comments,a.id_person AS id_person, a.lab, a.flag
+        from obj3_edta_aliquots a 
+        left join ref_person b on a.id_person = b.id_person 
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0
+        ORDER BY a.barcode_sample, a.date_process
+        ');
+        $response = $q->result();
+        return $response;
+        // $this->db->order_by($this->id, $this->order);
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_obj3bedta_al')->result();
     }
 
     function get_by_id($id)
@@ -125,7 +135,6 @@ class O3_blood_edta_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('position', 'Lab Tech');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();
@@ -138,7 +147,6 @@ class O3_blood_edta_model extends CI_Model
         // Select record
         $this->db->select('*');
         $this->db->where('obj', 'O3');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_sampletype');
         $response = $q->result_array();

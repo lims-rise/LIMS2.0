@@ -59,10 +59,22 @@ class O2a_sample_logging_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by('date_collection, id_samplelog', 'ASC');
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_obj2asam_log')->result();
+        $q = $this->db->query('SELECT 
+        a.id_samplelog, a.date_collection, b.initial, a.bar_samplebag, a.bar_eclosion, a.id_person,
+        a.lab, a.flag
+        from obj2a_samplelog a
+        left join ref_person b on a.id_person = b.id_person 
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0
+        ORDER BY a.id_samplelog
+        ');
+        $response = $q->result();
+        return $response;
+
+        // $this->db->order_by('date_collection, id_samplelog', 'ASC');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_obj2asam_log')->result();
     }
 
     function get_by_id($id)
@@ -132,7 +144,6 @@ class O2a_sample_logging_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('position', 'Lab Tech');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();

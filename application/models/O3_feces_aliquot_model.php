@@ -50,10 +50,24 @@ class O3_feces_aliquot_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by($this->id, $this->order);
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_obj3faliquot')->result();
+        $q = $this->db->query('SELECT 
+        a.barcode_sample, a.date_process, date_format(a.time_process,"%H:%i") AS time_process,
+        b.initial, a.cons_stool, a.color_stool, a.abnormal, a.ab_other, a.aliquot1, a.volume1, a.cryobox1,
+        a.aliquot2, a.volume2, a.cryobox2, a.aliquot3, a.volume3, a.cryobox3, a.aliquot_zymo, a.volume_zymo,
+        a.batch_zymo, a.cryobox_zymo, a.comments, a.id_person, a.lab, a.flag
+        from obj3_faliquot a 
+        left join ref_person b on a.id_person = b.id_person 
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0
+        ORDER BY a.barcode_sample, a.date_process
+        ');
+        $response = $q->result();
+        return $response;
+
+        // $this->db->order_by($this->id, $this->order);
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_obj3faliquot')->result();
     }
 
     function get_by_id($id)
@@ -121,7 +135,6 @@ class O3_feces_aliquot_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('position', 'Lab Tech');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();

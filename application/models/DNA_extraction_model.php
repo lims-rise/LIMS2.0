@@ -121,13 +121,84 @@ class DNA_extraction_model extends CI_Model
 
     function get_all()
     {
-        $q = $this->db->query('
-        SELECT a.barcode_sample, a.date_extraction, b.initial, a.kit_lot, c.type, a.barcode_dna, a.tube_number, a.cryobox, 
+        $q = $this->db->query('SELECT a.barcode_sample, a.date_extraction, b.initial, a.kit_lot, c.type, a.barcode_dna, a.tube_number, a.cryobox, 
         a.barcode_metagenomics, 
         concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS Location, a.meta_box, a.comments
         FROM dna_extraction a
         LEFT JOIN ref_person b ON a.id_person = b.id_person
-        LEFT JOIN v_ref_dna_ex c ON a.barcode_sample=c.barcode
+        LEFT JOIN (SELECT barcode_p1a  barcode, cryobox1  vessel, "O3 Blood-EDTA" type
+        FROM obj3_edta_aliquots
+        WHERE LENGTH(TRIM(barcode_p1a)) > 0
+        UNION ALL
+        SELECT barcode_p2a  barcode, cryobox2  vessel, "O3 Blood-EDTA" type
+        FROM obj3_edta_aliquots
+        WHERE LENGTH(TRIM(barcode_p2a)) > 0
+        UNION ALL
+        SELECT TRIM(barcode_p3a) barcode, cryobox3  vessel, "O3 Blood-EDTA" type
+        FROM obj3_edta_aliquots
+        WHERE LENGTH(TRIM(barcode_p3a)) > 0
+        UNION ALL
+        SELECT packed_cells barcode, cryobox_pc  vessel, "O3 Blood-EDTA" type
+        FROM obj3_edta_aliquots
+        WHERE LENGTH(TRIM(packed_cells)) > 0
+        UNION ALL
+        SELECT barcode_wb  barcode, cryoboxwb  vessel, "O3 Blood-EDTA" type
+        FROM obj3_edta_aliquots
+        WHERE LENGTH(TRIM(barcode_wb)) > 0
+        UNION ALL
+        SELECT barcode_sst1  barcode, cryobox1  vessel, "O3 Blood-SST" type
+        FROM obj3_sst_aliquots
+        WHERE LENGTH(TRIM(barcode_sst1)) > 0
+        UNION ALL
+        SELECT barcode_sst2  barcode, cryobox2  vessel, "O3 Blood-SST" type
+        FROM obj3_sst_aliquots
+        WHERE LENGTH(TRIM(barcode_sst2)) > 0
+        UNION ALL
+        SELECT barcode_sample  barcode, freezer_bag  vessel, "O3 Filter Paper" type
+        FROM obj3_bfilterpaper
+        WHERE LENGTH(TRIM(barcode_sample)) > 0
+        UNION ALL
+        SELECT aliquot1  barcode, cryobox1  vessel, "O3 Feces" type
+        FROM obj3_faliquot
+        WHERE LENGTH(TRIM(aliquot1)) > 0
+        UNION ALL
+        SELECT aliquot2  barcode, cryobox2  vessel, "O3 Feces" type
+        FROM obj3_faliquot
+        WHERE LENGTH(TRIM(aliquot2)) > 0
+        UNION ALL
+        SELECT aliquot3  barcode, cryobox3  vessel, "O3 Feces" type
+        FROM obj3_faliquot
+        WHERE LENGTH(TRIM(aliquot3)) > 0
+        UNION ALL
+        SELECT aliquot_zymo  barcode, cryobox_zymo  vessel, "O3 Feces" type
+        FROM obj3_faliquot
+        WHERE LENGTH(TRIM(aliquot_zymo)) > 0
+        UNION ALL
+        SELECT bar_macsweep1  barcode, cryobox1  vessel, "O3 Feces" type
+        FROM obj3_fmac2
+        WHERE LENGTH(TRIM(bar_macsweep1)) > 0
+        UNION ALL
+        SELECT bar_macsweep2  barcode, cryobox2  vessel, "O3 Feces" type
+        FROM obj3_fmac2
+        WHERE LENGTH(TRIM(bar_macsweep2)) > 0
+        UNION ALL
+        SELECT barcode_dna_bag  barcode, barcode_storage  vessel, CONCAT("O2B ", c.sampletype) type
+        FROM obj2b_metagenomics a
+        LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+        LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+        WHERE LENGTH(TRIM(barcode_dna_bag)) > 0
+        UNION ALL
+        SELECT barcode_dna1  barcode, barcode_storage1  vessel, CONCAT("O2B ", c.sampletype) type
+        FROM obj2b_meta_sediment a
+        LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+        LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+        WHERE LENGTH(TRIM(barcode_dna1)) > 0
+        UNION ALL
+        SELECT barcode_dna2  barcode, barcode_storage2  vessel, CONCAT("O2B ", c.sampletype) type
+        FROM obj2b_meta_sediment a
+        LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+        LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+        WHERE LENGTH(TRIM(barcode_dna2)) > 0) c ON a.barcode_sample=c.barcode
         LEFT JOIN ref_location_80 d on a.id_location=d.id_location_80        
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
@@ -225,7 +296,6 @@ class DNA_extraction_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('position', 'Lab Tech');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();
@@ -238,8 +308,7 @@ class DNA_extraction_model extends CI_Model
         // $this->db->select('freezer');
         // $q = $this->db->get('ref_location_80');
         $q = $this->db->query('SELECT DISTINCT freezer FROM ref_location_80
-            WHERE lab = "'.$this->session->userdata('lab').'" 
-            AND flag = 0 
+            WHERE flag = 0 
         ');
         $response = $q->result_array();    
         return $response;
@@ -248,8 +317,7 @@ class DNA_extraction_model extends CI_Model
       function getFreezer2(){
         $response = array();
         $q = $this->db->query('SELECT DISTINCT shelf FROM ref_location_80
-            WHERE lab = "'.$this->session->userdata('lab').'" 
-            AND flag = 0        
+            WHERE flag = 0        
         ');
         $response = $q->result_array();    
         return $response;
@@ -258,8 +326,7 @@ class DNA_extraction_model extends CI_Model
       function getFreezer3(){
         $response = array();
         $q = $this->db->query('SELECT DISTINCT rack FROM ref_location_80
-            WHERE lab = "'.$this->session->userdata('lab').'" 
-            AND flag = 0                
+            WHERE flag = 0                
         ');
         $response = $q->result_array();    
         return $response;
@@ -268,8 +335,7 @@ class DNA_extraction_model extends CI_Model
       function getFreezer4(){
         $response = array();
         $q = $this->db->query('SELECT DISTINCT rack_level FROM ref_location_80
-            WHERE lab = "'.$this->session->userdata('lab').'" 
-            AND flag = 0        
+            WHERE flag = 0        
         ');
         $response = $q->result_array();    
         return $response;

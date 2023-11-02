@@ -150,7 +150,6 @@ class O2b_other_lab_model extends CI_Model
         // Select record
         $this->db->select('*');
         $this->db->where('obj', 'O2BW');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_sampletype');
         $response = $q->result_array();

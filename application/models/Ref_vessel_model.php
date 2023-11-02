@@ -37,7 +37,7 @@ class Ref_vessel_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by($this->id, $this->order);
+        $this->db->order_by($this->id, 'ASC');
         $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         return $this->db->get('ref_vessel')->result();

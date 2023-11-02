@@ -62,11 +62,35 @@
                 animation: blinking 2s infinite, glowing 2s infinite;
             }
             
+        /* CSS to make the image cover the entire screen */
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+        }
     </style>
     </head>
 
     <!-- <img src="../img/black.jpg" class="user-image" alt="User Image"> -->
-    
+    <!-- <select id='id_country' name="id_country" class="form-control">
+        <?php
+        $lvl = $this->session->userdata('id_user_level');  
+                echo "<option value='1' selected='selected'>Animated</option>";
+                echo "<option value='2'>Static</option>";
+            ?>
+    </select>
+     -->
+    <!-- <div id="background-container"></div> -->
+    <!-- <img src="../img/dna.png"> -->
+        
     <video autoplay muted loop id="myVideo">
         <source src="../img/dna.mp4" type="video/mp4">
     </video>

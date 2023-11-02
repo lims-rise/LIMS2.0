@@ -233,10 +233,10 @@ class Kelolamenu extends CI_Controller
         $this->load->view('kelolamenu/tbl_menu_doc',$data);
     }
 
-    public function notif() 
-    {
-        $this->Menu_model->notif();
-    }
+    // public function notif() 
+    // {
+    //     $this->Menu_model->notif();
+    // }
 
 }
 

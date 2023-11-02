@@ -17,10 +17,12 @@ class SE_sample_sent_other_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, new_barcode, sample_type, date_shipped, volume, sent_from, destination, custodian, comments');
+        $this->datatables->select('barcode_sample, new_barcode, sample_type, date_shipped, volume, 
+        sent_from, destination, custodian, comments');
         $this->datatables->from('se_sample_sent');
         $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'barcode_sample');
@@ -32,6 +34,7 @@ class SE_sample_sent_other_model extends CI_Model
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
                 ".anchor(site_url('SE_sample_sent_other/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'barcode_sample');
         }
+
         return $this->datatables->generate();
     }
 

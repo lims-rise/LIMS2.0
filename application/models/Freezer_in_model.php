@@ -49,10 +49,25 @@ class Freezer_in_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by('date_in, id', 'ASC');
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_freez_in')->result();
+      $q = $this->db->query('SELECT 
+      a.id, a.date_in, DATE_FORMAT(a.time_in, "%H:%i") AS time_in, b.initial, c.vessel, a.barcode_sample, 
+      concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS location, a.comments,
+      a.id_person, a.id_vessel, a.id_location_80, a.need_cryobox, a.cryobox, a.lab, a.flag
+      FROM freezer_in a
+      LEFT JOIN ref_person b ON a.id_person=b.id_person
+      LEFT JOIN ref_vessel c ON a.id_vessel=c.id_vessel
+      LEFT JOIN ref_location_80 d ON a.id_location_80=d.id_location_80 
+      WHERE a.lab = "'.$this->session->userdata('lab').'" 
+      AND a.flag = 0
+      ORDER BY a.id
+      ');
+      $response = $q->result();
+      return $response;
+
+      // $this->db->order_by('date_in, id', 'ASC');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_freez_in')->result();
     }
 
     function get_by_id($id)
@@ -147,7 +162,6 @@ class Freezer_in_model extends CI_Model
         $response = array();
         $this->db->select('freezer');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -158,7 +172,6 @@ class Freezer_in_model extends CI_Model
         $response = array();
         $this->db->select('shelf');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -169,7 +182,6 @@ class Freezer_in_model extends CI_Model
         $response = array();
         $this->db->select('rack');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -180,7 +192,6 @@ class Freezer_in_model extends CI_Model
         $response = array();
         $this->db->select('rack_level');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -202,7 +213,6 @@ class Freezer_in_model extends CI_Model
         $this->db->where('shelf', $s);
         $this->db->where('rack', $r);
         $this->db->where('rack_level', $rl);
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
         // return $this->db->get('ref_location_80');

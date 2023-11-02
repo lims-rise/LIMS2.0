@@ -43,7 +43,6 @@ class Ref_shipping extends CI_Controller
             'id_shipping' => $this->input->post('id_shipping',TRUE),
             'shipping_method' => $this->input->post('shipping_method',TRUE),
             'uuid' => $this->uuid->v4(),
-            'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
             'date_created' => $dt->format('Y-m-d H:i:s'),
             );
@@ -56,7 +55,6 @@ class Ref_shipping extends CI_Controller
             'id_shipping' => $this->input->post('id_shipping',TRUE),
             'shipping_method' => $this->input->post('shipping_method',TRUE),
             'uuid' => $this->uuid->v4(),
-            'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
@@ -123,15 +121,8 @@ class Ref_shipping extends CI_Controller
 
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', "Barcode_sample"); 
-        $sheet->setCellValue('B1', "Date_receipt"); 
-        $sheet->setCellValue('C1', "Time_receipt");
-        $sheet->setCellValue('D1', "Lab_tech");
-        $sheet->setCellValue('E1', "Sample_type");
-        $sheet->setCellValue('F1', "P&G_control");
-        $sheet->setCellValue('G1', "Cold_chain");
-        $sheet->setCellValue('H1', "Cont_intact");
-        $sheet->setCellValue('I1', "Comments");
+        $sheet->setCellValue('A1', "ID_shipping"); 
+        $sheet->setCellValue('B1', "Shipping_method");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -140,20 +131,14 @@ class Ref_shipping extends CI_Controller
         // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
         $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
-          $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
-          $sheet->setCellValue('B'.$numrow, $data->date_receipt);
-          $sheet->setCellValue('C'.$numrow, $data->time_receipt);
-          $sheet->setCellValue('D'.$numrow, $data->initial);
-          $sheet->setCellValue('E'.$numrow, $data->sample_type);
-          $sheet->setCellValue('F'.$numrow, $data->png_control);
-          $sheet->setCellValue('G'.$numrow, $data->cold_chain);
-          $sheet->setCellValue('H'.$numrow, $data->cont_intact);
-          $sheet->setCellValue('I'.$numrow, $data->comments);
+          $sheet->setCellValue('A'.$numrow, $data->id_shipping);
+          $sheet->setCellValue('B'.$numrow, $data->shipping_method);
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
-    $fileName = 'O3-Sample_Reception.csv';
+    $datenow=date("Ymd");
+    $fileName = 'MASTER_shipping_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya

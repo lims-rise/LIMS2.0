@@ -166,29 +166,30 @@ class Wat_water_chemistry extends CI_Controller
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', "Barcode Sample");
-        $sheet->setCellValue('B1', "Ammonia (NH3-N) mg/L");
-        $sheet->setCellValue('C1', "Nitrate (NO3-N) mg/L");
-        $sheet->setCellValue('D1', "Nitrite (NO2-N) mg/L");
-        $sheet->setCellValue('E1', "BOD (Check unit)");
-        $sheet->setCellValue('F1', "Aluminium mg/L");
-        $sheet->setCellValue('G1', "Barium (Ba) mg/L");
-        $sheet->setCellValue('H1', "Iron (Fe) mg/L");
-        $sheet->setCellValue('I1', "Chrome (Cr) mg/L");
-        $sheet->setCellValue('J1', "Cadmium (Cd) mg/L");
-        $sheet->setCellValue('K1', "Manganese (Mn) mg/L");
-        $sheet->setCellValue('L1', "Nickel (Ni) mg/L");
-        $sheet->setCellValue('M1', "Zinc (Zn) mg/L");
-        $sheet->setCellValue('N1', "Copper (Cu) mg/L");
-        $sheet->setCellValue('O1', "Lead (Pb) mg/L");
-        $sheet->setCellValue('P1', "COD mg/L");
-        $sheet->setCellValue('Q1', "TDS mg/L");
-        $sheet->setCellValue('R1', "TSS mg/L");
-        $sheet->setCellValue('S1', "Phosphate mg/L");
-        $sheet->setCellValue('T1', "Oil and grease mg/L");
-        $sheet->setCellValue('U1', "Sulfide mg/L");
-        $sheet->setCellValue('V1', "Total Nitrogen mg/L");
-        $sheet->setCellValue('W1', "Total Phosphorous mg/L");
-        $sheet->setCellValue('X1', "Notes");        
+        $sheet->setCellValue('B1', "Laboratory");
+        $sheet->setCellValue('C1', "Ammonia (NH3-N) mg/L");
+        $sheet->setCellValue('D1', "Nitrate (NO3-N) mg/L");
+        $sheet->setCellValue('E1', "Nitrite (NO2-N) mg/L");
+        $sheet->setCellValue('F1', "BOD (Check unit)");
+        $sheet->setCellValue('G1', "Aluminium mg/L");
+        $sheet->setCellValue('H1', "Barium (Ba) mg/L");
+        $sheet->setCellValue('I1', "Iron (Fe) mg/L");
+        $sheet->setCellValue('J1', "Chrome (Cr) mg/L");
+        $sheet->setCellValue('K1', "Cadmium (Cd) mg/L");
+        $sheet->setCellValue('L1', "Manganese (Mn) mg/L");
+        $sheet->setCellValue('M1', "Nickel (Ni) mg/L");
+        $sheet->setCellValue('N1', "Zinc (Zn) mg/L");
+        $sheet->setCellValue('O1', "Copper (Cu) mg/L");
+        $sheet->setCellValue('P1', "Lead (Pb) mg/L");
+        $sheet->setCellValue('Q1', "COD mg/L");
+        $sheet->setCellValue('R1', "TDS mg/L");
+        $sheet->setCellValue('S1', "TSS mg/L");
+        $sheet->setCellValue('T1', "Phosphate mg/L");
+        $sheet->setCellValue('U1', "Oil and grease mg/L");
+        $sheet->setCellValue('V1', "Sulfide mg/L");
+        $sheet->setCellValue('W1', "Total Nitrogen mg/L");
+        $sheet->setCellValue('X1', "Total Phosphorous mg/L");
+        $sheet->setCellValue('Y1', "Notes");        
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -198,29 +199,30 @@ class Wat_water_chemistry extends CI_Controller
         $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
             $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
-            $sheet->setCellValue('B'.$numrow, $data->ammonia);
-            $sheet->setCellValue('C'.$numrow, $data->nitrate);
-            $sheet->setCellValue('D'.$numrow, $data->nitrite);
-            $sheet->setCellValue('E'.$numrow, $data->bod);
-            $sheet->setCellValue('F'.$numrow, $data->aluminium);
-            $sheet->setCellValue('G'.$numrow, $data->barium);
-            $sheet->setCellValue('H'.$numrow, $data->iron);
-            $sheet->setCellValue('I'.$numrow, $data->chrome);
-            $sheet->setCellValue('J'.$numrow, $data->cadmium);
-            $sheet->setCellValue('K'.$numrow, $data->manganese);
-            $sheet->setCellValue('L'.$numrow, $data->nickel);
-            $sheet->setCellValue('M'.$numrow, $data->zinc);
-            $sheet->setCellValue('N'.$numrow, $data->copper);
-            $sheet->setCellValue('O'.$numrow, $data->lead);
-            $sheet->setCellValue('P'.$numrow, $data->cod);
-            $sheet->setCellValue('Q'.$numrow, $data->tds);
-            $sheet->setCellValue('R'.$numrow, $data->tss);
-            $sheet->setCellValue('S'.$numrow, $data->phosphate);
-            $sheet->setCellValue('T'.$numrow, $data->oilgrease);
-            $sheet->setCellValue('U'.$numrow, $data->sulfide);
-            $sheet->setCellValue('V'.$numrow, $data->tot_nitrogen);
-            $sheet->setCellValue('W'.$numrow, $data->tot_phosphorous);
-            $sheet->setCellValue('X'.$numrow, $data->notes);
+            $sheet->setCellValue('B'.$numrow, $data->water_lab);
+            $sheet->setCellValue('C'.$numrow, $data->ammonia);
+            $sheet->setCellValue('D'.$numrow, $data->nitrate);
+            $sheet->setCellValue('E'.$numrow, $data->nitrite);
+            $sheet->setCellValue('F'.$numrow, $data->bod);
+            $sheet->setCellValue('G'.$numrow, $data->aluminium);
+            $sheet->setCellValue('H'.$numrow, $data->barium);
+            $sheet->setCellValue('I'.$numrow, $data->iron);
+            $sheet->setCellValue('J'.$numrow, $data->chrome);
+            $sheet->setCellValue('K'.$numrow, $data->cadmium);
+            $sheet->setCellValue('L'.$numrow, $data->manganese);
+            $sheet->setCellValue('M'.$numrow, $data->nickel);
+            $sheet->setCellValue('N'.$numrow, $data->zinc);
+            $sheet->setCellValue('O'.$numrow, $data->copper);
+            $sheet->setCellValue('P'.$numrow, $data->lead);
+            $sheet->setCellValue('Q'.$numrow, $data->cod);
+            $sheet->setCellValue('R'.$numrow, $data->tds);
+            $sheet->setCellValue('S'.$numrow, $data->tss);
+            $sheet->setCellValue('T'.$numrow, $data->phosphate);
+            $sheet->setCellValue('U'.$numrow, $data->oilgrease);
+            $sheet->setCellValue('V'.$numrow, $data->sulfide);
+            $sheet->setCellValue('W'.$numrow, $data->tot_nitrogen);
+            $sheet->setCellValue('X'.$numrow, $data->tot_phosphorous);
+            $sheet->setCellValue('Y'.$numrow, $data->notes);
             //   $no++; // Tambah 1 setiap kali looping
             $numrow++; // Tambah 1 setiap kali looping
         }

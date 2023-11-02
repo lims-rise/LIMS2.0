@@ -126,13 +126,25 @@ const formattedDate = `${year}-${month}-${day}`;
             };
         };
 
-        $('#date_rep1').on('change', function (){
+        $('#date_rep1').on('click', function (){
             if ($('#date_rep1').val() > $('#date_rep2').val()) {
                 $('#date_rep2').val($('#date_rep1').val());
             }
         });
 
-        $('#date_rep2').on('change', function (){
+        $('#date_rep2').on('click', function (){
+            if ($('#date_rep2').val() < $('#date_rep1').val()) {
+                $('#date_rep1').val($('#date_rep2').val());
+            }
+        });
+
+        $('#date_rep1').on('blur', function (){
+            if ($('#date_rep1').val() > $('#date_rep2').val()) {
+                $('#date_rep2').val($('#date_rep1').val());
+            }
+        });
+
+        $('#date_rep2').on('blur', function (){
             if ($('#date_rep2').val() < $('#date_rep1').val()) {
                 $('#date_rep1').val($('#date_rep2').val());
             }

@@ -51,10 +51,23 @@ class O3_blood_sst_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by($this->id, $this->order);
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_obj3sstal')->result();
+        $q = $this->db->query('SELECT 
+        a.barcode_sample AS barcode_sample,a.date_process AS date_process,b.initial AS initial,
+        a.barcode_sst1 AS barcode_sst1,a.vol_aliquot1 AS vol_aliquot1,a.cryobox1 AS cryobox1,
+        a.barcode_sst2 AS barcode_sst2,a.vol_aliquot2 AS vol_aliquot2,a.cryobox2 AS cryobox2,
+        a.comments AS comments,a.id_person AS id_person, a.lab, a.flag 
+        from  obj3_sst_aliquots a 
+        left join ref_person b on a.id_person = b.id_person 
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0
+        ORDER BY  a.barcode_sample, a.date_process
+        ');
+        $response = $q->result();
+        return $response;
+        // $this->db->order_by($this->id, $this->order);
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_obj3sstal')->result();
     }
 
     function get_by_id($id)
@@ -122,7 +135,6 @@ class O3_blood_sst_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('position', 'Lab Tech');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();
@@ -136,7 +148,6 @@ class O3_blood_sst_model extends CI_Model
         // Select record
         $this->db->select('*');
         $this->db->where('obj', 'O3');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_sampletype');
         $response = $q->result_array();

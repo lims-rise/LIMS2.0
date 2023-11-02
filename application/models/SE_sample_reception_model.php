@@ -114,7 +114,6 @@ class SE_sample_reception_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('position', 'Lab Tech');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();
@@ -128,7 +127,6 @@ class SE_sample_reception_model extends CI_Model
         // Select record
         $this->db->select('*');
         $this->db->where('obj', 'O3');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_sampletype');
         $response = $q->result_array();

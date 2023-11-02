@@ -5,7 +5,7 @@
                 <div class="box box-black box-solid">
     
                     <div class="box-header">
-                        <h3 class="box-title">Water Module - Water Chemstry</h3>
+                        <h3 class="box-title">Water Module - Water Chemistry</h3>
                     </div>
         
         <div class="box-body">

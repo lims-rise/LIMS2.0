@@ -26,11 +26,26 @@
                     <!-- <th width="30px">No</th> -->
 		    <th>Barcode sample</th>
 		    <th width="140px">Water type</th>
+        <?php
+        if ($this->session->userdata('lab') == 1) {
+            echo "
 		    <th>BTKL chems</th>
 		    <th>BBLK chems</th>
 		    <th>BTKL micro</th>
 		    <th>BBLK micro</th>
-		    <th>RISE lab</th>
+            "; 
+        } 
+        else {
+            echo "
+		    <th>WAF chems</th>
+		    <th>Other chems</th>
+		    <th>WAF micro</th>
+		    <th>Other micro</th>
+            "; 
+
+        }
+        ?>
+		    <th>RISE lab</th>            
 		    <th>Comments</th>
 		    <th>Action</th>
                 </tr>

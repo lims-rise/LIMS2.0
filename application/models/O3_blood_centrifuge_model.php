@@ -72,10 +72,27 @@ class O3_blood_centrifuge_model extends CI_Model
 
     function get_all()
     {
+
+        $q = $this->db->query('SELECT 
+        a.id, a.date_process, b.initial,
+        date_format(a.centrifuge_time,"%H:%i") AS centrifuge_time,
+        a.comments, 
+        c.barcode_sample, c.comments as comments_sample,
+        a.id_person, a.lab, a.flag
+        from obj3_blood_centrifuge a
+        left join ref_person b on a.id_person=b.id_person
+        left join obj3_blood_centrifuge_det c on a.id=c.id_bc 
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0
+        ORDER BY a.id
+        ');
+        $response = $q->result();
+        return $response;
+
         // $this->db->order_by('date_process, id', $this->order);
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('v_obj3bcentrifuge_det')->result();
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_obj3bcentrifuge_det')->result();
     }
 
     function get_by_id($id)
@@ -148,7 +165,6 @@ class O3_blood_centrifuge_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('position', 'Lab Tech');
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();
