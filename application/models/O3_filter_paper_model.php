@@ -29,7 +29,7 @@ class O3_filter_paper_model extends CI_Model
         obj3_bfilterpaper.id_location_80, obj3_bfilterpaper.lab, obj3_bfilterpaper.flag');
         $this->datatables->from('obj3_bfilterpaper');
         $this->datatables->join('ref_person', 'obj3_bfilterpaper.id_person = ref_person.id_person', 'left');
-        $this->datatables->join('ref_location_80', 'obj3_bfilterpaper.id_location_80 = ref_location_80.id_location_80', 'left');
+        $this->datatables->join('ref_location_80', 'obj3_bfilterpaper.id_location_80 = ref_location_80.id_location_80 AND ref_location_80.lab = '.$this->session->userdata('lab') , 'left');
         $this->datatables->where('obj3_bfilterpaper.lab', $this->session->userdata('lab'));
         $this->datatables->where('obj3_bfilterpaper.flag', '0');
 
@@ -72,7 +72,7 @@ class O3_filter_paper_model extends CI_Model
                 GROUP BY barcode_sample) a
               LEFT JOIN (SELECT id, id_location_80, lab, flag FROM freezer_in) b ON a.id = b.id
               ) x
-            LEFT JOIN ref_location_80 b ON x.id_location_80 = b.id_location_80
+            LEFT JOIN ref_location_80 b ON x.id_location_80 = b.id_location_80 AND b.lab = "'.$this->session->userdata('lab').'" 
             GROUP BY x.cryobox
             ORDER BY id) d on a.freezer_bag = d.cryobox 
       WHERE a.lab = "'.$this->session->userdata('lab').'" 
@@ -186,6 +186,7 @@ class O3_filter_paper_model extends CI_Model
         $response = array();
         $this->db->select('freezer');
         $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -196,6 +197,7 @@ class O3_filter_paper_model extends CI_Model
         $response = array();
         $this->db->select('shelf');
         $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -206,6 +208,7 @@ class O3_filter_paper_model extends CI_Model
         $response = array();
         $this->db->select('rack');
         $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -216,6 +219,7 @@ class O3_filter_paper_model extends CI_Model
         $response = array();
         $this->db->select('rack_level');
         $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -256,7 +260,7 @@ class O3_filter_paper_model extends CI_Model
             GROUP BY barcode_sample) a
           LEFT JOIN (SELECT id, id_location_80, lab, flag FROM freezer_in) b ON a.id = b.id
           ) x
-        LEFT JOIN ref_location_80 b ON x.id_location_80 = b.id_location_80
+        LEFT JOIN ref_location_80 b ON x.id_location_80 = b.id_location_80 AND b.lab = "'.$this->session->userdata('lab').'" 
         WHERE x.lab = "'.$this->session->userdata('lab').'" 
         AND x.flag = 0
         AND x.cryobox = "'.$id.'" 
@@ -276,6 +280,7 @@ class O3_filter_paper_model extends CI_Model
         $this->db->where('shelf', $s);
         $this->db->where('rack', $r);
         $this->db->where('rack_level', $rl);
+        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
         // return $this->db->get('ref_location_80');

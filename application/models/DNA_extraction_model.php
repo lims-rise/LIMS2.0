@@ -101,7 +101,7 @@ class DNA_extraction_model extends CI_Model
         LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
         LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
         WHERE LENGTH(TRIM(barcode_dna2)) > 0 ) c', 'a.barcode_sample=c.barcode', 'left');
-        $this->datatables->join('ref_location_80 d', 'a.id_location=d.id_location_80 ', 'left');
+        $this->datatables->join('ref_location_80 d', 'a.id_location=d.id_location_80 AND d.lab = '.$this->session->userdata('lab') , 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
         $this->datatables->where('a.flag', '0');
 
@@ -199,7 +199,7 @@ class DNA_extraction_model extends CI_Model
         LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
         LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
         WHERE LENGTH(TRIM(barcode_dna2)) > 0) c ON a.barcode_sample=c.barcode
-        LEFT JOIN ref_location_80 d on a.id_location=d.id_location_80        
+        LEFT JOIN ref_location_80 d on a.id_location=d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'" 
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ORDER BY a.date_extraction
@@ -283,8 +283,8 @@ class DNA_extraction_model extends CI_Model
         AND shelf = "'.$id_s.'" 
         AND rack = "'.$id_r.'" 
         AND rack_level = "'.$id_d.'" 
-        AND a.lab = "'.$this->session->userdata('lab').'" 
-        AND a.flag = 0 
+        AND lab = "'.$this->session->userdata('lab').'" 
+        AND flag = 0 
         ');
         //$url = $this->db->where('id_user_level',$user['id_user_level'])->get('tbl_user_level')->row();
         $response = $q->result_array();
@@ -307,8 +307,10 @@ class DNA_extraction_model extends CI_Model
         $response = array();
         // $this->db->select('freezer');
         // $q = $this->db->get('ref_location_80');
-        $q = $this->db->query('SELECT DISTINCT freezer FROM ref_location_80
-            WHERE flag = 0 
+        $q = $this->db->query('
+            SELECT DISTINCT freezer FROM ref_location_80
+            WHERE lab = "'.$this->session->userdata('lab').'" 
+            AND flag = 0 
         ');
         $response = $q->result_array();    
         return $response;
@@ -316,8 +318,10 @@ class DNA_extraction_model extends CI_Model
 
       function getFreezer2(){
         $response = array();
-        $q = $this->db->query('SELECT DISTINCT shelf FROM ref_location_80
-            WHERE flag = 0        
+        $q = $this->db->query('
+            SELECT DISTINCT shelf FROM ref_location_80
+            WHERE lab = "'.$this->session->userdata('lab').'" 
+            AND flag = 0 
         ');
         $response = $q->result_array();    
         return $response;
@@ -325,8 +329,10 @@ class DNA_extraction_model extends CI_Model
 
       function getFreezer3(){
         $response = array();
-        $q = $this->db->query('SELECT DISTINCT rack FROM ref_location_80
-            WHERE flag = 0                
+        $q = $this->db->query('
+            SELECT DISTINCT rack FROM ref_location_80
+            WHERE lab = "'.$this->session->userdata('lab').'" 
+            AND flag = 0 
         ');
         $response = $q->result_array();    
         return $response;
@@ -334,8 +340,10 @@ class DNA_extraction_model extends CI_Model
 
       function getFreezer4(){
         $response = array();
-        $q = $this->db->query('SELECT DISTINCT rack_level FROM ref_location_80
-            WHERE flag = 0        
+        $q = $this->db->query('
+            SELECT DISTINCT rack_level FROM ref_location_80
+            WHERE lab = "'.$this->session->userdata('lab').'" 
+            AND flag = 0 
         ');
         $response = $q->result_array();    
         return $response;

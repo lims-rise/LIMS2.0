@@ -27,8 +27,8 @@ class O2b_metagenomics_sf_model extends CI_Model
         a.comments, a.id_location_801, a.id_location_802, a.lab, a.flag
         ');
         $this->datatables->from('obj2b_meta_sediment a');
-        $this->datatables->join('ref_location_80 b', 'a.id_location_801 = b.id_location_80', 'left');
-        $this->datatables->join('ref_location_80 c', 'a.id_location_802 = c.id_location_80', 'left');
+        $this->datatables->join('ref_location_80 b', 'a.id_location_801 = b.id_location_80 AND b.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('ref_location_80 c', 'a.id_location_802 = c.id_location_80 AND c.lab = '.$this->session->userdata('lab') , 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
         $this->datatables->where('a.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
@@ -53,9 +53,9 @@ class O2b_metagenomics_sf_model extends CI_Model
         a.barcode_dna2, a.weight_sub2, a.barcode_storage2, a.position_tube2,
         concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS Location_tube2,
         a.comments
-        from ((obj2b_meta_sediment a 
-        left join ref_location_80 b on((a.id_location_801 = b.id_location_80))) 
-        left join ref_location_80 c on((a.id_location_802 = c.id_location_80)))     
+        from obj2b_meta_sediment a 
+        left join ref_location_80 b on a.id_location_801 = b.id_location_80 AND b.lab = "'.$this->session->userdata('lab').'" 
+        left join ref_location_80 c on a.id_location_802 = c.id_location_80 AND c.lab = "'.$this->session->userdata('lab').'"     
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
@@ -170,6 +170,7 @@ class O2b_metagenomics_sf_model extends CI_Model
         $q = $this->db->query('
         SELECT freezer, shelf, rack, rack_level FROM ref_location_80
         WHERE id_location_80 = "'.$id.'"
+        AND lab = "'.$this->session->userdata('lab').'" 
         ');        
         $response = $q->result_array();
         return $response;
@@ -186,6 +187,7 @@ class O2b_metagenomics_sf_model extends CI_Model
         AND shelf = "'.$shelf.'"
         AND rack = "'.$rack.'"
         AND rack_level = "'.$draw.'"
+        AND lab = "'.$this->session->userdata('lab').'" 
         AND flag = 0 
         ');        
         $response = $q->result_array();

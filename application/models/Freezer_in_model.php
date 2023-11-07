@@ -29,7 +29,7 @@ class Freezer_in_model extends CI_Model
         $this->datatables->from('freezer_in a');
         $this->datatables->join('ref_person b', 'a.id_person=b.id_person', 'left');
         $this->datatables->join('ref_vessel c', 'a.id_vessel=c.id_vessel', 'left');
-        $this->datatables->join('ref_location_80 d', 'a.id_location_80=d.id_location_80', 'left');
+        $this->datatables->join('ref_location_80 d', 'a.id_location_80=d.id_location_80 AND d.lab = '.$this->session->userdata('lab') , 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
         $this->datatables->where('a.flag', '0');
 
@@ -56,7 +56,7 @@ class Freezer_in_model extends CI_Model
       FROM freezer_in a
       LEFT JOIN ref_person b ON a.id_person=b.id_person
       LEFT JOIN ref_vessel c ON a.id_vessel=c.id_vessel
-      LEFT JOIN ref_location_80 d ON a.id_location_80=d.id_location_80 
+      LEFT JOIN ref_location_80 d ON a.id_location_80=d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'" 
       WHERE a.lab = "'.$this->session->userdata('lab').'" 
       AND a.flag = 0
       ORDER BY a.id
@@ -162,6 +162,7 @@ class Freezer_in_model extends CI_Model
         $response = array();
         $this->db->select('freezer');
         $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -172,6 +173,7 @@ class Freezer_in_model extends CI_Model
         $response = array();
         $this->db->select('shelf');
         $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -182,6 +184,7 @@ class Freezer_in_model extends CI_Model
         $response = array();
         $this->db->select('rack');
         $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -192,6 +195,7 @@ class Freezer_in_model extends CI_Model
         $response = array();
         $this->db->select('rack_level');
         $this->db->distinct();
+        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $q = $this->db->get('ref_location_80');
         $response = $q->result_array();
@@ -202,7 +206,8 @@ class Freezer_in_model extends CI_Model
         $q = $this->db->query('
         SELECT id_location_80, freezer, shelf, rack, rack_level
         FROM ref_location_80
-        WHERE id_location_80 = '.$id);
+        WHERE lab = "'.$this->session->userdata('lab').'" 
+        AND id_location_80 = '.$id);
         $response = $q->result_array();
         return $response;    
       }
@@ -213,6 +218,7 @@ class Freezer_in_model extends CI_Model
         $this->db->where('shelf', $s);
         $this->db->where('rack', $r);
         $this->db->where('rack_level', $rl);
+        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
         // return $this->db->get('ref_location_80');

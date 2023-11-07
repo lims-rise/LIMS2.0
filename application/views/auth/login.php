@@ -82,14 +82,24 @@
     <!-- <img src="../img/black.jpg" class="user-image" alt="User Image"> -->
     <!-- <select id='id_country' name="id_country" class="form-control">
         <?php
-        $lvl = $this->session->userdata('id_user_level');  
-                echo "<option value='1' selected='selected'>Animated</option>";
-                echo "<option value='2'>Static</option>";
+        // $lvl = $this->session->userdata('id_user_level');  
+        // if ($lvl == 1)
+        // {
+        //     echo '
+        //     <div id="background-container"></div>
+        //     <img src="../img/dna.png">
+        //     ';
+        // }
+        // else {
+        //     echo '
+        //     <video autoplay muted loop id="myVideo">
+        //     <source src="../img/dna.mp4" type="video/mp4">
+        //     </video>    
+        //     ';
+        // }
             ?>
     </select>
      -->
-    <!-- <div id="background-container"></div> -->
-    <!-- <img src="../img/dna.png"> -->
         
     <video autoplay muted loop id="myVideo">
         <source src="../img/dna.mp4" type="video/mp4">
@@ -111,6 +121,7 @@
             <div class="login-logo">
                 <!-- <a href="<?php echo base_url(); ?>"> -->
                 <!-- <b><mark>LIMS</mark>2.0</b>|LOGIN -->
+                <!-- <img src="../img/lims_logo2.png"> -->
                 <b><span style="background-color: #FFFFFF; color: #000000">LIMS</span>2.0</b>|LOGIN
             <!-- </a> -->
             </div>
@@ -157,8 +168,9 @@
                         <!-- Only for  -->
                         <a href="https://rise-program.org/" target="_blank">
                             <!-- RISE Program -->
-                            <span><img src="../assets/img/Project4.png" height='25px'  /></span>
-                        </a></p>
+                            <span><img src="../assets/img/Project4.png" height='25px'></span>
+                            
+                    </a></p>
                         <?php //echo anchor('#', '<i class="fa fa-eye-slash" aria-hidden="true"></i> Forget Password?', array('class' => 'btn btn-primary btn-block btn-flat')); ?>
                     </div>
                 </div>

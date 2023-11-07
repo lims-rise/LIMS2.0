@@ -47,7 +47,7 @@ class REP_o2a extends CI_Controller
         $host = 'localhost';
         $user = 'root';
         $password = '';
-        $database = 'lims_fj';
+        $database = 'lims_id';
 
         // Create a database connection
         $mysqli = new mysqli($host, $user, $password, $database);

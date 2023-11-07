@@ -150,6 +150,7 @@ class O2b_moisture_initial_model extends CI_Model
         $q = $this->db->query('
         SELECT freezer, shelf, rack, rack_level FROM ref_location_80
         WHERE id_location_80 = "'.$id.'"
+        AND lab = "'.$this->session->userdata('lab').'" 
         ');        
         $response = $q->result_array();
         return $response;
@@ -166,6 +167,8 @@ class O2b_moisture_initial_model extends CI_Model
         AND shelf = "'.$shelf.'"
         AND rack = "'.$rack.'"
         AND rack_level = "'.$draw.'"
+        AND lab = "'.$this->session->userdata('lab').'" 
+        AND flag = 0
         ');        
         $response = $q->result_array();
         return $response;

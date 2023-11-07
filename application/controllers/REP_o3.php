@@ -32,6 +32,7 @@ class REP_o3 extends CI_Controller
     public function json() {
         $date1=$this->input->get('date1');
         $date2=$this->input->get('date2');
+
         // var_dump($date2);
         header('Content-Type: application/json');
         echo $this->REP_o3_model->json($date1,$date2);
@@ -47,7 +48,7 @@ class REP_o3 extends CI_Controller
         $host = 'localhost';
         $user = 'root';
         $password = '';
-        $database = 'lims_fj';
+        $database = 'lims_id';
 
         // Create a database connection
         $mysqli = new mysqli($host, $user, $password, $database);
@@ -138,7 +139,7 @@ class REP_o3 extends CI_Controller
                 a.comments AS Comments 
                 from obj3_bfilterpaper a 
                 left join ref_person b on a.id_person = b.id_person 
-                left join ref_location_80 c on a.id_location_80 = c.id_location_80            
+                left join ref_location_80 c on a.id_location_80 = c.id_location_80 AND c.lab = "'.$this->session->userdata('lab').'" 
                 WHERE (a.date_process >= "'.$date1.'"
                 AND a.date_process <= "'.$date2.'")
                 AND a.lab = "'.$this->session->userdata('lab').'" 

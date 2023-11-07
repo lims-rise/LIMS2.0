@@ -47,7 +47,7 @@ class REP_dna extends CI_Controller
         $host = 'localhost';
         $user = 'root';
         $password = '';
-        $database = 'lims_fj';
+        $database = 'lims_id';
 
         // Create a database connection
         $mysqli = new mysqli($host, $user, $password, $database);
@@ -69,7 +69,7 @@ class REP_dna extends CI_Controller
                 a.comments AS Comments
                 FROM dna_extraction a
                 LEFT JOIN ref_person b ON a.id_person=b.id_person 
-                LEFT JOIN ref_location_80 d ON a.id_location=d.id_location_80 
+                LEFT JOIN ref_location_80 d ON a.id_location=d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'" 
                 WHERE  (a.date_extraction >= "'.$date1.'"
                 AND a.date_extraction <= "'.$date2.'")
                 AND a.lab = "'.$this->session->userdata('lab').'" 

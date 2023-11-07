@@ -223,7 +223,7 @@ $response = $q->result();
     </br>
     </br>
         <tr>
-            <td>Copyright © 2022-2023 LIMS-RISE | RISE Data Team. All rights reserved.</td>
+        <td>Copyright © 2022-2023 LIMS-RISE | RISE Data Team. All rights reserved.</td>
         </tr>
     </tfoot>
 </table>

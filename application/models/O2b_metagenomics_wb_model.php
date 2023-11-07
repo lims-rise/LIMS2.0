@@ -27,7 +27,7 @@ class O2b_metagenomics_wb_model extends CI_Model
         obj2b_metagenomics.comments, obj2b_metagenomics.id_location_80, obj2b_metagenomics.lab, obj2b_metagenomics.flag
         ');
         $this->datatables->from('obj2b_metagenomics');
-        $this->datatables->join('ref_location_80', 'obj2b_metagenomics.id_location_80 = ref_location_80.id_location_80', 'left');
+        $this->datatables->join('ref_location_80', 'obj2b_metagenomics.id_location_80 = ref_location_80.id_location_80 AND ref_location_80.lab = '.$this->session->userdata('lab') , 'left');
         $this->datatables->where('obj2b_metagenomics.lab', $this->session->userdata('lab'));
         $this->datatables->where('obj2b_metagenomics.flag', '0');
 
@@ -50,8 +50,8 @@ class O2b_metagenomics_wb_model extends CI_Model
         $q = $this->db->query('
         SELECT a.barcode_sample, a.barcode_falcon2, a.date_conduct, a.volume_filtered, a.time_started, a.time_finished, a.time_minutes, a.barcode_dna_bag,
         a.barcode_storage, concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS Location, a.comments
-        from (obj2b_metagenomics a 
-        left join ref_location_80 b on((a.id_location_80 = b.id_location_80)))        
+        from obj2b_metagenomics a 
+        left join ref_location_80 b on a.id_location_80 = b.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'"      
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
@@ -166,6 +166,7 @@ class O2b_metagenomics_wb_model extends CI_Model
         $q = $this->db->query('
         SELECT freezer, shelf, rack, rack_level FROM ref_location_80
         WHERE id_location_80 = "'.$id.'"
+        AND lab = "'.$this->session->userdata('lab').'" 
         ');        
         $response = $q->result_array();
         return $response;
@@ -182,6 +183,7 @@ class O2b_metagenomics_wb_model extends CI_Model
         AND shelf = "'.$shelf.'"
         AND rack = "'.$rack.'"
         AND rack_level = "'.$draw.'"
+        AND lab = "'.$this->session->userdata('lab').'" 
         AND flag = 0 
         ');        
         $response = $q->result_array();

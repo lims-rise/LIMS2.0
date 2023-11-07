@@ -40,7 +40,7 @@ class Ref_location_model extends CI_Model
         $this->db->order_by($this->id, 'ASC');
         $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
-        return $this->db->get('ref_location_80')->result();
+        return $this->db->get('ref_location_80')->result(); 
     }
 
     function get_by_id($id)

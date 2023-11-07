@@ -124,7 +124,7 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_metagenomics g ON a.barcode_sample=g.barcode_sample
         LEFT JOIN ref_sampletype h ON a.id_type2b=h.id_sampletype
         LEFT JOIN ref_sampletype i ON b.id_type2bwat=i.id_sampletype
-        LEFT JOIN ref_location_80 j ON g.id_location_80=j.id_location_80
+        LEFT JOIN ref_location_80 j ON g.id_location_80=j.id_location_80 AND j.lab = "'.$this->session->userdata('lab').'" 
         LEFT JOIN obj2b_mac1 k ON k.barcode_sample=a.barcode_sample
         LEFT JOIN obj2b_mac2 l ON l.bar_macconkey=k.bar_macconkey
         WHERE a.id_type2b = "'.$rep.'"
@@ -302,7 +302,7 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_mac1 p ON p.barcode_sample=g.barcode_falcon AND g.elution_no="Micro1"
         LEFT JOIN obj2b_mac2 q ON q.bar_macconkey=p.bar_macconkey
         LEFT JOIN ref_sampletype m ON a.id_type2b=m.id_sampletype
-        LEFT JOIN ref_location_80 n ON l.id_location_80=n.id_location_80
+        LEFT JOIN ref_location_80 n ON l.id_location_80=n.id_location_80 AND n.lab = "'.$this->session->userdata('lab').'" 
         WHERE a.id_type2b = "'.$rep.'"
         AND (a.date_arrival >= "'.$date1.'"
             AND a.date_arrival <= "'.$date2.'")
@@ -409,8 +409,8 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_idexx2 i ON h.barcode_colilert=i.barcode_colilert
         LEFT JOIN obj2b_meta_sediment j ON a.barcode_sample=j.barcode_sample
         LEFT JOIN ref_sampletype k ON a.id_type2b=k.id_sampletype
-        LEFT JOIN ref_location_80 l ON j.id_location_801=l.id_location_80
-        LEFT JOIN ref_location_80 m ON j.id_location_802=m.id_location_80
+        LEFT JOIN ref_location_80 l ON j.id_location_801=l.id_location_80 AND l.lab = "'.$this->session->userdata('lab').'" 
+        LEFT JOIN ref_location_80 m ON j.id_location_802=m.id_location_80 AND m.lab = "'.$this->session->userdata('lab').'" 
         LEFT JOIN obj2b_mac1 o ON b.barcode_tube=o.barcode_sample
         LEFT JOIN obj2b_mac2 p ON p.bar_macconkey=o.bar_macconkey
         WHERE a.id_type2b = "'.$rep.'"
@@ -451,8 +451,8 @@ class REP_o2b_model extends CI_Model
         FROM obj2b_receipt a
         LEFT JOIN obj2b_meta_sediment j ON a.barcode_sample=j.barcode_sample
         LEFT JOIN ref_sampletype k ON a.id_type2b=k.id_sampletype
-        LEFT JOIN ref_location_80 l ON j.id_location_801=l.id_location_80
-        LEFT JOIN ref_location_80 m ON j.id_location_802=m.id_location_80
+        LEFT JOIN ref_location_80 l ON j.id_location_801=l.id_location_80 AND l.lab = "'.$this->session->userdata('lab').'" 
+        LEFT JOIN ref_location_80 m ON j.id_location_802=m.id_location_80 AND m.lab = "'.$this->session->userdata('lab').'" 
         WHERE a.id_type2b = "'.$rep.'"
         AND (a.date_arrival >= "'.$date1.'"
             AND a.date_arrival <= "'.$date2.'")
