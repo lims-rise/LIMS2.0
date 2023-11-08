@@ -167,7 +167,7 @@
                         <p class="login-box-msg" style="text-align: right;">
                         <!-- Only for  -->
                         <a href="https://rise-program.org/" target="_blank">
-                            RISE Program
+                            RISE Program XXXXX
                             <span><img src="../assets/img/Project4.png" height='25px'></span>
                             </a>
                         </p>
