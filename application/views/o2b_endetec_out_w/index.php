@@ -283,8 +283,12 @@
         //     $('#time_incubation').timepicker('setTime', new Date());
         //     });
                     
-        $('#volume').on("change", function() {
-            $('#dilution').val($('#volume').val()/100);
+        $('#volume_ecoli').on("keyup", function() {
+             $('#ecoli_cfu').val($('#volume_ecoli').val()/$('#dilution_in').val());
+        });
+
+        $('#total_coliforms').on("keyup", function() {
+             $('#total_coli_cfu').val($('#total_coliforms').val()/$('#dilution_in').val());
         });
 
         // $('#barcode_sample').on("change", function() {
@@ -439,6 +443,8 @@
             $('#date_conduct_in').attr('readonly', true);
             $('#time_incubation_in').attr('readonly', true);
             $('#dilution_in').attr('readonly', true);
+            $('#ecoli_cfu').attr('readonly', true);
+            $('#total_coli_cfu').attr('readonly', true);
             $('#barcode_endetec').val('');
             $("#date_conduct").datepicker("setDate",'now');
             // $('#time_incubation').clockpicker("setTime", new Date());
@@ -466,6 +472,8 @@
             $('#date_conduct_in').attr('readonly', true);
             $('#time_incubation_in').attr('readonly', true);
             $('#dilution_in').attr('readonly', true);
+            $('#ecoli_cfu').attr('readonly', true);
+            $('#total_coli_cfu').attr('readonly', true);
             $('#barcode_endetec').val(data.barcode_endetec);
             $('#date_conduct_in').val(data.date_conduct_in);
             $('#time_incubation_in').val(data.time_incubation_in);

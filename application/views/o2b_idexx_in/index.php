@@ -260,7 +260,7 @@
         //     $('#time_incubation').timepicker('setTime', new Date());
         //     });
                     
-        $('#volume').on("change", function() {
+        $('#volume').on("keyup", function() {
             $('#dilution').val($('#volume').val()/100);
         });
 

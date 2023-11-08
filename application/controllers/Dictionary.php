@@ -146,19 +146,20 @@ class Dictionary extends CI_Controller
         $date1=$this->input->get('date1');
         $date2=$this->input->get('date2');
 
+        $this->load->database();
         // Database connection settings
-        $host = 'localhost';
-        $user = 'root';
-        $password = '';
-        $database = 'lims_fj';
+        // $host = 'localhost';
+        // $user = 'root';
+        // $password = '';
+        // $database = '';
 
-        // Create a database connection
-        $mysqli = new mysqli($host, $user, $password, $database);
+        // // Create a database connection
+        // $mysqli = new mysqli($host, $user, $password, $database);
 
-        // Check for connection errors
-        if ($mysqli->connect_error) {
-            die('Connection failed: ' . $mysqli->connect_error);
-        }        
+        // // Check for connection errors
+        // if ($mysqli->connect_error) {
+        //     die('Connection failed: ' . $mysqli->connect_error);
+        // }        
         $spreadsheet = new Spreadsheet();
 
         $sheets = array(
@@ -202,24 +203,27 @@ class Dictionary extends CI_Controller
             // Create a new worksheet for each sheet
             $worksheet = $spreadsheet->createSheet();
             $worksheet->setTitle($sheetInfo[0]);
-        
+    
             // SQL query to fetch data for this sheet
             $sql = $sheetInfo[1];
-            $result = $mysqli->query($sql);
-        
+            
+            // Use the query builder to fetch data
+            $query = $this->db->query($sql);
+            $result = $query->result_array();
+            
             // Column headers for this sheet
             $columns = $sheetInfo[2];
-        
+    
             // Add column headers
             $col = 1;
             foreach ($columns as $column) {
                 $worksheet->setCellValueByColumnAndRow($col, 1, $column);
                 $col++;
             }
-        
+    
             // Add data rows
             $row = 2;
-            while ($row_data = $result->fetch_assoc()) {
+            foreach ($result as $row_data) {
                 $col = 1;
                 foreach ($columns as $column) {
                     $worksheet->setCellValueByColumnAndRow($col, $row, $row_data[$column]);
@@ -228,6 +232,36 @@ class Dictionary extends CI_Controller
                 $row++;
             }
         }
+        // foreach ($sheets as $sheetInfo) {
+        //     // Create a new worksheet for each sheet
+        //     $worksheet = $spreadsheet->createSheet();
+        //     $worksheet->setTitle($sheetInfo[0]);
+        
+        //     // SQL query to fetch data for this sheet
+        //     $sql = $sheetInfo[1];
+        //     $result = $mysqli->query($sql);
+        
+        //     // Column headers for this sheet
+        //     $columns = $sheetInfo[2];
+        
+        //     // Add column headers
+        //     $col = 1;
+        //     foreach ($columns as $column) {
+        //         $worksheet->setCellValueByColumnAndRow($col, 1, $column);
+        //         $col++;
+        //     }
+        
+        //     // Add data rows
+        //     $row = 2;
+        //     while ($row_data = $result->fetch_assoc()) {
+        //         $col = 1;
+        //         foreach ($columns as $column) {
+        //             $worksheet->setCellValueByColumnAndRow($col, $row, $row_data[$column]);
+        //             $col++;
+        //         }
+        //         $row++;
+        //     }
+        // }
         
         // Create a new Xlsx writer
         $writer = new Xlsx($spreadsheet);
