@@ -167,10 +167,10 @@
                         <p class="login-box-msg" style="text-align: right;">
                         <!-- Only for  -->
                         <a href="https://rise-program.org/" target="_blank">
-                            <!-- RISE Program -->
+                            RISE Program
                             <span><img src="../assets/img/Project4.png" height='25px'></span>
-                            
-                    </a></p>
+                            </a>
+                        </p>
                         <?php //echo anchor('#', '<i class="fa fa-eye-slash" aria-hidden="true"></i> Forget Password?', array('class' => 'btn btn-primary btn-block btn-flat')); ?>
                     </div>
                 </div>
