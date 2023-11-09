@@ -190,8 +190,8 @@ const formattedDate = `${year}-${month}-${day}`;
             processing: true,
             serverSide: true,
             bDestroy: true,
-            // paging: false,
-            ordering: false,
+            // paging: true,
+            ordering: true,
             info: false,
             bFilter: false,
             ajax: {"url": "REP_o2b/json?date1="+date1+"&date2="+date2+"&rep="+rep, "type": "POST"},
@@ -208,7 +208,7 @@ const formattedDate = `${year}-${month}-${day}`;
                 {"data": "png_control"},
                 {"data": "barcode_tinytag"},
             ],
-            order: [[0, 'desc']],
+            order: [[1, 'DESC']],
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
