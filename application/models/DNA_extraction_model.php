@@ -17,107 +17,196 @@ class DNA_extraction_model extends CI_Model
 
     // datatables
     function json() {
-        // $this->datatables->select('barcode_sample, date_extraction, initial, kit_lot, type, barcode_dna, tube_number, cryobox, 
-        // barcode_metagenomics, id_location, meta_box, comments, id_person, lab, flag, freezer, shelf, rack, rack_level');
-        // $this->datatables->from('v_dna_extr');
-        // $this->datatables->where('lab', $this->session->userdata('lab'));
-        // $this->datatables->where('flag', '0');
+        $this->datatables->select('barcode_sample, date_extraction, initial, kit_lot, type, barcode_dna, tube_number, cryobox, 
+        barcode_metagenomics, id_location, meta_box, comments, id_person, lab, flag, freezer, shelf, rack, rack_level');
+        $this->datatables->from('v_dna_extr');
+        $this->datatables->where('lab', $this->session->userdata('lab'));
+        $this->datatables->where('flag', '0');
 
-        $this->datatables->select('a.barcode_sample, a.date_extraction, b.initial, a.kit_lot, a.sampletype as `type`, 
-        a.barcode_dna, a.tube_number, a.cryobox, a.barcode_metagenomics, a.id_location, a.meta_box, a.comments, 
-        a.id_person, a.lab, a.flag, d.freezer, d.shelf, d.rack, d.rack_level');
-        $this->datatables->from('dna_extraction a');
-        $this->datatables->join('ref_person b', 'a.id_person = b.id_person', 'left');
-        $this->datatables->join('(SELECT barcode_p1a  barcode, cryobox1  vessel, "O3 Blood-EDTA" type
-        FROM obj3_edta_aliquots
-        WHERE LENGTH(TRIM(barcode_p1a)) > 0
-        UNION ALL
-        SELECT barcode_p2a  barcode, cryobox2  vessel, "O3 Blood-EDTA" type
-        FROM obj3_edta_aliquots
-        WHERE LENGTH(TRIM(barcode_p2a)) > 0
-        UNION ALL
-        SELECT TRIM(barcode_p3a) barcode, cryobox3  vessel, "O3 Blood-EDTA" type
-        FROM obj3_edta_aliquots
-        WHERE LENGTH(TRIM(barcode_p3a)) > 0
-        UNION ALL
-        SELECT packed_cells barcode, cryobox_pc  vessel, "O3 Blood-EDTA" type
-        FROM obj3_edta_aliquots
-        WHERE LENGTH(TRIM(packed_cells)) > 0
-        UNION ALL
-        SELECT barcode_wb  barcode, cryoboxwb  vessel, "O3 Blood-EDTA" type
-        FROM obj3_edta_aliquots
-        WHERE LENGTH(TRIM(barcode_wb)) > 0
-        UNION ALL
-        SELECT barcode_sst1  barcode, cryobox1  vessel, "O3 Blood-SST" type
-        FROM obj3_sst_aliquots
-        WHERE LENGTH(TRIM(barcode_sst1)) > 0
-        UNION ALL
-        SELECT barcode_sst2  barcode, cryobox2  vessel, "O3 Blood-SST" type
-        FROM obj3_sst_aliquots
-        WHERE LENGTH(TRIM(barcode_sst2)) > 0
-        UNION ALL
-        SELECT barcode_sample  barcode, freezer_bag  vessel, "O3 Filter Paper" type
-        FROM obj3_bfilterpaper
-        WHERE LENGTH(TRIM(barcode_sample)) > 0
-        UNION ALL
-        SELECT aliquot1  barcode, cryobox1  vessel, "O3 Feces" type
-        FROM obj3_faliquot
-        WHERE LENGTH(TRIM(aliquot1)) > 0
-        UNION ALL
-        SELECT aliquot2  barcode, cryobox2  vessel, "O3 Feces" type
-        FROM obj3_faliquot
-        WHERE LENGTH(TRIM(aliquot2)) > 0
-        UNION ALL
-        SELECT aliquot3  barcode, cryobox3  vessel, "O3 Feces" type
-        FROM obj3_faliquot
-        WHERE LENGTH(TRIM(aliquot3)) > 0
-        UNION ALL
-        SELECT aliquot_zymo  barcode, cryobox_zymo  vessel, "O3 Feces" type
-        FROM obj3_faliquot
-        WHERE LENGTH(TRIM(aliquot_zymo)) > 0
-        UNION ALL
-        SELECT bar_macsweep1  barcode, cryobox1  vessel, "O3 Feces" type
-        FROM obj3_fmac2
-        WHERE LENGTH(TRIM(bar_macsweep1)) > 0
-        UNION ALL
-        SELECT bar_macsweep2  barcode, cryobox2  vessel, "O3 Feces" type
-        FROM obj3_fmac2
-        WHERE LENGTH(TRIM(bar_macsweep2)) > 0
-        UNION ALL
-        SELECT barcode_dna_bag  barcode, barcode_storage  vessel, CONCAT("O2B ", c.sampletype) type
-        FROM obj2b_metagenomics a
-        LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
-        LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
-        WHERE LENGTH(TRIM(barcode_dna_bag)) > 0
-        UNION ALL
-        SELECT barcode_dna1  barcode, barcode_storage1  vessel, CONCAT("O2B ", c.sampletype) type
-        FROM obj2b_meta_sediment a
-        LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
-        LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
-        WHERE LENGTH(TRIM(barcode_dna1)) > 0
-        UNION ALL
-        SELECT barcode_dna2  barcode, barcode_storage2  vessel, CONCAT("O2B ", c.sampletype) type
-        FROM obj2b_meta_sediment a
-        LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
-        LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
-        WHERE LENGTH(TRIM(barcode_dna2)) > 0 ) c', 'a.barcode_sample=c.barcode', 'left');
-        $this->datatables->join('ref_location_80 d', 'a.id_location=d.id_location_80 AND d.lab = '.$this->session->userdata('lab') , 'left');
-        $this->datatables->where('a.lab', $this->session->userdata('lab'));
-        $this->datatables->where('a.flag', '0');
+        // $this->datatables->select('a.barcode_sample, a.date_extraction, b.initial, a.kit_lot, a.sampletype as `type`, 
+        // a.barcode_dna, a.tube_number, a.cryobox, a.barcode_metagenomics, a.id_location, a.meta_box, a.comments, 
+        // a.id_person, a.lab, a.flag, d.freezer, d.shelf, d.rack, d.rack_level');
+        // $this->datatables->from('dna_extraction a');
+        // $this->datatables->join('ref_person b', 'a.id_person = b.id_person', 'left');
+        // $this->datatables->join('(SELECT barcode_p1a  barcode, cryobox1  vessel, "O3 Blood-EDTA" type
+        // FROM obj3_edta_aliquots
+        // WHERE LENGTH(TRIM(barcode_p1a)) > 0
+        // UNION ALL
+        // SELECT barcode_p2a  barcode, cryobox2  vessel, "O3 Blood-EDTA" type
+        // FROM obj3_edta_aliquots
+        // WHERE LENGTH(TRIM(barcode_p2a)) > 0
+        // UNION ALL
+        // SELECT TRIM(barcode_p3a) barcode, cryobox3  vessel, "O3 Blood-EDTA" type
+        // FROM obj3_edta_aliquots
+        // WHERE LENGTH(TRIM(barcode_p3a)) > 0
+        // UNION ALL
+        // SELECT packed_cells barcode, cryobox_pc  vessel, "O3 Blood-EDTA" type
+        // FROM obj3_edta_aliquots
+        // WHERE LENGTH(TRIM(packed_cells)) > 0
+        // UNION ALL
+        // SELECT barcode_wb  barcode, cryoboxwb  vessel, "O3 Blood-EDTA" type
+        // FROM obj3_edta_aliquots
+        // WHERE LENGTH(TRIM(barcode_wb)) > 0
+        // UNION ALL
+        // SELECT barcode_sst1  barcode, cryobox1  vessel, "O3 Blood-SST" type
+        // FROM obj3_sst_aliquots
+        // WHERE LENGTH(TRIM(barcode_sst1)) > 0
+        // UNION ALL
+        // SELECT barcode_sst2  barcode, cryobox2  vessel, "O3 Blood-SST" type
+        // FROM obj3_sst_aliquots
+        // WHERE LENGTH(TRIM(barcode_sst2)) > 0
+        // UNION ALL
+        // SELECT barcode_sample  barcode, freezer_bag  vessel, "O3 Filter Paper" type
+        // FROM obj3_bfilterpaper
+        // WHERE LENGTH(TRIM(barcode_sample)) > 0
+        // UNION ALL
+        // SELECT aliquot1  barcode, cryobox1  vessel, "O3 Feces" type
+        // FROM obj3_faliquot
+        // WHERE LENGTH(TRIM(aliquot1)) > 0
+        // UNION ALL
+        // SELECT aliquot2  barcode, cryobox2  vessel, "O3 Feces" type
+        // FROM obj3_faliquot
+        // WHERE LENGTH(TRIM(aliquot2)) > 0
+        // UNION ALL
+        // SELECT aliquot3  barcode, cryobox3  vessel, "O3 Feces" type
+        // FROM obj3_faliquot
+        // WHERE LENGTH(TRIM(aliquot3)) > 0
+        // UNION ALL
+        // SELECT aliquot_zymo  barcode, cryobox_zymo  vessel, "O3 Feces" type
+        // FROM obj3_faliquot
+        // WHERE LENGTH(TRIM(aliquot_zymo)) > 0
+        // UNION ALL
+        // SELECT bar_macsweep1  barcode, cryobox1  vessel, "O3 Feces" type
+        // FROM obj3_fmac2
+        // WHERE LENGTH(TRIM(bar_macsweep1)) > 0
+        // UNION ALL
+        // SELECT bar_macsweep2  barcode, cryobox2  vessel, "O3 Feces" type
+        // FROM obj3_fmac2
+        // WHERE LENGTH(TRIM(bar_macsweep2)) > 0
+        // UNION ALL
+        // SELECT barcode_dna_bag  barcode, barcode_storage  vessel, CONCAT("O2B ", c.sampletype) type
+        // FROM obj2b_metagenomics a
+        // LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+        // LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+        // WHERE LENGTH(TRIM(barcode_dna_bag)) > 0
+        // UNION ALL
+        // SELECT barcode_dna1  barcode, barcode_storage1  vessel, CONCAT("O2B ", c.sampletype) type
+        // FROM obj2b_meta_sediment a
+        // LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+        // LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+        // WHERE LENGTH(TRIM(barcode_dna1)) > 0
+        // UNION ALL
+        // SELECT barcode_dna2  barcode, barcode_storage2  vessel, CONCAT("O2B ", c.sampletype) type
+        // FROM obj2b_meta_sediment a
+        // LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+        // LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+        // WHERE LENGTH(TRIM(barcode_dna2)) > 0 ) c', 'a.barcode_sample=c.barcode', 'left');
+        // $this->datatables->join('ref_location_80 d', '(a.id_location=d.id_location_80 AND a.lab = d.lab)', 'left');
+        // $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        // $this->datatables->where('a.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
-            $this->datatables->add_column('action', '', 'barcode_sample');
+            $this->datatables->add_column('action', '', 'a.barcode_sample');
         }
         else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_sample');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'a.barcode_sample');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                ".anchor(site_url('dna_extraction/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'barcode_sample');
+                ".anchor(site_url('dna_extraction/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'a.barcode_sample');
         }
         return $this->datatables->generate();
     }
+
+    // function json()
+    // {
+    //     $q = $this->datatables->query('SELECT a.barcode_sample, a.date_extraction, b.initial, a.kit_lot, c.type, a.barcode_dna, a.tube_number, a.cryobox, 
+    //     a.barcode_metagenomics, 
+    //     concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS Location, a.meta_box, a.comments
+    //     FROM dna_extraction a
+    //     LEFT JOIN ref_person b ON a.id_person = b.id_person
+    //     LEFT JOIN (SELECT barcode_p1a  barcode, cryobox1  vessel, "O3 Blood-EDTA" type
+    //     FROM obj3_edta_aliquots
+    //     WHERE LENGTH(TRIM(barcode_p1a)) > 0
+    //     UNION ALL
+    //     SELECT barcode_p2a  barcode, cryobox2  vessel, "O3 Blood-EDTA" type
+    //     FROM obj3_edta_aliquots
+    //     WHERE LENGTH(TRIM(barcode_p2a)) > 0
+    //     UNION ALL
+    //     SELECT TRIM(barcode_p3a) barcode, cryobox3  vessel, "O3 Blood-EDTA" type
+    //     FROM obj3_edta_aliquots
+    //     WHERE LENGTH(TRIM(barcode_p3a)) > 0
+    //     UNION ALL
+    //     SELECT packed_cells barcode, cryobox_pc  vessel, "O3 Blood-EDTA" type
+    //     FROM obj3_edta_aliquots
+    //     WHERE LENGTH(TRIM(packed_cells)) > 0
+    //     UNION ALL
+    //     SELECT barcode_wb  barcode, cryoboxwb  vessel, "O3 Blood-EDTA" type
+    //     FROM obj3_edta_aliquots
+    //     WHERE LENGTH(TRIM(barcode_wb)) > 0
+    //     UNION ALL
+    //     SELECT barcode_sst1  barcode, cryobox1  vessel, "O3 Blood-SST" type
+    //     FROM obj3_sst_aliquots
+    //     WHERE LENGTH(TRIM(barcode_sst1)) > 0
+    //     UNION ALL
+    //     SELECT barcode_sst2  barcode, cryobox2  vessel, "O3 Blood-SST" type
+    //     FROM obj3_sst_aliquots
+    //     WHERE LENGTH(TRIM(barcode_sst2)) > 0
+    //     UNION ALL
+    //     SELECT barcode_sample  barcode, freezer_bag  vessel, "O3 Filter Paper" type
+    //     FROM obj3_bfilterpaper
+    //     WHERE LENGTH(TRIM(barcode_sample)) > 0
+    //     UNION ALL
+    //     SELECT aliquot1  barcode, cryobox1  vessel, "O3 Feces" type
+    //     FROM obj3_faliquot
+    //     WHERE LENGTH(TRIM(aliquot1)) > 0
+    //     UNION ALL
+    //     SELECT aliquot2  barcode, cryobox2  vessel, "O3 Feces" type
+    //     FROM obj3_faliquot
+    //     WHERE LENGTH(TRIM(aliquot2)) > 0
+    //     UNION ALL
+    //     SELECT aliquot3  barcode, cryobox3  vessel, "O3 Feces" type
+    //     FROM obj3_faliquot
+    //     WHERE LENGTH(TRIM(aliquot3)) > 0
+    //     UNION ALL
+    //     SELECT aliquot_zymo  barcode, cryobox_zymo  vessel, "O3 Feces" type
+    //     FROM obj3_faliquot
+    //     WHERE LENGTH(TRIM(aliquot_zymo)) > 0
+    //     UNION ALL
+    //     SELECT bar_macsweep1  barcode, cryobox1  vessel, "O3 Feces" type
+    //     FROM obj3_fmac2
+    //     WHERE LENGTH(TRIM(bar_macsweep1)) > 0
+    //     UNION ALL
+    //     SELECT bar_macsweep2  barcode, cryobox2  vessel, "O3 Feces" type
+    //     FROM obj3_fmac2
+    //     WHERE LENGTH(TRIM(bar_macsweep2)) > 0
+    //     UNION ALL
+    //     SELECT barcode_dna_bag  barcode, barcode_storage  vessel, CONCAT("O2B ", c.sampletype) type
+    //     FROM obj2b_metagenomics a
+    //     LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+    //     LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+    //     WHERE LENGTH(TRIM(barcode_dna_bag)) > 0
+    //     UNION ALL
+    //     SELECT barcode_dna1  barcode, barcode_storage1  vessel, CONCAT("O2B ", c.sampletype) type
+    //     FROM obj2b_meta_sediment a
+    //     LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+    //     LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+    //     WHERE LENGTH(TRIM(barcode_dna1)) > 0
+    //     UNION ALL
+    //     SELECT barcode_dna2  barcode, barcode_storage2  vessel, CONCAT("O2B ", c.sampletype) type
+    //     FROM obj2b_meta_sediment a
+    //     LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+    //     LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+    //     WHERE LENGTH(TRIM(barcode_dna2)) > 0) c ON a.barcode_sample=c.barcode
+    //     LEFT JOIN ref_location_80 d on a.id_location=d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'" 
+    //     WHERE a.lab = "'.$this->session->userdata('lab').'" 
+    //     AND a.flag = 0 
+    //     ORDER BY a.date_extraction
+    //     ');
+    //     $response = $q->generate();
+    //     return $response;    
+    // }
 
     function get_all()
     {

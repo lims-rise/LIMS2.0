@@ -24,11 +24,11 @@
             <thead>
                 <tr>
                 <!-- <th width="30px">No</th> -->
+                <th>Barcode sample</th>
                 <th>Barcode DNA</th>
                 <th>Date extraction</th>
                 <th>Lab tech</th>
                 <th>Sample type</th>
-                <th>Tube number</th>
                 <th>Cryobox</th>
                 <th>Barcode metagenomics</th>
                 <th>Meta box</th>
@@ -574,17 +574,19 @@
             // select: true;
             processing: true,
             serverSide: true,
+            // searchable: false,
             ajax: {"url": "dna_extraction/json", "type": "POST"},
             columns: [
                 // {
                 //     "data": "barcode_sample",
                 //     "orderable": false
                 // },
+                {"data": "barcode_sample"},
                 {"data": "barcode_dna"},
                 {"data": "date_extraction"},
                 {"data": "initial"},
                 {"data": "type"},
-                {"data": "tube_number"},
+                // {"data": "tube_number"},
                 {"data": "cryobox"},
                 {"data": "barcode_metagenomics"},
                 {"data": "meta_box"},
