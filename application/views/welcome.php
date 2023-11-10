@@ -24,7 +24,7 @@
             $labname = "Fiji";
         }
         echo alert('alert-info', 'Welcome '.$this->session->userdata('full_name') . ' to the '. $labname .' LIMS data', 
-        "<i class='fa fa-hand-o-left' aria-hidden='true'></i>" . ' To switch LIMS data between countries lab, please select the laboratory accordingly on the left side panel');
+        "<i class='fa fa-hand-o-left' aria-hidden='true'></i>" . ' To switch LIMS data between country labs, please select the corresponding countries on the left side panel.');
         
         ?>
 
