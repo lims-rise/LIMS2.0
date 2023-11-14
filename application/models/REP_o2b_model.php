@@ -82,6 +82,10 @@ class REP_o2b_model extends CI_Model
         e.volume AS idexx_in_volume,
         e.dilution AS idexx_in_dilution,
         e.comments AS idexx_in_comments,
+        e.barcode_colilert2 AS idexx_in_barcode_colilert2,
+        e.volume2 AS idexx_in_volume2,
+        e.dilution2 AS idexx_in_dilution2,
+        e.comments2 AS idexx_in_comments2,
         f.date_conduct AS idexx_out_date_conduct,
         f.barcode_colilert AS idexx_out_barcode_colilert,
         f.timeout_incubation AS idexx_out_timeout_incubation,
@@ -93,6 +97,17 @@ class REP_o2b_model extends CI_Model
         f.coliforms_smallwells AS idexx_out_coliforms_smallwells,
         f.coliforms_mpn AS idexx_out_coliforms_mpn,
         f.comments AS idexx_out_comments,
+        m.date_conduct AS idexx_out_date_conduct2,
+        m.barcode_colilert AS idexx_out_barcode_colilert2,
+        m.timeout_incubation AS idexx_out_timeout_incubation2,
+        m.time_minutes AS idexx_out_time_minutes2,
+        m.ecoli_largewells AS idexx_out_ecoli_largewells2,
+        m.ecoli_smallwells AS idexx_out_ecoli_smallwells2,
+        m.ecoli_mpn AS idexx_out_ecoli_mpn2,
+        m.coliforms_largewells AS idexx_out_coliforms_largewells2,
+        m.coliforms_smallwells AS idexx_out_coliforms_smallwells2,
+        m.coliforms_mpn AS idexx_out_coliforms_mpn2,
+        m.comments AS idexx_out_comments2,
         g.date_conduct AS metagenomics_date_conduct,
         g.barcode_sample AS metagenomics_barcode_sample,
         g.volume_filtered AS metagenomics_volume_filtered,
@@ -121,6 +136,7 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_endetec2 d ON c.barcode_endetec=d.barcode_endetec
         LEFT JOIN obj2b_idexx1 e ON a.barcode_sample=e.barcode_sample
         LEFT JOIN obj2b_idexx2 f ON e.barcode_colilert=f.barcode_colilert
+        LEFT JOIN obj2b_idexx2 m ON e.barcode_colilert2=m.barcode_colilert
         LEFT JOIN obj2b_metagenomics g ON a.barcode_sample=g.barcode_sample
         LEFT JOIN ref_sampletype h ON a.id_type2b=h.id_sampletype
         LEFT JOIN ref_sampletype i ON b.id_type2bwat=i.id_sampletype

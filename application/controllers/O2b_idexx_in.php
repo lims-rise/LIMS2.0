@@ -46,6 +46,10 @@ class O2b_idexx_in extends CI_Controller
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
             'comments' => $this->input->post('comments',TRUE),
+            'barcode_colilert2' => $this->input->post('barcode_colilert2',TRUE),
+            'volume2' => $this->input->post('volume2',TRUE),
+            'dilution2' => $this->input->post('dilution2',TRUE),
+            'comments2' => $this->input->post('comments2',TRUE),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -64,6 +68,10 @@ class O2b_idexx_in extends CI_Controller
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
             'comments' => $this->input->post('comments',TRUE),
+            'barcode_colilert2' => $this->input->post('barcode_colilert2',TRUE),
+            'volume2' => $this->input->post('volume2',TRUE),
+            'dilution2' => $this->input->post('dilution2',TRUE),
+            'comments2' => $this->input->post('comments2',TRUE),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -109,11 +117,20 @@ class O2b_idexx_in extends CI_Controller
     public function valid_bs2() 
     {
         $id = $this->input->get('id1');
-        $id2 = $this->input->get('id2');
-        $data = $this->O2b_idexx_in_model->validate2($id, $id2);
+        // $id2 = $this->input->get('id2');
+        $data = $this->O2b_idexx_in_model->validate2($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
+
+    // public function valid_bs3() 
+    // {
+    //     $id = $this->input->get('id1');
+    //     $id2 = $this->input->get('id2');
+    //     $data = $this->O2b_idexx_in_model->validate2($id, $id2);
+    //     header('Content-Type: application/json');
+    //     echo json_encode($data);
+    // }
 
 
     // public function _rules() 
@@ -145,6 +162,10 @@ class O2b_idexx_in extends CI_Controller
         $sheet->setCellValue('E1', "Volume(mL)added_in_bottle");
         $sheet->setCellValue('F1', "Dilution");
         $sheet->setCellValue('G1', "Comments");
+        $sheet->setCellValue('H1', "Barcode_colilert_2");
+        $sheet->setCellValue('I1', "Volume_2(mL)added_in_bottle");
+        $sheet->setCellValue('J1', "Dilution_2");
+        $sheet->setCellValue('K1', "Comments_2");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -160,6 +181,10 @@ class O2b_idexx_in extends CI_Controller
           $sheet->setCellValue('E'.$numrow, $data->volume);
           $sheet->setCellValue('F'.$numrow, $data->dilution);
           $sheet->setCellValue('G'.$numrow, $data->comments);
+          $sheet->setCellValue('H'.$numrow, $data->barcode_colilert2);
+          $sheet->setCellValue('I'.$numrow, $data->volume2);
+          $sheet->setCellValue('J'.$numrow, $data->dilution2);
+          $sheet->setCellValue('K'.$numrow, $data->comments2);
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

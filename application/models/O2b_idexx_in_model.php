@@ -17,7 +17,9 @@ class O2b_idexx_in_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_conduct, time_incubation, barcode_colilert, volume, dilution, comments, lab, flag');
+        $this->datatables->select('barcode_sample, date_conduct, time_incubation, 
+        barcode_colilert, volume, dilution, comments, barcode_colilert2, volume2, 
+        dilution2, comments2, lab, flag');
         $this->datatables->from('obj2b_idexx1');
         $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
@@ -149,7 +151,7 @@ class O2b_idexx_in_model extends CI_Model
         // return $this->db->get('ref_location_80')->row();
       }
 
-      function validate2($id, $id2){
+      function validate2($id){
         $q = $this->db->query('
         SELECT barcodes1, barcode_sample, flag FROM (
             SELECT barcode_nitro AS barcodes1, barcode_sample, flag
@@ -159,6 +161,9 @@ class O2b_idexx_in_model extends CI_Model
             FROM obj2b_endetec1
             UNION ALL
             SELECT barcode_colilert AS barcodes1, barcode_sample, flag
+            FROM obj2b_idexx1
+            UNION ALL
+            SELECT barcode_colilert2 AS barcodes1, barcode_sample, flag
             FROM obj2b_idexx1
             UNION ALL
             SELECT barcode_bootsocks AS barcodes1, barcode_bootsocks AS barcode_sample, flag
@@ -185,9 +190,7 @@ class O2b_idexx_in_model extends CI_Model
             SELECT barcode_colilert AS barcodes1, barcode_sample, flag
             FROM obj2b_subsd_idexx) x
             WHERE x.barcodes1 = "'.$id.'"
-                AND x.barcodes1 NOT IN (SELECT barcode_endetec FROM obj2b_idexx1
-                                        WHERE barcode_sample = "'.$id2.'")
-                AND x.flag = 0 
+            AND x.flag = 0 
 
         ');        
         $response = $q->result_array();

@@ -26,10 +26,12 @@
                     <!-- <th width="30px">No</th> -->
 		    <th>Barcode sample</th>
 		    <th>Date conducted</th>
-		    <th>Time incubation start</th>
+		    <!-- <th>Time incubation start</th> -->
 		    <th>Barcode Colilert</th>
-		    <th>Volume (mL) added</th>
-		    <th>Dilution</th>
+		    <th>Volume (mL)</th>
+		    <th>Barcode Colilert_2</th>
+		    <th>Volume_2 (mL)</th>
+		    <!-- <th>Dilution</th> -->
 		    <th>Comments</th>
 		    <th>Action</th>
                 </tr>
@@ -98,6 +100,7 @@
                                 </div>
                             </div>
                         </div> -->
+                        <hr>
 
                         <div class="form-group">
                             <label for="barcode_colilert" class="col-sm-4 control-label">Barcode colilert</label>
@@ -128,6 +131,36 @@
                                 </div>
                         </div>
 
+                        <hr>
+
+                        <div class="form-group">
+                            <label for="barcode_colilert2" class="col-sm-4 control-label">Barcode colilert-2</label>
+                            <div class="col-sm-8">
+                                <input id="barcode_colilert2" name="barcode_colilert2" type="text" class="form-control" placeholder="Barcode colilert-2" required>
+                                <div class="val3tip"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="volume2" class="col-sm-4 control-label">Volume-2 (mL) added</label>
+                            <div class="col-sm-8">
+                                <input id="volume2" name="volume2" type="number" step="0.01"  class="form-control" placeholder="Volume-2 (mL) added" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dilution2" class="col-sm-4 control-label">Dilution-2</label>
+                            <div class="col-sm-8">
+                                <input id="dilution2" name="dilution2" type="text" class="form-control" placeholder="Dilution-2" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                                <label for="comments2" class="col-sm-4 control-label">Comments-2</label>
+                                <div class="col-sm-8">
+                                    <textarea id="comments2" name="comments2" class="form-control" placeholder="Comments-2"> </textarea>
+                                </div>
+                        </div>                        
                         <!-- <div class="form-group">
                             <label for="notes" class="col-sm-4 control-label">Notes</label>
                             <div class="col-sm-8">
@@ -171,7 +204,7 @@
         //     timeFormat: 'H:i'
         // });
 
-        $('.val1tip, .val2tip').tooltipster({
+        $('.val1tip, .val2tip, .val3tip').tooltipster({
             animation: 'swing',
             delay: 1,
             theme: 'tooltipster-default',
@@ -188,12 +221,12 @@
         // function checkBarcode() { col-sm-8
         // $('.modal-body').click(function() {
         $('#barcode_sample').click(function() {
-            $('.val1tip, .val2tip').tooltipster('hide');   
+            $('.val1tip, .val2tip, .val3tip').tooltipster('hide');   
         // $('#barcode_sample').val('');     
         });
 
         $('#barcode_colilert').click(function() {
-            $('.val1tip, .val2tip').tooltipster('hide');   
+            $('.val1tip, .val2tip, .val3tip').tooltipster('hide');   
         // $('#barcode_sample').val('');     
         });
 
@@ -204,7 +237,7 @@
         // });
 
         $("#compose-modal").on('hide.bs.modal', function(){
-            $('.val1tip, .val2tip').tooltipster('hide');   
+            $('.val1tip, .val2tip, .val3tip').tooltipster('hide');   
             // $('#barcode_sample').val('');     
         });
 
@@ -262,6 +295,10 @@
                     
         $('#volume').on("keyup", function() {
             $('#dilution').val($('#volume').val()/100);
+        });
+
+        $('#volume2').on("keyup", function() {
+            $('#dilution2').val($('#volume2').val()/100);
         });
 
         $('#barcode_sample').on("change", function() {
@@ -326,15 +363,16 @@
 
         $('#barcode_colilert').on("change", function() {
             data1 = $('#barcode_colilert').val();
-            data2 = $('#barcode_sample').val();
+            data2 = $('#barcode_colilert2').val();
+            // data2 = $('#barcode_sample').val();
             $.ajax({
                 type: "GET",
-                url: "O2b_idexx_in/valid_bs2?id1="+data1+"&id2="+data2,
+                url: "O2b_idexx_in/valid_bs2?id1="+data1,
                 // data:data1,
                 dataType: "json",
                 success: function(data) {
                     // var barcode = '';
-                    if (data.length > 0) {
+                    if ((data.length > 0) || data1==data2) {
                         tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode colilert <strong> ' + data1 +'</strong> is already in the system !</span>');
                         $('.val2tip').tooltipster('content', tip);
                         $('.val2tip').tooltipster('show');
@@ -355,6 +393,37 @@
             });
         });
 
+        $('#barcode_colilert2').on("change", function() {
+            data1 = $('#barcode_colilert2').val();
+            data2 = $('#barcode_colilert').val();
+            // data2 = $('#barcode_sample').val();
+            $.ajax({
+                type: "GET",
+                url: "O2b_idexx_in/valid_bs2?id1="+data1,
+                // data:data1,
+                dataType: "json",
+                success: function(data) {
+                    // var barcode = '';
+                    if ((data.length > 0) || data1==data2) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode colilert <strong> ' + data1 +'</strong> is already in the system !</span>');
+                        $('.val3tip').tooltipster('content', tip);
+                        $('.val3tip').tooltipster('show');
+                        $('#barcode_colilert2').focus();
+                        $('#barcode_colilert2').val('');     
+                        $('#barcode_colilert2').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_colilert2').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_colilert2').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_colilert2').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
 
         // $("input").focusout(function(){
         //     if ($('#barcode_sample').val() == ""){
@@ -368,7 +437,7 @@
 
         $("input").keypress(function(){
             // $('#barcode_sample').val('');     
-            $('.val1tip,.val2tip').tooltipster('hide');   
+            $('.val1tip,.val2tip,.val2tip').tooltipster('hide');   
         });
 
         $('#compose-modal').on('shown.bs.modal', function () {
@@ -415,10 +484,12 @@
                 // },
                 {"data": "barcode_sample"},
                 {"data": "date_conduct"},
-                {"data": "time_incubation"},
+                // {"data": "time_incubation"},
                 {"data": "barcode_colilert"},
                 {"data": "volume"},
-                {"data": "dilution"},
+                {"data": "barcode_colilert2"},
+                {"data": "volume2"},
+                // {"data": "dilution"},
                 {"data": "comments"},
                 {
                     "data" : "action",
@@ -452,6 +523,10 @@
             $('#volume').val('');
             $('#dilution').val('');
             $('#comments').val('');
+            $('#barcode_colilert2').val('');
+            $('#volume2').val('');
+            $('#dilution2').val('');
+            $('#comments2').val('');
             $('#compose-modal').modal('show');
         });
 
@@ -472,6 +547,10 @@
             $('#volume').val(data.volume);
             $('#dilution').val(data.dilution);
             $('#comments').val(data.comments);
+            $('#barcode_colilert2').val(data.barcode_colilert2);
+            $('#volume2').val(data.volume2);
+            $('#dilution2').val(data.dilution2);
+            $('#comments2').val(data.comments2);
             $('#compose-modal').modal('show');
         });  
 
