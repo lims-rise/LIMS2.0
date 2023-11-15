@@ -17,7 +17,7 @@ class DNA_extraction_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_extraction, initial, kit_lot, type, barcode_dna, tube_number, cryobox, 
+        $this->datatables->select('barcode_sample, date_extraction, initial, kit_lot, type, weights, barcode_dna, tube_number, cryobox, 
         barcode_metagenomics, id_location, meta_box, comments, id_person, lab, flag, freezer, shelf, rack, rack_level');
         $this->datatables->from('v_dna_extr');
         $this->datatables->where('lab', $this->session->userdata('lab'));

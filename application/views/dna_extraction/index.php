@@ -25,10 +25,10 @@
                 <tr>
                 <!-- <th width="30px">No</th> -->
                 <th>Barcode sample</th>
-                <th>Barcode DNA</th>
                 <th>Date extraction</th>
-                <th>Lab tech</th>
                 <th>Sample type</th>
+                <th>Weights</th>
+                <th>Barcode DNA</th>
                 <th>Cryobox</th>
                 <th>Barcode metagenomics</th>
                 <th>Meta box</th>
@@ -582,11 +582,11 @@
                 //     "orderable": false
                 // },
                 {"data": "barcode_sample"},
-                {"data": "barcode_dna"},
                 {"data": "date_extraction"},
-                {"data": "initial"},
                 {"data": "type"},
+                {"data": "weights"},
                 // {"data": "tube_number"},
+                {"data": "barcode_dna"},
                 {"data": "cryobox"},
                 {"data": "barcode_metagenomics"},
                 {"data": "meta_box"},
