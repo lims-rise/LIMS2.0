@@ -26,7 +26,7 @@ class DNA_aliquotting_model extends CI_Model
         $this->datatables->select('a.id_dna, a.date_aliquot, b.initial, a.barcode_monash, a.barcode_cambridge, 
         a.comments, a.id_person, a.lab, a.flag, count(c.id_dna_det) AS aliq');
         $this->datatables->from('dna_aliquot a');
-        $this->datatables->join('ref_person b', 'a.id_person=b.id_person AND b.lab = ' . $this->session->userdata('lab'), 'left');
+        $this->datatables->join('ref_person b', 'a.id_person=b.id_person', 'left');
         $this->datatables->join('dna_aliquot_det c', 'a.id_dna=c.id_dna', 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
         $this->datatables->where('a.flag', '0');
