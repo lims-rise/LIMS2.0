@@ -61,7 +61,7 @@ class SE_sample_analysis extends CI_Controller
             'analysis' => $this->input->post('analysis',TRUE),
             'person' => $this->input->post('person',TRUE),
             'comments' => $this->input->post('comments',TRUE),    
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

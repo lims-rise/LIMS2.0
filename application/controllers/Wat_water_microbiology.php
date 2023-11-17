@@ -59,7 +59,7 @@ class Wat_water_microbiology extends CI_Controller
                 'total_coliforms' => $this->input->post('total_coliforms',TRUE),
                 'volume_ecoli' => $this->input->post('volume_ecoli',TRUE),
                 'comments' => $this->input->post('comments',TRUE),
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

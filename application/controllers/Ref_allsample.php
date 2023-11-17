@@ -54,7 +54,7 @@ class Ref_allsample extends CI_Controller
             $data = array(
             'id_sample' => $this->input->post('id_sample',TRUE),
             'sample' => $this->input->post('sample',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

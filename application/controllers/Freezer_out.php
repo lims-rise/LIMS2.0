@@ -71,7 +71,7 @@ class Freezer_out extends CI_Controller
             'id_shipping' => $this->input->post('id_shipping',TRUE),
             'tracking_number' => $this->input->post('tracking_number',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

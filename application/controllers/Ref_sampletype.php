@@ -56,7 +56,7 @@ class Ref_sampletype extends CI_Controller
             'id_sampletype' => $this->input->post('id_sampletype',TRUE),
             'sampletype' => $this->input->post('sampletype',TRUE),
             'obj' => $this->input->post('obj',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

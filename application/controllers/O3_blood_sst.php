@@ -70,7 +70,7 @@ class O3_blood_sst extends CI_Controller
                 'vol_aliquot2' => $this->sanitasi($this->input->post('vol_aliquot2',TRUE)),
                 'cryobox2' => $this->input->post('cryobox2',TRUE),
                 'comments' => $this->input->post('comments',TRUE),
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

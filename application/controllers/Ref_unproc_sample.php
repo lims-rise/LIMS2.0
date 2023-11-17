@@ -58,7 +58,7 @@ class Ref_unproc_sample extends CI_Controller
             'date_entry' => $this->input->post('date_entry',TRUE),
             'time_entry' => $this->input->post('time_entry',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

@@ -101,7 +101,7 @@ class Wat_water_chemistry extends CI_Controller
                 'tot_nitrogen' => $this->input->post('tot_nitrogen',TRUE),
                 'tot_phosphorous' => $this->input->post('tot_phosphorous',TRUE),    
                 'notes' => $this->input->post('notes',TRUE),    
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

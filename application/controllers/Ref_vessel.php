@@ -54,7 +54,7 @@ class Ref_vessel extends CI_Controller
             $data = array(
             'id_vessel' => $this->input->post('id_vessel',TRUE),
             'vessel' => $this->input->post('vessel',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

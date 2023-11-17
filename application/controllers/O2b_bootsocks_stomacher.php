@@ -77,7 +77,7 @@ class O2b_bootsocks_stomacher extends CI_Controller
                 'elu_comments' => $this->input->post('elu_comments',TRUE),
                 'barcode_falcon' => $this->input->post('barcode_falcon',TRUE),
                 'volume_stomacher' => $this->input->post('volume_stomacher',TRUE),
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

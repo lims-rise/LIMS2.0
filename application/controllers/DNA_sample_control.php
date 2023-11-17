@@ -58,7 +58,7 @@ class DNA_sample_control extends CI_Controller
             'barcode_vessel' => $this->input->post('barcode_vessel',TRUE),
             'sample_type' => $this->input->post('sample_type',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

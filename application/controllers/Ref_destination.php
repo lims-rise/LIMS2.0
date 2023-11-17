@@ -54,7 +54,7 @@ class Ref_destination extends CI_Controller
             $data = array(
             'id_destination' => $this->input->post('id_destination',TRUE),
             'destination' => $this->input->post('destination',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

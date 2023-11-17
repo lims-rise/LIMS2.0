@@ -71,7 +71,7 @@ class O2b_idexx_out extends CI_Controller
             'coliforms_smallwells' => $this->input->post('coliforms_smallwells',TRUE),
             'coliforms_mpn' => html_entity_decode($this->input->post('coliforms_mpn',TRUE)),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

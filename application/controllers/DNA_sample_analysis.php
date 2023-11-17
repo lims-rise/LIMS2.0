@@ -64,7 +64,7 @@ class DNA_sample_analysis extends CI_Controller
             'run_number' => $this->input->post('run_number',TRUE),
             'barcode_array' => $this->input->post('barcode_array',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

@@ -88,7 +88,7 @@ class O3_blood_edta extends CI_Controller
                 'packed_cells' => $this->input->post('packed_cells',TRUE),
                 'cryobox_pc' => $this->input->post('cryobox_pc',TRUE),
                 'comments' => $this->input->post('comments',TRUE),
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

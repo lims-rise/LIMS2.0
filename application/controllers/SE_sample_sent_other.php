@@ -63,7 +63,7 @@ class SE_sample_sent_other extends CI_Controller
             'destination' => $this->input->post('destination',TRUE),
             'custodian' => $this->input->post('custodian',TRUE),
             'comments' => $this->input->post('comments',TRUE),    
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

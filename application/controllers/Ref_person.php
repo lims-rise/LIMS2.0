@@ -58,7 +58,7 @@ class Ref_person extends CI_Controller
             'realname' => $this->input->post('realname',TRUE),
             'initial' => $this->input->post('initial',TRUE),
             'position' => $this->input->post('position',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

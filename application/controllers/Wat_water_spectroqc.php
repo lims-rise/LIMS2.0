@@ -125,7 +125,7 @@ class WAT_water_spectroqc extends CI_Controller
                 'cert_value' => $this->input->post('cert_value',TRUE),
                 'uncertainty' => $this->input->post('uncertainty',TRUE),
                 'notes' => $this->input->post('notes',TRUE),
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

@@ -54,7 +54,7 @@ class Ref_shipping extends CI_Controller
             $data = array(
             'id_shipping' => $this->input->post('id_shipping',TRUE),
             'shipping_method' => $this->input->post('shipping_method',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

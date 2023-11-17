@@ -66,7 +66,7 @@ class O2a_sample_logging extends CI_Controller
                 'id_person' => $this->input->post('id_person',TRUE),
                 'bar_samplebag' => $this->input->post('bar_samplebag',TRUE),
                 'bar_eclosion' => $this->input->post('bar_eclosion',TRUE),
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

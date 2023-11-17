@@ -79,7 +79,7 @@ class Freezer_in extends CI_Controller
                 'need_cryobox' => $this->input->post('need_cryobox',TRUE),
                 'cryobox' => $this->input->post('cryobox',TRUE),
                 'comments' => $this->input->post('comments',TRUE),
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

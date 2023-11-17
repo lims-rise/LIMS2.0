@@ -66,7 +66,7 @@ class O2a_sample_reception extends CI_Controller
                 'id_delivered' => $this->input->post('delivered',TRUE),
                 'id_received' => $this->input->post('received',TRUE),
                 'sample_type' => $this->input->post('sample_type',TRUE),
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

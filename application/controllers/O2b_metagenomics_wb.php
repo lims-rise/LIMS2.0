@@ -75,7 +75,7 @@ class O2b_metagenomics_wb extends CI_Controller
             'barcode_storage' => $this->input->post('barcode_storage',TRUE),
             'id_location_80' => $this->input->post('id_loc',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

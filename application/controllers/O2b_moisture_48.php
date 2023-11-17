@@ -63,7 +63,7 @@ class O2b_moisture_48 extends CI_Controller
             'dry_weight48' => $this->input->post('dry_weight48',TRUE),
             'difference' => $this->input->post('difference',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

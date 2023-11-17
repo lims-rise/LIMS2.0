@@ -67,7 +67,7 @@ class O2b_macconkey_out extends CI_Controller
             'bar_macsweep2' => $this->input->post('bar_macsweep2',TRUE),
             'cryobox2' => $this->input->post('cryobox2',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

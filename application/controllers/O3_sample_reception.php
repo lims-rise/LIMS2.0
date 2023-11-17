@@ -68,7 +68,7 @@ class O3_sample_reception extends CI_Controller
             'cold_chain' => $this->input->post('cold_chain',TRUE),
             'cont_intact' => $this->input->post('cont_intact',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

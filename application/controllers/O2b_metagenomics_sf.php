@@ -79,7 +79,7 @@ class O2b_metagenomics_sf extends CI_Controller
             'position_tube2' => $this->input->post('position_tube2',TRUE),
             'id_location_802' => $this->input->post('id_location_802',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

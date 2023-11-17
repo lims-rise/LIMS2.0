@@ -61,7 +61,7 @@ class O2b_moisture_24 extends CI_Controller
             'date_moisture' => $this->input->post('date_moisture',TRUE),
             'dry_weight24' => $this->input->post('dry_weight24',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

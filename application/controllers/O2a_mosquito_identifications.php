@@ -115,7 +115,7 @@ class O2a_mosquito_identifications extends CI_Controller
                 'aedes_larvae' => $this->input->post('aedes_larvae',TRUE),    
                 'unidentify' => $this->input->post('unidentify',TRUE),    
                 'notes' => $this->input->post('notes',TRUE),    
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

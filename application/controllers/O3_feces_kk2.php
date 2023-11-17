@@ -91,7 +91,7 @@ class O3_feces_kk2 extends CI_Controller
                 'other_com' => $this->input->post('other_com',TRUE),
                 'comments' => $this->input->post('comments',TRUE),
                 'finalized' => $this->input->post('finalized',TRUE),
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

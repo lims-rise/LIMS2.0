@@ -73,7 +73,7 @@ class O2b_sample_prep extends CI_Controller
                 'elu_comments' => $this->input->post('elu_comments',TRUE),
                 'barcode_tube' => $this->input->post('barcode_tube',TRUE),
                 'subsample_wet' => $this->input->post('subsample_wet',TRUE),
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

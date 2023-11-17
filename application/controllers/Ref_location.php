@@ -60,7 +60,7 @@ class Ref_location extends CI_Controller
             'shelf' => $this->input->post('shelf',TRUE),
             'rack' => $this->input->post('rack',TRUE),
             'rack_level' => $this->input->post('rack_level',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

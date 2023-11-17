@@ -72,7 +72,7 @@ class O2b_idexx_in extends CI_Controller
             'volume2' => $this->input->post('volume2',TRUE),
             'dilution2' => $this->input->post('dilution2',TRUE),
             'comments2' => $this->input->post('comments2',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

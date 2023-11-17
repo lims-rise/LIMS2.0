@@ -64,7 +64,7 @@ class O2B_sample_reception extends CI_Controller
             'png_control' => $this->input->post('png_control',TRUE),
             'barcode_tinytag' => $this->input->post('barcode_tinytag',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

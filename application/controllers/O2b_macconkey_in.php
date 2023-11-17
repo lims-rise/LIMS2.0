@@ -65,7 +65,7 @@ class O2b_macconkey_in extends CI_Controller
             'id_person' => $this->input->post('id_person',TRUE),
             'volume' => $this->input->post('volume',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

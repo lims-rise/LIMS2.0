@@ -74,7 +74,7 @@ class O2b_other_lab extends CI_Controller
             '3rdparty_lab4' => $this->input->post('3rdparty_lab4',TRUE),
             'barcode_rise_lab' => $this->input->post('barcode_rise_lab',TRUE),
             'comments' => $this->input->post('comments',TRUE),
-            'uuid' => $this->uuid->v4(),
+            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
