@@ -58,7 +58,7 @@
             <div class="modal-content">
                 <div class="modal-header box">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="modal-title">O3 - New Sample</h4>
+                    <h4 class="modal-title" id="modal-title">DNA Extraction - New Sample</h4>
                 </div>
                 <form id="formSample"  action= <?php echo site_url('dna_extraction/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
@@ -126,6 +126,13 @@
                             <div class="col-sm-8">
                                 <input id="cryobox" name="cryobox" type="text" class="form-control" placeholder="Cryobox" required>
                                 <div class="val3tip"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="weights" class="col-sm-4 control-label">Weights (mg)</label>
+                            <div class="col-sm-8">
+                                <input id="weights" name="weights" type="number" step="0.01" class="form-control" placeholder="Weights (mg)" required>
                             </div>
                         </div>
 
@@ -612,7 +619,7 @@
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
             $('#id_loc').val('');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> O3 - New Sample<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> DNA Extraction - New Sample<span id="my-another-cool-loader"></span>');
             $('#barcode_sample').attr('readonly', false);
             $('#barcode_sample').val('');
             $('#id_person').val('');
@@ -641,7 +648,7 @@
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> O3 - Update Sample<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> DNA Extraction - Update Sample<span id="my-another-cool-loader"></span>');
             $('#barcode_sample').attr('readonly', true);
             $('#barcode_sample').val(data.barcode_sample);
             $('#id_person').val(data.id_person);

@@ -66,7 +66,7 @@ class REP_dna extends CI_Controller
                 'DNA_Extraction',
                 'SELECT a.barcode_sample AS Barcode_sample, a.date_extraction AS Date_extraction, 
                 b.initial AS Lab_tech, a.kit_lot AS Kit_lot, a.sampletype AS Sample_type, 
-                a.barcode_dna AS Barcode_DNA, a.tube_number AS Tube_number, a.cryobox AS Cryobox, 
+                a.barcode_dna AS Barcode_DNA, a.weights AS Weights, a.tube_number AS Tube_number, a.cryobox AS Cryobox, 
                 a.barcode_metagenomics AS Barcode_metagenomics, a.meta_box AS Meta_box,
                 CONCAT("F",d.freezer,"-S",d.shelf,"-R",d.rack,"-DRW",d.rack_level) AS Freezer_Location,
                 a.comments AS Comments
@@ -79,7 +79,7 @@ class REP_dna extends CI_Controller
                 AND a.flag = 0 
                 ORDER BY a.date_extraction, a.barcode_dna ASC
                 ',
-                array('Barcode_sample', 'Date_extraction', 'Lab_tech', 'Kit_lot', 'Sample_type', 'Barcode_DNA', 'Tube_number', 'Cryobox',
+                array('Barcode_sample', 'Date_extraction', 'Lab_tech', 'Kit_lot', 'Sample_type', 'Barcode_DNA', 'Weights', 'Tube_number', 'Cryobox',
                         'Barcode_metagenomics', 'Meta_box', 'Freezer_Location', 'Comments'), // Columns for Sheet1
             ),
             array(

@@ -54,6 +54,7 @@ class DNA_extraction extends CI_Controller
             'id_person' => $this->input->post('id_person',TRUE),
             'kit_lot' => $this->input->post('kit_lot',TRUE),
             'sampletype' => $this->input->post('type',TRUE),
+            'weights' => $this->input->post('weights',TRUE),
             'tube_number' => $this->input->post('tube_number',TRUE),
             'cryobox' => $this->input->post('cryobox',TRUE),
             'barcode_metagenomics' => $this->input->post('barcode_metagenomics',TRUE),
@@ -77,6 +78,7 @@ class DNA_extraction extends CI_Controller
             'id_person' => $this->input->post('id_person',TRUE),
             'kit_lot' => $this->input->post('kit_lot',TRUE),
             'sampletype' => $this->input->post('type',TRUE),
+            'weights' => $this->input->post('weights',TRUE),
             'tube_number' => $this->input->post('tube_number',TRUE),
             'cryobox' => $this->input->post('cryobox',TRUE),
             'barcode_metagenomics' => $this->input->post('barcode_metagenomics',TRUE),
@@ -196,12 +198,13 @@ class DNA_extraction extends CI_Controller
         $sheet->setCellValue('D1', "Kit_lot");
         $sheet->setCellValue('E1', "Sample_type");
         $sheet->setCellValue('F1', "Barcode_DNA");
-        $sheet->setCellValue('G1', "Tube_number");
-        $sheet->setCellValue('H1', "Cryobox");
-        $sheet->setCellValue('I1', "Barcode_metagenomics");
-        $sheet->setCellValue('J1', "Location");
-        $sheet->setCellValue('K1', "Meta_box");
-        $sheet->setCellValue('L1', "Comments");
+        $sheet->setCellValue('G1', "Weights");
+        $sheet->setCellValue('H1', "Tube_number");
+        $sheet->setCellValue('I1', "Cryobox");
+        $sheet->setCellValue('J1', "Barcode_metagenomics");
+        $sheet->setCellValue('K1', "Location");
+        $sheet->setCellValue('L1', "Meta_box");
+        $sheet->setCellValue('M1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -216,12 +219,13 @@ class DNA_extraction extends CI_Controller
           $sheet->setCellValue('D'.$numrow, $data->kit_lot);
           $sheet->setCellValue('E'.$numrow, $data->type);
           $sheet->setCellValue('F'.$numrow, $data->barcode_dna);
-          $sheet->setCellValue('G'.$numrow, $data->tube_number);
-          $sheet->setCellValue('H'.$numrow, $data->cryobox);
-          $sheet->setCellValue('I'.$numrow, $data->barcode_metagenomics);
-          $sheet->setCellValue('J'.$numrow, $data->Location);
-          $sheet->setCellValue('K'.$numrow, $data->meta_box);
-          $sheet->setCellValue('L'.$numrow, $data->comments);
+          $sheet->setCellValue('G'.$numrow, $data->weights);
+          $sheet->setCellValue('H'.$numrow, $data->tube_number);
+          $sheet->setCellValue('I'.$numrow, $data->cryobox);
+          $sheet->setCellValue('J'.$numrow, $data->barcode_metagenomics);
+          $sheet->setCellValue('K'.$numrow, $data->Location);
+          $sheet->setCellValue('L'.$numrow, $data->meta_box);
+          $sheet->setCellValue('M'.$numrow, $data->comments);
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }
