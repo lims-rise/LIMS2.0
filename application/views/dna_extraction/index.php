@@ -629,6 +629,7 @@
             $('#barcode_dna').attr('readonly', false);
             $('#barcode_dna').val('');
             $('#cryobox').val('');
+            $('#weights').val('');
             $('#tube_number').val('');
             $('#barcode_metagenomics').val('');
             $('#meta_box').val('');
@@ -658,6 +659,7 @@
             $('#barcode_dna').attr('readonly', true);
             $('#barcode_dna').val(data.barcode_dna);
             $('#cryobox').val(data.cryobox);
+            $('#weights').val(data.weights);
             $('#tube_number').val(data.tube_number);
             $('#barcode_metagenomics').val(data.barcode_metagenomics);
             $('#meta_box').val(data.meta_box);
