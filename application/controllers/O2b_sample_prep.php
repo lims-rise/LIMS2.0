@@ -289,9 +289,9 @@ class O2b_sample_prep extends CI_Controller
           $sheet->setCellValue('F'.$numrow, $data->subsample_wet);
           $sheet->setCellValue('G'.$numrow, $data->barcode_endetec);
           $sheet->setCellValue('H'.$numrow, $data->volume_falcon);
-          $sheet->setCellValue('I'.$numrow, $data->dilution);
-          $sheet->setCellValue('J'.$numrow, $data->time_incubation);
-          $sheet->setCellValue('K'.$numrow, $data->comments);
+          $sheet->setCellValue('I'.$numrow, $data->end_dilution);
+          $sheet->setCellValue('J'.$numrow, $data->end_time_incubation);
+          $sheet->setCellValue('K'.$numrow, $data->end_comments);
           $sheet->setCellValue('L'.$numrow, $data->barcode_colilert);
           $sheet->setCellValue('M'.$numrow, $data->volume);
           $sheet->setCellValue('N'.$numrow, $data->dilution);

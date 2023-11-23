@@ -83,7 +83,7 @@ class O2b_sample_prep_model extends CI_Model
     {
         $q = $this->db->query('
         SELECT a.barcode_sample, a.date_conduct, a.elution, a.elu_comments, a.barcode_tube, a.subsample_wet, 
-        b.barcode_endetec, b.volume_falcon, b.dilution, b.time_incubation, b.comments, c.barcode_colilert,
+        b.barcode_endetec, b.volume_falcon, b.dilution as end_dilution, b.time_incubation as end_time_incubation, b.comments as end_comments, c.barcode_colilert,
         c.volume, c.dilution, c.time_incubation, c.comments
         FROM obj2b_sediment_prep a
         LEFT JOIN obj2b_subsd_endetec b ON a.barcode_sample=b.barcode_sample
