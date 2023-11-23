@@ -628,7 +628,7 @@
                     "className" : "text-center"
                 }
             ],
-            order: [[0, 'desc']],
+            order: [[1, 'desc']],
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
@@ -661,7 +661,7 @@
                     "className" : "text-center"
                 }
             ],
-            order: [[1, 'desc']],
+            order: [[0, 'asc']],
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
@@ -696,7 +696,7 @@
                     "className" : "text-center"
                 }
             ],
-            order: [[1, 'desc']],
+            order: [[0, 'asc']],
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
