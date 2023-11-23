@@ -380,6 +380,11 @@ class REP_o2b_model extends CI_Model
         h.dilution AS sedi_idexx_dilution,
         h.time_incubation AS sedi_idexx_time_incubation,
         h.comments AS sedi_idexx_comments,
+        q.barcode_colilert AS sedi_idexx_barcode_colilert2,
+        q.volume AS sedi_idexx_volume2,
+        q.dilution AS sedi_idexx_dilution2,
+        q.time_incubation AS sedi_idexx_time_incubation2,
+        q.comments AS sedi_idexx_comments2,
         i.date_conduct AS idexx_out_date_conduct,
         i.timeout_incubation AS idexx_out_timeout_incubation,
         i.time_minutes AS idexx_out_time_minutes,
@@ -390,18 +395,28 @@ class REP_o2b_model extends CI_Model
         i.coliforms_smallwells AS idexx_out_coliforms_smallwells,
         i.coliforms_mpn AS idexx_out_coliforms_mpn,
         i.comments AS idexx_out_comments,
+        r.date_conduct AS idexx_out_date_conduct2,
+        r.timeout_incubation AS idexx_out_timeout_incubation2,
+        r.time_minutes AS idexx_out_time_minutes2,
+        r.ecoli_largewells AS idexx_out_ecoli_largewells2,
+        r.ecoli_smallwells AS idexx_out_ecoli_smallwells2,
+        r.ecoli_mpn AS idexx_out_ecoli_mpn2,
+        r.coliforms_largewells AS idexx_out_coliforms_largewells2,
+        r.coliforms_smallwells AS idexx_out_coliforms_smallwells2,
+        r.coliforms_mpn AS idexx_out_coliforms_mpn2,
+        r.comments AS idexx_out_comments2,
         j.date_conduct AS metagenomics_date_conduct,
         j.barcode_sample AS metagenomics_barcode_sample,
         j.barcode_dna1 AS metagenomics_barcode_dna1,
         j.weight_sub1 AS metagenomics_weight_sub1,
         j.barcode_storage1 AS metagenomics_barcode_storage1,
         j.position_tube1 AS metagenomics_position_tube1,
-        concat("F",l.freezer,"-","S",l.shelf,"-","R",l.rack,"-","DRW",l.rack_level) AS metagenomics_location1,
+        CONCAT("F",l.freezer,"-","S",l.shelf,"-","R",l.rack,"-","DRW",l.rack_level) AS metagenomics_location1,
         j.barcode_dna2 AS metagenomics_barcode_dna2,
         j.weight_sub2 AS metagenomics_weight_sub2,
         j.barcode_storage2 AS metagenomics_barcode_storage2,
         j.position_tube2 AS metagenomics_position_tube2,
-        concat("F",m.freezer,"-","S",m.shelf,"-","R",m.rack,"-","DRW",m.rack_level) AS metagenomics_location2,
+        CONCAT("F",m.freezer,"-","S",m.shelf,"-","R",m.rack,"-","DRW",m.rack_level) AS metagenomics_location2,
         j.comments AS metagenomics_comments,
         o.bar_macconkey AS mac1_barcode_macconkey,
         o.date_process AS mac1_date_process,
@@ -423,7 +438,9 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_subsd_endetec f ON b.barcode_sample=f.barcode_sample
         LEFT JOIN obj2b_endetec3 g ON f.barcode_endetec=g.barcode_endetec
         LEFT JOIN obj2b_subsd_idexx h ON b.barcode_sample=h.barcode_sample
+        LEFT JOIN obj2b_subsd_idexx q ON b.barcode_sample=q.barcode_sample AND h.barcode_colilert <> q.barcode_colilert
         LEFT JOIN obj2b_idexx2 i ON h.barcode_colilert=i.barcode_colilert
+        LEFT JOIN obj2b_idexx2 r ON q.barcode_colilert=r.barcode_colilert
         LEFT JOIN obj2b_meta_sediment j ON a.barcode_sample=j.barcode_sample
         LEFT JOIN ref_sampletype k ON a.id_type2b=k.id_sampletype
         LEFT JOIN ref_location_80 l ON j.id_location_801=l.id_location_80 AND l.lab = "'.$this->session->userdata('lab').'" 
