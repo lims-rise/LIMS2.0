@@ -210,7 +210,7 @@ class DNA_extraction_model extends CI_Model
 
     function get_all()
     {
-        $q = $this->db->query('SELECT a.barcode_sample, a.date_extraction, b.initial, a.kit_lot, c.type, a.barcode_dna, a.tube_number, a.cryobox, 
+        $q = $this->db->query('SELECT a.barcode_sample, a.date_extraction, b.initial, a.kit_lot, c.type, a.barcode_dna, a.weights, a.tube_number, a.cryobox, 
         a.barcode_metagenomics, 
         concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS Location, a.meta_box, a.comments
         FROM dna_extraction a
