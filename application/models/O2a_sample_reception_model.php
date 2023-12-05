@@ -72,7 +72,7 @@ class O2a_sample_reception_model extends CI_Model
         $q = $this->db->query('
         select b.barcode_sample, a.date_receipt, c.initial AS deli_by, d.initial AS rec_by, a.sample_type
         from obj2a_receipt a 
-        LEFT JOIN obj2a_receipt_det b ON a.id_receipt = b.id_receipt
+        LEFT JOIN obj2a_receipt_det b ON a.id_receipt = b.id_receipt AND b.lab = "'.$this->session->userdata('lab').'" 
         LEFT JOIN ref_person c ON a.id_delivered = c.id_person
         LEFT JOIN ref_person d ON a.id_received = d.id_person
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
