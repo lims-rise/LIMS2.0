@@ -63,13 +63,26 @@ class Wat_water_spectroqc_model extends CI_Model
       return $this->datatables->generate();
   }
 
-    // function get_all()
-    // {
-    //     $this->db->order_by($this->id, $this->order);
-    //     $this->db->where('lab', $this->session->userdata('lab'));
-    //     $this->db->where('flag', '0');
-    //     return $this->db->get('v_obj3bfilterpaper')->result();
-    // }
+    function get_all()
+    {
+        $q = $this->db->query('SELECT a.id_spec, a.date_spec, c.initial, a.chem_parameter, a.mixture_name, a.sample_no, 
+        a.lot_no, a.date_expired, a.cert_value, a.uncertainty, a.notes, a.tot_result, a.tot_trueness,
+        a.tot_bias, a.avg_result, a.avg_trueness, a.avg_bias, a.sd, a.rsd, a.cv_horwits, a.cv,
+        a.prec, a.accuracy, a.bias, b.id_dspec, b.duplication, b.result, b.trueness, b.bias_method, b.result2 
+        FROM obj2b_spectro_crm a
+        LEFT JOIN obj2b_spectro_crm_det b ON a.id_spec=b.id_spec
+        LEFT JOIN ref_person c ON a.id_person = c.id_person    
+        WHERE a.lab="'.$this->session->userdata('lab').'"
+        AND a.flag = 0 
+        ');        
+        $response = $q->result();
+        return $response;
+
+        // $this->db->order_by($this->id, $this->order);
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('obj2b_spectro_crm_det')->result();
+    }
 
     function get_by_id($id)
     {

@@ -73,14 +73,14 @@
                         <input id="id_spec" name="id_spec" type="hidden" class="form-control input-sm">
 
                         <div class="form-group">
-                            <label for="date_spec" class="col-sm-4 control-label">Date Spectro Run</label>
+                            <label for="date_spec" class="col-sm-4 control-label">Date spectro run</label>
                             <div class="col-sm-8">
                                 <input id="date_spec" name="date_spec" type="date" class="form-control" placeholder="Date Spectro Run" value="<?php echo date("Y-m-d"); ?>">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="id_person" class="col-sm-4 control-label">Lab Tech</label>
+                            <label for="id_person" class="col-sm-4 control-label">Lab tech</label>
                             <div class="col-sm-8" >
                             <select id='id_person' name="id_person" class="form-control">
                                 <option>-- Select lab tech --</option>
@@ -100,10 +100,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="chem_parameter" class="col-sm-4 control-label">Chemistry Parameter</label>
+                            <label for="chem_parameter" class="col-sm-4 control-label">Chemistry parameter</label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="chem_parameter" name="chem_parameter" required>
-                                    <option value="" selected disabled>Choose Chemistry Parameter</option>
+                                    <option value="" selected disabled>Choose Chemistry parameter</option>
                                     <?php
                                     echo "<option value='Ammonia' >Ammonia</option>
                                         <option value='Nitrate' >Nitrate</option>
@@ -143,7 +143,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="cert_value" class="col-sm-4 control-label">Certified Value</label>
+                            <label for="cert_value" class="col-sm-4 control-label">Certified value</label>
                             <div class="col-sm-8">
                                 <input id="cert_value" name="cert_value" type="number" step="0.1" class="form-control" placeholder="Certified Value">
                             </div>

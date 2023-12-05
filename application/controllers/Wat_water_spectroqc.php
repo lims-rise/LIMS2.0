@@ -315,76 +315,154 @@ class WAT_water_spectroqc extends CI_Controller
 	// $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     // }
 
-
     public function excel()
     {
         // $date1=$this->input->get('date1');
         // $date2=$this->input->get('date2');
 
-        $spreadsheet = new Spreadsheet();    
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', "Barcode_sample"); 
-        $sheet->setCellValue('B1', "Date_process"); 
-        $sheet->setCellValue('C1', "Time_process");
-        $sheet->setCellValue('D1', "Lab_tech");
-        $sheet->setCellValue('E1', "Freezer_bag");
-        $sheet->setCellValue('F1', "Location");
-        $sheet->setCellValue('G1', "Comments");
-        // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
+        $this->load->database();
 
-        // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
-        $rdeliver = $this->Wat_water_spectroqc_model->get_all();
+        // Database connection settings
+        // $host = 'localhost';
+        // $user = 'root';
+        // $password = '';
+
+        // // Create a database connection
+        // $mysqli = new mysqli($host, $user, $password, $database);
+
+        // // Check for connection errors
+        // if ($mysqli->connect_error) {
+        //     die('Connection failed: ' . $mysqli->connect_error);
+        // }        
+        $spreadsheet = new Spreadsheet();
+
+        $sheets = array(
+            array(
+                'Water_Spectro',
+                'SELECT a.id_spec AS ID_spectro, a.date_spec AS Date_spectro, c.initial AS Lab_tech, a.chem_parameter AS Chemistry_parameter, a.mixture_name AS Mixture_name, a.sample_no AS Sample_number, 
+                a.lot_no AS Lot_number, a.date_expired AS Date_expired, a.cert_value AS Certified_value, a.uncertainty AS Uncertainty, a.notes AS Comments, a.tot_result AS Total_result, a.tot_trueness AS Total_trueness,
+                a.tot_bias AS Total_bias, a.avg_result AS AVG_result, a.avg_trueness AS AVG_trueness, a.avg_bias AS AVG_bias, a.sd AS SD, a.rsd AS `%RSD`, a.cv_horwits AS `%CV_horwits`, a.cv AS `0.67x%CV`,
+                a.prec AS Test_Precision, a.accuracy AS Test_Accuracy, a.bias AS `Test_Bias`
+                FROM obj2b_spectro_crm a
+                LEFT JOIN ref_person c ON a.id_person = c.id_person
+                WHERE
+                a.lab = "'.$this->session->userdata('lab').'" 
+                AND a.flag = 0 
+                ORDER BY a.date_spec, a.id_spec
+                ',
+                array('ID_spectro', 'Date_spectro', 'Lab_tech', 'Chemistry_parameter', 'Mixture_name', 
+                'Sample_number', 'Lot_number', 'Date_expired', 'Certified_value', 'Uncertainty', 
+                'Comments', 'Total_result', 'Total_trueness', 'Total_bias', 'AVG_result', 'AVG_trueness',
+                'AVG_bias', 'SD', '%RSD', '%CV_horwits', '0.67x%CV', 'Test_Precision', 'Test_Accuracy', 'Test_Bias'), // Columns for Sheet1
+            ),
+            array(
+                'Water_spectro_QC_detail',
+                'SELECT b.id_dspec AS ID_detail_spectro, b.id_spec AS ID_parent_spectro, b.duplication AS Duplication, 
+                b.result AS Result, b.trueness AS Trueness, b.bias_method AS Bias_method, b.result2 AS `Result^2`
+                FROM obj2b_spectro_crm_det b
+                WHERE b.lab = "'.$this->session->userdata('lab').'" 
+                AND b.flag = 0 
+                ORDER BY b.id_spec, b.id_dspec ASC
+                ', // Different columns for Sheet2
+                array('ID_detail_spectro', 'ID_parent_spectro', 'Duplication', 'Result', 'Trueness', 'Bias_method', 'Result^2'), // Columns for Sheet2
+            ),
+            // Add more sheets as needed
+        );
+        
+        $spreadsheet->removeSheetByIndex(0);
+
+        foreach ($sheets as $sheetInfo) {
+            // Create a new worksheet for each sheet
+            $worksheet = $spreadsheet->createSheet();
+            $worksheet->setTitle($sheetInfo[0]);
     
-        // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
-        $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
-        foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
-          $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
-          $sheet->setCellValue('B'.$numrow, $data->date_process);
-          $sheet->setCellValue('C'.$numrow, $data->time_process);
-          $sheet->setCellValue('D'.$numrow, $data->initial);
-          $sheet->setCellValue('E'.$numrow, $data->freezer_bag);
-          $sheet->setCellValue('F'.$numrow, $data->location);
-          $sheet->setCellValue('G'.$numrow, $data->comments);
-        //   $no++; // Tambah 1 setiap kali looping
-          $numrow++; // Tambah 1 setiap kali looping
+            // SQL query to fetch data for this sheet
+            $sql = $sheetInfo[1];
+            
+            // Use the query builder to fetch data
+            $query = $this->db->query($sql);
+            $result = $query->result_array();
+            
+            // Column headers for this sheet
+            $columns = $sheetInfo[2];
+    
+            // Add column headers
+            $col = 1;
+            foreach ($columns as $column) {
+                $worksheet->setCellValueByColumnAndRow($col, 1, $column);
+                $col++;
+            }
+    
+            // Add data rows
+            $row = 2;
+            foreach ($result as $row_data) {
+                $col = 1;
+                foreach ($columns as $column) {
+                    $worksheet->setCellValueByColumnAndRow($col, $row, $row_data[$column]);
+                    $col++;
+                }
+                $row++;
+            }
         }
-    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
-    $datenow=date("Ymd");
-    $fileName = 'WAT_Water_spectroqc_'.$datenow.'.csv';
 
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya
-    header('Cache-Control: max-age=0');
-
-    // $this->output->set_header('Content-Type: application/vnd.ms-excel');
-    // $this->output->set_header("Content-type: application/csv");
-    // $this->output->set_header('Cache-Control: max-age=0');
-    $writer->save('php://output');
-    //     $writer->save($fileName); 
-    // //redirect(HTTP_UPLOAD_PATH.$fileName); 
-    // $filepath = file_get_contents($fileName);
-    // force_download($fileName, $filepath);
-
-        // // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
-        // $sheet->getDefaultRowDimension()->setRowHeight(-1);
-    
-        // // Set orientasi kertas jadi LANDSCAPE
-        // $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-    
-        // // Set judul file excel nya
-        // $sheet->setTitle("Delivery Reports");
-    
-        // // Proses file excel
-        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        // header('Content-Disposition: attachment; filename="Delivery_Reports.xlsx"'); // Set nama file excel nya
-        // header('Cache-Control: max-age=0');
-    
-        // // $writer = new Xlsx($spreadsheet);
-        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
-        // // $fileName = $fileName.'.csv';
-        // $writer->save('php://output');
-           
+        // Create a new Xlsx writer
+        $writer = new Xlsx($spreadsheet);
+        
+        // Set the HTTP headers to download the Excel file
+        $datenow=date("Ymd");
+        $filename = 'Water_Spectro_QC_'.$datenow.'.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        
+        // Save the Excel file to the output stream
+        $writer->save('php://output');
     }
+
+
+    // public function excel()
+    // {
+    //     $spreadsheet = new Spreadsheet();    
+    //     $sheet = $spreadsheet->getActiveSheet();
+    //     $sheet->setCellValue('A1', "ID_spectro"); 
+    //     $sheet->setCellValue('B1', "Date_spectro"); 
+    //     $sheet->setCellValue('C1', "Lab_tech");
+    //     $sheet->setCellValue('D1', "Chemistry_parameter");
+    //     $sheet->setCellValue('E1', "Mixture_name");
+    //     $sheet->setCellValue('F1', "Sample_number");
+    //     $sheet->setCellValue('G1', "Lot_number");
+    //     $sheet->setCellValue('G1', "Date_expired");
+    //     $sheet->setCellValue('G1', "Certified_value");
+    //     $sheet->setCellValue('G1', "Uncertainty");
+    //     $sheet->setCellValue('G1', "Comments");
+
+    //     // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
+
+    //     // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
+    //     $rdeliver = $this->Wat_water_spectroqc_model->get_all();
+    
+    //     // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
+    //     $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
+    //     foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
+    //       $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
+    //       $sheet->setCellValue('B'.$numrow, $data->date_process);
+    //       $sheet->setCellValue('C'.$numrow, $data->time_process);
+    //       $sheet->setCellValue('D'.$numrow, $data->initial);
+    //       $sheet->setCellValue('E'.$numrow, $data->freezer_bag);
+    //       $sheet->setCellValue('F'.$numrow, $data->location);
+    //       $sheet->setCellValue('G'.$numrow, $data->comments);
+    //       $numrow++; // Tambah 1 setiap kali looping
+    //     }
+    // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+    // $datenow=date("Ymd");
+    // $fileName = 'WAT_Water_spectroqc_'.$datenow.'.csv';
+
+    // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    // header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya
+    // header('Cache-Control: max-age=0');
+
+    // $writer->save('php://output');
+    // }
 }
 
 /* End of file WAT_water_spectroqc.php */
