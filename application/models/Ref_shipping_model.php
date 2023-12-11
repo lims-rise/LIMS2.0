@@ -19,7 +19,7 @@ class Ref_shipping_model extends CI_Model
     function json() {
         $this->datatables->select('id_shipping, shipping_method');
         $this->datatables->from('ref_shipping');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
@@ -38,7 +38,7 @@ class Ref_shipping_model extends CI_Model
     function get_all()
     {
         $this->db->order_by($this->id, 'ASC');
-        $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         return $this->db->get('ref_shipping')->result();
     }

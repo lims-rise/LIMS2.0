@@ -19,7 +19,7 @@ class Ref_vessel_model extends CI_Model
     function json() {
         $this->datatables->select('id_vessel, vessel');
         $this->datatables->from('ref_vessel');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
@@ -38,7 +38,7 @@ class Ref_vessel_model extends CI_Model
     function get_all()
     {
         $this->db->order_by($this->id, 'ASC');
-        $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         return $this->db->get('ref_vessel')->result();
     }
