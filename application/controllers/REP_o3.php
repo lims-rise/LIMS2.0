@@ -136,7 +136,7 @@ class REP_o3 extends CI_Controller
                 'Filter_Paper',
                 'SELECT a.barcode_sample AS Barcode_sample, a.date_process AS Date_process, 
                 a.time_process AS Time_process, b.initial AS Lab_tech, a.freezer_bag AS Freezer_bag,
-                concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS Frezzer_Location, 
+                concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS Freezer_Location, 
                 a.comments AS Comments 
                 from obj3_bfilterpaper a 
                 left join ref_person b on a.id_person = b.id_person 
@@ -148,7 +148,7 @@ class REP_o3 extends CI_Controller
                 ORDER BY a.date_process, a.time_process ASC
                 ',
                 array('Barcode_sample', 'Date_process', 'Time_process', 'Lab_tech', 'Freezer_bag', 
-                'Frezzer_Location', 'Comments'),
+                'Freezer_Location', 'Comments'),
             ),
             array(
                 'Feces_KK1',
