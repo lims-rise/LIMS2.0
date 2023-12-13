@@ -13,7 +13,6 @@
                         <!-- <button> </button> -->
                         <!-- <div class="col-md-12 col-xs-12"> -->
                             <a class="btn btn-success btn-sm" id="o3_sam_rec" href="o3_sample_reception/excel"><i class="fa fa-file-excel-o"></i><br /> Sample Reception</a>
-        <!--                    <a class="btn btn-success btn-sm" id="o3_edta_wb" href="module/ob3_bedta_wb/export_csv.php"><i class="fa fa-file-excel-o"></i> Whole Blood</a> -->
                             <a class="btn btn-success btn-sm" id="o3_centrifuge" href="o3_blood_centrifuge/excel"><i class="fa fa-file-excel-o"></i><br /> Blood-Centrifuge</a>
                             <a class="btn btn-success btn-sm" id="o3_edta_ali" href="o3_blood_edta/excel"><i class="fa fa-file-excel-o"></i><br /> EDTA-Aliquots</a>
                             <a class="btn btn-success btn-sm" id="o3_sst_ali" href="o3_blood_sst/excel"><i class="fa fa-file-excel-o"></i><br /> SST-Aliquots</a>

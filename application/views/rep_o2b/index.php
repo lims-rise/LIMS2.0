@@ -10,6 +10,35 @@
                         <h3 class="box-title">REPORTS - Objective 2B REPORT</h3>
                     </div>
                     <div class="box-body">
+                        <!-- <table class="table table-bordered"> -->
+                                <!-- <tr> -->
+                        <a class="btn btn-success btn-sm" id="o2b_reception" href="O2B_sample_reception/excel"><i class="fa fa-file-excel-o"></i><br />Reception</a> 
+                        <a class="btn btn-success btn-sm" id="o2b_bootsock_stomacher" href="O2b_bootsocks_stomacher/excel"><i class="fa fa-file-excel-o"></i><br />B.Stomacher</a>
+                        <a class="btn btn-success btn-sm" id="o2b_weight_before" href="O2b_bootsocks_before/excel"><i class="fa fa-file-excel-o"></i><br />B.Before</a>
+                        <a class="btn btn-success btn-sm" id="o2b_weight_after" href="O2b_bootsocks_after/excel"><i class="fa fa-file-excel-o"></i><br />B.After</a>
+                        <a class="btn btn-success btn-sm" id="o2b_sediment_sampleprep" href="O2b_sample_prep/excel"><i class="fa fa-file-excel-o"></i><br />S.Sampleprep</a>
+                        <a class="btn btn-success btn-sm" id="o2b_otherlab" href="O2b_other_lab/excel"><i class="fa fa-file-excel-o"></i><br />Other Lab</a>
+                        <a class="btn btn-success btn-sm" id="o2b_blank" href="O2b_blank_in/excel"><i class="fa fa-file-excel-o"></i><br />Blank IN</a>
+                        <a class="btn btn-success btn-sm" id="o2b_endetec_inw" href="O2b_endetec_in/excel"><i class="fa fa-file-excel-o"></i><br />Endetec In(W)</a>
+                        <a class="btn btn-success btn-sm" id="o2b_endetec_outw" href="O2b_endetec_out_w/excel"><i class="fa fa-file-excel-o"></i><br />Endetec Out(W)</a>
+                        <a class="btn btn-success btn-sm" id="o2b_endetec_outbs" href="O2b_endetec_out_bs/excel"><i class="fa fa-file-excel-o"></i><br />Endetec Out(BS)</a>
+                        <a class="btn btn-success btn-sm" id="o2b_idexx_in" href="O2b_idexx_in/excel"><i class="fa fa-file-excel-o"></i><br />IDEXX In(W)</a>
+                        <a class="btn btn-success btn-sm" id="o2b_idexx_out" href="O2b_idexx_out/excel"><i class="fa fa-file-excel-o"></i><br />IDEXX Out(All)</a>
+                        <a class="btn btn-success btn-sm" id="o2b_mac1" href="O2b_macconkey_in/excel"><i class="fa fa-file-excel-o"></i><br />Mac In</a>
+                        <a class="btn btn-success btn-sm" id="o2b_mac2" href="O2b_macconkey_out/excel"><i class="fa fa-file-excel-o"></i><br />Mac Out</a>
+                        <a class="btn btn-success btn-sm" id="o2b_meta_wb" href="O2b_metagenomics_wb/excel"><i class="fa fa-file-excel-o"></i><br />Meta (WB)</a>
+                        <a class="btn btn-success btn-sm" id="o2b_meta_sf" href="O2b_metagenomics_sf/excel"><i class="fa fa-file-excel-o"></i><br />Meta (SF)</a>
+                        <a class="btn btn-success btn-sm" id="o2b_mois_i" href="O2b_moisture_initial/excel"><i class="fa fa-file-excel-o"></i><br />Mois (I)</a>
+                        <a class="btn btn-success btn-sm" id="o2b_mois_24" href="O2b_moisture_24/excel"><i class="fa fa-file-excel-o"></i><br />Mois (24)</a>
+                        <a class="btn btn-success btn-sm" id="o2b_mois_48" href="O2b_moisture_48/excel"><i class="fa fa-file-excel-o"></i><br />Mois (48)</a>
+                        <a class="btn btn-success btn-sm" id="o2b_mois_72" href="O2b_moisture_72/excel"><i class="fa fa-file-excel-o"></i><br />Mois (72)</a>
+                    <!-- </tr>
+                    </table> -->
+                    </div> <!-- </box-body2 > -->
+
+
+                    <div class="box-body">
+                
                         <!-- <button> </button> -->
                         <!-- <div class="col-md-12 col-xs-12"> -->
                         <div class="form-group">
