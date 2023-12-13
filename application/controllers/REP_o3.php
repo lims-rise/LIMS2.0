@@ -64,7 +64,7 @@ class REP_o3 extends CI_Controller
             array(
                 'Sample_reception',
                 'SELECT a.barcode_sample AS Barcode_sample, a.date_receipt AS Date_receipt, a.time_receipt AS Time_receipt, 
-                b.initial AS Lab_tech, c.sampletype AS Sample_type, a.cold_chain AS Cold_chain, 
+                b.initial AS Lab_tech, c.sampletype AS Sample_type, a.png_control AS P&G_control, a.cold_chain AS Cold_chain, 
                 a.cont_intact AS Cont_intact, a.comments AS Comments 
                 FROM obj3_sam_rec a
                 left join ref_person b on a.id_person = b.id_person
@@ -75,13 +75,13 @@ class REP_o3 extends CI_Controller
                 AND a.flag = 0 
                 ORDER BY a.date_receipt, a.time_receipt ASC
                 ',
-                array('Barcode_sample', 'Date_receipt', 'Time_receipt', 'Lab_tech', 'Sample_type', 
+                array('Barcode_sample', 'Date_receipt', 'Time_receipt', 'Lab_tech', 'Sample_type', 'P&G_control',
                     'Cold_chain', 'Cont_intact', 'Comments'), // Columns for Sheet1
             ),
             array(
                 'Blood_centrifuge',
-                'SELECT b.barcode_sample AS Barcode_sample, a.date_process AS Date_process, c.initial AS Lab_tech, 
-                a.centrifuge_time AS Centrifuge_time, b.comments AS Comments
+                'SELECT a.ID AS ID, a.date_process AS Date_process, c.initial AS Lab_tech, 
+                a.centrifuge_time AS Centrifuge_time, a.comments AS Comments, b.barcode_sample AS Barcode_sample, b.comments AS Comments_sample, 
                 FROM obj3_blood_centrifuge a
                 LEFT JOIN obj3_blood_centrifuge_det b ON a.id = b.id_bc
                 LEFT JOIN ref_person c ON a.id_person = c.id_person
@@ -91,7 +91,7 @@ class REP_o3 extends CI_Controller
                 AND a.flag = 0 
                 ORDER BY a.date_process ASC
                 ', // Different columns for Sheet2
-                array('Barcode_sample', 'Date_process', 'Lab_tech', 'Centrifuge_time', 'Comments'), // Columns for Sheet2
+                array('ID', 'Date_process', 'Lab_tech', 'Centrifuge_time', 'Comments', 'Barcode_sample', 'Comments_sample'), // Columns for Sheet2
             ),
             array(
                 'EDTA_Aliquots',
@@ -110,10 +110,10 @@ class REP_o3 extends CI_Controller
                 AND a.flag = 0 
                 ORDER BY a.date_process ASC
                 ',
-                array('Barcode_sample', 'Date_process', 'Lab_tech', 'Hemolysis', 'Barcode_Wholeblood',
-                'Volume_wholeblood', 'Cryobox_wholeblood', 'Barcode_plasma1', 'Volume_aliquot1', 'Cryobox1',
-                'Barcode_plasma2', 'Volume_aliquot2', 'Cryobox2', 'Barcode_plasma3', 'Volume_aliquot3', 'Cryobox3',
-                'Packed_cells', 'Cryobox_packed_cells', 'Comments'),
+                array('Barcode_sample', 'Date_process', 'Lab_tech', 'Hemolysis', 'Barcode_wb',
+                'Vol_aliquotwb', 'Cryoboxwb', 'Barcode_plasma1', 'Vol_aliquot1', 'Cryobox1',
+                'Barcode_plasma2', 'Vol_aliquot2', 'Cryobox2', 'Barcode_plasma3', 'Vol_aliquot3', 'Cryobox3',
+                'Packed_cells', 'Cryobox_PC', 'Comments'),
             ),
             array(
                 'SST_Aliquots',
@@ -136,7 +136,7 @@ class REP_o3 extends CI_Controller
                 'Filter_Paper',
                 'SELECT a.barcode_sample AS Barcode_sample, a.date_process AS Date_process, 
                 a.time_process AS Time_process, b.initial AS Lab_tech, a.freezer_bag AS Freezer_bag,
-                concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS Freezer_Location, 
+                concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS Freezer_location, 
                 a.comments AS Comments 
                 from obj3_bfilterpaper a 
                 left join ref_person b on a.id_person = b.id_person 
@@ -148,7 +148,7 @@ class REP_o3 extends CI_Controller
                 ORDER BY a.date_process, a.time_process ASC
                 ',
                 array('Barcode_sample', 'Date_process', 'Time_process', 'Lab_tech', 'Freezer_bag', 
-                'Freezer_Location', 'Comments'),
+                'Location', 'Comments'),
             ),
             array(
                 'Feces_KK1',
@@ -182,7 +182,7 @@ class REP_o3 extends CI_Controller
                 ORDER BY a.date_process, a.time_process ASC
                 ',
                 array('Barcode_sample', 'Date_process', 'Time_process', 'Lab_tech', 'Cons_stool', 
-                'Color_stool', 'Abnormal', 'Abnormal_note', 'Aliquot1', 'Volume1', 
+                'Color_stool', 'Abnormal', 'Other_abnormal', 'Aliquot1', 'Volume1', 
                 'Cryobox1', 'Aliquot2', 'Volume2', 'Cryobox2', 'Aliquot3',                                 
                 'Volume3', 'Cryobox3', 'Aliquot_zymo', 'Volume_zymo', 'Batch_zymo',                                 
                 'Cryobox_zymo', 'Comments'),
@@ -230,8 +230,7 @@ class REP_o3 extends CI_Controller
                 a.strongyloides AS StrongyloidesStercoralis, a.strongyloides_com AS StrongyloidesStercoralis_comment,
                 a.taenia AS TaeniaSpss, a.taenia_com AS TaeniaSpss_comment, 
                 a.other AS Other, a.other_com AS Other_comment, a.comments AS GeneralComments,
-                CASE WHEN a.finalized = "1" THEN "Yes" 
-                            ELSE "No" END AS "Finalized"
+                a.finalized AS "Finalized"
                 from obj3_fkk2 a 
                 left join ref_person b on a.id_person = b.id_person
                 left join ref_person c on a.id_person2 = c.id_person           
@@ -241,11 +240,11 @@ class REP_o3 extends CI_Controller
                 AND a.flag = 0 
                 ORDER BY a.date_process ASC
                 ',
-                array('Barcode_kkslide', 'Date_process', 'Person_Read', 'Person_Write', 'Duration',
-                'Start_time', 'End_time', 'AscarisLumbricoides', 'AscarisLumbricoides_comment', 
-                'Hookworm', 'Hookworm_comment', 'TrichurisTrichura', 'TrichurisTrichura_comment', 
-                'StrongyloidesStercoralis', 'StrongyloidesStercoralis_comment', 'TaeniaSpss', 
-                'TaeniaSpss_comment', 'Other', 'Other_comment', 'GeneralComments', 'Finalized'),
+                array('Barcode_kkslide', 'Date_process', 'Person_read', 'Person_write', 'Duration',
+                'Start_time', 'End_time', 'Ascaris', 'Ascaris_note', 
+                'Hookworm', 'Hookworm_note', 'Trichuris', 'Trichuris_note', 
+                'Strongyloides', 'Strongyloides_note', 'Taenia', 
+                'Taenia_note', 'Other', 'Other_note', 'Comments', 'Finalized'),
             ),
             // Add more sheets as needed
         );

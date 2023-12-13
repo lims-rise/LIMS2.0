@@ -175,6 +175,7 @@ class O3_feces_kk2 extends CI_Controller
         $sheet->setCellValue('R1', "Other");
         $sheet->setCellValue('S1', "Other_note");
         $sheet->setCellValue('T1', "Comments");
+        $sheet->setCellValue('U1', "Finalized");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -203,6 +204,7 @@ class O3_feces_kk2 extends CI_Controller
           $sheet->setCellValue('R'.$numrow, $data->other);
           $sheet->setCellValue('S'.$numrow, $data->other_com);
           $sheet->setCellValue('T'.$numrow, $data->comments);
+          $sheet->setCellValue('U'.$numrow, $data->finalized);
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }
