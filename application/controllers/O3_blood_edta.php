@@ -215,7 +215,7 @@ class O3_blood_edta extends CI_Controller
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
     $datenow=date("Ymd");
-    $fileName = 'O3_Blood_edta_'.$datenow.'.csv';
+    $fileName = 'O3_EDTA_Aliquots_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya

@@ -204,7 +204,7 @@ class O2b_other_lab extends CI_Controller
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
     $datenow=date("Ymd");
-    $fileName = 'O2B_OtherLab_'.$datenow.'.csv';
+    $fileName = 'O2B_Other_Lab_Analysis_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya

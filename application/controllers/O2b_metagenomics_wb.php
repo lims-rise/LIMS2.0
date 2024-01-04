@@ -202,7 +202,7 @@ class O2b_metagenomics_wb extends CI_Controller
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
     $datenow=date("Ymd");
-    $fileName = 'O2B_Metagenomics(Water_Bootsocks)_'.$datenow.'.csv';
+    $fileName = 'O2B_Metagenomics_(Water_&_Bootsocks)_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya

@@ -150,7 +150,7 @@ class O3_feces_mac1 extends CI_Controller
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
     $datenow=date("Ymd");
-    $fileName = 'O3_Feces_Mac1_'.$datenow.'.csv';
+    $fileName = 'O3_Feces_Macconkey1_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya

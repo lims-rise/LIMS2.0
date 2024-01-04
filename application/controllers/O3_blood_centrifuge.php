@@ -214,7 +214,7 @@ class O3_blood_centrifuge extends CI_Controller
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
     $datenow=date("Ymd");
-    $fileName = 'O3_blood_centrifuge_'.$datenow.'.csv';
+    $fileName = 'O3_Blood_Centrifuge_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya
