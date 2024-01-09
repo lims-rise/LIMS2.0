@@ -20,7 +20,7 @@ class Dictionary_model extends CI_Model
     function json() {
         // $this->datatables->select('id, module, subheadings, col_name,
         // var_label, var_type, description, start_date,
-        // end_date, detail, comments, dictionary_id');
+        // end_date, detail, comments, dictionary_id');  
         // $this->datatables->from('v_dictionary'); 
 
         $this->datatables->select('id, module, subheadings, col_name, var_label, var_type, 

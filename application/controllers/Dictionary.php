@@ -23,7 +23,7 @@ class Dictionary extends CI_Controller
         // $this->load->model('Dictionary_model');
         // $data['person'] = $this->Dictionary_model->getLabtech();
         // $data['type'] = $this->Dictionary_model->getSampleType();
-        // $this->template->load('template','Dictionary/index', $data);
+        // $this->template->load('template','Dictionary/index', $data);  
         $this->template->load('template','Dictionary/index');
     } 
     
