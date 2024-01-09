@@ -202,7 +202,7 @@
                 // {
                 //     "data": "barcode_sample",
                 //     "orderable": false
-                // },
+                // },   
                 {"data": "id"},
                 {"data": "module"},
                 {"data": "subheadings"},

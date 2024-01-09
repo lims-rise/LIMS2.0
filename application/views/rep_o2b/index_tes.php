@@ -32,7 +32,7 @@
                         <a class="btn btn-success btn-sm" id="o2b_mois_72" href="O2b_moisture_72/excel"><i class="fa fa-file-excel-o"></i><br />Mois (72)</a>
                     </div>
 
-                    <!-- <button id="triggerAllButtons" class="btn btn-primary">Export All</button> -->
+                    <button id="triggerAllButtons" class="btn btn-primary">Export All</button>
 
                     <div class="box-body">
                 
@@ -146,7 +146,7 @@ const day = String(currentDate.getDate()).padStart(2, '0');
 const formattedDate = `${year}-${month}-${day}`;
 
     $(document).ready(function() {
-/*
+
         // Click event for the trigger button
         $('#triggerAllButtons').on('click', function() {
             // Find all buttons in the container and trigger their clicks
@@ -163,10 +163,11 @@ const formattedDate = `${year}-${month}-${day}`;
             
             // Your button click logic goes here
             // For example, you can open a link using window.location.href
-            window.location.href = $(this).attr('href');
+            console.log("Button clicked: " + $(this).attr('href'));
+            // window.location.href = $(this).attr('href');
         });
 
-*/
+
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
             return {
