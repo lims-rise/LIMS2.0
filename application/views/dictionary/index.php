@@ -337,12 +337,12 @@
                 $(this).addClass('active');
             }
 
-            var data = table.row($(this)).data();
-            if (data) {
-                tabledet.ajax.url('dictionary/jsondet/\"' + data.dictionary_id + '\"').load();
+            // var data = table.row($(this)).data();
+            // if (data) {
+            //     tabledet.ajax.url('dictionary/jsondet/\"' + data.dictionary_id + '\"').load();
                 // tabledet.ajax.url('dictionary/jsondet?id1=\"' + data.dictionary_id + '\"').load();
                 // tabledet.ajax.url('dictionary/jsondet').load();
-            }
+            // }
         });   
 
         // $('[data-dismiss=modal]').on('click', function(e) {
