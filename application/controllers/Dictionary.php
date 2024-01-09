@@ -34,7 +34,7 @@ class Dictionary extends CI_Controller
 
     public function jsondet() {
         $id = $this->input->get('id1',TRUE);
-        // console.log($id);
+        // console.log($id); 
         header('Content-Type: application/json');
         echo $this->Dictionary_model->jsondetail($id);
         // echo $this->Dictionary_model->jsondetail();
