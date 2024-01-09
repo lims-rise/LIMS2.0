@@ -175,7 +175,7 @@
         //     $('#sample').focus();
         // });        
                 
-        // var id_det = $('#id_det').val();                
+        //var id_det = $('#id_det').val();                
         var base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
@@ -305,21 +305,21 @@
             }
         });         
 
-        $('#mytable').on('click', '.btn_detail', function(){
-            $('.val1tip').tooltipster('hide');   
-            let tr = $(this).parent().parent();
-            let data = table.row(tr).data();
-            console.log(data);
-            // var data = this.parents('tr').data();
-            $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Dictionary - Detail<span id="my-another-cool-loader"></span>');
-            $('#id_det').val(data.dictionary_id);
-            $('#detmodule').val(data.module);
-            $('#detheading').val(data.subheadings);
-            $('#detvar_label').val(data.var_label);
-            $('#compose-modal').modal('show');
-            // tabledet.ajax.url('dictionary/jsondet?id=' + data.dictionary_id).load();
-        });  
+        // $('#mytable').on('click', '.btn_detail', function(){
+        //     $('.val1tip').tooltipster('hide');   
+        //     let tr = $(this).parent().parent();
+        //     let data = table.row(tr).data();
+        //     console.log(data);
+        //     // var data = this.parents('tr').data();
+        //     $('#mode').val('edit');
+        //     $('#modal-title').html('<i class="fa fa-pencil-square"></i> Dictionary - Detail<span id="my-another-cool-loader"></span>');
+        //     $('#id_det').val(data.dictionary_id);
+        //     $('#detmodule').val(data.module);
+        //     $('#detheading').val(data.subheadings);
+        //     $('#detvar_label').val(data.var_label);
+        //     $('#compose-modal').modal('show');
+        //     // tabledet.ajax.url('dictionary/jsondet?id=' + data.dictionary_id).load();
+        // });  
 
         // #tblEmployee tbody tr.even:hover {
         //     background-color: cadetblue;
