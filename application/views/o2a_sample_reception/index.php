@@ -237,7 +237,7 @@
         $('#barcode_sample').on("change", function() {
             data1 = $('#barcode_sample').val();
             ckbar = data1.substring(0,6).toUpperCase();
-            ckarray = ["N0-M0-", "F0-M0-"];
+            ckarray = ["N0-M3-", "F0-M3-", "N0-M0-", "F0-M0-"];
             // ckarray = [10, 11, 12];
             ck = $.inArray(ckbar, ckarray);
             if (ck == -1) {
