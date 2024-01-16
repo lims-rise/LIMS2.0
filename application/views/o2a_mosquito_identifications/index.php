@@ -65,7 +65,7 @@
             <div class="modal-content">
                 <div class="modal-header box">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="modal-title">O3 - New Feces KK 1</h4>
+                    <h4 class="modal-title" id="modal-title">O2A - New mosquito identifications</h4>
                 </div>
                 <form id="formSample"  action= <?php echo site_url('o2a_mosquito_identifications/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
