@@ -395,25 +395,25 @@ $(document).ready(function() {
             }, 3000);                            
         });
 
-        $('#bar_kkslide').on("change", function() {
-            data1 = $('#bar_kkslide').val();
-            ckbar = data1.substring(0,5).toUpperCase();
-            ckarray = ["N-F1-", "F-F1-"];
+        $('#bar_storagebag').on("change", function() {
+            data1 = $('#bar_storagebag').val();
+            ckbar = data1.substring(0,6).toUpperCase();
+            ckarray = ["N0-M3-", "N0-M1-", "F0-M3-", "F0-M1-"];
             // ckarray = [10, 11, 12];
             ck = $.inArray(ckbar, ckarray);
             if (ck == -1) {
-                tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! </br> <strong> ex.(N-F1-XXXXXX / F-F1-XXXXXX) </strong> </span>');
+                tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! </br> <strong> ex.(N0-M3-XXXXXX / N0-M1-XXXXXX / F0-M3-XXXXXX / F0-M1-XXXXXX) </strong> </span>');
                 $('.val1tip').tooltipster('content', tip);
                 $('.val1tip').tooltipster('show');
-                $('#bar_kkslide').val('');     
-                $('#bar_kkslide').css({'background-color' : '#FFE6E7'});
+                $('#bar_storagebag').val('');     
+                $('#bar_storagebag').css({'background-color' : '#FFE6E7'});
                 setTimeout(function(){
-                    $('#bar_kkslide').css({'background-color' : '#FFFFFF'});
+                    $('#bar_storagebag').css({'background-color' : '#FFFFFF'});
                     setTimeout(function(){
-                        $('#bar_kkslide').css({'background-color' : '#FFE6E7'});
+                        $('#bar_storagebag').css({'background-color' : '#FFE6E7'});
                         setTimeout(function(){
-                            $('#bar_kkslide').css({'background-color' : '#FFFFFF'});
-                            $('#bar_kkslide').focus();
+                            $('#bar_storagebag').css({'background-color' : '#FFFFFF'});
+                            $('#bar_storagebag').focus();
                         }, 300);                            
                     }, 300);
                 }, 300);
@@ -430,15 +430,15 @@ $(document).ready(function() {
                         tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !</span>');
                         $('.val1tip').tooltipster('content', tip);
                         $('.val1tip').tooltipster('show');
-                        $('#bar_kkslide').val('');     
-                        $('#bar_kkslide').focus();
-                        $('#bar_kkslide').css({'background-color' : '#FFE6E7'});
+                        $('#bar_storagebag').val('');     
+                        $('#bar_storagebag').focus();
+                        $('#bar_storagebag').css({'background-color' : '#FFE6E7'});
                         setTimeout(function(){
-                            $('#bar_kkslide').css({'background-color' : '#FFFFFF'});
+                            $('#bar_storagebag').css({'background-color' : '#FFFFFF'});
                             setTimeout(function(){
-                                $('#bar_kkslide').css({'background-color' : '#FFE6E7'});
+                                $('#bar_storagebag').css({'background-color' : '#FFE6E7'});
                                 setTimeout(function(){
-                                    $('#bar_kkslide').css({'background-color' : '#FFFFFF'});
+                                    $('#bar_storagebag').css({'background-color' : '#FFFFFF'});
                                 }, 300);                            
                             }, 300);
                         }, 300);
@@ -524,7 +524,7 @@ $(document).ready(function() {
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> O3 - New Feces KK 1<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> O2A - New mosquito identifications<span id="my-another-cool-loader"></span>');
             $('#bar_storagebag').attr('readonly', false);
             $('#bar_storagebag').val('');
             // $("#date_ident").datepicker("setDate",'now');
@@ -570,7 +570,7 @@ $(document).ready(function() {
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> O3 - Update Feces KK 1<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> O2A - Update mosquito identifications<span id="my-another-cool-loader"></span>');
             $('#bar_storagebag').attr('readonly', true);
             $('#bar_storagebag').val(data.bar_storagebag);
             $('#date_ident').val(data.date_ident);
