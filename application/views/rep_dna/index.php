@@ -17,6 +17,7 @@
                             <a class="btn btn-success btn-sm" id="dna_concentration" href="dna_concentration/excel"><i class="fa fa-file-excel-o"></i><br /> DNA Concentration</a>
                             <a class="btn btn-success btn-sm" id="dna_aliquotting" href="dna_aliquotting/excel"><i class="fa fa-file-excel-o"></i><br /> DNA Aliquotting</a>
                             <a class="btn btn-success btn-sm" id="dna_sample_analysis" href="dna_sample_analysis/excel"><i class="fa fa-file-excel-o"></i><br /> DNA Sample Analysis</a>
+                            <a class="btn btn-success btn-sm" id="dna_nanopore_analysis" href="dna_nanopore_analysis/excel"><i class="fa fa-file-excel-o"></i><br /> DNA Nanopore Analysis</a>
                         <!-- </div> -->
 
 

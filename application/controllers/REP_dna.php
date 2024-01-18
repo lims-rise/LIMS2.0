@@ -131,6 +131,20 @@ class REP_dna extends CI_Controller
                 array('Barcode_DNA', 'Date_analysis', 'Lab_tech', 'Analysis_type',
                 'Run_number', 'Barcode_array', 'Comments'),
             ),
+            array(
+                'DNA_Nanopore_Analysis',
+                'SELECT a.barcode_dna AS Barcode_DNA, a.date_analysis AS Date_analysis, b.initial AS Lab_tech,
+                a.barcode_ID AS Barcode_ID, a.alias AS Alias
+                FROM dna_nanopore_analysis a
+                LEFT JOIN ref_person b ON a.id_person = b.id_person         
+                WHERE (a.date_analysis >= "'.$date1.'"
+                AND a.date_analysis <= "'.$date2.'")
+                AND a.lab = "'.$this->session->userdata('lab').'" 
+                AND a.flag = 0 
+                ORDER BY a.date_analysis ASC
+                ',
+                array('Barcode_DNA', 'Date_analysis', 'Lab_tech', 'Barcode_ID', 'Alias'),
+            ),
             // Add more sheets as needed
         );
         

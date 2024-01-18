@@ -6,13 +6,13 @@ if (!defined('BASEPATH'))
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     
-class DNA_sample_analysis extends CI_Controller
+class DNA_nanopore_analysis extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         is_login();
-        $this->load->model('DNA_sample_analysis_model');
+        $this->load->model('DNA_nanopore_analysis_model');
         $this->load->library('form_validation');        
 	    $this->load->library('datatables');
 	    $this->load->library('uuid');
@@ -20,15 +20,15 @@ class DNA_sample_analysis extends CI_Controller
 
     public function index()
     {
-        // $this->load->model('DNA_sample_analysis_model');
-        $data['person'] = $this->DNA_sample_analysis_model->getLabtech();
-        // $data['type'] = $this->DNA_sample_analysis_model->getSampleType();
-        $this->template->load('template','dna_sample_analysis/index', $data);
+        // $this->load->model('DNA_nanopore_analysis_model');
+        $data['person'] = $this->DNA_nanopore_analysis_model->getLabtech();
+        // $data['type'] = $this->DNA_nanopore_analysis_model->getSampleType();
+        $this->template->load('template','DNA_nanopore_analysis/index', $data);
     } 
     
     public function json() {
         header('Content-Type: application/json');
-        echo $this->DNA_sample_analysis_model->json();
+        echo $this->DNA_nanopore_analysis_model->json();
     }
 
     public function save() 
@@ -42,17 +42,15 @@ class DNA_sample_analysis extends CI_Controller
             'barcode_dna' => $this->input->post('barcode_dna',TRUE),
             'date_analysis' => $this->input->post('date_analysis',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
-            'analysis_type' => $this->input->post('analysis_type',TRUE),
-            'run_number' => $this->input->post('run_number',TRUE),
-            'barcode_array' => $this->input->post('barcode_array',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'barcode_id' => $this->input->post('barcode_id',TRUE),
+            'alias' => $this->input->post('alias',TRUE),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
             'date_created' => $dt->format('Y-m-d H:i:s'),
             );
  
-            $this->DNA_sample_analysis_model->insert($data);
+            $this->DNA_nanopore_analysis_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');    
         }
         else if ($mode=="edit"){
@@ -60,26 +58,24 @@ class DNA_sample_analysis extends CI_Controller
             'barcode_dna' => $this->input->post('barcode_dna',TRUE),
             'date_analysis' => $this->input->post('date_analysis',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
-            'analysis_type' => $this->input->post('analysis_type',TRUE),
-            'run_number' => $this->input->post('run_number',TRUE),
-            'barcode_array' => $this->input->post('barcode_array',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'barcode_id' => $this->input->post('barcode_id',TRUE),
+            'alias' => $this->input->post('alias',TRUE),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
-            $this->DNA_sample_analysis_model->update($id, $data);
+            $this->DNA_nanopore_analysis_model->update($id, $data);
             $this->session->set_flashdata('message', 'Create Record Success');    
         }
 
-        redirect(site_url("dna_sample_analysis"));
+        redirect(site_url("DNA_nanopore_analysis"));
     }
 
     public function delete($id) 
     {
-        $row = $this->DNA_sample_analysis_model->get_by_id($id);
+        $row = $this->DNA_nanopore_analysis_model->get_by_id($id);
         // $id_user = $this->input->get('id', TRUE);
         // $lab = $this->input->post('id_lab');
         $data = array(
@@ -87,13 +83,13 @@ class DNA_sample_analysis extends CI_Controller
             );
 
         if ($row) {
-            // $this->DNA_sample_analysis_model->delete($id);
-            $this->DNA_sample_analysis_model->update($id, $data);
+            // $this->DNA_nanopore_analysis_model->delete($id);
+            $this->DNA_nanopore_analysis_model->update($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('dna_sample_analysis'));
+            redirect(site_url('DNA_nanopore_analysis'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('dna_sample_analysis'));
+            redirect(site_url('DNA_nanopore_analysis'));
         }
     }
 
@@ -101,7 +97,7 @@ class DNA_sample_analysis extends CI_Controller
     {
         $id = $this->input->get('id1');
         // echo $id;
-        $data = $this->DNA_sample_analysis_model->getDNAType($id);
+        $data = $this->DNA_nanopore_analysis_model->getDNAType($id);
 
         header('Content-Type: application/json');
         echo json_encode($data);
@@ -113,7 +109,7 @@ class DNA_sample_analysis extends CI_Controller
     {
         $id = $this->input->get('id1');
         // echo $id;
-        $data = $this->DNA_sample_analysis_model->validate1($id);
+        $data = $this->DNA_nanopore_analysis_model->validate1($id);
 
         header('Content-Type: application/json');
         echo json_encode($data);
@@ -121,12 +117,12 @@ class DNA_sample_analysis extends CI_Controller
         // $data['location'] = $this->O3_filter_paper_model->find_loc($id);
     }
 
-    public function valid_asys() 
+    public function valid_bid() 
     {
         $id1 = $this->input->get('id1');
         $id2 = $this->input->get('id2');
         // echo $id;
-        $data = $this->DNA_sample_analysis_model->valid_asys($id1, $id2);
+        $data = $this->DNA_nanopore_analysis_model->validate2($id1, $id2);
 
         header('Content-Type: application/json');
         echo json_encode($data);
@@ -160,14 +156,12 @@ class DNA_sample_analysis extends CI_Controller
         $sheet->setCellValue('A1', "Barcode_DNA"); 
         $sheet->setCellValue('B1', "Date_analysis"); 
         $sheet->setCellValue('C1', "Lab_tech");
-        $sheet->setCellValue('D1', "Analysis_type");
-        $sheet->setCellValue('E1', "Run_number");
-        $sheet->setCellValue('F1', "Barcode_array/Flowcell");
-        $sheet->setCellValue('G1', "Comments");
+        $sheet->setCellValue('D1', "Barcode_ID");
+        $sheet->setCellValue('E1', "Alias");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
-        $rdeliver = $this->DNA_sample_analysis_model->get_all();
+        $rdeliver = $this->DNA_nanopore_analysis_model->get_all();
     
         // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
         $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
@@ -175,16 +169,14 @@ class DNA_sample_analysis extends CI_Controller
           $sheet->setCellValue('A'.$numrow, $data->barcode_dna);
           $sheet->setCellValue('B'.$numrow, $data->date_analysis);
           $sheet->setCellValue('C'.$numrow, $data->initial);
-          $sheet->setCellValue('D'.$numrow, $data->analysis_type);
-          $sheet->setCellValue('E'.$numrow, $data->run_number);
-          $sheet->setCellValue('F'.$numrow, $data->barcode_array);
-          $sheet->setCellValue('G'.$numrow, $data->comments);
+          $sheet->setCellValue('D'.$numrow, $data->barcode_id);
+          $sheet->setCellValue('E'.$numrow, $data->alias);
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
     $datenow=date("Ymd");
-    $fileName = 'DNA_Sample_Analysis_'.$datenow.'.csv';
+    $fileName = 'DNA_nanopore_analysis_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya
@@ -221,8 +213,8 @@ class DNA_sample_analysis extends CI_Controller
     }
 }
 
-/* End of file DNA_sample_analysis.php */
-/* Location: ./application/controllers/DNA_sample_analysis.php */
+/* End of file DNA_nanopore_analysis.php */
+/* Location: ./application/controllers/DNA_nanopore_analysis.php */
 /* Please DO NOT modify this information : */
 /* Generated by Harviacode Codeigniter CRUD Generator 2022-12-14 03:38:42 */
 /* http://harviacode.com */

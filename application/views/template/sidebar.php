@@ -83,7 +83,9 @@ if ($this->session->userdata('id_user_level') == "") {
             // if($id_user_level!=''){
                 $sql_menu = "SELECT * 
                 FROM tbl_menu 
-                WHERE id_menu in(select id_menu from tbl_hak_akses where id_user_level=$id_user_level) and is_main_menu=0 and is_aktif='y'";
+                WHERE id_menu in (select id_menu from tbl_hak_akses 
+                                    where id_user_level=$id_user_level) 
+                                and is_main_menu=0 and is_aktif='y'";
             // }
             // else {
             //     echo base_url() . 'auth';
@@ -99,6 +101,7 @@ if ($this->session->userdata('id_user_level') == "") {
             // chek is have sub menu
             $this->db->where('is_main_menu',$menu->id_menu);
             $this->db->where('is_aktif','y');
+            $this->db->order_by('id_menu', 'ASC');
             $submenu = $this->db->get('tbl_menu');
             if($submenu->num_rows()>0){
                 // display sub menu

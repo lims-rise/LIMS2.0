@@ -5,7 +5,7 @@
                 <div class="box box-black box-solid">
     
                     <div class="box-header">
-                        <h3 class="box-title">DNA Module - DNA Sample Analysis</h3>
+                        <h3 class="box-title">DNA Module - DNA Nanopore Analysis</h3>
                     </div>
         
         <div class="box-body">
@@ -13,11 +13,11 @@
 <?php
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl != 7){
-            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New DNA Sample Analysis </button>";
+            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New DNA Nanopore Analysis </button>";
         }
 ?>
         
-		<?php echo anchor(site_url('dna_sample_analysis/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?></div>
+		<?php echo anchor(site_url('DNA_nanopore_analysis/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?></div>
         <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
             <thead>
                 <tr>
@@ -25,10 +25,8 @@
 		    <th>Barcode DNA</th>
 		    <th>Date analysis</th>
 		    <th>Lab tech</th>
-		    <th>Analysis type</th>
-		    <th>Run number</th>
-		    <th>Barcode array/Flowcell</th>
-		    <th>Comments</th>
+		    <th>Barcode ID</th>
+		    <th>Alias</th>
 		    <th>Action</th>
                 </tr>
             </thead>
@@ -54,9 +52,9 @@
             <div class="modal-content">
                 <div class="modal-header box">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="modal-title">DNA - New DNA Analysis</h4>
+                    <h4 class="modal-title" id="modal-title">DNA - New DNA Nanopore Analysis</h4>
                 </div>
-                <form id="formSample"  action= <?php echo site_url('dna_sample_analysis/save') ?> method="post" class="form-horizontal">
+                <form id="formSample"  action= <?php echo site_url('DNA_nanopore_analysis/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <div class="form-group">
@@ -95,54 +93,27 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="analysis_type" class="col-sm-4 control-label">Analysis type</label>
+                            <label for="barcode_id" class="col-sm-4 control-label">Barcode ID</label>
                             <div class="col-sm-8">
-                            <select class="form-control" id="analysis_type" name="analysis_type" required>
+                            <select class="form-control" id="barcode_id" name="barcode_id" required>
 									<?php
-                                    echo "<option value='' selected disabled>Select analysis type</option>
-										  <option value='Pathogen array v1' >Pathogen array v1</option>
-                                          <option value='Pathogen array v2' >Pathogen array v2</option> 
-                                          <option value='AMR array' >AMR array</option>
-                                          <option value='Nanopore' >Nanopore</option>
-                                          ";
-									?>
-									</select>
+                                    echo "<option value='' selected disabled>Select barcode ID</option>";
+                                
+                                    for ($i = 1; $i <= 96; $i++) : ?>
+                                        <!-- Use sprintf to format the value with leading zeros -->
+                                        <option value='<?php echo "Barcode" . sprintf('%02d', $i); ?>'>
+                                            <?php echo "Barcode" . sprintf('%02d', $i); ?>
+                                        </option>
+                                    <?php endfor; ?>
+                                </select>
+                                <div class="val2tip"></div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="run_number" class="col-sm-4 control-label">Run number</label>
-                            <div class="col-sm-8">
-                                <input id="run_number" name="run_number" type="number" class="form-control" placeholder="Run number" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="barcode_array" class="col-sm-4 control-label">Barcode array/Flowcell</label>
-                            <div class="col-sm-8">
-                                <input id="barcode_array" name="barcode_array" type="text" class="form-control" placeholder="Barcode array/Flowcell" required>
-                            </div>
-                        </div>
-
-                        <!-- <div class="form-group">
-                            <label for="id_type" class="col-sm-4 control-label">Sample Type</label>
-                            <div class="col-sm-8">
-                            <select id='sample_type' name="sample_type" class="form-control">
-                                <option>-- Select answer --</option>
-                                <option value='Human Stool (Control)' >Human Stool (Control)</option>
-                                <option value='MacConkey (Control)' >MacConkey (Control)</option>
-                                <option value='Water (Control)' >Water (Control)</option>
-                                <option value='Bootsocks (Control)' >Bootsocks (Control)</option>
-                                <option value='Soil (Control)' >Soil (Control)</option>
-                                <option value='Animal Stool (Control)' >Animal Stool (Control)</option>                            
-                            </select>
-                            </div>
-                        </div> -->
-
-                        <div class="form-group">
-                                <label for="comments" class="col-sm-4 control-label">Comments</label>
+                                <label for="alias" class="col-sm-4 control-label">Alias</label>
                                 <div class="col-sm-8">
-                                    <textarea id="comments" name="comments" class="form-control" placeholder="Comments"> </textarea>
+                                    <textarea id="alias" name="alias" class="form-control" placeholder="Alias"> </textarea>
                                 </div>
                         </div>
 
@@ -174,7 +145,7 @@
         // vibrate: true        // vibrate the device when dragging clock hand
         // });                
 
-        $('.val1tip').tooltipster({
+        $('.val1tip,.val2tip').tooltipster({
             animation: 'swing',
             delay: 1,
             theme: 'tooltipster-default',
@@ -196,19 +167,19 @@
         // });
 
         $('.col-sm-8').click(function() {
-            $('.val1tip').tooltipster('hide');   
+            $('.val1tip, .val2tip').tooltipster('hide');   
             // $('#barcode_dna').val('');     
         });
 
         $("#compose-modal").on('hide.bs.modal', function(){
-            $('.val1tip').tooltipster('hide');   
+            $('.val1tip, .val2tip').tooltipster('hide');   
             // $('#barcode_sample').val('');     
         });
 
         // function loadSType(data1) {
         //     $.ajax({
         //         type: "GET",
-        //         url: "dna_sample_analysis/get_dna_type?id1="+data1,
+        //         url: "DNA_nanopore_analysis/get_dna_type?id1="+data1,
         //         // data:data1,
         //         dataType: "json",
         //         success: function(data) {
@@ -249,7 +220,7 @@
 //            loadSType(data1);
             $.ajax({
                 type: "GET",
-                url: "dna_sample_analysis/valid_bs?id1="+data1,
+                url: "DNA_nanopore_analysis/valid_bs?id1="+data1,
                 // data:data1,
                 dataType: "json",
                 success: function(data) {
@@ -284,6 +255,37 @@
             // }, 5000);
         });
 
+        // $('#barcode_id').on("click", function() {
+        $("#barcode_id").change(function(){
+            data1 = $('#barcode_dna').val();
+            data2 = $('#barcode_id').val();
+            $.ajax({
+                type: "GET",
+                url: "DNA_nanopore_analysis/valid_bid?id1="+data1+"&id2="+data2,
+                dataType: "json",
+                success: function(data) {
+                    if (data.length != 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode ID <strong> ' + data2 +'</strong> for Barcode DNA <strong> ' + data1 +'</strong> is already in the system !</span>');
+                        $('.val2tip').tooltipster('content', tip);
+                        $('.val2tip').tooltipster('show');
+                        $('#barcode_id').focus();
+                        $('#barcode_id').val('');     
+                        // $('#stype').val('');     
+                        $('#barcode_id').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_id').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_id').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_id').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
+
         // $("input").focusout(function(){
         //     if ($('#barcode_sample').val() == ""){
         //         tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode sample <strong> is required !</strong></span>');
@@ -299,24 +301,24 @@
         //     $('.val1tip').tooltipster('hide');   
         // });
 
-        $('#analysis_type').on("click", function() {
-            data1 = $('#barcode_dna').val();
-            data2 = $('#analysis_type').val();
-            $.ajax({
-                type: "GET",
-                url: "dna_sample_analysis/valid_asys?id1="+data1+"&id2="+data2,
-                // data:data1,
-                dataType: "json",
-                success: function(data) {
-                    // console.log(data);
-                    // var barcode = '';
-                    $('#run_number').val(data[0].run);
-                    // if (data.length > 0) {
-                    //     $('#run_number').val(data[0].run);
-                    // }
-                }
-            });
-        });
+        // $('#analysis_type').on("click", function() {
+        //     data1 = $('#barcode_dna').val();
+        //     data2 = $('#analysis_type').val();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "DNA_nanopore_analysis/valid_asys?id1="+data1+"&id2="+data2,
+        //         // data:data1,
+        //         dataType: "json",
+        //         success: function(data) {
+        //             // console.log(data);
+        //             // var barcode = '';
+        //             $('#run_number').val(data[0].run);
+        //             // if (data.length > 0) {
+        //             //     $('#run_number').val(data[0].run);
+        //             // }
+        //         }
+        //     });
+        // });
 
 
         $('#compose-modal').on('shown.bs.modal', function () {
@@ -355,7 +357,7 @@
             // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "dna_sample_analysis/json", "type": "POST"},
+            ajax: {"url": "DNA_nanopore_analysis/json", "type": "POST"},
             columns: [
                 // {
                 //     "data": "barcode_sample",
@@ -364,10 +366,8 @@
                 {"data": "barcode_dna"},
                 {"data": "date_analysis"},
                 {"data": "initial"},
-                {"data": "analysis_type"},
-                {"data": "run_number"},
-                {"data": "barcode_array"},
-                {"data": "comments"},
+                {"data": "barcode_id"},
+                {"data": "alias"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -388,16 +388,12 @@
         $('#addtombol').click(function() {
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> DNA - New DNA Sample Analysis<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> DNA - New DNA Nanopore Analysis<span id="my-another-cool-loader"></span>');
             $('#barcode_dna').attr('readonly', false);
             $('#barcode_dna').val('');
             $('#id_person').val('');
-            $('#analysis_type').val('');
-            $('#run_number').val('');
-            $('#run_number').attr('readonly', true);
-            $('#barcode_array').val('');
-            // $("#date_concentration").datepicker("setDate",'now');
-            $('#comments').val('');
+            $('#barcode_id').val('');
+            $('#alias').val('');
             $('#compose-modal').modal('show');
         });
 
@@ -408,18 +404,13 @@
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> DNA - Update DNA Sample Analysis<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> DNA - Update DNA Nanopore Analysis<span id="my-another-cool-loader"></span>');
             $('#barcode_dna').attr('readonly', true);
             $('#barcode_dna').val(data.barcode_dna);
             $('#date_analysis').val(data.date_analysis);
             $('#id_person').val(data.id_person).trigger('change');
-            $('#analysis_type').val(data.analysis_type).trigger('change');
-            $('#run_number').attr('readonly', true);
-            $('#run_number').val(data.run_number);
-            // loadSType(data.barcode_dna);
-            // $('#stype').val(data.sample_type).trigger('change');
-            $('#barcode_array').val(data.barcode_array);
-            $('#comments').val(data.comments);
+            $('#barcode_id').val(data.barcode_id).trigger('change');
+            $('#alias').val(data.alias);
             $('#compose-modal').modal('show');
         });  
 
