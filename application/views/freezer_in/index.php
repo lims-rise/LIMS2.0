@@ -361,7 +361,7 @@
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> DNA - New DNA Control<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Freezer Management - New Sample IN<span id="my-another-cool-loader"></span>');
             $('#id').val('');
             $('#id_person').val('');
             $('#id_vessel').val('');
@@ -385,7 +385,7 @@
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> DNA - Update DNA Control<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Freezer Management - Update Sample IN<span id="my-another-cool-loader"></span>');
             // $('#barcode_dna').attr('readonly', true);
             $('#id').val(data.id);
             $('#date_in').val(data.date_in);
