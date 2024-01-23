@@ -158,6 +158,8 @@
                 <div class="row">
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-danger btn-block btn-flat"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+                        <!-- <a href="auth/blokir_akses">Forget password?</a> -->
+
                     </div>
                     <!-- <div class="col-xs-4"> -->
                         <!-- For RISE only -->
@@ -174,125 +176,307 @@
                         <?php //echo anchor('#', '<i class="fa fa-eye-slash" aria-hidden="true"></i> Forget Password?', array('class' => 'btn btn-primary btn-block btn-flat')); ?>
                     </div>
                 </div>
-                <!-- /.col -->
 
-
-                <!-- /.col -->
-                <!-- <div class="row" style="margin-top: 20px;">
-                    <div class="col-xs-12">
-                        <div class="callout callout-info">
-                            <h4>Level Super Admin</h4>
-
-                            <p><b>Email</b> : nuris.akbar@gmail.com</p>
-                            <p><b>Password</b> : password</p>
-                            <hr>
-                            <h4>Level Admin</h4>
-
-                            <p><b>Email</b> : hafid@gmail.com</p>
-                            <p><b>Password</b> : password</p>
-                        </div>
-                    </div>
-
-                </div> -->
                 </form>
 
-
-
+                        <a href="#" id='addtombol'>Forget password?</a>
 
             </div>
             <!-- /.login-box-body -->
         </div>
+
+    <!-- MODAL FORM -->
+    <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header box">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="modal-title">Forget password?</h4>
+                </div>
+                <!-- <form id="formSample"  action= <?php //echo site_url('Auth/forgetpassword') ?> method="post" class="form-horizontal"> -->
+                <form id="formSample" method="post" class="form-horizontal">
+                    <div class="modal-body">
+                        <div class="form-group">
+                        <input id="mode" name="mode" type="hidden" class="form-control input-sm">
+                            <label for="email" class="col-sm-4 control-label">Enter your LIMS login email</label>
+                            <div class="col-sm-8">
+                                <input id="email" name="email" type="text" class="form-control" placeholder="Email" required>
+                                <!-- <div class="val1tip"></div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer clearfix">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Request code</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->        
+
+
+    <!-- MODAL FORM 2-->
+    <div class="modal fade" id="reset-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header box">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="modal-title">Reset Password</h4>
+                </div>
+                <form id="formSample"  action= <?php echo site_url('Auth/savepassword') ?> method="post" class="form-horizontal">
+                    <div class="modal-body">
+                        <p>6 digit Code has been sent to your email, please check your email</p>
+                        <input id="emailsend" name="emailsend" type="hidden" class="form-control input-sm">
+                        <div class="form-group">
+                            <label for="code" class="col-sm-4 control-label">Your Code?</label>
+                            <div class="col-sm-8">
+                                <input id="code" name="code" type="text" class="form-control" placeholder="Insert your code here" required>
+                                <!-- <div class="val1tip"></div> -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_pass" class="col-sm-4 control-label">New password</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input id="new_pass" name="new_pass" type="password" class="form-control" placeholder="New password" required>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-eye-close bt1" style="cursor:pointer"></span>
+                                    <!-- <div class="val1tip"></div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="re_pass" class="col-sm-4 control-label">Retype password</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input id="re_pass" name="re_pass" type="password" class="form-control" placeholder="Retype password" required>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-eye-close bt1" style="cursor:pointer"></span>
+                                    <!-- <div class="val1tip"></div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer clearfix">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Reset password</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->        
+
+    
         <!-- /.login-box -->
 
         <!-- jQuery 3 -->
-        <script src="<?php echo base_url(); ?>assets/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap 3.3.7 -->
-        <script src="<?php echo base_url(); ?>/assets/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- iCheck -->
-        <script src="<?php echo base_url(); ?>/assets/adminlte/plugins/iCheck/icheck.min.js"></script>
-        <!-- <script src="<?php //echo base_url(); ?>assets/js/jquery.backstretch.min.js"></script>
-        <script src="<?php //echo base_url(); ?>assets/js/templatemo-script.js"></script> -->
-        <script>
-            $(document).ready(function() {
+<script src="<?php echo base_url(); ?>assets/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="<?php echo base_url(); ?>/assets/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="<?php echo base_url(); ?>/assets/adminlte/plugins/iCheck/icheck.min.js"></script>
+<!-- <script src="<?php //echo base_url(); ?>assets/js/jquery.backstretch.min.js"></script>
+<script src="<?php //echo base_url(); ?>assets/js/templatemo-script.js"></script> -->
+<script>
+    $(document).ready(function() {
 
-                var myVideo = document.getElementById("myVideo");
-                if (myVideo.addEventListener) {
-                    myVideo.addEventListener('contextmenu', function(e) {
-                        e.preventDefault();
-                    }, false);
-                } else {
-                    myVideo.attachEvent('oncontextmenu', function() {
-                        window.event.returnValue = false;
-                    });
-                }
-
-                            
-            $(".bt1").bind("click", function() {
-                if ($('#password').attr('type') =='password'){
-                    $('#password').attr('type','text');
-                    $('.bt1').removeClass('glyphicon-eye-close');
-                    $('.bt1').addClass('glyphicon-eye-open');
-                }else if($('#password').attr('type') =='text'){
-                    $('#password').attr('type','password');
-                    $('.bt1').removeClass('glyphicon-eye-open');
-                    $('.bt1').addClass('glyphicon-eye-close');
-                }
-                });    
-            });            
-
-            $(function () {
-                $('input').iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue',
-                    increaseArea: '20%' // optional
-                });
+        var myVideo = document.getElementById("myVideo");
+        if (myVideo.addEventListener) {
+            myVideo.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            }, false);
+        } else {
+            myVideo.attachEvent('oncontextmenu', function() {
+                window.event.returnValue = false;
             });
+        }
 
-
-            $(function() {
-                startTime();
-                // $(".center").center();
-                // $(window).resize(function() {
-                //     $(".center").center();
-                // });
+        $('#code').on("change", function() {
+            data1 = $('#code').val();
+            data2 = $('#emailsend').val();
+            $.ajax({
+                type: "GET",
+                url: "Auth/valid_code?id1="+data1+"&id2="+data2,
+                dataType: "json",
+                success: function(data) {
+                    if (data.length == 0) {
+                        $('#code').focus();
+                        $('#code').val('');     
+                        $('#code').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#code').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#code').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#code').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
             });
+        });
 
-            /*  */
-            function startTime()
-            {
-                var today = new Date();
-                var h = today.getHours();
-                var m = today.getMinutes();
-                var s = today.getSeconds();
+        // $('#email').on("change", function() {
+        //     $('#emailsend').val($('#email').val());     
+        // });
 
-                // add a zero in front of numbers<10
-                h = checkTime(h);
-                m = checkTime(m);
-                s = checkTime(s);
+        $('#re_pass').on("change", function() {
+            data1 = $('#new_pass').val();
+            data2 = $('#re_pass').val();
+            if (data1 != data2) {
+                $('#re_pass').focus();
+                $('#re_pass').val('');     
+                $('#re_pass').css({'background-color' : '#FFE6E7'});
+                setTimeout(function(){
+                    $('#re_pass').css({'background-color' : '#FFFFFF'});
+                    setTimeout(function(){
+                        $('#re_pass').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#re_pass').css({'background-color' : '#FFFFFF'});
+                        }, 300);                            
+                    }, 300);
+                }, 300);
+            }
+            });
+        });
 
-                //Check for PM and AM
-                // var day_or_night = (h > 11) ? "PM" : "AM";
+        $('#addtombol').click(function() {
+            // $('.val1tip').tooltipster('hide');   
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Forget Password ?<span id="my-another-cool-loader"></span>');
+            $('#email').val('');
+            $('#compose-modal').modal('show');
+        });
 
-                //Convert to 12 hours system
-                // if (h > 12)
-                //     h -= 12;
+        // $('#formSample').submit(function(e) {
+        //     e.preventDefault();
+        //     // Perform your form submission logic here
+        //     // For demonstration purposes, let's assume the form is successfully submitted
+        //     // You may want to use AJAX to submit the form data to your server
+        //     // Show the second modal after the form is submitted
+        //     $('#modal-title').html('<i class="fa fa-wpforms"></i> Reset Password ?<span id="my-another-cool-loader"></span>');
+        //     $('#code').val('');
+        //     $('#new_pass').val('');
+        //     $('#reset-modal').modal('show');
+        // });            
 
-                //Add time to the headline and update every 500 milliseconds
-                // $('#time').html(h + ":" + m + ":" + s + " " + day_or_night);
-                $('#time').html(h + ":" + m + ":" + s);
-                setTimeout(function() {
-                    startTime()
-                }, 500);
+        $('#formSample').submit(function(e) {
+            e.preventDefault();
+            // Get form data
+            var formData = $(this).serialize();
+
+            // Perform AJAX request to submit the form data
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo site_url('Auth/forgetpassword'); ?>',
+                data: formData,
+                dataType: 'json', // Change this based on your server response
+                success: function(response) {
+                    // Handle the server response here
+                    // Show the second modal after the form is successfully submitted
+                    if (response.status === 'success') {
+                        $('#modal-title').html('<i class="fa fa-wpforms"></i> Reset Password<span id="my-another-cool-loader"></span>');
+                        $('#emailsend').val($('#email').val());
+                        $('#code').val('');
+                        $('#new_pass').val('');
+                        $('#compose-modal').modal('hide');
+                        $('#reset-modal').modal('show');
+                    }
+                    else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response here
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+
+        $(".bt1").bind("click", function() {
+            if ($('#password').attr('type') =='password'){
+                $('#password').attr('type','text');
+                $('.bt1').removeClass('glyphicon-eye-close');
+                $('.bt1').addClass('glyphicon-eye-open');
+            }else if($('#password').attr('type') =='text'){
+                $('#password').attr('type','password');
+                $('.bt1').removeClass('glyphicon-eye-open');
+                $('.bt1').addClass('glyphicon-eye-close');
             }
 
-            function checkTime(i)
+            if ($('#new_pass').attr('type') =='password'){
+                $('#new_pass').attr('type','text');
+                $('.bt1').removeClass('glyphicon-eye-close');
+                $('.bt1').addClass('glyphicon-eye-open');
+            }else if($('#new_pass').attr('type') =='text'){
+                $('#new_pass').attr('type','password');
+                $('.bt1').removeClass('glyphicon-eye-open');
+                $('.bt1').addClass('glyphicon-eye-close');
+            }                
+
+            if ($('#re_pass').attr('type') =='password'){
+                $('#re_pass').attr('type','text');
+                $('.bt1').removeClass('glyphicon-eye-close');
+                $('.bt1').addClass('glyphicon-eye-open');
+            }else if($('#re_pass').attr('type') =='text'){
+                $('#re_pass').attr('type','password');
+                $('.bt1').removeClass('glyphicon-eye-open');
+                $('.bt1').addClass('glyphicon-eye-close');
+            }                
+
+            });    
+
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
+
+
+        $(function() {
+            startTime();
+            // $(".center").center();
+            // $(window).resize(function() {
+            //     $(".center").center();
+            // });
+        });
+
+        /*  */
+        function startTime()
+        {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+
+            // add a zero in front of numbers<10
+            h = checkTime(h);
+            m = checkTime(m);
+            s = checkTime(s);
+
+            //Check for PM and AM
+            // var day_or_night = (h > 11) ? "PM" : "AM";
+
+            //Convert to 12 hours system
+            // if (h > 12)
+            //     h -= 12;
+
+            //Add time to the headline and update every 500 milliseconds
+            // $('#time').html(h + ":" + m + ":" + s + " " + day_or_night);
+            $('#time').html(h + ":" + m + ":" + s);
+            setTimeout(function() {
+                startTime()
+            }, 500);
+        }
+
+        function checkTime(i)
+        {
+            if (i < 10)
             {
-                if (i < 10)
-                {
-                    i = "0" + i;
-                }
-                return i;
-            }                        
-        </script>
+                i = "0" + i;
+            }
+            return i;
+        }                        
+    </script>
     </body>
 </html>
