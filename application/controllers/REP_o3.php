@@ -65,7 +65,7 @@ class REP_o3 extends CI_Controller
                 'Sample_reception',
                 'SELECT a.barcode_sample AS Barcode_sample, a.date_receipt AS Date_receipt, a.time_receipt AS Time_receipt, 
                 b.initial AS Lab_tech, c.sampletype AS Sample_type, a.png_control AS P&G_control, a.cold_chain AS Cold_chain, 
-                a.cont_intact AS Cont_intact, a.comments AS Comments 
+                a.cont_intact AS Cont_intact, TRIM(a.comments) AS Comments 
                 FROM obj3_sam_rec a
                 left join ref_person b on a.id_person = b.id_person
                 left join ref_sampletype c on a.id_type = c.id_sampletype
@@ -81,7 +81,7 @@ class REP_o3 extends CI_Controller
             array(
                 'Blood_centrifuge',
                 'SELECT a.ID AS ID, a.date_process AS Date_process, c.initial AS Lab_tech, 
-                a.centrifuge_time AS Centrifuge_time, a.comments AS Comments, b.barcode_sample AS Barcode_sample, b.comments AS Comments_sample, 
+                a.centrifuge_time AS Centrifuge_time, TRIM(a.comments) AS Comments, b.barcode_sample AS Barcode_sample, b.comments AS Comments_sample, 
                 FROM obj3_blood_centrifuge a
                 LEFT JOIN obj3_blood_centrifuge_det b ON a.id = b.id_bc
                 LEFT JOIN ref_person c ON a.id_person = c.id_person
@@ -101,7 +101,7 @@ class REP_o3 extends CI_Controller
                 a.cryobox1 AS Cryobox1, a.barcode_p2a AS Barcode_plasma2, a.vol_aliquot2 AS Volume_aliquot2, 
                 a.cryobox2 AS Cryobox2, a.barcode_p3a AS Barcode_plasma3, a.vol_aliquot3 AS Volume_aliquot3, 
                 a.cryobox3 AS Cryobox3, a.packed_cells AS Packed_cells, a.cryobox_pc AS Cryobox_packed_cells, 
-                a.comments AS Comments
+                TRIM(a.comments) AS Comments
                 from obj3_edta_aliquots a 
                 left join ref_person b on a.id_person = b.id_person
                 WHERE (a.date_process >= "'.$date1.'"
@@ -120,7 +120,7 @@ class REP_o3 extends CI_Controller
                 'SELECT a.barcode_sample AS Barcode_sample, a.date_process AS Date_process, b.initial AS Lab_tech, 
                 a.barcode_sst1 AS Barcode_SST1, a.vol_aliquot1 AS Vol_aliquot1, a.cryobox1 AS Cryobox1,
                 a.barcode_sst2 AS Barcode_SST2, a.vol_aliquot2 AS Vol_aliquot2, a.cryobox2 AS Cryobox2, 
-                a.comments AS Comments
+                TRIM(a.comments) AS Comments
                 from obj3_sst_aliquots a 
                 left join ref_person b on a.id_person = b.id_person
                 WHERE (a.date_process >= "'.$date1.'"
@@ -137,7 +137,7 @@ class REP_o3 extends CI_Controller
                 'SELECT a.barcode_sample AS Barcode_sample, a.date_process AS Date_process, 
                 a.time_process AS Time_process, b.initial AS Lab_tech, a.freezer_bag AS Freezer_bag,
                 concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS Freezer_location, 
-                a.comments AS Comments 
+                TRIM(a.comments) AS Comments 
                 from obj3_bfilterpaper a 
                 left join ref_person b on a.id_person = b.id_person 
                 left join ref_location_80 c on a.id_location_80 = c.id_location_80 AND c.lab = "'.$this->session->userdata('lab').'" 
@@ -153,7 +153,7 @@ class REP_o3 extends CI_Controller
             array(
                 'Feces_KK1',
                 'SELECT a.barcode_sample AS Barcode_sample, a.date_process AS Date_process, 
-                a.time_process AS Time_process, b.initial AS Lab_tech, a.bar_kkslide AS Barcode_kkslide, a.comments AS Comments
+                a.time_process AS Time_process, b.initial AS Lab_tech, a.bar_kkslide AS Barcode_kkslide, TRIM(a.comments) AS Comments
                 from obj3_fkk1 a 
                 left join ref_person b on a.id_person = b.id_person                    
                 WHERE (a.date_process >= "'.$date1.'"
@@ -173,7 +173,7 @@ class REP_o3 extends CI_Controller
                 a.aliquot2 AS Aliquot2, a.volume2 AS Volume2, a.cryobox2 AS Cryobox2,
                 a.aliquot3 AS Aliquot3, a.volume3 AS Volume3, a.cryobox3 AS Cryobox3, 
                 a.aliquot_zymo AS Aliquot_zymo, a.volume_zymo AS Volume_zymo, 
-                a.batch_zymo AS Batch_zymo, a.cryobox_zymo AS Cryobox_zymo, a.comments AS Comments
+                a.batch_zymo AS Batch_zymo, a.cryobox_zymo AS Cryobox_zymo, TRIM(a.comments) AS Comments
                 from (obj3_faliquot a left join ref_person b on((a.id_person = b.id_person)))                              
                 WHERE (a.date_process >= "'.$date1.'"
                 AND a.date_process <= "'.$date2.'")
@@ -191,7 +191,7 @@ class REP_o3 extends CI_Controller
                 'Feces_Macconkey1',
                 'SELECT a.barcode_sample AS Barcode_sample, a.date_process AS Date_process, 
                 a.time_process AS Time_process, b.initial AS Lab_tech, a.bar_macconkey AS Barcode_macconkey, 
-                a.comments AS Comments
+                TRIM(a.comments) AS Comments
                 from obj3_fmac1 a 
                 left join ref_person b on a.id_person = b.id_person 
                 WHERE (a.date_process >= "'.$date1.'"
@@ -207,7 +207,7 @@ class REP_o3 extends CI_Controller
                 'SELECT a.bar_macconkey AS Barcode_macconkey, a.date_process AS Date_process, 
                 a.time_process AS Time_process, b.initial AS Lab_tech, 
                 a.bar_macsweep1 AS Barcode_macsweep1, a.cryobox1 AS Cryobox1,
-                a.bar_macsweep2 AS Barcode_macsweep2, a.cryobox2 AS Cryobox2, a.comments AS Comments
+                a.bar_macsweep2 AS Barcode_macsweep2, a.cryobox2 AS Cryobox2, TRIM(a.comments) AS Comments
                 from obj3_fmac2 a 
                 left join ref_person b on a.id_person = b.id_person            
                 WHERE (a.date_process >= "'.$date1.'"
@@ -229,7 +229,7 @@ class REP_o3 extends CI_Controller
                 a.trichuris AS TrichurisTrichura, a.trichuris_com AS TrichurisTrichura_comment, 
                 a.strongyloides AS StrongyloidesStercoralis, a.strongyloides_com AS StrongyloidesStercoralis_comment,
                 a.taenia AS TaeniaSpss, a.taenia_com AS TaeniaSpss_comment, 
-                a.other AS Other, a.other_com AS Other_comment, a.comments AS GeneralComments,
+                a.other AS Other, a.other_com AS Other_comment, TRIM(a.comments) AS GeneralComments,
                 a.finalized AS "Finalized"
                 from obj3_fkk2 a 
                 left join ref_person b on a.id_person = b.id_person

@@ -53,7 +53,7 @@ class O2b_metagenomics_wb extends CI_Controller
             'barcode_dna_bag' => $this->input->post('barcode_dna_bag',TRUE),
             'barcode_storage' => $this->input->post('barcode_storage',TRUE),
             'id_location_80' => $this->input->post('id_loc',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -74,7 +74,7 @@ class O2b_metagenomics_wb extends CI_Controller
             'barcode_dna_bag' => $this->input->post('barcode_dna_bag',TRUE),
             'barcode_storage' => $this->input->post('barcode_storage',TRUE),
             'id_location_80' => $this->input->post('id_loc',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -196,7 +196,7 @@ class O2b_metagenomics_wb extends CI_Controller
           $sheet->setCellValue('H'.$numrow, $data->barcode_dna_bag);
           $sheet->setCellValue('I'.$numrow, $data->barcode_storage);
           $sheet->setCellValue('J'.$numrow, $data->Location);
-          $sheet->setCellValue('K'.$numrow, $data->comments);
+          $sheet->setCellValue('K'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

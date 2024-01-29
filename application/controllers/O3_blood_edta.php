@@ -57,7 +57,7 @@ class O3_blood_edta extends CI_Controller
             'cryobox3' => $this->input->post('cryobox3',TRUE),
             'packed_cells' => $this->input->post('packed_cells',TRUE),
             'cryobox_pc' => $this->input->post('cryobox_pc',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -87,7 +87,7 @@ class O3_blood_edta extends CI_Controller
                 'cryobox3' => $this->input->post('cryobox3',TRUE),
                 'packed_cells' => $this->input->post('packed_cells',TRUE),
                 'cryobox_pc' => $this->input->post('cryobox_pc',TRUE),
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -209,7 +209,7 @@ class O3_blood_edta extends CI_Controller
           $sheet->setCellValue('P'.$numrow, $data->cryobox3);
           $sheet->setCellValue('Q'.$numrow, $data->packed_cells);
           $sheet->setCellValue('R'.$numrow, $data->cryobox_pc);
-          $sheet->setCellValue('S'.$numrow, $data->comments);
+          $sheet->setCellValue('S'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

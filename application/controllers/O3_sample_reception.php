@@ -47,7 +47,7 @@ class O3_sample_reception extends CI_Controller
             'png_control' => $this->input->post('png_control',TRUE),
             'cold_chain' => $this->input->post('cold_chain',TRUE),
             'cont_intact' => $this->input->post('cont_intact',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -67,7 +67,7 @@ class O3_sample_reception extends CI_Controller
             'png_control' => $this->input->post('png_control',TRUE),
             'cold_chain' => $this->input->post('cold_chain',TRUE),
             'cont_intact' => $this->input->post('cont_intact',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -161,7 +161,7 @@ class O3_sample_reception extends CI_Controller
           $sheet->setCellValue('F'.$numrow, $data->png_control);
           $sheet->setCellValue('G'.$numrow, $data->cold_chain);
           $sheet->setCellValue('H'.$numrow, $data->cont_intact);
-          $sheet->setCellValue('I'.$numrow, $data->comments);
+          $sheet->setCellValue('I'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

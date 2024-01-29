@@ -60,7 +60,7 @@ class DNA_extraction extends CI_Controller
             'barcode_metagenomics' => $this->input->post('barcode_metagenomics',TRUE),
             'id_location' => $this->input->post('id_loc',TRUE),
             'meta_box' => $this->input->post('meta_box',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -84,7 +84,7 @@ class DNA_extraction extends CI_Controller
             'barcode_metagenomics' => $this->input->post('barcode_metagenomics',TRUE),
             'id_location' => $this->input->post('id_loc',TRUE),
             'meta_box' => $this->input->post('meta_box',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -225,7 +225,7 @@ class DNA_extraction extends CI_Controller
           $sheet->setCellValue('J'.$numrow, $data->barcode_metagenomics);
           $sheet->setCellValue('K'.$numrow, $data->Location);
           $sheet->setCellValue('L'.$numrow, $data->meta_box);
-          $sheet->setCellValue('M'.$numrow, $data->comments);
+          $sheet->setCellValue('M'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

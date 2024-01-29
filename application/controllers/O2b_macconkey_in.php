@@ -46,7 +46,7 @@ class O2b_macconkey_in extends CI_Controller
             'time_process' => $this->input->post('time_process',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'volume' => $this->input->post('volume',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -64,7 +64,7 @@ class O2b_macconkey_in extends CI_Controller
             'time_process' => $this->input->post('time_process',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'volume' => $this->input->post('volume',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -169,7 +169,7 @@ class O2b_macconkey_in extends CI_Controller
           $sheet->setCellValue('E'.$numrow, $data->time_process);
           $sheet->setCellValue('F'.$numrow, $data->initial);
           $sheet->setCellValue('G'.$numrow, $data->volume);
-          $sheet->setCellValue('H'.$numrow, $data->comments);
+          $sheet->setCellValue('H'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

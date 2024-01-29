@@ -42,7 +42,7 @@ class DNA_sample_control extends CI_Controller
             'barcode_sample' => $this->input->post('barcode_sample',TRUE),
             'barcode_vessel' => $this->input->post('barcode_vessel',TRUE),
             'sample_type' => $this->input->post('sample_type',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -57,7 +57,7 @@ class DNA_sample_control extends CI_Controller
             'barcode_sample' => $this->input->post('barcode_sample',TRUE),
             'barcode_vessel' => $this->input->post('barcode_vessel',TRUE),
             'sample_type' => $this->input->post('sample_type',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -141,7 +141,7 @@ class DNA_sample_control extends CI_Controller
           $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
           $sheet->setCellValue('B'.$numrow, $data->barcode_vessel);
           $sheet->setCellValue('C'.$numrow, $data->sample_type);
-          $sheet->setCellValue('D'.$numrow, $data->comments);
+          $sheet->setCellValue('D'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

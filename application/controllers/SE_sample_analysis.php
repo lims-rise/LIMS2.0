@@ -44,7 +44,7 @@ class SE_sample_analysis extends CI_Controller
             'date_analysis' => $this->input->post('date_analysis',TRUE),
             'analysis' => $this->input->post('analysis',TRUE),
             'person' => $this->input->post('person',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -60,7 +60,7 @@ class SE_sample_analysis extends CI_Controller
             'date_analysis' => $this->input->post('date_analysis',TRUE),
             'analysis' => $this->input->post('analysis',TRUE),
             'person' => $this->input->post('person',TRUE),
-            'comments' => $this->input->post('comments',TRUE),    
+            'comments' => trim($this->input->post('comments',TRUE)),    
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -146,7 +146,7 @@ class SE_sample_analysis extends CI_Controller
           $sheet->setCellValue('B'.$numrow, $data->date_analysis);
           $sheet->setCellValue('C'.$numrow, $data->analysis);
           $sheet->setCellValue('D'.$numrow, $data->person);
-          $sheet->setCellValue('E'.$numrow, $data->comments);
+          $sheet->setCellValue('E'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

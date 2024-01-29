@@ -43,7 +43,7 @@ class O3_feces_mac1 extends CI_Controller
             'time_process' => $this->input->post('time_process',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'bar_macconkey' => $this->input->post('bar_macconkey',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -60,7 +60,7 @@ class O3_feces_mac1 extends CI_Controller
             'time_process' => $this->input->post('time_process',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'bar_macconkey' => $this->input->post('bar_macconkey',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -144,7 +144,7 @@ class O3_feces_mac1 extends CI_Controller
           $sheet->setCellValue('C'.$numrow, $data->time_process);
           $sheet->setCellValue('D'.$numrow, $data->initial);
           $sheet->setCellValue('E'.$numrow, $data->bar_macconkey);
-          $sheet->setCellValue('F'.$numrow, $data->comments);
+          $sheet->setCellValue('F'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

@@ -45,7 +45,7 @@ class SE_sample_sent_other extends CI_Controller
             'volume' => $this->input->post('volume',TRUE),
             'destination' => $this->input->post('destination',TRUE),
             'custodian' => $this->input->post('custodian',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -62,7 +62,7 @@ class SE_sample_sent_other extends CI_Controller
             'volume' => $this->input->post('volume',TRUE),
             'destination' => $this->input->post('destination',TRUE),
             'custodian' => $this->input->post('custodian',TRUE),
-            'comments' => $this->input->post('comments',TRUE),    
+            'comments' => trim($this->input->post('comments',TRUE)),    
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -156,7 +156,7 @@ class SE_sample_sent_other extends CI_Controller
           $sheet->setCellValue('F'.$numrow, $data->sent_from);
           $sheet->setCellValue('G'.$numrow, $data->destination);
           $sheet->setCellValue('H'.$numrow, $data->custodian);
-          $sheet->setCellValue('I'.$numrow, $data->comments);
+          $sheet->setCellValue('I'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

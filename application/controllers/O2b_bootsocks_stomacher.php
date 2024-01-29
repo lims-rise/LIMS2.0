@@ -106,7 +106,7 @@ class O2b_bootsocks_stomacher extends CI_Controller
                 'volume_falcon_en2' => $this->input->post('volume_falcon_en2',TRUE),
                 'dilution_en' => $this->input->post('dilution_en',TRUE),
                 'time_incubation_en' => $this->input->post('time_incubation_en',TRUE),
-                'comments_en' => $this->input->post('comments_en',TRUE),
+                'comments_en' => trim($this->input->post('comments_en',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_created' => $this->session->userdata('id_users'),
@@ -126,7 +126,7 @@ class O2b_bootsocks_stomacher extends CI_Controller
                 'volume_falcon_en2' => $this->input->post('volume_falcon_en2',TRUE),
                 'dilution_en' => $this->input->post('dilution_en',TRUE),
                 'time_incubation_en' => $this->input->post('time_incubation_en',TRUE),
-                'comments_en' => $this->input->post('comments_en',TRUE),
+                'comments_en' => trim($this->input->post('comments_en',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -156,7 +156,7 @@ class O2b_bootsocks_stomacher extends CI_Controller
                 'volume_falcon_id2' => $this->input->post('volume_falcon_id2',TRUE),
                 'dilution_id' => $this->input->post('dilution_id',TRUE),
                 'time_incubation_id' => $this->input->post('time_incubation_id',TRUE),
-                'comments_id' => $this->input->post('comments_id',TRUE),
+                'comments_id' => trim($this->input->post('comments_id',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_created' => $this->session->userdata('id_users'),
@@ -176,7 +176,7 @@ class O2b_bootsocks_stomacher extends CI_Controller
                 'volume_falcon_id2' => $this->input->post('volume_falcon_id2',TRUE),
                 'dilution_id' => $this->input->post('dilution_id',TRUE),
                 'time_incubation_id' => $this->input->post('time_incubation_id',TRUE),
-                'comments_id' => $this->input->post('comments_id',TRUE),
+                'comments_id' => trim($this->input->post('comments_id',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -328,23 +328,23 @@ class O2b_bootsocks_stomacher extends CI_Controller
             $sheet->setCellValue('C' .$numrow, $data->stomacher_barcode_bootsocks1);
             $sheet->setCellValue('D' .$numrow, $data->stomacher_elution_number_Micro1);
             $sheet->setCellValue('E' .$numrow, $data->stomacher_elution_Micro1);
-            $sheet->setCellValue('F' .$numrow, $data->stomacher_elution_Micro1_comment);
+            $sheet->setCellValue('F' .$numrow, trim($data->stomacher_elution_Micro1_comment));
             $sheet->setCellValue('G' .$numrow, $data->stomacher_barcode_falcon_Micro1);
             $sheet->setCellValue('H' .$numrow, $data->stomacher_volume_Micro1);
             $sheet->setCellValue('I' .$numrow, $data->stomacher_elution_number_Micro2);
             $sheet->setCellValue('j' .$numrow, $data->stomacher_elution_Micro2);
-            $sheet->setCellValue('K' .$numrow, $data->stomacher_elution_Micro2_comment);
+            $sheet->setCellValue('K' .$numrow, trim($data->stomacher_elution_Micro2_comment));
             $sheet->setCellValue('L' .$numrow, $data->stomacher_barcode_falcon_Micro2);
             $sheet->setCellValue('M' .$numrow, $data->stomacher_volume_Micro2);        
             $sheet->setCellValue('N' .$numrow, $data->stomacher_barcode_bootsocks2);
             $sheet->setCellValue('O' .$numrow, $data->stomacher_elution_number_Moisture1);
             $sheet->setCellValue('P' .$numrow, $data->stomacher_elution_Moisture1);
-            $sheet->setCellValue('Q' .$numrow, $data->stomacher_elution_Moisture1_comment);
+            $sheet->setCellValue('Q' .$numrow, trim($data->stomacher_elution_Moisture1_comment));
             $sheet->setCellValue('R' .$numrow, $data->stomacher_barcode_falcon_Moisture1);
             $sheet->setCellValue('S' .$numrow, $data->stomacher_volume_Moisture1);
             $sheet->setCellValue('T' .$numrow, $data->stomacher_elution_number_Moisture2);
             $sheet->setCellValue('U' .$numrow, $data->stomacher_elution_Moisture2);
-            $sheet->setCellValue('V' .$numrow, $data->stomacher_elution_Moisture2_comment);
+            $sheet->setCellValue('V' .$numrow, trim($data->stomacher_elution_Moisture2_comment));
             $sheet->setCellValue('W' .$numrow, $data->stomacher_barcode_falcon_Moisture2);
             $sheet->setCellValue('X' .$numrow, $data->stomacher_volume_Moisture2);     
             $sheet->setCellValue('Y' .$numrow, $data->stom_endet_barcode_endetec);
@@ -354,7 +354,7 @@ class O2b_bootsocks_stomacher extends CI_Controller
             $sheet->setCellValue('AC'.$numrow, $data->stom_endet_volume_falcon2);
             $sheet->setCellValue('AD'.$numrow, $data->stom_endet_dilution);
             $sheet->setCellValue('AE'.$numrow, $data->stom_endet_time_incu_start);
-            $sheet->setCellValue('AF'.$numrow, $data->stom_endet_comments);
+            $sheet->setCellValue('AF'.$numrow, trim($data->stom_endet_comments));
             $sheet->setCellValue('AG'.$numrow, $data->stom_idexx_barcode_colilert);
             $sheet->setCellValue('AH'.$numrow, $data->stom_idexx_barcode_falcon1);
             $sheet->setCellValue('AI'.$numrow, $data->stom_idexx_volume_falcon1);
@@ -362,7 +362,7 @@ class O2b_bootsocks_stomacher extends CI_Controller
             $sheet->setCellValue('AK'.$numrow, $data->stom_idexx_volume_falcon2);
             $sheet->setCellValue('AL'.$numrow, $data->stom_idexx_dilution);
             $sheet->setCellValue('AM'.$numrow, $data->stom_idexx_time_incu_start);
-            $sheet->setCellValue('AN'.$numrow, $data->stom_idexx_comments); 
+            $sheet->setCellValue('AN'.$numrow, trim($data->stom_idexx_comments)); 
           //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

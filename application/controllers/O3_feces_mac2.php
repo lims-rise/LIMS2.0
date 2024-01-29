@@ -46,7 +46,7 @@ class O3_feces_mac2 extends CI_Controller
             'cryobox1' => $this->input->post('cryobox1',TRUE),
             'bar_macsweep2' => $this->input->post('bar_macsweep2',TRUE),
             'cryobox2' => $this->input->post('cryobox2',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -66,7 +66,7 @@ class O3_feces_mac2 extends CI_Controller
             'cryobox1' => $this->input->post('cryobox1',TRUE),
             'bar_macsweep2' => $this->input->post('bar_macsweep2',TRUE),
             'cryobox2' => $this->input->post('cryobox2',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -156,7 +156,7 @@ class O3_feces_mac2 extends CI_Controller
           $sheet->setCellValue('F'.$numrow, $data->cryobox1);
           $sheet->setCellValue('G'.$numrow, $data->bar_macsweep2);
           $sheet->setCellValue('H'.$numrow, $data->cryobox2);
-          $sheet->setCellValue('I'.$numrow, $data->comments);
+          $sheet->setCellValue('I'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

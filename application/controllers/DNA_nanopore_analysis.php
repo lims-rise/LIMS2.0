@@ -43,7 +43,7 @@ class DNA_nanopore_analysis extends CI_Controller
             'date_analysis' => $this->input->post('date_analysis',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'barcode_id' => $this->input->post('barcode_id',TRUE),
-            'alias' => $this->input->post('alias',TRUE),
+            'alias' => trim($this->input->post('alias',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -59,7 +59,7 @@ class DNA_nanopore_analysis extends CI_Controller
             'date_analysis' => $this->input->post('date_analysis',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'barcode_id' => $this->input->post('barcode_id',TRUE),
-            'alias' => $this->input->post('alias',TRUE),
+            'alias' => trim($this->input->post('alias',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -170,7 +170,7 @@ class DNA_nanopore_analysis extends CI_Controller
           $sheet->setCellValue('B'.$numrow, $data->date_analysis);
           $sheet->setCellValue('C'.$numrow, $data->initial);
           $sheet->setCellValue('D'.$numrow, $data->barcode_id);
-          $sheet->setCellValue('E'.$numrow, $data->alias);
+          $sheet->setCellValue('E'.$numrow, trim($data->alias));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

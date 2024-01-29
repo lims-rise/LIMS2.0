@@ -46,7 +46,7 @@ class O2b_moisture_72 extends CI_Controller
             'barcode_foil' => $this->input->post('barcode_foil',TRUE),
             'date_moisture' => $this->input->post('date_moisture',TRUE),
             'dry_weight72' => $this->input->post('dry_weight72',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -60,7 +60,7 @@ class O2b_moisture_72 extends CI_Controller
             $data = array(
             'date_moisture' => $this->input->post('date_moisture',TRUE),
             'dry_weight72' => $this->input->post('dry_weight72',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -158,7 +158,7 @@ class O2b_moisture_72 extends CI_Controller
           $sheet->setCellValue('A'.$numrow, $data->barcode_foil);
           $sheet->setCellValue('B'.$numrow, $data->date_moisture);
           $sheet->setCellValue('C'.$numrow, $data->dry_weight72);
-          $sheet->setCellValue('D'.$numrow, $data->comments);
+          $sheet->setCellValue('D'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

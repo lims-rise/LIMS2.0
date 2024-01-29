@@ -43,7 +43,7 @@ class SE_sample_ended extends CI_Controller
             'barcode_sample' => $this->input->post('barcode_sample',TRUE),
             'date_ended' => $this->input->post('date_ended',TRUE),
             'lab_sample_end' => $this->input->post('lab_sample_end',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -58,7 +58,7 @@ class SE_sample_ended extends CI_Controller
             'barcode_sample' => $this->input->post('barcode_sample',TRUE),
             'date_ended' => $this->input->post('date_ended',TRUE),
             'lab_sample_end' => $this->input->post('lab_sample_end',TRUE),
-            'comments' => $this->input->post('comments',TRUE),    
+            'comments' => trim($this->input->post('comments',TRUE)),    
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -142,7 +142,7 @@ class SE_sample_ended extends CI_Controller
           $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
           $sheet->setCellValue('B'.$numrow, $data->date_ended);
           $sheet->setCellValue('C'.$numrow, $data->lab_sample_end);
-          $sheet->setCellValue('D'.$numrow, $data->comments);
+          $sheet->setCellValue('D'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

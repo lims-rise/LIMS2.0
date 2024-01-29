@@ -102,7 +102,7 @@ class WAT_water_spectroqc extends CI_Controller
                 'date_expired' => $this->input->post('date_expired',TRUE),
                 'cert_value' => $this->input->post('cert_value',TRUE),
                 'uncertainty' => $this->input->post('uncertainty',TRUE),
-                'notes' => $this->input->post('notes',TRUE),
+                'notes' => trim($this->input->post('notes',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_created' => $this->session->userdata('id_users'),
@@ -124,7 +124,7 @@ class WAT_water_spectroqc extends CI_Controller
                 'date_expired' => $this->input->post('date_expired',TRUE),
                 'cert_value' => $this->input->post('cert_value',TRUE),
                 'uncertainty' => $this->input->post('uncertainty',TRUE),
-                'notes' => $this->input->post('notes',TRUE),
+                'notes' => trim($this->input->post('notes',TRUE)),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -340,7 +340,7 @@ class WAT_water_spectroqc extends CI_Controller
             array(
                 'Water_Spectro',
                 'SELECT a.id_spec AS ID_spectro, a.date_spec AS Date_spectro, c.initial AS Lab_tech, a.chem_parameter AS Chemistry_parameter, a.mixture_name AS Mixture_name, a.sample_no AS Sample_number, 
-                a.lot_no AS Lot_number, a.date_expired AS Date_expired, a.cert_value AS Certified_value, a.uncertainty AS Uncertainty, a.notes AS Comments, a.tot_result AS Total_result, a.tot_trueness AS Total_trueness,
+                a.lot_no AS Lot_number, a.date_expired AS Date_expired, a.cert_value AS Certified_value, a.uncertainty AS Uncertainty, TRIM(a.notes) AS Comments, a.tot_result AS Total_result, a.tot_trueness AS Total_trueness,
                 a.tot_bias AS Total_bias, a.avg_result AS AVG_result, a.avg_trueness AS AVG_trueness, a.avg_bias AS AVG_bias, a.sd AS SD, a.rsd AS `%RSD`, a.cv_horwits AS `%CV_horwits`, a.cv AS `0.67x%CV`,
                 a.prec AS Test_Precision, a.accuracy AS Test_Accuracy, a.bias AS `Test_Bias`
                 FROM obj2b_spectro_crm a

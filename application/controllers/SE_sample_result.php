@@ -46,7 +46,7 @@ class SE_sample_result extends CI_Controller
             'result' => $this->input->post('result',TRUE),
             'units' => $this->input->post('units',TRUE),
             'person' => $this->input->post('person',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -64,7 +64,7 @@ class SE_sample_result extends CI_Controller
             'result' => $this->input->post('result',TRUE),
             'units' => $this->input->post('units',TRUE),
             'person' => $this->input->post('person',TRUE),
-            'comments' => $this->input->post('comments',TRUE),    
+            'comments' => trim($this->input->post('comments',TRUE)),    
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -154,7 +154,7 @@ class SE_sample_result extends CI_Controller
           $sheet->setCellValue('D'.$numrow, $data->result);
           $sheet->setCellValue('E'.$numrow, $data->units);
           $sheet->setCellValue('F'.$numrow, $data->person);
-          $sheet->setCellValue('G'.$numrow, $data->comments);
+          $sheet->setCellValue('G'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

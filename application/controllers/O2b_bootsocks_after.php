@@ -49,7 +49,7 @@ class O2b_bootsocks_after extends CI_Controller
                 'barcode_bootsocks' => $this->input->post('barcode_bootsocks',TRUE),
                 'date_weighed' => $this->input->post('date_weighed',TRUE),
                 'bootsock_weight_wet' => $this->input->post('bootsock_weight_wet',TRUE),
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_created' => $this->session->userdata('id_users'),
@@ -65,7 +65,7 @@ class O2b_bootsocks_after extends CI_Controller
                 'barcode_bootsocks' => $this->input->post('barcode_bootsocks',TRUE),
                 'date_weighed' => $this->input->post('date_weighed',TRUE),
                 'bootsock_weight_wet' => $this->input->post('bootsock_weight_wet',TRUE),
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -202,7 +202,7 @@ class O2b_bootsocks_after extends CI_Controller
           $sheet->setCellValue('A'.$numrow, $data->barcode_bootsocks);
           $sheet->setCellValue('B'.$numrow, $data->date_weighed);
           $sheet->setCellValue('C'.$numrow, $data->bootsock_weight_wet);
-          $sheet->setCellValue('D'.$numrow, $data->comments);
+          $sheet->setCellValue('D'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

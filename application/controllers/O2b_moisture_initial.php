@@ -53,7 +53,7 @@ class O2b_moisture_initial extends CI_Controller
             'time_filter_finish' => $this->input->post('time_filter_finish',TRUE),
             'wet_weight' => $this->input->post('wet_weight',TRUE),
             'time_incubator' => $this->input->post('time_incubator',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -74,7 +74,7 @@ class O2b_moisture_initial extends CI_Controller
             'time_filter_finish' => $this->input->post('time_filter_finish',TRUE),
             'wet_weight' => $this->input->post('wet_weight',TRUE),
             'time_incubator' => $this->input->post('time_incubator',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -196,7 +196,7 @@ class O2b_moisture_initial extends CI_Controller
           $sheet->setCellValue('H'.$numrow, $data->time_filter_finish);
           $sheet->setCellValue('I'.$numrow, $data->wet_weight);
           $sheet->setCellValue('J'.$numrow, $data->time_incubator);
-          $sheet->setCellValue('K'.$numrow, $data->comments);
+          $sheet->setCellValue('K'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

@@ -57,7 +57,7 @@ class O3_feces_kk2 extends CI_Controller
             'taenia_com' => $this->input->post('taenia_com',TRUE),
             'other' => $this->input->post('other',TRUE),
             'other_com' => $this->input->post('other_com',TRUE),    
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'finalized' => $this->input->post('finalized',TRUE),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -89,7 +89,7 @@ class O3_feces_kk2 extends CI_Controller
                 'taenia_com' => $this->input->post('taenia_com',TRUE),
                 'other' => $this->input->post('other',TRUE),
                 'other_com' => $this->input->post('other_com',TRUE),
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 'finalized' => $this->input->post('finalized',TRUE),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
@@ -203,7 +203,7 @@ class O3_feces_kk2 extends CI_Controller
           $sheet->setCellValue('Q'.$numrow, $data->taenia_com);
           $sheet->setCellValue('R'.$numrow, $data->other);
           $sheet->setCellValue('S'.$numrow, $data->other_com);
-          $sheet->setCellValue('T'.$numrow, $data->comments);
+          $sheet->setCellValue('T'.$numrow, trim($data->comments));
           $sheet->setCellValue('U'.$numrow, $data->finalized);
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping

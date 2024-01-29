@@ -67,7 +67,7 @@ class REP_se extends CI_Controller
                 sample_type AS Sample_type, obtained AS Obtained, conditions AS Conditions, 
                 quarantine AS Quarantine, permit_number AS Permit_number,
                 name_email_custodian AS Name_email_custodian, desc_storage AS Desc_storage, 
-                loc_storage AS Loc_storage, comments AS Comments
+                loc_storage AS Loc_storage, TRIM(comments) AS Comments
                 FROM se_sample_receipt
                 WHERE  (date_received >= "'.$date1.'"
                 AND date_received <= "'.$date2.'")
@@ -82,7 +82,7 @@ class REP_se extends CI_Controller
             array(
                 'Sample_Analysis_Summary',
                 'SELECT barcode_sample AS Barcode_sample, date_analysis AS Date_analysis, 
-                analysis AS Analysis, person AS Person, comments AS Comments
+                analysis AS Analysis, person AS Person, TRIM(comments) AS Comments
                 FROM se_analysis
                 WHERE (date_analysis >= "'.$date1.'"
                 AND date_analysis <= "'.$date2.'")
@@ -95,7 +95,7 @@ class REP_se extends CI_Controller
             array(
                 'Sample_Result',
                 'SELECT barcode_sample AS Barcode_sample, date_analysis AS Date_analysis, 
-                analyte AS Analyte, result AS Result, units AS Units, person AS Person, comments AS Comments
+                analyte AS Analyte, result AS Result, units AS Units, person AS Person, TRIM(comments) AS Comments
                 FROM se_result
                 WHERE (date_analysis >= "'.$date1.'"
                 AND date_analysis <= "'.$date2.'")
@@ -108,7 +108,7 @@ class REP_se extends CI_Controller
             array(
                 'Sample_Ended',
                 'SELECT barcode_sample AS Barcode_sample, date_ended AS Date_ended, 
-                lab_sample_end AS Lab_sample_end, comments AS Comments
+                lab_sample_end AS Lab_sample_end, TRIM(comments) AS Comments
                 FROM se_sample_ended
                 WHERE (date_ended >= "'.$date1.'"
                 AND date_ended <= "'.$date2.'")
@@ -121,7 +121,7 @@ class REP_se extends CI_Controller
             array(
                 'Sample_Sent_to_Other_Lab',
                 'SELECT barcode_sample AS Barcode_sample, date_shipped AS Date_shipped, 
-                volume AS Volume, destination AS Destination, custodian AS Custodian, comments AS Comments
+                volume AS Volume, destination AS Destination, custodian AS Custodian, TRIM(comments) AS Comments
                 FROM se_sample_sent
                 WHERE (date_shipped >= "'.$date1.'"
                 AND date_shipped <= "'.$date2.'")

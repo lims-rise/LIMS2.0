@@ -50,7 +50,7 @@ class O2b_other_lab extends CI_Controller
             'barcode_microbiology2' => $this->input->post('barcode_microbiology2',TRUE),
             '3rdparty_lab4' => $this->input->post('3rdparty_lab4',TRUE),
             'barcode_rise_lab' => $this->input->post('barcode_rise_lab',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -73,7 +73,7 @@ class O2b_other_lab extends CI_Controller
             'barcode_microbiology2' => $this->input->post('barcode_microbiology2',TRUE),
             '3rdparty_lab4' => $this->input->post('3rdparty_lab4',TRUE),
             'barcode_rise_lab' => $this->input->post('barcode_rise_lab',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -198,7 +198,7 @@ class O2b_other_lab extends CI_Controller
           $sheet->setCellValue('I'.$numrow, $data->lab3);
           $sheet->setCellValue('J'.$numrow, $data->barcode_microbiology2);
           $sheet->setCellValue('K'.$numrow, $data->lab4);
-          $sheet->setCellValue('L'.$numrow, $data->comments);
+          $sheet->setCellValue('L'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

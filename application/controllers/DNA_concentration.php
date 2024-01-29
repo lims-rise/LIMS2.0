@@ -42,7 +42,7 @@ class DNA_concentration extends CI_Controller
             'barcode_sample' => $this->input->post('barcode_sample',TRUE),
             'barcode_vessel' => $this->input->post('barcode_vessel',TRUE),
             'sample_type' => $this->input->post('sample_type',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -57,7 +57,7 @@ class DNA_concentration extends CI_Controller
             'barcode_sample' => $this->input->post('barcode_sample',TRUE),
             'barcode_vessel' => $this->input->post('barcode_vessel',TRUE),
             'sample_type' => $this->input->post('sample_type',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -157,7 +157,7 @@ class DNA_concentration extends CI_Controller
           $sheet->setCellValue('C'.$numrow, $data->initial);
           $sheet->setCellValue('D'.$numrow, $data->sampletype);
           $sheet->setCellValue('E'.$numrow, $data->dna_concentration);
-          $sheet->setCellValue('F'.$numrow, $data->comments);
+          $sheet->setCellValue('F'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

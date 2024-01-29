@@ -126,7 +126,7 @@ class REP_o2a extends CI_Controller
                 IFNULL(a.culex_larvae,0) AS Culex_larvae,
                 IFNULL(a.aedes_larvae,0) AS Aedes_larvae,
                 IFNULL(a.unidentify,0) AS Unidentify,
-                a.notes AS Notes,
+                TRIM(a.notes) AS Notes,
                 a.id_person AS id_person,
                 a.lab AS lab,
                 a.flag AS flag

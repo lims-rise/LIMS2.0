@@ -99,7 +99,7 @@ class O2b_sample_prep extends CI_Controller
                 'volume_falcon' => $this->input->post('volume_falcon',TRUE),
                 'dilution' => $this->input->post('dilution',TRUE),
                 'time_incubation' => $this->input->post('time_incubation',TRUE),
-                'comments' => $this->input->post('comments_en',TRUE),
+                'comments' => trim($this->input->post('comments_en',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_created' => $this->session->userdata('id_users'),
@@ -116,7 +116,7 @@ class O2b_sample_prep extends CI_Controller
                 'volume_falcon' => $this->input->post('volume_falcon',TRUE),
                 'dilution' => $this->input->post('dilution',TRUE),
                 'time_incubation' => $this->input->post('time_incubation',TRUE),
-                'comments' => $this->input->post('comments_en',TRUE),
+                'comments' => trim($this->input->post('comments_en',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -143,7 +143,7 @@ class O2b_sample_prep extends CI_Controller
                 'volume' => $this->input->post('volume',TRUE),
                 'dilution' => $this->input->post('dilution_id',TRUE),
                 'time_incubation' => $this->input->post('time_incubation_id',TRUE),
-                'comments' => $this->input->post('comments_id',TRUE),
+                'comments' => trim($this->input->post('comments_id',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_created' => $this->session->userdata('id_users'),
@@ -160,7 +160,7 @@ class O2b_sample_prep extends CI_Controller
                 'volume' => $this->input->post('volume',TRUE),
                 'dilution' => $this->input->post('dilution_id',TRUE),
                 'time_incubation' => $this->input->post('time_incubation_id',TRUE),
-                'comments' => $this->input->post('comments_id',TRUE),
+                'comments' => trim($this->input->post('comments_id',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -291,12 +291,12 @@ class O2b_sample_prep extends CI_Controller
           $sheet->setCellValue('H'.$numrow, $data->volume_falcon);
           $sheet->setCellValue('I'.$numrow, $data->end_dilution);
           $sheet->setCellValue('J'.$numrow, $data->end_time_incubation);
-          $sheet->setCellValue('K'.$numrow, $data->end_comments);
+          $sheet->setCellValue('K'.$numrow, trim($data->end_comments));
           $sheet->setCellValue('L'.$numrow, $data->barcode_colilert);
           $sheet->setCellValue('M'.$numrow, $data->volume);
           $sheet->setCellValue('N'.$numrow, $data->dilution);
           $sheet->setCellValue('O'.$numrow, $data->time_incubation);
-          $sheet->setCellValue('P'.$numrow, $data->comments);          
+          $sheet->setCellValue('P'.$numrow, trim($data->comments));          
           //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

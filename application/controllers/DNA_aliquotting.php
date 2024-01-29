@@ -71,7 +71,7 @@ class DNA_aliquotting extends CI_Controller
             'id_person' => $this->input->post('id_person',TRUE),
             'barcode_monash' => $this->input->post('barcode_monash',TRUE),
             'barcode_cambridge' => $this->input->post('barcode_cambridge',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -87,7 +87,7 @@ class DNA_aliquotting extends CI_Controller
             'id_person' => $this->input->post('id_person',TRUE),
             'barcode_monash' => $this->input->post('barcode_monash',TRUE),
             'barcode_cambridge' => $this->input->post('barcode_cambridge',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -142,7 +142,7 @@ class DNA_aliquotting extends CI_Controller
             'row_id' => $rows,
             'column_id' => $columns,
             'id_dna' => $this->input->post('id_dna',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -158,7 +158,7 @@ class DNA_aliquotting extends CI_Controller
             'row_id' => $rows,
             'column_id' => $columns,
             'id_dna' => $this->input->post('id_dna',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -263,7 +263,7 @@ class DNA_aliquotting extends CI_Controller
           $sheet->setCellValue('E'.$numrow, $data->barcode_cambridge);
           $sheet->setCellValue('F'.$numrow, $data->row_id);
           $sheet->setCellValue('G'.$numrow, $data->column_id);
-          $sheet->setCellValue('H'.$numrow, $data->comments);
+          $sheet->setCellValue('H'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

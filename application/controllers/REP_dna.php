@@ -69,7 +69,7 @@ class REP_dna extends CI_Controller
                 a.barcode_dna AS Barcode_DNA, a.weights AS Weights, a.tube_number AS Tube_number, a.cryobox AS Cryobox, 
                 a.barcode_metagenomics AS Barcode_metagenomics, a.meta_box AS Meta_box,
                 CONCAT("F",d.freezer,"-S",d.shelf,"-R",d.rack,"-DRW",d.rack_level) AS Freezer_Location,
-                a.comments AS Comments
+                TRIM(a.comments) AS Comments
                 FROM dna_extraction a
                 LEFT JOIN ref_person b ON a.id_person=b.id_person 
                 LEFT JOIN ref_location_80 d ON a.id_location=d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'" 
@@ -86,7 +86,7 @@ class REP_dna extends CI_Controller
                 'DNA_Concentration',
                 'SELECT a.barcode_dna AS Barcode_DNA, a.date_concentration AS Date_concentration, 
                 c.initial AS Lab_tech, b.sampletype AS Sample_type, a.dna_concentration AS DNA_concentration, 
-                a.comments AS Comments
+                TRIM(a.comments) AS Comments
                 FROM dna_concentration a
                 LEFT JOIN dna_extraction b ON a.barcode_dna=b.barcode_dna
                 LEFT JOIN ref_person c ON a.id_person=c.id_person 
@@ -102,7 +102,7 @@ class REP_dna extends CI_Controller
                 'DNA_Aliquotting',
                 'SELECT c.barcode_dna AS Barcode_DNA, a.date_aliquot AS Date_aliquot, b.initial AS Lab_tech,
                 a.barcode_monash AS Barcode_Monash, a.barcode_cambridge AS Barcode_Cambridge, 
-                c.row_id AS Row_ID, c.column_id AS Column_ID, a.comments AS Comments
+                c.row_id AS Row_ID, c.column_id AS Column_ID, TRIM(a.comments) AS Comments
                 FROM dna_aliquot a
                 LEFT JOIN dna_aliquot_det c ON a. id_dna = c.id_dna
                 LEFT JOIN ref_person b ON a.id_person=b.id_person  
@@ -119,7 +119,7 @@ class REP_dna extends CI_Controller
                 'DNA_Sample_Analysis',
                 'SELECT a.barcode_dna AS Barcode_DNA, a.date_analysis AS Date_analysis, b.initial AS Lab_tech,
                 a.analysis_type AS Analysis_type, a.run_number AS Run_number, 
-                a.barcode_array AS Barcode_array, a.comments AS Comments
+                a.barcode_array AS Barcode_array, TRIM(a.comments) AS Comments
                 FROM dna_sample_analysis a
                 LEFT JOIN ref_person b ON a.id_person = b.id_person         
                 WHERE (a.date_analysis >= "'.$date1.'"
@@ -134,7 +134,7 @@ class REP_dna extends CI_Controller
             array(
                 'DNA_Nanopore_Analysis',
                 'SELECT a.barcode_dna AS Barcode_DNA, a.date_analysis AS Date_analysis, b.initial AS Lab_tech,
-                a.barcode_ID AS Barcode_ID, a.alias AS Alias
+                a.barcode_ID AS Barcode_ID, TRIM(a.alias) AS Alias
                 FROM dna_nanopore_analysis a
                 LEFT JOIN ref_person b ON a.id_person = b.id_person         
                 WHERE (a.date_analysis >= "'.$date1.'"

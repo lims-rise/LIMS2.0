@@ -45,7 +45,7 @@ class O2b_endetec_in extends CI_Controller
             'barcode_endetec' => $this->input->post('barcode_endetec',TRUE),
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -63,7 +63,7 @@ class O2b_endetec_in extends CI_Controller
             'barcode_endetec' => $this->input->post('barcode_endetec',TRUE),
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -159,7 +159,7 @@ class O2b_endetec_in extends CI_Controller
           $sheet->setCellValue('D'.$numrow, $data->barcode_endetec);
           $sheet->setCellValue('E'.$numrow, $data->volume);
           $sheet->setCellValue('F'.$numrow, $data->dilution);
-          $sheet->setCellValue('G'.$numrow, $data->comments);
+          $sheet->setCellValue('G'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

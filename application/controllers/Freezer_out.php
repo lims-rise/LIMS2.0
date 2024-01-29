@@ -50,7 +50,7 @@ class Freezer_out extends CI_Controller
             'id_destination' => $this->input->post('id_destination',TRUE),
             'id_shipping' => $this->input->post('id_shipping',TRUE),
             'tracking_number' => $this->input->post('tracking_number',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -70,7 +70,7 @@ class Freezer_out extends CI_Controller
             'id_destination' => $this->input->post('id_destination',TRUE),
             'id_shipping' => $this->input->post('id_shipping',TRUE),
             'tracking_number' => $this->input->post('tracking_number',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -178,7 +178,7 @@ class Freezer_out extends CI_Controller
           $sheet->setCellValue('G'.$numrow, $data->destination);
           $sheet->setCellValue('H'.$numrow, $data->shipping_method);
           $sheet->setCellValue('I'.$numrow, $data->tracking_number);
-          $sheet->setCellValue('J'.$numrow, $data->comments);
+          $sheet->setCellValue('J'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

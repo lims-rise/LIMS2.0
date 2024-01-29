@@ -45,7 +45,7 @@ class O2B_sample_reception extends CI_Controller
             'id_type2b' => $this->input->post('id_type2b',TRUE),
             'png_control' => $this->input->post('png_control',TRUE),
             'barcode_tinytag' => $this->input->post('barcode_tinytag',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -63,7 +63,7 @@ class O2B_sample_reception extends CI_Controller
             'id_type2b' => $this->input->post('id_type2b',TRUE),
             'png_control' => $this->input->post('png_control',TRUE),
             'barcode_tinytag' => $this->input->post('barcode_tinytag',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -153,7 +153,7 @@ class O2B_sample_reception extends CI_Controller
           $sheet->setCellValue('D'.$numrow, $data->sampletype2b);
           $sheet->setCellValue('E'.$numrow, $data->png_control);
           $sheet->setCellValue('F'.$numrow, $data->barcode_tinytag);
-          $sheet->setCellValue('G'.$numrow, $data->comments);
+          $sheet->setCellValue('G'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

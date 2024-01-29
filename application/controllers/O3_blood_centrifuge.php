@@ -48,7 +48,7 @@ class O3_blood_centrifuge extends CI_Controller
                 'date_process' => $this->input->post('date_process',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
                 'centrifuge_time' => $this->input->post('centrifuge_time',TRUE),
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_created' => $this->session->userdata('id_users'),
@@ -64,7 +64,7 @@ class O3_blood_centrifuge extends CI_Controller
                 'date_process' => $this->input->post('date_process',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
                 'centrifuge_time' => $this->input->post('centrifuge_time',TRUE),
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -87,7 +87,7 @@ class O3_blood_centrifuge extends CI_Controller
         if ($mode_det=="insert"){
             $data = array(
                 'barcode_sample' => $this->input->post('barcode_sample',TRUE),
-                'comments' => $this->input->post('comments_det',TRUE),
+                'comments' => trim($this->input->post('comments_det',TRUE)),
                 'id_bc' => $this->input->post('idbc_det',TRUE),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
@@ -101,7 +101,7 @@ class O3_blood_centrifuge extends CI_Controller
         else if ($mode_det=="edit"){
             $data = array(
                 'barcode_sample' => $this->input->post('barcode_sample',TRUE),
-                'comments' => $this->input->post('comments_det',TRUE),
+                'comments' => trim($this->input->post('comments_det',TRUE)),
                 'id_bc' => $this->input->post('idbc_det',TRUE),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
@@ -208,7 +208,7 @@ class O3_blood_centrifuge extends CI_Controller
           $sheet->setCellValue('D'.$numrow, $data->centrifuge_time);
           $sheet->setCellValue('E'.$numrow, $data->comments);
           $sheet->setCellValue('F'.$numrow, $data->barcode_sample);
-          $sheet->setCellValue('G'.$numrow, $data->comments_sample);
+          $sheet->setCellValue('G'.$numrow, trim($data->comments_sample));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

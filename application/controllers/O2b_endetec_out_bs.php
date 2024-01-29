@@ -44,7 +44,7 @@ class O2b_endetec_out_bs extends CI_Controller
             'time_ecoli' => $this->input->post('time_ecoli',TRUE),
             'volume_ecoli' => $this->input->post('volume_ecoli',TRUE),
             'total_coliforms' => $this->input->post('total_coliforms',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -61,7 +61,7 @@ class O2b_endetec_out_bs extends CI_Controller
             'time_ecoli' => $this->input->post('time_ecoli',TRUE),
             'volume_ecoli' => $this->input->post('volume_ecoli',TRUE),
             'total_coliforms' => $this->input->post('total_coliforms',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -155,7 +155,7 @@ class O2b_endetec_out_bs extends CI_Controller
           $sheet->setCellValue('C'.$numrow, $data->time_ecoli);
           $sheet->setCellValue('D'.$numrow, $data->volume_ecoli);
           $sheet->setCellValue('E'.$numrow, $data->total_coliforms);
-          $sheet->setCellValue('F'.$numrow, $data->comments);
+          $sheet->setCellValue('F'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

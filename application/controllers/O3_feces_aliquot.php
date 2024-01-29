@@ -65,7 +65,7 @@ class O3_feces_aliquot extends CI_Controller
                 'volume_zymo' => $this->sanitasi($this->input->post('volume_zymo',TRUE)),
                 'batch_zymo' => $this->input->post('batch_zymo',TRUE),
                 'cryobox_zymo' => $this->input->post('cryobox_zymo',TRUE),
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_created' => $this->session->userdata('id_users'),
@@ -98,7 +98,7 @@ class O3_feces_aliquot extends CI_Controller
                     'volume_zymo' => $this->sanitasi($this->input->post('volume_zymo',TRUE)),
                     'batch_zymo' => $this->input->post('batch_zymo',TRUE),
                     'cryobox_zymo' => $this->input->post('cryobox_zymo',TRUE),
-                    'comments' => $this->input->post('comments',TRUE),
+                    'comments' => trim($this->input->post('comments',TRUE)),
                     // 'uuid' => $this->uuid->v4(),
                     'lab' => $this->session->userdata('lab'),
                     'user_updated' => $this->session->userdata('id_users'),
@@ -217,7 +217,7 @@ class O3_feces_aliquot extends CI_Controller
           $sheet->setCellValue('S'.$numrow, $data->volume_zymo);
           $sheet->setCellValue('T'.$numrow, $data->batch_zymo);
           $sheet->setCellValue('U'.$numrow, $data->cryobox_zymo);
-          $sheet->setCellValue('V'.$numrow, $data->comments);
+          $sheet->setCellValue('V'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

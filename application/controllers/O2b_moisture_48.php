@@ -47,7 +47,7 @@ class O2b_moisture_48 extends CI_Controller
             'date_moisture' => $this->input->post('date_moisture',TRUE),
             'dry_weight48' => $this->input->post('dry_weight48',TRUE),
             'difference' => $this->input->post('difference',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -62,7 +62,7 @@ class O2b_moisture_48 extends CI_Controller
             'date_moisture' => $this->input->post('date_moisture',TRUE),
             'dry_weight48' => $this->input->post('dry_weight48',TRUE),
             'difference' => $this->input->post('difference',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -162,7 +162,7 @@ class O2b_moisture_48 extends CI_Controller
           $sheet->setCellValue('B'.$numrow, $data->date_moisture);
           $sheet->setCellValue('C'.$numrow, $data->dry_weight48);
           $sheet->setCellValue('D'.$numrow, $data->difference);
-          $sheet->setCellValue('E'.$numrow, $data->comments);
+          $sheet->setCellValue('E'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

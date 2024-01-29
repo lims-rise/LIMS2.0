@@ -53,7 +53,7 @@ class SE_sample_reception extends CI_Controller
             'name_email_custodian' => $this->input->post('name_email_custodian',TRUE),
             'desc_storage' => $this->input->post('desc_storage',TRUE),
             'loc_storage' => $this->input->post('loc_storage',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -78,7 +78,7 @@ class SE_sample_reception extends CI_Controller
             'name_email_custodian' => $this->input->post('name_email_custodian',TRUE),
             'desc_storage' => $this->input->post('desc_storage',TRUE),
             'loc_storage' => $this->input->post('loc_storage',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -182,7 +182,7 @@ class SE_sample_reception extends CI_Controller
           $sheet->setCellValue('K'.$numrow, $data->name_email_custodian);
           $sheet->setCellValue('L'.$numrow, $data->desc_storage);
           $sheet->setCellValue('M'.$numrow, $data->loc_storage);
-          $sheet->setCellValue('N'.$numrow, $data->comments);
+          $sheet->setCellValue('N'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

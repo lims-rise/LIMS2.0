@@ -48,7 +48,7 @@ class O3_blood_sst extends CI_Controller
             'barcode_sst2' => $this->input->post('barcode_sst2',TRUE),
             'vol_aliquot2' => $this->sanitasi($this->input->post('vol_aliquot2',TRUE)),
             'cryobox2' => $this->input->post('cryobox2',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -69,7 +69,7 @@ class O3_blood_sst extends CI_Controller
                 'barcode_sst2' => $this->input->post('barcode_sst2',TRUE),
                 'vol_aliquot2' => $this->sanitasi($this->input->post('vol_aliquot2',TRUE)),
                 'cryobox2' => $this->input->post('cryobox2',TRUE),
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -163,7 +163,7 @@ class O3_blood_sst extends CI_Controller
           $sheet->setCellValue('G'.$numrow, $data->barcode_sst2);
           $sheet->setCellValue('H'.$numrow, $data->vol_aliquot2);
           $sheet->setCellValue('I'.$numrow, $data->cryobox2);
-          $sheet->setCellValue('J'.$numrow, $data->comments);
+          $sheet->setCellValue('J'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

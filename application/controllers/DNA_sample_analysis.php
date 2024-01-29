@@ -45,7 +45,7 @@ class DNA_sample_analysis extends CI_Controller
             'analysis_type' => $this->input->post('analysis_type',TRUE),
             'run_number' => $this->input->post('run_number',TRUE),
             'barcode_array' => $this->input->post('barcode_array',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -63,7 +63,7 @@ class DNA_sample_analysis extends CI_Controller
             'analysis_type' => $this->input->post('analysis_type',TRUE),
             'run_number' => $this->input->post('run_number',TRUE),
             'barcode_array' => $this->input->post('barcode_array',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -178,7 +178,7 @@ class DNA_sample_analysis extends CI_Controller
           $sheet->setCellValue('D'.$numrow, $data->analysis_type);
           $sheet->setCellValue('E'.$numrow, $data->run_number);
           $sheet->setCellValue('F'.$numrow, $data->barcode_array);
-          $sheet->setCellValue('G'.$numrow, $data->comments);
+          $sheet->setCellValue('G'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

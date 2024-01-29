@@ -45,11 +45,11 @@ class O2b_idexx_in extends CI_Controller
             'barcode_colilert' => $this->input->post('barcode_colilert',TRUE),
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'barcode_colilert2' => $this->input->post('barcode_colilert2',TRUE),
             'volume2' => $this->input->post('volume2',TRUE),
             'dilution2' => $this->input->post('dilution2',TRUE),
-            'comments2' => $this->input->post('comments2',TRUE),
+            'comments2' => trim($this->input->post('comments2',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -67,11 +67,11 @@ class O2b_idexx_in extends CI_Controller
             'barcode_colilert' => $this->input->post('barcode_colilert',TRUE),
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
-            'comments' => $this->input->post('comments',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
             'barcode_colilert2' => $this->input->post('barcode_colilert2',TRUE),
             'volume2' => $this->input->post('volume2',TRUE),
             'dilution2' => $this->input->post('dilution2',TRUE),
-            'comments2' => $this->input->post('comments2',TRUE),
+            'comments2' => trim($this->input->post('comments2',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
@@ -184,7 +184,7 @@ class O2b_idexx_in extends CI_Controller
           $sheet->setCellValue('H'.$numrow, $data->barcode_colilert2);
           $sheet->setCellValue('I'.$numrow, $data->volume2);
           $sheet->setCellValue('J'.$numrow, $data->dilution2);
-          $sheet->setCellValue('K'.$numrow, $data->comments2);
+          $sheet->setCellValue('K'.$numrow, trim($data->comments2));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

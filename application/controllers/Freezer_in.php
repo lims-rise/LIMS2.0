@@ -58,7 +58,7 @@ class Freezer_in extends CI_Controller
                 'id_location_80' => $freezerloc->id_location_80,
                 'need_cryobox' => $this->input->post('need_cryobox',TRUE),
                 'cryobox' => $this->input->post('cryobox',TRUE),
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_created' => $this->session->userdata('id_users'),
@@ -78,7 +78,7 @@ class Freezer_in extends CI_Controller
                 'id_location_80' => $freezerloc->id_location_80,
                 'need_cryobox' => $this->input->post('need_cryobox',TRUE),
                 'cryobox' => $this->input->post('cryobox',TRUE),
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -184,7 +184,7 @@ class Freezer_in extends CI_Controller
           $sheet->setCellValue('G'.$numrow, $data->need_cryobox);
           $sheet->setCellValue('H'.$numrow, $data->cryobox);
           $sheet->setCellValue('I'.$numrow, $data->location);
-          $sheet->setCellValue('J'.$numrow, $data->comments);
+          $sheet->setCellValue('J'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

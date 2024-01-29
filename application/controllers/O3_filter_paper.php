@@ -94,7 +94,7 @@ class O3_filter_paper extends CI_Controller
                 'id_vessel' => '1',
                 'barcode_sample' => $this->input->post('barcode_sample',TRUE),
                 'id_location_80' => $freezerloc->id_location_80,
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 'out' => '0',
                 'need_cryobox' => '1',
                 'cryobox' => $this->input->post('freezer_bag',TRUE),
@@ -115,7 +115,7 @@ class O3_filter_paper extends CI_Controller
                 'id_person' => $this->input->post('id_person',TRUE),
                 'freezer_bag' => $this->input->post('freezer_bag',TRUE),
                 'id_location_80' => $this->input->post('idfrez',TRUE),
-                'comments' => $this->input->post('comments',TRUE),
+                'comments' => trim($this->input->post('comments',TRUE)),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -222,7 +222,7 @@ class O3_filter_paper extends CI_Controller
           $sheet->setCellValue('D'.$numrow, $data->initial);
           $sheet->setCellValue('E'.$numrow, $data->freezer_bag);
           $sheet->setCellValue('F'.$numrow, $data->location);
-          $sheet->setCellValue('G'.$numrow, $data->comments);
+          $sheet->setCellValue('G'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

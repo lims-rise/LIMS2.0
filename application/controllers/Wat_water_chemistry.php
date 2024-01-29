@@ -63,7 +63,7 @@ class Wat_water_chemistry extends CI_Controller
             'sulfide' => $this->input->post('sulfide',TRUE),    
             'tot_nitrogen' => $this->input->post('tot_nitrogen',TRUE),
             'tot_phosphorous' => $this->input->post('tot_phosphorous',TRUE),    
-            'notes' => $this->input->post('notes',TRUE),
+            'notes' => trim($this->input->post('notes',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
@@ -100,7 +100,7 @@ class Wat_water_chemistry extends CI_Controller
                 'sulfide' => $this->input->post('sulfide',TRUE),    
                 'tot_nitrogen' => $this->input->post('tot_nitrogen',TRUE),
                 'tot_phosphorous' => $this->input->post('tot_phosphorous',TRUE),    
-                'notes' => $this->input->post('notes',TRUE),    
+                'notes' => trim($this->input->post('notes',TRUE)),    
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -228,7 +228,7 @@ class Wat_water_chemistry extends CI_Controller
             $sheet->setCellValue('Y'.$numrow, $data->sulfide);
             $sheet->setCellValue('Z'.$numrow, $data->tot_nitrogen);
             $sheet->setCellValue('AA'.$numrow, $data->tot_phosphorous);
-            $sheet->setCellValue('AB'.$numrow, $data->notes);
+            $sheet->setCellValue('AB'.$numrow, trim($data->notes));
             //   $no++; // Tambah 1 setiap kali looping
             $numrow++; // Tambah 1 setiap kali looping
         }
