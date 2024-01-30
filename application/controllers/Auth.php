@@ -108,11 +108,11 @@ Class Auth extends CI_Controller{
                     $this->db->where('emails', $email);
                     $this->db->delete('user_reset');
                     $this->db->insert('user_reset', $dataarray);
-                    $response = array('status' => 'success', 'message' => 'Sukses! email berhasil dikirim.');
+                    $response = array('status' => 'success', 'message' => 'Email sent.');
                     echo json_encode($response);
                 } else {
                     // Display or log the actual error message
-                    $response = array('status' => 'error', 'message' => 'Error! email tidak dapat dikirim. ' . $this->email->print_debugger());
+                    $response = array('status' => 'error', 'message' => 'Error! email cannot be sent.' . $this->email->print_debugger());
                     echo json_encode($response);
                 }
             } catch (\Throwable $th) {

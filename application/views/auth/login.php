@@ -204,6 +204,13 @@
                                 <!-- <div class="val1tip"></div> -->
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <div id="quickMessage" class="form-group"></div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer clearfix">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Request code</button>
@@ -226,6 +233,7 @@
                 <form id="formSample"  action= <?php echo site_url('Auth/savepassword') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <p>6 digit Code has been sent to your email, please check your email</p>
+                        <hr>
                         <input id="emailsend" name="emailsend" type="hidden" class="form-control input-sm">
                         <div class="form-group">
                             <label for="code" class="col-sm-4 control-label">Your Code?</label>
@@ -343,22 +351,16 @@
             // $('.val1tip').tooltipster('hide');   
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Forget Password ?<span id="my-another-cool-loader"></span>');
             $('#email').val('');
+            $('#quickMessage').empty();
             $('#compose-modal').modal('show');
         });
 
-        // $('#formSample').submit(function(e) {
-        //     e.preventDefault();
-        //     // Perform your form submission logic here
-        //     // For demonstration purposes, let's assume the form is successfully submitted
-        //     // You may want to use AJAX to submit the form data to your server
-        //     // Show the second modal after the form is submitted
-        //     $('#modal-title').html('<i class="fa fa-wpforms"></i> Reset Password ?<span id="my-another-cool-loader"></span>');
-        //     $('#code').val('');
-        //     $('#new_pass').val('');
-        //     $('#reset-modal').modal('show');
-        // });            
-
         $('#formSample').submit(function(e) {
+            $('#quickMessage').empty();
+            var loadingMessage = $('<p></p>').addClass('text-info').text('Checking your email and sending your code, please wait...');
+            $('#quickMessage').append(loadingMessage);
+
+            $('#formSample button[type="submit"]').prop('disabled', true);
             e.preventDefault();
             // Get form data
             var formData = $(this).serialize();
@@ -373,6 +375,9 @@
                     // Handle the server response here
                     // Show the second modal after the form is successfully submitted
                     if (response.status === 'success') {
+                        // $('#responseMessage').html('<p class="text-' + response.status + '">' + response.message + '</p>');
+
+                        $('#formSample button[type="submit"]').prop('disabled', false);
                         $('#modal-title').html('<i class="fa fa-wpforms"></i> Reset Password<span id="my-another-cool-loader"></span>');
                         $('#emailsend').val($('#email').val());
                         $('#code').val('');
@@ -381,7 +386,12 @@
                         $('#reset-modal').modal('show');
                     }
                     else {
-                        alert(response.message);
+                        // alert(response.message);
+                        $('#quickMessage').empty();
+                        var loadingMessage = $('<p></p>').addClass('text-info').text('Email not found, please enter the correct LIMS login email');
+                        $('#quickMessage').append(loadingMessage);
+                        $('#email').val('');
+                        $('#formSample button[type="submit"]').prop('disabled', false);
                     }
                 },
                 error: function(xhr, status, error) {
