@@ -159,10 +159,11 @@ class O2b_other_lab_model extends CI_Model
 
       function gen_ctrl($wtyp){
         $ctrl = array('15', '16', '17');
-        $this->db->select("CONCAT('CTRL-W-', LPAD(CONVERT(COUNT(*)+1,CHAR) ,5,'0')) AS new_bar");
+        $this->db->select("CONCAT('CTRL-W-', LPAD(CONVERT(RIGHT(MAX(barcode_sample), 5)+1,CHAR) ,5,'0')) AS new_bar");
         $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
         $this->db->where_in('id_type2bwat', $ctrl);
+        $this->db->order_by('barcode_sample', 'ASC');
         $q = $this->db->get('obj2b_chemistry');
         $response = $q->result_array();
         return $response;
