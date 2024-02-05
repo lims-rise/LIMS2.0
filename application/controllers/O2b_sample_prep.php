@@ -89,7 +89,7 @@ class O2b_sample_prep extends CI_Controller
     public function save_detail1() 
     {
         $mode_det1 = $this->input->post('mode_det1',TRUE);
-        $id = $this->input->post('barcode_bootsock1',TRUE);
+        $id = $this->input->post('barcode_sample1',TRUE);
         $dt = new DateTime();
 
         if ($mode_det1=="insert"){
@@ -133,7 +133,7 @@ class O2b_sample_prep extends CI_Controller
     public function save_detail2() 
     {
         $mode_det2 = $this->input->post('mode_det2',TRUE);
-        $id = $this->input->post('barcode_bootsock2',TRUE);
+        $id = $this->input->post('barcode_sample2',TRUE);
         $dt = new DateTime();
 
         if ($mode_det2=="insert"){

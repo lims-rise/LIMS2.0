@@ -733,9 +733,9 @@
             // }
             $('#mode_det').val('insert');
             $('#detail-title1').html('<i class="fa fa-wpforms"></i> O2B Sample Prep - New Endetec<span id="my-another-cool-loader"></span>');
-            $('#barcode_sample1').val('');
+            $('#barcode_sample1').val(data.barcode_sample);
             $('#barcode_endetec').attr('readonly', false);
-            $('#barcode_endetec').val(data.barcode_bootsock);
+            $('#barcode_endetec').val('');
             $('#volume_falcon').val('');
             $('#dilution_en').attr('readonly', true);
             $('#dilution_en').val('');
@@ -758,9 +758,9 @@
             // }
             $('#mode_det2').val('insert');
             $('#detail-title2').html('<i class="fa fa-wpforms"></i> O2B Sample Prep - New IDEXX<span id="my-another-cool-loader"></span>');
-            $('#barcode_sample2').val('');
+            $('#barcode_sample2').val(data.barcode_sample);
             $('#barcode_colilert').attr('readonly', false);
-            $('#barcode_colilert').val(data.barcode_bootsock);
+            $('#barcode_colilert').val('');
             $('#volume').val('');
             $('#dilution_id').attr('readonly', true);
             $('#dilution_id').val('');
