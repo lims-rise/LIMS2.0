@@ -44,7 +44,7 @@ class O2b_sample_prep extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        // $id = $this->input->post('idbc',TRUE);
+        $id = $this->input->post('barcode_sample',TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){

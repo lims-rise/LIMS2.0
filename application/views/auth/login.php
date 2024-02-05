@@ -125,6 +125,8 @@
                 <b><span style="background-color: #FFFFFF; color: #000000">LIMS</span>2.0</b>|LOGIN
             <!-- </a> -->
             </div>
+            <span id="typed-text"></span>
+
                 <?php
                 $status_login = $this->session->userdata('status_login');
                 if (empty($status_login)) {
@@ -135,6 +137,7 @@
                 }
                 ?>
                 <p class="login-box-msg <?php echo isset($messageClass) ? $messageClass : ''; ?>" style="font-size: 16px;"><?php echo $message; ?></p>
+
 
                 <?php echo form_open('auth/cheklogin'); ?>
                 <div class="form-group has-feedback">
@@ -281,10 +284,20 @@
 <script src="<?php echo base_url(); ?>/assets/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="<?php echo base_url(); ?>/assets/adminlte/plugins/iCheck/icheck.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+
 <!-- <script src="<?php //echo base_url(); ?>assets/js/jquery.backstretch.min.js"></script>
 <script src="<?php //echo base_url(); ?>assets/js/templatemo-script.js"></script> -->
 <script>
     $(document).ready(function() {
+
+        var options = {
+            strings: ["Human samples (Blood and Feces)", "Enviroment samples (Water, Sedimen, Bootsock, Animal Feces)", "Ecology samples (Mosquito and Pupae)", "DNA Extraction, DNA Analysis and DNA Consentration"], // Array of strings to be typed
+            typeSpeed: 100, // Typing speed in milliseconds
+            loop: true // Whether to loop through the strings
+        };
+
+        var typed = new Typed('#typed-text', options);
 
         var myVideo = document.getElementById("myVideo");
         if (myVideo.addEventListener) {

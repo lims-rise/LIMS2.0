@@ -151,7 +151,7 @@
                         <div class="form-group">
                             <label for="subsample_wet" class="col-sm-4 control-label">Subsample Wet Weight (g)</label>
                             <div class="col-sm-8">
-                                <input id="subsample_wet" name="subsample_wet" type="number" class="form-control" placeholder="Subsample Wet Weight (g)">
+                                <input id="subsample_wet" name="subsample_wet" type="number" step="0.01" class="form-control" placeholder="Subsample Wet Weight (g)">
                                 <!-- <div class="val1tip"></div> -->
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                             <div class="col-sm-8">
                             <select id='elution' name="elution" class="form-control">
                                 <option selected disabled>-- Select answer --</option>
-                                <option value="50">40</option>
+                                <option value="40">40</option>
                                 <option value="Other">Other</option>
                             </select>
                             </div>
