@@ -209,7 +209,7 @@
                         <div class="form-group">
                             <label for="volume_falcon" class="col-sm-4 control-label">Volume from Falcon into Endetec (mL)</label>
                             <div class="col-sm-8">
-                                <input id="volume_falcon" name="volume_falcon" type="number" class="form-control" placeholder="Volume from Falcon into Endetec (mL)">
+                                <input id="volume_falcon" name="volume_falcon" type="number" step="0.01" class="form-control" placeholder="Volume from Falcon into Endetec (mL)">
                                 <!-- <div class="val1tip"></div> -->
                             </div>
                         </div>
@@ -279,7 +279,7 @@
                         <div class="form-group">
                             <label for="volume" class="col-sm-4 control-label">Volume (mL) added in bottle</label>
                             <div class="col-sm-8">
-                                <input id="volume" name="volume" type="number" class="form-control" placeholder="Volume (mL) added in bottle">
+                                <input id="volume" name="volume" type="number" step="0.01" class="form-control" placeholder="Volume (mL) added in bottle">
                                 <!-- <div class="val1tip"></div> -->
                             </div>
                         </div>
