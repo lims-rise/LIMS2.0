@@ -277,7 +277,7 @@
         $('#bar_macsweep1').on("change", function() {
             data1 = $('#bar_macsweep1').val();
             ckbar = data1.substring(0,5).toUpperCase();
-            ckarray = ["N-J1-", "F-J1-"];
+            ckarray = ["N-S2-", "F-S2-"];
             // ckarray = [10, 11, 12];
             ck = $.inArray(ckbar, ckarray);
             if (ck == -1) {
@@ -330,7 +330,7 @@
         $('#bar_macsweep2').on("change", function() {
             data1 = $('#bar_macsweep2').val();
             ckbar = data1.substring(0,5).toUpperCase();
-            ckarray = ["N-J2-", "F-J2-"];
+            ckarray = ["N-S2-", "F-S2-"];
             // ckarray = [10, 11, 12];
             ck = $.inArray(ckbar, ckarray);
             if (ck == -1) {
