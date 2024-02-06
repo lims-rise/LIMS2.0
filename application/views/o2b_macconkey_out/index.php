@@ -281,7 +281,7 @@
             // ckarray = [10, 11, 12];
             ck = $.inArray(ckbar, ckarray);
             if (ck == -1) {
-                tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! </br> <strong> ex.(N-J1-XXXXXX / F-J1-XXXXXX) </strong> </span>');
+                tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! </br> <strong> ex.(N-S2-XXXXXX / F-S2-XXXXXX) </strong> </span>');
                 $('.val2tip').tooltipster('content', tip);
                 $('.val2tip').tooltipster('show');
                 $('#bar_macsweep1').val('');     
@@ -334,7 +334,7 @@
             // ckarray = [10, 11, 12];
             ck = $.inArray(ckbar, ckarray);
             if (ck == -1) {
-                tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! </br> <strong> ex.(N-J2-XXXXXX / F-J2-XXXXXX) </strong> </span>');
+                tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! </br> <strong> ex.(N-S2-XXXXXX / F-S2-XXXXXX) </strong> </span>');
                 $('.val3tip').tooltipster('content', tip);
                 $('.val3tip').tooltipster('show');
                 $('#bar_macsweep2').val('');     
