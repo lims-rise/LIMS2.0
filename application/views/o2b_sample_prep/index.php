@@ -460,13 +460,7 @@
                 console.log(data);
                     // var barcode = '';
                     if (data.length > 0) {
-                        // if (data.res == 1) {
-                        //     tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> not found in the reception !</span>');
-                        // }
-                        // else 
-                        // alert(data[0].res +" >> "+data[0].cnt);
-                        if ((data[0].res == "4") && (data[0].cnt == "4")) {
-                            tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already have 4 elution !</span>');
+                            tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !!</span>');
                             $('.val1tip').tooltipster('content', tip);
                             $('.val1tip').tooltipster('show');
                             $('#barcode_sample').focus();
@@ -482,24 +476,24 @@
                                 }, 300);
                             }, 300);
                         }
-                    }
-                    else {
-                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> not bootsock sample or not found in the reception !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#barcode_sample').focus();
-                        $('#barcode_sample').val('');     
-                        $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    }
+                    // }
+                    // else {
+                    //     tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> not bootsock sample or not found in the reception !</span>');
+                    //     $('.val1tip').tooltipster('content', tip);
+                    //     $('.val1tip').tooltipster('show');
+                    //     $('#barcode_sample').focus();
+                    //     $('#barcode_sample').val('');     
+                    //     $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                    //     setTimeout(function(){
+                    //         $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                    //         setTimeout(function(){
+                    //             $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                    //             setTimeout(function(){
+                    //                 $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                    //             }, 300);                            
+                    //         }, 300);
+                    //     }, 300);
+                    // }
                 }
             });
             // }

@@ -189,11 +189,11 @@ class O2b_sample_prep_model extends CI_Model
       }
 
       function validate1($id){
-        $this->db->where('A1', $id);
+        $this->db->where('barcode_sample', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
         // $q = $this->db->get('obj2b_bs_stomacher');
-        $q = $this->db->get('v_check_bs');
+        $q = $this->db->get('obj2b_sediment_prep');
         $response = $q->result_array();
         return $response;
         // return $this->db->get('ref_location_80')->row();
