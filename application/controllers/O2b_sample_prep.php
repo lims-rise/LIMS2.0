@@ -44,17 +44,17 @@ class O2b_sample_prep extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_sample',TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
 
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
                 'date_conduct' => $this->input->post('date_conduct',TRUE),
                 'elution' => $this->input->post('elution',TRUE),
                 'elu_comments' => $this->input->post('elu_comments',TRUE),
-                'barcode_tube' => $this->input->post('barcode_tube',TRUE),
+                'barcode_tube' => strtoupper($this->input->post('barcode_tube',TRUE)),
                 'subsample_wet' => $this->input->post('subsample_wet',TRUE),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
@@ -67,11 +67,11 @@ class O2b_sample_prep extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
                 'date_conduct' => $this->input->post('date_conduct',TRUE),
                 'elution' => $this->input->post('elution',TRUE),
                 'elu_comments' => $this->input->post('elu_comments',TRUE),
-                'barcode_tube' => $this->input->post('barcode_tube',TRUE),
+                'barcode_tube' => strtoupper($this->input->post('barcode_tube',TRUE)),
                 'subsample_wet' => $this->input->post('subsample_wet',TRUE),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
@@ -89,13 +89,13 @@ class O2b_sample_prep extends CI_Controller
     public function save_detail1() 
     {
         $mode_det1 = $this->input->post('mode_det1',TRUE);
-        $id = $this->input->post('barcode_sample1',TRUE);
+        $id = strtoupper($this->input->post('barcode_sample1',TRUE));
         $dt = new DateTime();
 
         if ($mode_det1=="insert"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample1',TRUE),
-                'barcode_endetec' => $this->input->post('barcode_endetec',TRUE),
+                'barcode_sample' => strtoupper($this->input->post('barcode_sample1',TRUE)),
+                'barcode_endetec' => strtoupper($this->input->post('barcode_endetec',TRUE)),
                 'volume_falcon' => $this->input->post('volume_falcon',TRUE),
                 'dilution' => $this->input->post('dilution',TRUE),
                 'time_incubation' => $this->input->post('time_incubation',TRUE),
@@ -111,8 +111,8 @@ class O2b_sample_prep extends CI_Controller
         }
         else if ($mode_det1=="edit"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample1',TRUE),
-                'barcode_endetec' => $this->input->post('barcode_endetec',TRUE),
+                'barcode_sample' => strtoupper($this->input->post('barcode_sample1',TRUE)),
+                'barcode_endetec' => strtoupper($this->input->post('barcode_endetec',TRUE)),
                 'volume_falcon' => $this->input->post('volume_falcon',TRUE),
                 'dilution' => $this->input->post('dilution',TRUE),
                 'time_incubation' => $this->input->post('time_incubation',TRUE),
@@ -133,13 +133,13 @@ class O2b_sample_prep extends CI_Controller
     public function save_detail2() 
     {
         $mode_det2 = $this->input->post('mode_det2',TRUE);
-        $id = $this->input->post(strtoupper('barcode_sample2'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample2',TRUE));
         $dt = new DateTime();
 
         if ($mode_det2=="insert"){
             $data = array(
-                'barcode_sample' => $this->input->post(strtoupper('barcode_sample2'),TRUE),
-                'barcode_colilert' => $this->input->post(strtoupper('barcode_colilert'),TRUE),
+                'barcode_sample' => strtoupper($this->input->post('barcode_sample2',TRUE)),
+                'barcode_colilert' => strtoupper($this->input->post('barcode_colilert',TRUE)),
                 'volume' => $this->input->post('volume',TRUE),
                 'dilution' => $this->input->post('dilution_id',TRUE),
                 'time_incubation' => $this->input->post('time_incubation_id',TRUE),
@@ -155,8 +155,8 @@ class O2b_sample_prep extends CI_Controller
         }
         else if ($mode_det2=="edit"){
             $data = array(
-                'barcode_sample' => $this->input->post(strtoupper('barcode_sample2'),TRUE),
-                'barcode_colilert' => $this->input->post(strtoupper('barcode_colilert'),TRUE),
+                'barcode_sample' => strtoupper($this->input->post('barcode_sample2',TRUE)),
+                'barcode_colilert' => strtoupper($this->input->post('barcode_colilert',TRUE)),
                 'volume' => $this->input->post('volume',TRUE),
                 'dilution' => $this->input->post('dilution_id',TRUE),
                 'time_incubation' => $this->input->post('time_incubation_id',TRUE),

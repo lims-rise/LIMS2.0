@@ -39,14 +39,14 @@ class O2b_bootsocks_before extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_bootsocks'),TRUE);
+        $id = strtoupper($this->input->post('barcode_bootsocks',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
 
             $data = array(
                 // 'id' => $this->input->post('idbc',TRUE),
-                'barcode_bootsocks' => $this->input->post(strtoupper('barcode_bootsocks'),TRUE),
+                'barcode_bootsocks' => strtoupper($this->input->post('barcode_bootsocks',TRUE)),
                 'date_weighed' => $this->input->post('date_weighed',TRUE),
                 'bootsock_weight_dry' => $this->input->post('bootsock_weight_dry',TRUE),
                 'comments' => trim($this->input->post('comments',TRUE)),
@@ -62,7 +62,7 @@ class O2b_bootsocks_before extends CI_Controller
         else if ($mode=="edit"){
             $data = array(
                 // 'id' => $this->input->post('idbc',TRUE),
-                'barcode_bootsocks' => $this->input->post(strtoupper('barcode_bootsocks'),TRUE),
+                'barcode_bootsocks' => strtoupper($this->input->post('barcode_bootsocks',TRUE)),
                 'date_weighed' => $this->input->post('date_weighed',TRUE),
                 'bootsock_weight_dry' => $this->input->post('bootsock_weight_dry',TRUE),
                 'comments' => trim($this->input->post('comments',TRUE)),

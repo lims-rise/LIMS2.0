@@ -38,12 +38,12 @@ class O2b_moisture_48 extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_foil'),TRUE);
+        $id = strtoupper($this->input->post('barcode_foil',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_foil' => $this->input->post(strtoupper('barcode_foil'),TRUE),
+            'barcode_foil' => strtoupper($this->input->post('barcode_foil',TRUE)),
             'date_moisture' => $this->input->post('date_moisture',TRUE),
             'dry_weight48' => $this->input->post('dry_weight48',TRUE),
             'difference' => $this->input->post('difference',TRUE),
@@ -59,6 +59,7 @@ class O2b_moisture_48 extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
+            'barcode_foil' => strtoupper($this->input->post('barcode_foil',TRUE)),
             'date_moisture' => $this->input->post('date_moisture',TRUE),
             'dry_weight48' => $this->input->post('dry_weight48',TRUE),
             'difference' => $this->input->post('difference',TRUE),

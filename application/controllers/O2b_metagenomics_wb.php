@@ -38,20 +38,20 @@ class O2b_metagenomics_wb extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
-            'barcode_falcon2' => $this->input->post(strtoupper('barcode_falcon2'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
+            'barcode_falcon2' => strtoupper($this->input->post('barcode_falcon2',TRUE)),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'volume_filtered' => $this->input->post('volume_filtered',TRUE),
             'time_started' => $this->input->post('time_started',TRUE),
             'time_finished' => $this->input->post('time_finished',TRUE),
             'time_minutes' => $this->input->post('time_minutes',TRUE),
-            'barcode_dna_bag' => $this->input->post(strtoupper('barcode_dna_bag'),TRUE),
-            'barcode_storage' => $this->input->post(strtoupper('barcode_storage'),TRUE),
+            'barcode_dna_bag' => strtoupper($this->input->post('barcode_dna_bag',TRUE)),
+            'barcode_storage' => strtoupper($this->input->post('barcode_storage',TRUE)),
             'id_location_80' => $this->input->post('id_loc',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
@@ -65,14 +65,15 @@ class O2b_metagenomics_wb extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_falcon2' => $this->input->post(strtoupper('barcode_falcon2'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
+            'barcode_falcon2' => strtoupper($this->input->post('barcode_falcon2',TRUE)),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'volume_filtered' => $this->input->post('volume_filtered',TRUE),
             'time_started' => $this->input->post('time_started',TRUE),
             'time_finished' => $this->input->post('time_finished',TRUE),
             'time_minutes' => $this->input->post('time_minutes',TRUE),
-            'barcode_dna_bag' => $this->input->post(strtoupper('barcode_dna_bag'),TRUE),
-            'barcode_storage' => $this->input->post(strtoupper('barcode_storage'),TRUE),
+            'barcode_dna_bag' => strtoupper($this->input->post('barcode_dna_bag',TRUE)),
+            'barcode_storage' => strtoupper($this->input->post('barcode_storage',TRUE)),
             'id_location_80' => $this->input->post('id_loc',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),

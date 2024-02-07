@@ -38,16 +38,16 @@ class O2b_moisture_initial extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
-            'barcode_falcon2' => $this->input->post(strtoupper('barcode_falcon2'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
+            'barcode_falcon2' => strtoupper($this->input->post('barcode_falcon2',TRUE)),
             'date_moisture' => $this->input->post('date_moisture',TRUE),
-            'barcode_bootsock' => $this->input->post(strtoupper('barcode_bootsock'),TRUE),
-            'barcode_foil' => $this->input->post(strtoupper('barcode_foil'),TRUE),
+            'barcode_bootsock' => strtoupper($this->input->post('barcode_bootsock',TRUE)),
+            'barcode_foil' => strtoupper($this->input->post('barcode_foil',TRUE)),
             'foil_weight' => $this->input->post('foil_weight',TRUE),
             'time_filter_start' => $this->input->post('time_filter_start',TRUE),
             'time_filter_finish' => $this->input->post('time_filter_finish',TRUE),
@@ -65,10 +65,11 @@ class O2b_moisture_initial extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_falcon2' => $this->input->post(strtoupper('barcode_falcon2'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
+            'barcode_falcon2' => strtoupper($this->input->post('barcode_falcon2',TRUE)),
             'date_moisture' => $this->input->post('date_moisture',TRUE),
-            'barcode_bootsock' => $this->input->post(strtoupper('barcode_bootsock'),TRUE),
-            'barcode_foil' => $this->input->post(strtoupper('barcode_foil'),TRUE),
+            'barcode_bootsock' => strtoupper($this->input->post('barcode_bootsock',TRUE)),
+            'barcode_foil' => strtoupper($this->input->post('barcode_foil',TRUE)),
             'foil_weight' => $this->input->post('foil_weight',TRUE),
             'time_filter_start' => $this->input->post('time_filter_start',TRUE),
             'time_filter_finish' => $this->input->post('time_filter_finish',TRUE),

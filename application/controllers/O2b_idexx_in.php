@@ -34,19 +34,19 @@ class O2b_idexx_in extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'time_incubation' => $this->input->post('time_incubation',TRUE),
-            'barcode_colilert' => $this->input->post(strtoupper('barcode_colilert'),TRUE),
+            'barcode_colilert' => strtoupper($this->input->post('barcode_colilert',TRUE)),
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
-            'barcode_colilert2' => $this->input->post(strtoupper('barcode_colilert2'),TRUE),
+            'barcode_colilert2' => strtoupper($this->input->post('barcode_colilert2',TRUE)),
             'volume2' => $this->input->post('volume2',TRUE),
             'dilution2' => $this->input->post('dilution2',TRUE),
             'comments2' => trim($this->input->post('comments2',TRUE)),
@@ -61,14 +61,14 @@ class O2b_idexx_in extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'time_incubation' => $this->input->post('time_incubation',TRUE),
-            'barcode_colilert' => $this->input->post(strtoupper('barcode_colilert'),TRUE),
+            'barcode_colilert' => strtoupper($this->input->post('barcode_colilert',TRUE)),
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
-            'barcode_colilert2' => $this->input->post(strtoupper('barcode_colilert2'),TRUE),
+            'barcode_colilert2' => strtoupper($this->input->post('barcode_colilert2',TRUE)),
             'volume2' => $this->input->post('volume2',TRUE),
             'dilution2' => $this->input->post('dilution2',TRUE),
             'comments2' => trim($this->input->post('comments2',TRUE)),

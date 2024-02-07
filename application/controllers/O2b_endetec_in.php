@@ -34,15 +34,15 @@ class O2b_endetec_in extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'time_incubation' => $this->input->post('time_incubation',TRUE),
-            'barcode_endetec' => $this->input->post(strtoupper('barcode_endetec'),TRUE),
+            'barcode_endetec' => strtoupper($this->input->post('barcode_endetec',TRUE)),
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
@@ -57,10 +57,10 @@ class O2b_endetec_in extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'time_incubation' => $this->input->post('time_incubation',TRUE),
-            'barcode_endetec' => $this->input->post(strtoupper('barcode_endetec'),TRUE),
+            'barcode_endetec' => strtoupper($this->input->post('barcode_endetec',TRUE)),
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
