@@ -69,8 +69,8 @@ class DNA_aliquotting extends CI_Controller
             $data = array(
             'date_aliquot' => $this->input->post('date_aliquot',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
-            'barcode_monash' => $this->input->post(strtoupper('barcode_monash'),TRUE),
-            'barcode_cambridge' => $this->input->post(strtoupper('barcode_cambridge'),TRUE),
+            'barcode_monash' => strtoupper($this->input->post('barcode_monash',TRUE)),
+            'barcode_cambridge' => strtoupper($this->input->post('barcode_cambridge',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -85,8 +85,8 @@ class DNA_aliquotting extends CI_Controller
             $data = array(
             'date_aliquot' => $this->input->post('date_aliquot',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
-            'barcode_monash' => $this->input->post(strtoupper('barcode_monash'),TRUE),
-            'barcode_cambridge' => $this->input->post(strtoupper('barcode_cambridge'),TRUE),
+            'barcode_monash' => strtoupper($this->input->post('barcode_monash',TRUE)),
+            'barcode_cambridge' => strtoupper($this->input->post('barcode_cambridge',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -138,7 +138,7 @@ class DNA_aliquotting extends CI_Controller
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_dna' => $this->input->post(strtoupper('barcode_dna'),TRUE),
+            'barcode_dna' => strtoupper($this->input->post('barcode_dna',TRUE)),
             'row_id' => $rows,
             'column_id' => $columns,
             'id_dna' => $this->input->post('id_dna',TRUE),
@@ -154,7 +154,7 @@ class DNA_aliquotting extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_dna' => $this->input->post(strtoupper('barcode_dna'),TRUE),
+            'barcode_dna' => strtoupper($this->input->post('barcode_dna',TRUE)),
             'row_id' => $rows,
             'column_id' => $columns,
             'id_dna' => $this->input->post('id_dna',TRUE),

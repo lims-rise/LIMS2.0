@@ -39,12 +39,12 @@ class O3_feces_aliquot extends CI_Controller
         //     $this->index();
         // } else {
             $mode = $this->input->post('mode',TRUE);
-            $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
+            $id = strtoupper($this->input->post('barcode_sample',TRUE));
             $dt = new DateTime();
     
             if ($mode=="insert"){
                 $data = array(
-                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+                'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
                 'date_process' => $this->input->post('date_process',TRUE),
                 'time_process' => $this->input->post('time_process',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
@@ -52,19 +52,19 @@ class O3_feces_aliquot extends CI_Controller
                 'color_stool' => $this->input->post('color_stool',TRUE),
                 'abnormal' => $this->input->post('abnormal',TRUE),
                 'ab_other' => $this->input->post('ab_other',TRUE),
-                'aliquot1' => $this->input->post(strtoupper('aliquot1'),TRUE),
+                'aliquot1' => strtoupper($this->input->post('aliquot1',TRUE)),
                 'volume1' => $this->sanitasi($this->input->post('volume1',TRUE)),
-                'cryobox1' => $this->input->post(strtoupper('cryobox1'),TRUE),
-                'aliquot2' => $this->input->post(strtoupper('aliquot2'),TRUE),
+                'cryobox1' => strtoupper($this->input->post('cryobox1',TRUE)),
+                'aliquot2' => strtoupper($this->input->post('aliquot2',TRUE)),
                 'volume2' => $this->sanitasi($this->input->post('volume2',TRUE)),
-                'cryobox2' => $this->input->post(strtoupper('cryobox2'),TRUE),
-                'aliquot3' => $this->input->post(strtoupper('aliquot3'),TRUE),
+                'cryobox2' => strtoupper($this->input->post('cryobox2',TRUE)),
+                'aliquot3' => strtoupper($this->input->post('aliquot3',TRUE)),
                 'volume3' => $this->sanitasi($this->input->post('volume3',TRUE)),
-                'cryobox3' => $this->input->post(strtoupper('cryobox3'),TRUE),
-                'aliquot_zymo' => $this->input->post(strtoupper('aliquot_zymo'),TRUE),
+                'cryobox3' => strtoupper($this->input->post('cryobox3',TRUE)),
+                'aliquot_zymo' => strtoupper($this->input->post('aliquot_zymo',TRUE)),
                 'volume_zymo' => $this->sanitasi($this->input->post('volume_zymo',TRUE)),
-                'batch_zymo' => $this->input->post(strtoupper('batch_zymo'),TRUE),
-                'cryobox_zymo' => $this->input->post(strtoupper('cryobox_zymo'),TRUE),
+                'batch_zymo' => strtoupper($this->input->post('batch_zymo',TRUE)),
+                'cryobox_zymo' => strtoupper($this->input->post('cryobox_zymo',TRUE)),
                 'comments' => trim($this->input->post('comments',TRUE)),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
@@ -77,7 +77,7 @@ class O3_feces_aliquot extends CI_Controller
             }
             else if ($mode=="edit"){
                 $data = array(
-                    'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+                    'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
                     'date_process' => $this->input->post('date_process',TRUE),
                     'time_process' => $this->input->post('time_process',TRUE),
                     'id_person' => $this->input->post('id_person',TRUE),
@@ -85,19 +85,19 @@ class O3_feces_aliquot extends CI_Controller
                     'color_stool' => $this->input->post('color_stool',TRUE),
                     'abnormal' => $this->input->post('abnormal',TRUE),
                     'ab_other' => $this->input->post('ab_other',TRUE),
-                    'aliquot1' => $this->input->post(strtoupper('aliquot1'),TRUE),
+                    'aliquot1' => strtoupper($this->input->post('aliquot1',TRUE)),
                     'volume1' => $this->sanitasi($this->input->post('volume1',TRUE)),
-                    'cryobox1' => $this->input->post(strtoupper('cryobox1'),TRUE),
-                    'aliquot2' => $this->input->post(strtoupper('aliquot2'),TRUE),
+                    'cryobox1' => strtoupper($this->input->post('cryobox1',TRUE)),
+                    'aliquot2' => strtoupper($this->input->post('aliquot2',TRUE)),
                     'volume2' => $this->sanitasi($this->input->post('volume2',TRUE)),
-                    'cryobox2' => $this->input->post(strtoupper('cryobox2'),TRUE),
-                    'aliquot3' => $this->input->post(strtoupper('aliquot3'),TRUE),
+                    'cryobox2' => strtoupper($this->input->post('cryobox2',TRUE)),
+                    'aliquot3' => strtoupper($this->input->post('aliquot3',TRUE)),
                     'volume3' => $this->sanitasi($this->input->post('volume3',TRUE)),
-                    'cryobox3' => $this->input->post(strtoupper('cryobox3'),TRUE),
-                    'aliquot_zymo' => $this->input->post(strtoupper('aliquot_zymo'),TRUE),
+                    'cryobox3' => strtoupper($this->input->post('cryobox3',TRUE)),
+                    'aliquot_zymo' => strtoupper($this->input->post('aliquot_zymo',TRUE)),
                     'volume_zymo' => $this->sanitasi($this->input->post('volume_zymo',TRUE)),
-                    'batch_zymo' => $this->input->post(strtoupper('batch_zymo'),TRUE),
-                    'cryobox_zymo' => $this->input->post(strtoupper('cryobox_zymo'),TRUE),    
+                    'batch_zymo' => strtoupper($this->input->post('batch_zymo',TRUE)),
+                    'cryobox_zymo' => strtoupper($this->input->post('cryobox_zymo',TRUE)),     
                     'comments' => trim($this->input->post('comments',TRUE)),
                     // 'uuid' => $this->uuid->v4(),
                     'lab' => $this->session->userdata('lab'),

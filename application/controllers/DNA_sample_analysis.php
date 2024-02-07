@@ -34,17 +34,17 @@ class DNA_sample_analysis extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_dna'),TRUE);
+        $id = strtoupper($this->input->post('barcode_dna',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_dna' => $this->input->post(strtoupper('barcode_dna'),TRUE),
+            'barcode_dna' => strtoupper($this->input->post('barcode_dna',TRUE)),
             'date_analysis' => $this->input->post('date_analysis',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'analysis_type' => $this->input->post('analysis_type',TRUE),
             'run_number' => $this->input->post('run_number',TRUE),
-            'barcode_array' => $this->input->post(strtoupper('barcode_array'),TRUE),
+            'barcode_array' => strtoupper($this->input->post('barcode_array',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -57,12 +57,12 @@ class DNA_sample_analysis extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_dna' => $this->input->post(strtoupper('barcode_dna'),TRUE),
+            'barcode_dna' => strtoupper($this->input->post('barcode_dna',TRUE)),
             'date_analysis' => $this->input->post('date_analysis',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'analysis_type' => $this->input->post('analysis_type',TRUE),
             'run_number' => $this->input->post('run_number',TRUE),
-            'barcode_array' => $this->input->post(strtoupper('barcode_array'),TRUE),
+            'barcode_array' => strtoupper($this->input->post('barcode_array',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),

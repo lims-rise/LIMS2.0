@@ -33,12 +33,12 @@ class Wat_water_microbiology extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_process' => $this->input->post('date_process',TRUE),
             'total_coliforms' => $this->input->post('total_coliforms',TRUE),
             'volume_ecoli' => $this->input->post('volume_ecoli',TRUE),
@@ -54,7 +54,7 @@ class Wat_water_microbiology extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+                'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
                 'date_process' => $this->input->post('date_process',TRUE),
                 'total_coliforms' => $this->input->post('total_coliforms',TRUE),
                 'volume_ecoli' => $this->input->post('volume_ecoli',TRUE),

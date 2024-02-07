@@ -37,7 +37,7 @@ class DNA_extraction extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_dna'),TRUE);
+        $id = strtoupper($this->input->post('barcode_dna',TRUE));
         // $id_f = $this->input->post('id_freez',TRUE);
         // $id_s = $this->input->post('id_shelf',TRUE);
         // $id_r = $this->input->post('id_rack',TRUE);
@@ -48,18 +48,18 @@ class DNA_extraction extends CI_Controller
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_dna' => $this->input->post(strtoupper('barcode_dna'),TRUE),
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_dna' => strtoupper($this->input->post('barcode_dna',TRUE)),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_extraction' => $this->input->post('date_extraction',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'kit_lot' => $this->input->post('kit_lot',TRUE),
             'sampletype' => $this->input->post('type',TRUE),
             'weights' => $this->input->post('weights',TRUE),
             'tube_number' => $this->input->post('tube_number',TRUE),
-            'cryobox' => $this->input->post(strtoupper('cryobox'),TRUE),
-            'barcode_metagenomics' => $this->input->post(strtoupper('barcode_metagenomics'),TRUE),
+            'cryobox' => strtoupper($this->input->post('cryobox',TRUE)),
+            'barcode_metagenomics' => strtoupper($this->input->post('barcode_metagenomics',TRUE)),
             'id_location' => $this->input->post('id_loc',TRUE),
-            'meta_box' => $this->input->post(strtoupper('meta_box'),TRUE),
+            'meta_box' => strtoupper($this->input->post('meta_box',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -72,18 +72,18 @@ class DNA_extraction extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_dna' => $this->input->post(strtoupper('barcode_dna'),TRUE),
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_dna' => strtoupper($this->input->post('barcode_dna',TRUE)),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_extraction' => $this->input->post('date_extraction',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'kit_lot' => $this->input->post('kit_lot',TRUE),
             'sampletype' => $this->input->post('type',TRUE),
             'weights' => $this->input->post('weights',TRUE),
             'tube_number' => $this->input->post('tube_number',TRUE),
-            'cryobox' => $this->input->post(strtoupper('cryobox'),TRUE),
-            'barcode_metagenomics' => $this->input->post(strtoupper('barcode_metagenomics'),TRUE),
+            'cryobox' => strtoupper($this->input->post('cryobox',TRUE)),
+            'barcode_metagenomics' => strtoupper($this->input->post('barcode_metagenomics',TRUE)),
             'id_location' => $this->input->post('id_loc',TRUE),
-            'meta_box' => $this->input->post(strtoupper('meta_box'),TRUE),
+            'meta_box' => strtoupper($this->input->post('meta_box',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),

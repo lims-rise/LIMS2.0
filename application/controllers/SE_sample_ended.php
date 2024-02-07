@@ -35,12 +35,12 @@ class SE_sample_ended extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_ended' => $this->input->post('date_ended',TRUE),
             'lab_sample_end' => $this->input->post('lab_sample_end',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
@@ -55,7 +55,7 @@ class SE_sample_ended extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_ended' => $this->input->post('date_ended',TRUE),
             'lab_sample_end' => $this->input->post('lab_sample_end',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),    

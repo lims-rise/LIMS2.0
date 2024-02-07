@@ -34,13 +34,13 @@ class DNA_sample_control extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
-            'barcode_vessel' => $this->input->post(strtoupper('barcode_vessel'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
+            'barcode_vessel' => strtoupper($this->input->post('barcode_vessel',TRUE)),
             'sample_type' => $this->input->post('sample_type',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
@@ -54,8 +54,8 @@ class DNA_sample_control extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
-            'barcode_vessel' => $this->input->post(strtoupper('barcode_vessel'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
+            'barcode_vessel' => strtoupper($this->input->post('barcode_vessel',TRUE)),
             'sample_type' => $this->input->post('sample_type',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),

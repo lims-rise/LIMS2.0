@@ -34,20 +34,20 @@ class O3_blood_sst extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_process' => $this->input->post('date_process',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
-            'barcode_sst1' => $this->input->post(strtoupper('barcode_sst1'),TRUE),
+            'barcode_sst1' => strtoupper($this->input->post('barcode_sst1',TRUE)),
             'vol_aliquot1' => $this->sanitasi($this->input->post('vol_aliquot1',TRUE)),
-            'cryobox1' => $this->input->post(strtoupper('cryobox1'),TRUE),
-            'barcode_sst2' => $this->input->post(strtoupper('barcode_sst2'),TRUE),
+            'cryobox1' => strtoupper($this->input->post('cryobox1',TRUE)),
+            'barcode_sst2' => strtoupper($this->input->post('barcode_sst2',TRUE)),
             'vol_aliquot2' => $this->sanitasi($this->input->post('vol_aliquot2',TRUE)),
-            'cryobox2' => $this->input->post(strtoupper('cryobox2'),TRUE),
+            'cryobox2' => strtoupper($this->input->post('cryobox2',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -60,15 +60,15 @@ class O3_blood_sst extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+                'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
                 'date_process' => $this->input->post('date_process',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
-                'barcode_sst1' => $this->input->post(strtoupper('barcode_sst1'),TRUE),
+                'barcode_sst1' => strtoupper($this->input->post('barcode_sst1',TRUE)),
                 'vol_aliquot1' => $this->sanitasi($this->input->post('vol_aliquot1',TRUE)),
-                'cryobox1' => $this->input->post(strtoupper('cryobox1'),TRUE),
-                'barcode_sst2' => $this->input->post(strtoupper('barcode_sst2'),TRUE),
+                'cryobox1' => strtoupper($this->input->post('cryobox1',TRUE)),
+                'barcode_sst2' => strtoupper($this->input->post('barcode_sst2',TRUE)),
                 'vol_aliquot2' => $this->sanitasi($this->input->post('vol_aliquot2',TRUE)),
-                'cryobox2' => $this->input->post(strtoupper('cryobox2'),TRUE),
+                'cryobox2' => strtoupper($this->input->post('cryobox2',TRUE)),    
                 'comments' => trim($this->input->post('comments',TRUE)),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),

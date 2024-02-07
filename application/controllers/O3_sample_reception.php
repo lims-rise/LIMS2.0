@@ -34,12 +34,12 @@ class O3_sample_reception extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_receipt' => $this->input->post('date_receipt',TRUE),
             'time_receipt' => $this->input->post('time_receipt',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
@@ -59,6 +59,7 @@ class O3_sample_reception extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_receipt' => $this->input->post('date_receipt',TRUE),
             'time_receipt' => $this->input->post('time_receipt',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),

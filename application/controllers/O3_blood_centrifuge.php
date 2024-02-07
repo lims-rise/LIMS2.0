@@ -81,12 +81,12 @@ class O3_blood_centrifuge extends CI_Controller
     public function save_detail() 
     {
         $mode_det = $this->input->post('mode_det',TRUE);
-        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode_det=="insert"){
             $data = array(
-                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+                'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
                 'comments' => trim($this->input->post('comments_det',TRUE)),
                 'id_bc' => $this->input->post('idbc_det',TRUE),
                 'uuid' => $this->uuid->v4(),
@@ -100,7 +100,7 @@ class O3_blood_centrifuge extends CI_Controller
         }
         else if ($mode_det=="edit"){
             $data = array(
-                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+                'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
                 'comments' => trim($this->input->post('comments_det',TRUE)),
                 'id_bc' => $this->input->post('idbc_det',TRUE),
                 'uuid' => $this->uuid->v4(),
