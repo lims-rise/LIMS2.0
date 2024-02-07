@@ -34,12 +34,12 @@ class O2b_endetec_out_w extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_endetec',TRUE);
+        $id = $this->input->post(strtoupper('barcode_endetec'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_endetec' => $this->input->post('barcode_endetec',TRUE),
+            'barcode_endetec' => $this->input->post(strtoupper('barcode_endetec'),TRUE),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'time_ecoli' => $this->input->post('time_ecoli',TRUE),
             'volume_ecoli' => $this->input->post('volume_ecoli',TRUE),
@@ -58,7 +58,7 @@ class O2b_endetec_out_w extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_endetec' => $this->input->post('barcode_endetec',TRUE),
+            'barcode_endetec' => $this->input->post(strtoupper('barcode_endetec'),TRUE),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'time_ecoli' => $this->input->post('time_ecoli',TRUE),
             'volume_ecoli' => $this->input->post('volume_ecoli',TRUE),

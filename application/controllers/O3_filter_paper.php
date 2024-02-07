@@ -37,7 +37,7 @@ class O3_filter_paper extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_sample',TRUE);
+        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
         $f = $this->input->post('freezer',TRUE);
         $s = $this->input->post('shelf',TRUE);
         $r = $this->input->post('rack',TRUE);
@@ -52,12 +52,12 @@ class O3_filter_paper extends CI_Controller
                 'time_in' => $this->input->post('time_process',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
                 'id_vessel' => '1',
-                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
                 'id_location_80' => $freezerloc->id_location_80,
                 'comments' => $this->input->post('comments',TRUE),
                 'out' => '0',
                 'need_cryobox' => '1',
-                'cryobox' => $this->input->post('freezer_bag',TRUE),
+                'cryobox' => $this->input->post(strtoupper('freezer_bag'),TRUE),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_created' => $this->session->userdata('id_users'),
@@ -69,11 +69,11 @@ class O3_filter_paper extends CI_Controller
             $freezid = $this->O3_filter_paper_model->getFreezerIN($id);
 
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
                 'date_process' => $this->input->post('date_process',TRUE),
                 'time_process' => $this->input->post('time_process',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
-                'freezer_bag' => $this->input->post('freezer_bag',TRUE),
+                'freezer_bag' => $this->input->post(strtoupper('freezer_bag'),TRUE),
                 'id_location_80' => $freezid->id,
                 'comments' => $this->input->post('comments',TRUE),
                 'uuid' => $this->uuid->v4(),
@@ -92,12 +92,12 @@ class O3_filter_paper extends CI_Controller
                 'time_in' => $this->input->post('time_process',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
                 'id_vessel' => '1',
-                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
                 'id_location_80' => $freezerloc->id_location_80,
                 'comments' => trim($this->input->post('comments',TRUE)),
                 'out' => '0',
                 'need_cryobox' => '1',
-                'cryobox' => $this->input->post('freezer_bag',TRUE),
+                'cryobox' => $this->input->post(strtoupper('freezer_bag'),TRUE),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
@@ -109,11 +109,11 @@ class O3_filter_paper extends CI_Controller
             $this->session->set_flashdata('message', 'Create Record Success');          
 
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
                 'date_process' => $this->input->post('date_process',TRUE),
                 'time_process' => $this->input->post('time_process',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
-                'freezer_bag' => $this->input->post('freezer_bag',TRUE),
+                'freezer_bag' => $this->input->post(strtoupper('freezer_bag'),TRUE),
                 'id_location_80' => $this->input->post('idfrez',TRUE),
                 'comments' => trim($this->input->post('comments',TRUE)),
                 // 'uuid' => $this->uuid->v4(),

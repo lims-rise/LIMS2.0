@@ -87,7 +87,7 @@ class O2a_sample_reception extends CI_Controller
 
         if ($mode_det=="insert"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
                 'id_receipt' => $this->input->post('idrec2',TRUE),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
@@ -100,7 +100,7 @@ class O2a_sample_reception extends CI_Controller
         }
         else if ($mode_det=="edit"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
                 'id_receipt' => $this->input->post('idrec2',TRUE),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),

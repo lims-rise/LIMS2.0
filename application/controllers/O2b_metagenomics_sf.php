@@ -38,21 +38,21 @@ class O2b_metagenomics_sf extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_sample',TRUE);
+        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
-            'barcode_dna1' => $this->input->post('barcode_dna1',TRUE),
+            'barcode_dna1' => $this->input->post(strtoupper('barcode_dna1'),TRUE),
             'weight_sub1' => $this->input->post('weight_sub1',TRUE),
-            'barcode_storage1' => $this->input->post('barcode_storage1',TRUE),
+            'barcode_storage1' => $this->input->post(strtoupper('barcode_storage1'),TRUE),
             'position_tube1' => $this->input->post('position_tube1',TRUE),
             'id_location_801' => $this->input->post('id_location_801',TRUE),
-            'barcode_dna2' => $this->input->post('barcode_dna2',TRUE),
+            'barcode_dna2' => $this->input->post(strtoupper('barcode_dna2'),TRUE),
             'weight_sub2' => $this->input->post('weight_sub2',TRUE),
-            'barcode_storage2' => $this->input->post('barcode_storage2',TRUE),
+            'barcode_storage2' => $this->input->post(strtoupper('barcode_storage2'),TRUE),
             'position_tube2' => $this->input->post('position_tube2',TRUE),
             'id_location_802' => $this->input->post('id_location_802',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
@@ -68,14 +68,14 @@ class O2b_metagenomics_sf extends CI_Controller
         else if ($mode=="edit"){
             $data = array(
             'date_conduct' => $this->input->post('date_conduct',TRUE),
-            'barcode_dna1' => $this->input->post('barcode_dna1',TRUE),
+            'barcode_dna1' => $this->input->post(strtoupper('barcode_dna1'),TRUE),
             'weight_sub1' => $this->input->post('weight_sub1',TRUE),
-            'barcode_storage1' => $this->input->post('barcode_storage1',TRUE),
+            'barcode_storage1' => $this->input->post(strtoupper('barcode_storage1'),TRUE),
             'position_tube1' => $this->input->post('position_tube1',TRUE),
             'id_location_801' => $this->input->post('id_location_801',TRUE),
-            'barcode_dna2' => $this->input->post('barcode_dna2',TRUE),
+            'barcode_dna2' => $this->input->post(strtoupper('barcode_dna2'),TRUE),
             'weight_sub2' => $this->input->post('weight_sub2',TRUE),
-            'barcode_storage2' => $this->input->post('barcode_storage2',TRUE),
+            'barcode_storage2' => $this->input->post(strtoupper('barcode_storage2'),TRUE),
             'position_tube2' => $this->input->post('position_tube2',TRUE),
             'id_location_802' => $this->input->post('id_location_802',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),

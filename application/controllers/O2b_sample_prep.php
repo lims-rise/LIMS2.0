@@ -133,13 +133,13 @@ class O2b_sample_prep extends CI_Controller
     public function save_detail2() 
     {
         $mode_det2 = $this->input->post('mode_det2',TRUE);
-        $id = $this->input->post('barcode_sample2',TRUE);
+        $id = $this->input->post(strtoupper('barcode_sample2'),TRUE);
         $dt = new DateTime();
 
         if ($mode_det2=="insert"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample2',TRUE),
-                'barcode_colilert' => $this->input->post('barcode_colilert',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_sample2'),TRUE),
+                'barcode_colilert' => $this->input->post(strtoupper('barcode_colilert'),TRUE),
                 'volume' => $this->input->post('volume',TRUE),
                 'dilution' => $this->input->post('dilution_id',TRUE),
                 'time_incubation' => $this->input->post('time_incubation_id',TRUE),
@@ -155,8 +155,8 @@ class O2b_sample_prep extends CI_Controller
         }
         else if ($mode_det2=="edit"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample2',TRUE),
-                'barcode_colilert' => $this->input->post('barcode_colilert',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_sample2'),TRUE),
+                'barcode_colilert' => $this->input->post(strtoupper('barcode_colilert'),TRUE),
                 'volume' => $this->input->post('volume',TRUE),
                 'dilution' => $this->input->post('dilution_id',TRUE),
                 'time_incubation' => $this->input->post('time_incubation_id',TRUE),

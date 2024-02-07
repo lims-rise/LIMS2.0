@@ -34,22 +34,22 @@ class O2b_other_lab extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_sample',TRUE);
+        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
             'id_type2bwat' => $this->input->post('id_type2bwat',TRUE),
-            'barcode_nitro' => $this->input->post('barcode_nitro',TRUE),
+            'barcode_nitro' => $this->input->post(strtoupper('barcode_nitro'),TRUE),
             '3rdparty_lab' => $this->input->post('3rdparty_lab',TRUE),
-            'barcode_nitro2' => $this->input->post('barcode_nitro2',TRUE),
+            'barcode_nitro2' => $this->input->post(strtoupper('barcode_nitro2'),TRUE),
             '3rdparty_lab2' => $this->input->post('3rdparty_lab2',TRUE),
-            'barcode_microbiology' => $this->input->post('barcode_microbiology',TRUE),
+            'barcode_microbiology' => $this->input->post(strtoupper('barcode_microbiology'),TRUE),
             '3rdparty_lab3' => $this->input->post('3rdparty_lab3',TRUE),
-            'barcode_microbiology2' => $this->input->post('barcode_microbiology2',TRUE),
+            'barcode_microbiology2' => $this->input->post(strtoupper('barcode_microbiology2'),TRUE),
             '3rdparty_lab4' => $this->input->post('3rdparty_lab4',TRUE),
-            'barcode_rise_lab' => $this->input->post('barcode_rise_lab',TRUE),
+            'barcode_rise_lab' => $this->input->post(strtoupper('barcode_rise_lab'),TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -62,17 +62,17 @@ class O2b_other_lab extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
             'id_type2bwat' => $this->input->post('id_type2bwat',TRUE),
-            'barcode_nitro' => $this->input->post('barcode_nitro',TRUE),
+            'barcode_nitro' => $this->input->post(strtoupper('barcode_nitro'),TRUE),
             '3rdparty_lab' => $this->input->post('3rdparty_lab',TRUE),
-            'barcode_nitro2' => $this->input->post('barcode_nitro2',TRUE),
+            'barcode_nitro2' => $this->input->post(strtoupper('barcode_nitro2'),TRUE),
             '3rdparty_lab2' => $this->input->post('3rdparty_lab2',TRUE),
-            'barcode_microbiology' => $this->input->post('barcode_microbiology',TRUE),
+            'barcode_microbiology' => $this->input->post(strtoupper('barcode_microbiology'),TRUE),
             '3rdparty_lab3' => $this->input->post('3rdparty_lab3',TRUE),
-            'barcode_microbiology2' => $this->input->post('barcode_microbiology2',TRUE),
+            'barcode_microbiology2' => $this->input->post(strtoupper('barcode_microbiology2'),TRUE),
             '3rdparty_lab4' => $this->input->post('3rdparty_lab4',TRUE),
-            'barcode_rise_lab' => $this->input->post('barcode_rise_lab',TRUE),
+            'barcode_rise_lab' => $this->input->post(strtoupper('barcode_rise_lab'),TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),

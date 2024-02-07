@@ -33,12 +33,12 @@ class O2a_mosquito_identifications extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('bar_storagebag',TRUE);
+        $id = $this->input->post(strtoupper('bar_storagebag'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'bar_storagebag' => $this->input->post('bar_storagebag',TRUE),
+            'bar_storagebag' => $this->input->post(strtoupper('bar_storagebag'),TRUE),
             'date_ident' => $this->input->post('date_ident',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'catch_met' => $this->input->post('catch_met',TRUE),
@@ -82,7 +82,7 @@ class O2a_mosquito_identifications extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-                'bar_storagebag' => $this->input->post('bar_storagebag',TRUE),
+                'bar_storagebag' => $this->input->post(strtoupper('bar_storagebag'),TRUE),
                 'date_ident' => $this->input->post('date_ident',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
                 'catch_met' => $this->input->post('catch_met',TRUE),

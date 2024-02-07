@@ -34,12 +34,12 @@ class Ref_unproc_sample extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_sample',TRUE);
+        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
             'date_entry' => $this->input->post('date_entry',TRUE),
             'time_entry' => $this->input->post('time_entry',TRUE),
             'comments' => $this->input->post('comments',TRUE),
@@ -54,7 +54,7 @@ class Ref_unproc_sample extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
             'date_entry' => $this->input->post('date_entry',TRUE),
             'time_entry' => $this->input->post('time_entry',TRUE),
             'comments' => $this->input->post('comments',TRUE),

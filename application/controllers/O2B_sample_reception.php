@@ -34,17 +34,17 @@ class O2B_sample_reception extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_sample',TRUE);
+        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
             'date_arrival' => $this->input->post('date_arrival',TRUE),
             'time_arrival' => $this->input->post('time_arrival',TRUE),
             'id_type2b' => $this->input->post('id_type2b',TRUE),
             'png_control' => $this->input->post('png_control',TRUE),
-            'barcode_tinytag' => $this->input->post('barcode_tinytag',TRUE),
+            'barcode_tinytag' => $this->input->post(strtoupper('barcode_tinytag'),TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -57,12 +57,12 @@ class O2B_sample_reception extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
             'date_arrival' => $this->input->post('date_arrival',TRUE),
             'time_arrival' => $this->input->post('time_arrival',TRUE),
             'id_type2b' => $this->input->post('id_type2b',TRUE),
             'png_control' => $this->input->post('png_control',TRUE),
-            'barcode_tinytag' => $this->input->post('barcode_tinytag',TRUE),
+            'barcode_tinytag' => $this->input->post(strtoupper('barcode_tinytag'),TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),

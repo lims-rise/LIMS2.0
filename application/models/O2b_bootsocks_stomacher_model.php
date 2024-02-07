@@ -178,6 +178,13 @@ class O2b_bootsocks_stomacher_model extends CI_Model
         $this->db->update($this->table, $data);
     }
 
+    function update2($id1, $id2, $data)
+    {
+        $this->db->where('barcode_sample', $id1);
+        $this->db->where('elution_no', $id2);
+        $this->db->update($this->table, $data);
+    }
+
     function insert_det1($data)
     {
         $this->db->insert('obj2b_subbs_endetec', $data);

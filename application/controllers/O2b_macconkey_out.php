@@ -33,19 +33,19 @@ class O2b_macconkey_out extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('bar_macconkey',TRUE);
+        $id = $this->input->post(strtoupper('bar_macconkey'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'bar_macconkey' => $this->input->post('bar_macconkey',TRUE),
+            'bar_macconkey' => $this->input->post(strtoupper('bar_macconkey'),TRUE),
             'date_process' => $this->input->post('date_process',TRUE),
             'time_process' => $this->input->post('time_process',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
-            'bar_macsweep1' => $this->input->post('bar_macsweep1',TRUE),
-            'cryobox1' => $this->input->post('cryobox1',TRUE),
-            'bar_macsweep2' => $this->input->post('bar_macsweep2',TRUE),
-            'cryobox2' => $this->input->post('cryobox2',TRUE),
+            'bar_macsweep1' => $this->input->post(strtoupper('bar_macsweep1'),TRUE),
+            'cryobox1' => $this->input->post(strtoupper('cryobox1'),TRUE),
+            'bar_macsweep2' => $this->input->post(strtoupper('bar_macsweep2'),TRUE),
+            'cryobox2' => $this->input->post(strtoupper('cryobox2'),TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -58,14 +58,14 @@ class O2b_macconkey_out extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'bar_macconkey' => $this->input->post('bar_macconkey',TRUE),
+            'bar_macconkey' => $this->input->post(strtoupper('bar_macconkey'),TRUE),
             'date_process' => $this->input->post('date_process',TRUE),
             'time_process' => $this->input->post('time_process',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
-            'bar_macsweep1' => $this->input->post('bar_macsweep1',TRUE),
-            'cryobox1' => $this->input->post('cryobox1',TRUE),
-            'bar_macsweep2' => $this->input->post('bar_macsweep2',TRUE),
-            'cryobox2' => $this->input->post('cryobox2',TRUE),
+            'bar_macsweep1' => $this->input->post(strtoupper('bar_macsweep1'),TRUE),
+            'cryobox1' => $this->input->post(strtoupper('cryobox1'),TRUE),
+            'bar_macsweep2' => $this->input->post(strtoupper('bar_macsweep2'),TRUE),
+            'cryobox2' => $this->input->post(strtoupper('cryobox2'),TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),

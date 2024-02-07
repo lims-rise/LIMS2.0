@@ -34,14 +34,14 @@ class O2b_macconkey_in extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('bar_macconkey',TRUE);
+        $id = $this->input->post(strtoupper('bar_macconkey'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'bar_macconkey' => $this->input->post('bar_macconkey',TRUE),
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
-            'barcode_falcon2' => $this->input->post('barcode_falcon2',TRUE),
+            'bar_macconkey' => $this->input->post(strtoupper('bar_macconkey'),TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_falcon2' => $this->input->post(strtoupper('barcode_falcon2'),TRUE),
             'date_process' => $this->input->post('date_process',TRUE),
             'time_process' => $this->input->post('time_process',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
@@ -58,8 +58,8 @@ class O2b_macconkey_in extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
-            'barcode_falcon2' => $this->input->post('barcode_falcon2',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'barcode_falcon2' => $this->input->post(strtoupper('barcode_falcon2'),TRUE),
             'date_process' => $this->input->post('date_process',TRUE),
             'time_process' => $this->input->post('time_process',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),

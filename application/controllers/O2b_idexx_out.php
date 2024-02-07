@@ -34,12 +34,12 @@ class O2b_idexx_out extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_colilert',TRUE);
+        $id = $this->input->post(strtoupper('barcode_colilert'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_colilert' => $this->input->post('barcode_colilert',TRUE),
+            'barcode_colilert' => $this->input->post(strtoupper('barcode_colilert'),TRUE),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'timeout_incubation' => $this->input->post('timeout_incubation',TRUE),
             'time_minutes' => $this->input->post('time_minutes',TRUE),

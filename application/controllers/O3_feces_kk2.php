@@ -33,12 +33,12 @@ class O3_feces_kk2 extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('bar_kkslide',TRUE);
+        $id = $this->input->post(strtoupper('bar_kkslide'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'bar_kkslide' => $this->input->post('bar_kkslide',TRUE),
+            'bar_kkslide' => $this->input->post(strtoupper('bar_kkslide'),TRUE),
             'date_process' => $this->input->post('date_process',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
             'id_person2' => $this->input->post('id_person2',TRUE),
@@ -70,7 +70,6 @@ class O3_feces_kk2 extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-                'bar_kkslide' => $this->input->post('bar_kkslide',TRUE),
                 'date_process' => $this->input->post('date_process',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
                 'id_person2' => $this->input->post('id_person2',TRUE),

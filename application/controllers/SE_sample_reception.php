@@ -35,13 +35,13 @@ class SE_sample_reception extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_sample',TRUE);
+        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
-            'new_barcode' => $this->input->post('new_barcode',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'new_barcode' => $this->input->post(strtoupper('new_barcode'),TRUE),
             'date_received' => $this->input->post('date_received',TRUE),
             'lab_received' => $this->input->post('lab_received',TRUE),
             'person' => $this->input->post('person',TRUE),
@@ -65,8 +65,8 @@ class SE_sample_reception extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
-            'new_barcode' => $this->input->post('new_barcode',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
+            'new_barcode' => $this->input->post(strtoupper('new_barcode'),TRUE),
             'date_received' => $this->input->post('date_received',TRUE),
             'lab_received' => $this->input->post('lab_received',TRUE),
             'person' => $this->input->post('person',TRUE),

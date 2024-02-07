@@ -45,18 +45,20 @@ class O2b_bootsocks_stomacher extends CI_Controller
     {
         $mode = $this->input->post('mode',TRUE);
         // $id = $this->input->post('idbc',TRUE);
+        $id1 = $this->input->post(strtoupper('barcode_sample'),TRUE);
+        $id2 = $this->input->post('elution_no',TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
 
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
                 'date_conduct' => $this->input->post('date_conduct',TRUE),
                 'elution_no' => $this->input->post('elution_no',TRUE),
-                'barcode_bootsock' => $this->input->post('barcode_bootsock',TRUE),
+                'barcode_bootsock' => $this->input->post(strtoupper('barcode_bootsock'),TRUE),
                 'elution' => $this->input->post('elution',TRUE),
                 'elu_comments' => $this->input->post('elu_comments',TRUE),
-                'barcode_falcon' => $this->input->post('barcode_falcon',TRUE),
+                'barcode_falcon' => $this->input->post(strtoupper('barcode_falcon'),TRUE),
                 'volume_stomacher' => $this->input->post('volume_stomacher',TRUE),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
@@ -69,13 +71,13 @@ class O2b_bootsocks_stomacher extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
                 'date_conduct' => $this->input->post('date_conduct',TRUE),
                 'elution_no' => $this->input->post('elution_no',TRUE),
-                'barcode_bootsock' => $this->input->post('barcode_bootsock',TRUE),
+                'barcode_bootsock' => $this->input->post(strtoupper('barcode_bootsock'),TRUE),
                 'elution' => $this->input->post('elution',TRUE),
                 'elu_comments' => $this->input->post('elu_comments',TRUE),
-                'barcode_falcon' => $this->input->post('barcode_falcon',TRUE),
+                'barcode_falcon' => $this->input->post(strtoupper('barcode_falcon'),TRUE),
                 'volume_stomacher' => $this->input->post('volume_stomacher',TRUE),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
@@ -83,7 +85,7 @@ class O2b_bootsocks_stomacher extends CI_Controller
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
                 );
 
-            $this->O2b_bootsocks_stomacher_model->update($id, $data);
+            $this->O2b_bootsocks_stomacher_model->update2($id1, $id2, $data);
             $this->session->set_flashdata('message', 'Create Record Success');    
         }
 
@@ -93,16 +95,16 @@ class O2b_bootsocks_stomacher extends CI_Controller
     public function save_detail1() 
     {
         $mode_det1 = $this->input->post('mode_det1',TRUE);
-        $id = $this->input->post('barcode_bootsock1',TRUE);
+        $id = $this->input->post(strtoupper('barcode_bootsock1'),TRUE);
         $dt = new DateTime();
 
         if ($mode_det1=="insert"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_bootsock1',TRUE),
-                'barcode_endetec' => $this->input->post('barcode_endetec',TRUE),
-                'barcode_falcon_en1' => $this->input->post('barcode_falcon_en1',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_bootsock1'),TRUE),
+                'barcode_endetec' => $this->input->post(strtoupper('barcode_endetec'),TRUE),
+                'barcode_falcon_en1' => $this->input->post(strtoupper('barcode_falcon_en1'),TRUE),
                 'volume_falcon_en1' => $this->input->post('volume_falcon_en1',TRUE),
-                'barcode_falcon_en2' => $this->input->post('barcode_falcon_en2',TRUE),
+                'barcode_falcon_en2' => $this->input->post(strtoupper('barcode_falcon_en2'),TRUE),
                 'volume_falcon_en2' => $this->input->post('volume_falcon_en2',TRUE),
                 'dilution_en' => $this->input->post('dilution_en',TRUE),
                 'time_incubation_en' => $this->input->post('time_incubation_en',TRUE),
@@ -118,11 +120,11 @@ class O2b_bootsocks_stomacher extends CI_Controller
         }
         else if ($mode_det1=="edit"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_bootsock1',TRUE),
-                'barcode_endetec' => $this->input->post('barcode_endetec',TRUE),
-                'barcode_falcon_en1' => $this->input->post('barcode_falcon_en1',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_bootsock1'),TRUE),
+                'barcode_endetec' => $this->input->post(strtoupper('barcode_endetec'),TRUE),
+                'barcode_falcon_en1' => $this->input->post(strtoupper('barcode_falcon_en1'),TRUE),
                 'volume_falcon_en1' => $this->input->post('volume_falcon_en1',TRUE),
-                'barcode_falcon_en2' => $this->input->post('barcode_falcon_en2',TRUE),
+                'barcode_falcon_en2' => $this->input->post(strtoupper('barcode_falcon_en2'),TRUE),
                 'volume_falcon_en2' => $this->input->post('volume_falcon_en2',TRUE),
                 'dilution_en' => $this->input->post('dilution_en',TRUE),
                 'time_incubation_en' => $this->input->post('time_incubation_en',TRUE),
@@ -143,16 +145,16 @@ class O2b_bootsocks_stomacher extends CI_Controller
     public function save_detail2() 
     {
         $mode_det2 = $this->input->post('mode_det2',TRUE);
-        $id = $this->input->post('barcode_bootsock2',TRUE);
+        $id = $this->input->post(strtoupper('barcode_bootsock2'),TRUE);
         $dt = new DateTime();
 
         if ($mode_det2=="insert"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_bootsock2',TRUE),
-                'barcode_colilert' => $this->input->post('barcode_colilert',TRUE),
-                'barcode_falcon_id1' => $this->input->post('barcode_falcon_id1',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_bootsock2'),TRUE),
+                'barcode_colilert' => $this->input->post(strtoupper('barcode_colilert'),TRUE),
+                'barcode_falcon_id1' => $this->input->post(strtoupper('barcode_falcon_id1'),TRUE),
                 'volume_falcon_id1' => $this->input->post('volume_falcon_id1',TRUE),
-                'barcode_falcon_id2' => $this->input->post('barcode_falcon_id2',TRUE),
+                'barcode_falcon_id2' => $this->input->post(strtoupper('barcode_falcon_id2'),TRUE),
                 'volume_falcon_id2' => $this->input->post('volume_falcon_id2',TRUE),
                 'dilution_id' => $this->input->post('dilution_id',TRUE),
                 'time_incubation_id' => $this->input->post('time_incubation_id',TRUE),
@@ -168,11 +170,11 @@ class O2b_bootsocks_stomacher extends CI_Controller
         }
         else if ($mode_det2=="edit"){
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_bootsock2',TRUE),
-                'barcode_colilert' => $this->input->post('barcode_colilert',TRUE),
-                'barcode_falcon_id1' => $this->input->post('barcode_falcon_id1',TRUE),
+                'barcode_sample' => $this->input->post(strtoupper('barcode_bootsock2'),TRUE),
+                'barcode_colilert' => $this->input->post(strtoupper('barcode_colilert'),TRUE),
+                'barcode_falcon_id1' => $this->input->post(strtoupper('barcode_falcon_id1'),TRUE),
                 'volume_falcon_id1' => $this->input->post('volume_falcon_id1',TRUE),
-                'barcode_falcon_id2' => $this->input->post('barcode_falcon_id2',TRUE),
+                'barcode_falcon_id2' => $this->input->post(strtoupper('barcode_falcon_id2'),TRUE),
                 'volume_falcon_id2' => $this->input->post('volume_falcon_id2',TRUE),
                 'dilution_id' => $this->input->post('dilution_id',TRUE),
                 'time_incubation_id' => $this->input->post('time_incubation_id',TRUE),

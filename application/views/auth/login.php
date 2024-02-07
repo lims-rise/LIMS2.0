@@ -76,37 +76,61 @@
             width: auto;
             height: auto;
         }
+
+        /* #toggleButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }         */
+/* 
+        .video-container {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            overflow: hidden; 
+        } */
+
+        /* Style the play/pause button */
+        #toggleButton {
+            position: absolute;
+            bottom: 20px; /* Adjust this value to position the button vertically */
+            right: 20px; /* Adjust this value to position the button horizontally*/
+            /* background-color: #4CAF50; */
+            background-color: transparent; 
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            z-index: 999; /* Ensure the button stays above the video*/
+        } 
+
+
     </style>
     </head>
 
-    <!-- <img src="../img/black.jpg" class="user-image" alt="User Image"> -->
-    <!-- <select id='id_country' name="id_country" class="form-control">
-        <?php
-        // $lvl = $this->session->userdata('id_user_level');  
-        // if ($lvl == 1)
-        // {
-        //     echo '
-        //     <div id="background-container"></div>
-        //     <img src="../img/dna.png">
-        //     ';
-        // }
-        // else {
-        //     echo '
-        //     <video autoplay muted loop id="myVideo">
-        //     <source src="../img/dna.mp4" type="video/mp4">
-        //     </video>    
-        //     ';
-        // }
-            ?>
-    </select>
-     -->
-        
-    <video autoplay muted loop id="myVideo">
+    <!-- <video autoplay muted loop id="myVideo">
         <source src="../img/dna.mp4" type="video/mp4">
-    </video>
+    </video> -->
 
     <body class="hold-transition login-page">
 
+    <div class="video-container">
+        <video autoplay muted loop id="myVideo">
+            <source src="../img/dna.mp4" type="video/mp4">
+        </video>
+        <!-- Toggle switch -->
+        <button id="toggleButton"><i class="fa fa-pause"></i></button>
+        <!-- <label class="switch">
+            <input type="checkbox" id="toggleButton">
+             <span class="slider round"></span>
+        </label> -->
+
+    </div>
+        
         <style>h1{
             color:white;
             font-size:55px;
@@ -119,13 +143,13 @@
             <div class="login-box-body" style="text-align: center;">
             <h1><div id="time"></div></h1>
             <div class="login-logo">
-                <!-- <a href="<?php echo base_url(); ?>"> -->
+                <!-- <a href="<?php //echo base_url(); ?>"> -->
                 <!-- <b><mark>LIMS</mark>2.0</b>|LOGIN -->
                 <!-- <img src="../img/lims_logo2.png"> -->
-                <b><span style="background-color: #FFFFFF; color: #000000">LIMS</span>2.0</b>|LOGIN
+                <b><span style="background-color: #bab8b8; color: #000000">LIMS</span>2.0</b>|LOGIN
             <!-- </a> -->
             </div>
-            <span id="typed-text"></span>
+            <!-- <span id="typed-text"></span> -->
 
                 <?php
                 $status_login = $this->session->userdata('status_login');
@@ -289,16 +313,50 @@
 <!-- <script src="<?php //echo base_url(); ?>assets/js/jquery.backstretch.min.js"></script>
 <script src="<?php //echo base_url(); ?>assets/js/templatemo-script.js"></script> -->
 <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var video = document.getElementById('myVideo');
+        var button = document.getElementById('toggleButton');
+
+        // Toggle play/pause on button click
+        button.addEventListener('click', function() {
+            if (video.paused) {
+                video.play();
+                button.innerHTML = '<i class="fa fa-pause"></i>';
+            } else {
+                video.pause();
+                button.innerHTML = '<i class="fa fa-play"></i>';
+            }
+        });
+    });
+                
+    // Add event listener for toggle switch
+    // document.getElementById('toggleButton').addEventListener('change', function() {
+    //     var video = document.getElementById('myVideo');
+    //     if (this.checked) {
+    //         video.play();
+    //     } else {
+    //         video.pause();
+    //     }
+    // });
+
     $(document).ready(function() {
 
-        var options = {
-            strings: ["Human samples (Blood and Feces)", "Enviroment samples (Water, Sedimen, Bootsock, Animal Feces)", "Ecology samples (Mosquito and Pupae)", "DNA Extraction, DNA Analysis and DNA Consentration"], // Array of strings to be typed
-            typeSpeed: 100, // Typing speed in milliseconds
-            loop: true // Whether to loop through the strings
-        };
+        // var options = {
+        //     strings: ["Human samples (Blood and Feces)", "Enviroment samples (Water, Sedimen, Bootsock, Animal Feces)", "Ecology samples (Mosquito and Pupae)", "DNA Extraction, DNA Analysis and DNA Consentration"], // Array of strings to be typed
+        //     typeSpeed: 100, // Typing speed in milliseconds
+        //     loop: true // Whether to loop through the strings
+        // };
 
-        var typed = new Typed('#typed-text', options);
-
+        // var typed = new Typed('#typed-text', options);
+        // document.getElementById('toggleButton').addEventListener('change', function() {
+        //     var video = document.getElementById('myVideo');
+        //     if (this.checked) {
+        //         video.play();
+        //     } else {
+        //         video.pause();
+        //     }
+        // });
         var myVideo = document.getElementById("myVideo");
         if (myVideo.addEventListener) {
             myVideo.addEventListener('contextmenu', function(e) {

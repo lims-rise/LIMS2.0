@@ -34,16 +34,16 @@ class O2b_blank_in extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_sample',TRUE);
+        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'time_incubation' => $this->input->post('time_incubation',TRUE),
             'blank_type' => $this->input->post('blank_type',TRUE),
-            'barcode_endidx' => $this->input->post('barcode_endidx',TRUE),
+            'barcode_endidx' => $this->input->post(strtoupper('barcode_endidx'),TRUE),
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
@@ -58,11 +58,11 @@ class O2b_blank_in extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'time_incubation' => $this->input->post('time_incubation',TRUE),
             'blank_type' => $this->input->post('blank_type',TRUE),
-            'barcode_endidx' => $this->input->post('barcode_endidx',TRUE),
+            'barcode_endidx' => $this->input->post(strtoupper('barcode_endidx'),TRUE),
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),

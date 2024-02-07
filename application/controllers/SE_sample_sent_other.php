@@ -35,12 +35,12 @@ class SE_sample_sent_other extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('barcode_sample',TRUE);
+        $id = $this->input->post(strtoupper('barcode_sample'),TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
             'date_shipped' => $this->input->post('date_shipped',TRUE),
             'volume' => $this->input->post('volume',TRUE),
             'destination' => $this->input->post('destination',TRUE),
@@ -57,7 +57,7 @@ class SE_sample_sent_other extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => $this->input->post('barcode_sample',TRUE),
+            'barcode_sample' => $this->input->post(strtoupper('barcode_sample'),TRUE),
             'date_shipped' => $this->input->post('date_shipped',TRUE),
             'volume' => $this->input->post('volume',TRUE),
             'destination' => $this->input->post('destination',TRUE),
