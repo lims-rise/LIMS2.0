@@ -59,7 +59,7 @@
                         <div class="form-group">
                             <label for="barcode_bootsocks" class="col-sm-4 control-label">Barcode bootsocks</label>
                             <div class="col-sm-8">
-                                <input id="barcode_bootsocks" name="barcode_bootsocks" type="text" class="form-control" placeholder="Barcode samplebag">
+                                <input id="barcode_bootsocks" name="barcode_bootsocks" type="text" class="form-control" placeholder="Barcode samplebag" required>
                                 <div class="val1tip"></div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <label for="bootsock_weight_wet" class="col-sm-4 control-label">Bootsock weight - wet (g)</label>
                             <div class="col-sm-8">
-                                <input id="bootsock_weight_wet" name="bootsock_weight_wet" type="number" step="0.01" class="form-control" placeholder="Bootsock weight - wet (g)">
+                                <input id="bootsock_weight_wet" name="bootsock_weight_wet" type="number" step="0.01" class="form-control" placeholder="Bootsock weight - wet (g)" required>
                             </div>
                         </div>
 
