@@ -331,8 +331,13 @@
             }, 3000);                            
         });
 
+        $('#id_person').on("change", function() {
+            $('#bar_kkslide').trigger('change');
+        });
+
         $('#bar_kkslide').on("change", function() {
             data1 = $('#bar_kkslide').val();
+            data3 = $('#id_person').val();
             ckbar = data1.substring(0,5).toUpperCase();
             ckarray = ["N-F1-", "F-F1-"];
             // ckarray = [10, 11, 12];
@@ -357,7 +362,7 @@
             else {
             $.ajax({
                 type: "GET",
-                url: "o3_feces_kk2/valid_bs?id1="+data1+"&id2=1",
+                url: "o3_feces_kk2/valid_bs?id1="+data1+"&id2=1&id3="+data3,
                 data:data1,
                 dataType: "json",
                 success: function(data) {

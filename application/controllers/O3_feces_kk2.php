@@ -128,7 +128,8 @@ class O3_feces_kk2 extends CI_Controller
     {
         $id = $this->input->get('id1');
         $type = $this->input->get('id2');
-        $data = $this->O3_feces_kk2_model->validate1($id, $type);
+        $read = $this->input->get('id3');
+        $data = $this->O3_feces_kk2_model->validate1($id, $type, $read);
         header('Content-Type: application/json');
         echo json_encode($data);
     }    

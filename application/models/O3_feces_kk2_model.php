@@ -148,9 +148,10 @@ class O3_feces_kk2_model extends CI_Model
         return $response;
       }
 
-      function validate1($id, $type){
+      function validate1($id, $type, $read){
         if($type == 1) {
             $this->db->where('bar_kkslide', $id);
+            $this->db->where('id_person', $read);
         }
         $this->db->where('flag', '0');
         $q = $this->db->get($this->table);
