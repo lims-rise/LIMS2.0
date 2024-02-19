@@ -173,7 +173,7 @@
                                 <input id="ascaris" name="ascaris" type="number" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
-                                <input id="ascaris_com" name="ascaris_com" type="text" class="form-control" placeholder="Comments" required>
+                                <input id="ascaris_com" name="ascaris_com" type="text" class="form-control" placeholder="Comments">
                             </div>
                         </div>
 
@@ -183,7 +183,7 @@
                                 <input id="hookworm" name="hookworm" type="number" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
-                                <input id="hookworm_com" name="hookworm_com" type="text" class="form-control" placeholder="Comments" required>
+                                <input id="hookworm_com" name="hookworm_com" type="text" class="form-control" placeholder="Comments">
                             </div>
                         </div>
 
@@ -193,7 +193,7 @@
                                 <input id="trichuris" name="trichuris" type="number" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
-                                <input id="trichuris_com" name="trichuris_com" type="text" class="form-control" placeholder="Comments" required>
+                                <input id="trichuris_com" name="trichuris_com" type="text" class="form-control" placeholder="Comments">
                             </div>
                         </div>
 
@@ -203,7 +203,7 @@
                                 <input id="strongyloides" name="strongyloides" type="number" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
-                                <input id="strongyloides_com" name="strongyloides_com" type="text" class="form-control" placeholder="Comments" required>
+                                <input id="strongyloides_com" name="strongyloides_com" type="text" class="form-control" placeholder="Comments">
                             </div>
                         </div>
 
@@ -213,7 +213,7 @@
                                 <input id="taenia" name="taenia" type="number" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
-                                <input id="taenia_com" name="taenia_com" type="text" class="form-control" placeholder="Comments" required>
+                                <input id="taenia_com" name="taenia_com" type="text" class="form-control" placeholder="Comments">
                             </div>
                         </div>
 
@@ -223,7 +223,7 @@
                                 <input id="other" name="other" type="number" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
-                                <input id="other_com" name="other_com" type="text" class="form-control" placeholder="Comments" required>
+                                <input id="other_com" name="other_com" type="text" class="form-control" placeholder="Comments">
                             </div>
                         </div>
 
