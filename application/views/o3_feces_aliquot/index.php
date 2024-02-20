@@ -27,16 +27,16 @@
                     <!-- <th width="30px">No</th> -->
                     <th>Barcode sample</th>
                     <th>Date process</th>
-                    <th>Time process</th>
+                    <!-- <th>Time process</th> -->
                     <th>Lab tech</th>
                     <th>Aliquot-1</th>
-                    <!-- <th>Cryobox-1</th> -->
+                    <th>Cryobox-1</th>
                     <th>Aliquot-2</th>
-                    <!-- <th>Cryobox-2</th> -->
+                    <th>Cryobox-2</th>
                     <th>Aliquot-3</th>
-                    <!-- <th>Cryobox-3</th> -->
+                    <th>Cryobox-3</th>
                     <th>Aliquot-zymo</th>
-                    <!-- <th>Cryobox-zymo</th> -->
+                    <th>Cryobox-zymo</th>
                     <th>Comments</th>
                     <th width="120px">Action</th>
                 </tr>
@@ -685,16 +685,16 @@
                 // },
                 {"data": "barcode_sample"},
                 {"data": "date_process"},
-                {"data": "time_process"},
+                // {"data": "time_process"},
                 {"data": "initial"},
                 {"data": "aliquot1"},
-                // {"data": "cryobox1"},
+                {"data": "cryobox1"},
                 {"data": "aliquot2"},
-                // {"data": "cryobox2"},
+                {"data": "cryobox2"},
                 {"data": "aliquot3"},
-                // {"data": "cryobox3"},
+                {"data": "cryobox3"},
                 {"data": "aliquot_zymo"},
-                // {"data": "cryobox_zymo"},
+                {"data": "cryobox_zymo"},
                 {"data": "comments"},
                 {
                     "data" : "action",
