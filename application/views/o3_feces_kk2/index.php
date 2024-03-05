@@ -332,7 +332,7 @@
         });
 
         $('#id_person').on("change", function() {
-            $('#bar_kkslide').trigger('change');
+            //$('#bar_kkslide').trigger('change');
         });
 
         $('#bar_kkslide').on("change", function() {
@@ -360,6 +360,7 @@
                 }, 300);
             }
             else {
+            $('#bar_kkslide').val(data1);     
             $.ajax({
                 type: "GET",
                 url: "o3_feces_kk2/valid_bs?id1="+data1+"&id2=1&id3="+data3,
