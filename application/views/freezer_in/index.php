@@ -362,7 +362,12 @@
         $('#addtombol').click(function() {
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Freezer Management - New Sample IN<span id="my-another-cool-loader"></span>');
+            var now = new Date();
+            var currentDate = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
+            var currentTime = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2) + ':' + ('0' + now.getSeconds()).slice(-2);
             $('#id').val('');
+            $('#date_in').val(currentDate);
+            $('#time_in').val(currentTime);
             $('#id_person').val('');
             $('#id_vessel').val('');
             $('#barcode_sample').val('');

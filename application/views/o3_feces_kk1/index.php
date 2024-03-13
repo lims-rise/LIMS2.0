@@ -385,8 +385,8 @@
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> O3 - Update Feces KK 1<span id="my-another-cool-loader"></span>');
             $('#barcode_sample').attr('readonly', true);
             $('#barcode_sample').val(data.barcode_sample);
-            $('#date_receipt').val(data.date_process);
-            $('#time_receipt').val(data.time_process);
+            $('#date_process').val(data.date_process);
+            $('#time_process').val(data.time_process);
             // $('#time_receipt').clockpicker({'default': data.time_receipt});
             // $("#date_receipt").datepicker("setDate",'now');
             // $('#time_receipt').timepicker('setTime', new Date());
