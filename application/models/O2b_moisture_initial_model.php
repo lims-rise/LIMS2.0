@@ -17,10 +17,12 @@ class O2b_moisture_initial_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('*');
+        $this->datatables->select('barcode_sample, barcode_falcon2, date_moisture, barcode_bootsock, barcode_foil, foil_weight, 
+        time_filter_start, time_filter_finish, wet_weight, time_incubator, comments, lab, flag');
         $this->datatables->from('obj2b_moisture1');
         $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
+
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'barcode_sample');

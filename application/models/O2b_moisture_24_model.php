@@ -17,7 +17,7 @@ class O2b_moisture_24_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('*');
+        $this->datatables->select('barcode_foil, date_moisture, dry_weight24, comments, lab, flag');
         $this->datatables->from('obj2b_moisture2');
         $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
