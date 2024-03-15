@@ -136,7 +136,7 @@
                         <div class="form-group">
                             <label for="barcode_colilert2" class="col-sm-4 control-label">Barcode colilert-2</label>
                             <div class="col-sm-8">
-                                <input id="barcode_colilert2" name="barcode_colilert2" type="text" class="form-control" placeholder="Barcode colilert-2" required>
+                                <input id="barcode_colilert2" name="barcode_colilert2" type="text" class="form-control" placeholder="Barcode colilert-2">
                                 <div class="val3tip"></div>
                             </div>
                         </div>
@@ -144,14 +144,14 @@
                         <div class="form-group">
                             <label for="volume2" class="col-sm-4 control-label">Volume-2 (mL) added</label>
                             <div class="col-sm-8">
-                                <input id="volume2" name="volume2" type="number" step="0.01"  class="form-control" placeholder="Volume-2 (mL) added" required>
+                                <input id="volume2" name="volume2" type="number" step="0.01"  class="form-control" placeholder="Volume-2 (mL) added">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="dilution2" class="col-sm-4 control-label">Dilution-2</label>
                             <div class="col-sm-8">
-                                <input id="dilution2" name="dilution2" type="text" class="form-control" placeholder="Dilution-2" required>
+                                <input id="dilution2" name="dilution2" type="text" class="form-control" placeholder="Dilution-2">
                             </div>
                         </div>
 
