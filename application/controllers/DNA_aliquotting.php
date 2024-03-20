@@ -110,6 +110,7 @@ class DNA_aliquotting extends CI_Controller
         $sql_aliq = "SELECT MAX(row_id) AS row_id, MAX(column_id) AS column_id
         FROM dna_aliquot_det
         WHERE id_dna = '$id_dna'
+        -- AND id_dna_det = '$id_dna_det'
         GROUP BY id_dna, row_id
         ORDER BY row_id DESC 
         LIMIT 1";
@@ -155,9 +156,9 @@ class DNA_aliquotting extends CI_Controller
         else if ($mode=="edit"){
             $data = array(
             'barcode_dna' => strtoupper($this->input->post('barcode_dna',TRUE)),
-            'row_id' => $rows,
-            'column_id' => $columns,
-            'id_dna' => $this->input->post('id_dna',TRUE),
+            // 'row_id' => $rows,
+            // 'column_id' => $columns,
+            // 'id_dna' => $this->input->post('id_dna',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),

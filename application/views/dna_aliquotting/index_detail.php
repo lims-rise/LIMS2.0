@@ -146,6 +146,11 @@
         var table
         $(document).ready(function() {
 
+            $('#compose-modal').on('shown.bs.modal', function () {
+                // $('#barcode_sample').val('');     
+                $('#barcode_dna').focus();
+            });        
+
             $('#addtombol').click(function() {
                 $('#mode_det').val('insert');
                 $('#id_dna_det').val('');
@@ -201,7 +206,7 @@
                         "className" : "text-center"
                     }
                 ],
-                // order: [[0, 'desc']],
+                order: [[0, 'desc'], [1, 'desc']],
                 rowCallback: function(row, data, iDisplayIndex) {
                     var info = this.fnPagingInfo();
                     var page = info.iPage;
