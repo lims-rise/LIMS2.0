@@ -17,20 +17,24 @@ class DNA_aliquotting_model extends CI_Model
 
     // datatables
     function json() {
+
         // $this->datatables->select('id_dna, date_aliquot, initial, barcode_monash, barcode_cambridge, comments, aliq,
         // id_person, lab, flag');
         // $this->datatables->from('v_dna_aliq');
         // $this->datatables->where('lab', $this->session->userdata('lab'));
         // $this->datatables->where('flag', '0');
 
+        // $this->datatables->select('a.id_dna, a.date_aliquot, b.initial, a.barcode_monash, a.barcode_cambridge, 
+        // a.comments, a.id_person, a.lab, a.flag, count(c.id_dna_det) AS aliq');
         $this->datatables->select('a.id_dna, a.date_aliquot, b.initial, a.barcode_monash, a.barcode_cambridge, 
-        a.comments, a.id_person, a.lab, a.flag, count(c.id_dna_det) AS aliq');
+        a.comments, a.id_person, a.lab, a.flag, c.num_aliq');
         $this->datatables->from('dna_aliquot a');
         $this->datatables->join('ref_person b', 'a.id_person=b.id_person', 'left');
-        $this->datatables->join('dna_aliquot_det c', 'a.id_dna=c.id_dna', 'left');
+        $this->datatables->join('v_numaliq c', 'a.id_dna=c.id_dna', 'left');
+        // $this->datatables->join('dna_aliquot_det c', 'a.id_dna=c.id_dna', 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
         $this->datatables->where('a.flag', '0');
-        $this->datatables->group_by('a.id_dna');
+        // $this->datatables->group_by('a.id_dna');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){

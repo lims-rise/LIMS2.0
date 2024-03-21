@@ -296,16 +296,16 @@
         };
 
         table = $("#mytable").DataTable({
-            initComplete: function() {
-                var api = this.api();
-                $('#mytable_filter input')
-                        .off('.DT')
-                        .on('keyup.DT', function(e) {
-                            if (e.keyCode == 13) {
-                                api.search(this.value).draw();
-                            }
-                });
-            },
+            // initComplete: function() {
+            //     var api = this.api();
+            //     $('#mytable_filter input')
+            //             .off('.DT')
+            //             .on('keyup.DT', function(e) {
+            //                 if (e.keyCode == 13) {
+            //                     api.search(this.value).draw();
+            //                 }
+            //     });
+            // },
             oLanguage: {
                 sProcessing: "loading..."
             },
@@ -340,16 +340,16 @@
         });
 
         table_det = $("#mytable_det").DataTable({
-            initComplete: function() {
-                var api = this.api();
-                $('#mytable_filter input')
-                        .off('.DT')
-                        .on('keyup.DT', function(e) {
-                            if (e.keyCode == 13) {
-                                api.search(this.value).draw();
-                            }
-                });
-            },
+            // initComplete: function() {
+            //     var api = this.api();
+            //     $('#mytable_filter input')
+            //             .off('.DT')
+            //             .on('keyup.DT', function(e) {
+            //                 if (e.keyCode == 13) {
+            //                     api.search(this.value).draw();
+            //                 }
+            //     });
+            // },
             oLanguage: {
                 sProcessing: "loading..."
             },

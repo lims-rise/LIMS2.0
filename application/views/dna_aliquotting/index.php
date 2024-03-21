@@ -295,16 +295,16 @@
         };
 
         table = $("#mytable").DataTable({
-            initComplete: function() {
-                var api = this.api();
-                $('#mytable_filter input')
-                        .off('.DT')
-                        .on('keyup.DT', function(e) {
-                            if (e.keyCode == 13) {
-                                api.search(this.value).draw();
-                            }
-                });
-            },
+            // initComplete: function() {
+            //     var api = this.api();
+            //     $('#mytable_filter input')
+            //             .off('.DT')
+            //             .on('keyup.DT', function(e) {
+            //                 if (e.keyCode == 13) {
+            //                     api.search(this.value).draw();
+            //                 }
+            //     });
+            // },
             oLanguage: {
                 sProcessing: "loading..."
             },
@@ -322,7 +322,7 @@
                 {"data": "initial"},
                 {"data": "barcode_monash"},
                 {"data": "barcode_cambridge"},
-                {"data": "aliq"},
+                {"data": "num_aliq"},
                 {"data": "comments"},
                 {
                     "data" : "action",
