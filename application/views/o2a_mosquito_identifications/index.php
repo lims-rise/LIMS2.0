@@ -373,7 +373,7 @@ $(document).ready(function() {
 
 
         $('#compose-modal').on('shown.bs.modal', function () {
-            $('#barcode_sample').focus();
+            $('#bar_storagebag').focus();
         });        
                 
         $('.val1tip').tooltipster({
@@ -398,7 +398,7 @@ $(document).ready(function() {
         $('#bar_storagebag').on("change", function() {
             data1 = $('#bar_storagebag').val();
             ckbar = data1.substring(0,6).toUpperCase();
-            ckarray = ["N0-M3-", "N0-M1-", "F0-M3-", "F0-M1-"];
+            ckarray = ["N0-M3-", "N0-M1-", "N0-M0-", "F0-M3-", "F0-M1-", "F0-M0-"];
             // ckarray = [10, 11, 12];
             ck = $.inArray(ckbar, ckarray);
             if (ck == -1) {

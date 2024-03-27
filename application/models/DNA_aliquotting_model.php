@@ -81,16 +81,16 @@ class DNA_aliquotting_model extends CI_Model
 
     function get_all()
     {
-        $q = $this->db->query('
-        SELECT c.barcode_dna, a.date_aliquot, b.initial, a.barcode_monash, a.barcode_cambridge, c.row_id, c.column_id,
-        a.comments
+        $q = $this->db->query("
+        SELECT c.barcode_dna, a.date_aliquot, b.initial, a.barcode_monash, a.barcode_cambridge, 
+        c.row_id, c.column_id, TRIM(a.comments) AS comments
         FROM dna_aliquot a
         LEFT JOIN dna_aliquot_det c ON a. id_dna = c.id_dna
         LEFT JOIN ref_person b ON a.id_person=b.id_person  
-        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+        WHERE a.lab = '".$this->session->userdata("lab")."' 
         AND a.flag = 0 
         ORDER BY a.date_aliquot
-        ');
+        ");
         $response = $q->result();
         return $response;    
     }
