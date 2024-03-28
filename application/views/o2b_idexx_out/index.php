@@ -416,7 +416,8 @@
             }
         });        
 
-        $('#timeout_incubation').on('change', function (){
+        $('#timeout_incubation').on('change keypress keyup keydown', function(event) {        
+        // $('#timeout_incubation').on('change', function (){
             var days = showDays($('#date_conduct').val(), $('#date_conduct_in').val());
             var difference = (toMinutes($('#timeout_incubation').val()) - toMinutes($('#time_incubation_in').val()));
             var result = Math.floor(difference / 60) + (24 * 60 * days);
