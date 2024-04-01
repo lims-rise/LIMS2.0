@@ -360,6 +360,8 @@ class DNA_aliquotting extends CI_Controller
         }        
 
     /* Excel File Format */
+    $spreadsheet->getActiveSheet()->setTitle($row->barcode_monash);
+
     $writer = new Xlsx($spreadsheet);
     ob_clean();
     $filename = 'DNA_Aliquot_crosstab_' . date('Ymd');
