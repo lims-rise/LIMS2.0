@@ -305,6 +305,199 @@ class DNA_aliquotting extends CI_Controller
         // $writer->save('php://output');
            
     }
+
+    public function excel_crosstab($id)
+	{
+        /* Data */
+        $data = $this->DNA_aliquotting_model->get_all_with_detail_excel($id);
+
+        $pivotedData = [];
+        foreach ($data as $row) {
+            $pivotedData[$row->row_id][$row->column_id] = $row->barcode_dna;
+        }
+    
+        /* Spreadsheet Init */
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->getColumnDimension('A')->setWidth(5); // Set width for column A
+        $sheet->getColumnDimension('B')->setWidth(12); // Set width for column B
+        $sheet->getColumnDimension('C')->setWidth(12); // Set width for column B
+        $sheet->getColumnDimension('D')->setWidth(12); // Set width for column B
+        $sheet->getColumnDimension('E')->setWidth(12); // Set width for column B
+        $sheet->getColumnDimension('F')->setWidth(12); // Set width for column B
+        $sheet->getColumnDimension('G')->setWidth(12); // Set width for column B
+        $sheet->getColumnDimension('H')->setWidth(12); // Set width for column B
+        $sheet->getColumnDimension('I')->setWidth(12); // Set width for column B
+        $sheet->getColumnDimension('J')->setWidth(12); // Set width for column B
+        $sheet->getColumnDimension('K')->setWidth(12); // Set width for column B
+        $sheet->getColumnDimension('L')->setWidth(12); // Set width for column B
+        $sheet->getColumnDimension('M')->setWidth(12); // Set width for column B
+
+        // $sheet->getStyle('A1')->getFont()->setBold(true);        
+        $sheet->setCellValue('A1', "Barcode Monash : " . $row->barcode_monash);
+        // $sheet->getStyle('A2')->getFont()->setBold(true);        
+        $sheet->setCellValue('A2', "Date Aliquot : " . $row->date_aliquot);
+        // $sheet->getStyle('A3')->getFont()->setBold(true);        
+        $sheet->setCellValue('A3', "Lab tech : " . $row->realname);
+
+        $sheet->setCellValue('A5', ' ');
+        $columnNumber = 2;
+        foreach (range(1, 12) as $number) {
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($columnNumber++);
+            $sheet->setCellValue($columnLetter . '5', $number);
+        }
+
+        // Set data rows
+        $rowNumber = 6;
+        foreach ($pivotedData as $rowId => $rowData) {
+            $sheet->setCellValue('A' . $rowNumber, $rowId); // Set row ID
+            $columnNumber = 2;
+            foreach ($rowData as $columnId => $barcodeDna) {
+                $sheet->setCellValueByColumnAndRow($columnNumber++, $rowNumber, $barcodeDna);
+            }
+            $rowNumber++;
+        }        
+
+    /* Excel File Format */
+    $writer = new Xlsx($spreadsheet);
+    ob_clean();
+    $filename = 'DNA_Aliquot_crosstab_' . date('Ymd');
+    
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+    header('Cache-Control: max-age=0');
+
+    $writer->save('php://output');
+
+        // $hcolumn = 'A';
+        // $hrow = 1;
+
+        // $sheet->getColumnDimension('A')->setWidth(5); // Set width for column A
+        // $sheet->getColumnDimension('B')->setWidth(30); // Set width for column B
+        // $sheet->getColumnDimension('C')->setWidth(5); // Set width for column B
+        // $sheet->getColumnDimension('D')->setWidth(7); // Set width for column B
+        // $sheet->getColumnDimension('E')->setWidth(15); // Set width for column B
+        // $sheet->getColumnDimension('F')->setWidth(17); // Set width for column B
+        // $sheet->getColumnDimension('G')->setWidth(30); // Set width for column B
+
+    //     //logo
+    //     $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+    //     $drawing->setName('Monash');
+    //     $drawing->setDescription('Monash');
+    //     $drawing->setPath('img/rise_logo_x.jpg'); // put your path and image here
+    //     $drawing->setCoordinates('A1');
+    //     $drawing->setOffsetX(10);
+    //     // $drawing->setRotation(25);
+    //     // $drawing->getShadow()->setVisible(true);
+    //     // $drawing->getShadow()->setDirection(45);
+    //     $drawing->setWorksheet($spreadsheet->getActiveSheet());
+
+    //     $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+    //     $drawing->setName('Monash2');
+    //     $drawing->setDescription('Monash2');
+    //     $drawing->setPath('img/monash.png'); // put your path and image here
+    //     $drawing->setCoordinates('G1');
+    //     $drawing->setOffsetX(70);
+    //     $drawing->setOffsetY(0); // Adjust the vertical offset
+
+    //     // $drawing->setRotation(25);
+    //     // $drawing->getShadow()->setVisible(true);
+    //     // $drawing->getShadow()->setDirection(45);
+    //     $drawing->setWorksheet($spreadsheet->getActiveSheet());
+
+
+    //     /* Excel Header */
+    //     $start = 8;
+    //     $sheet->getStyle($hcolumn.$start)->getFont()->setBold(true);        
+    //     $sheet->getStyle($hcolumn.$start)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);        
+    //     $sheet->setCellValue($hcolumn++ . $start, "No");
+    //     $sheet->getStyle($hcolumn.$start)->getFont()->setBold(true);        
+    //     $sheet->getStyle($hcolumn.$start)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);        
+    //     $sheet->setCellValue($hcolumn++ . $start, "Description");
+    //     $sheet->getStyle($hcolumn.$start)->getFont()->setBold(true);        
+    //     $sheet->getStyle($hcolumn.$start)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);        
+    //     $sheet->setCellValue($hcolumn++ . $start, "Qty");
+    //     $sheet->getStyle($hcolumn.$start)->getFont()->setBold(true);        
+    //     $sheet->getStyle($hcolumn.$start)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);        
+    //     $sheet->setCellValue($hcolumn++ . $start, "Unit");
+    //     $sheet->getStyle($hcolumn.$start)->getFont()->setBold(true);        
+    //     $sheet->getStyle($hcolumn.$start)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);        
+    //     $sheet->setCellValue($hcolumn++ . $start, "Unit Price IDR");
+    //     $sheet->getStyle($hcolumn.$start)->getFont()->setBold(true);        
+    //     $sheet->getStyle($hcolumn.$start)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);        
+    //     $sheet->setCellValue($hcolumn++ . $start, "Total Price IDR");
+    //     $sheet->getStyle($hcolumn.$start)->getFont()->setBold(true);        
+    //     $sheet->getStyle($hcolumn.$start)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);        
+    //     $sheet->setCellValue($hcolumn++ . $start, "Remark");
+        
+    //     /* Excel Data */
+    //     $row_number = $start+1;
+
+    //     foreach($data as $key => $row)
+    //     {
+    //         $sheet->getStyle('C2')->getFont()->setBold(true);        
+    //         $sheet->setCellValue('C2', "RISE Makassar | Budget Request");
+    //         $sheet->getStyle('C3')->getFont()->setBold(true);        
+    //         $sheet->setCellValue('C3', $row->objective);
+    //         $sheet->getStyle('C4')->getFont()->setBold(true);        
+    //         $sheet->setCellValue('C4', $row->title);
+    //         $sheet->setCellValue('G6', "Date : " . $row->date_req);
+
+    //         $column = 'A';
+    //         $sheet->setCellValue($column++ .$row_number, $key+1);
+    //         $sheet->setCellValue($column++ .$row_number, $row->items);
+    //         $sheet->setCellValue($column++ .$row_number, $row->qty);
+    //         $sheet->setCellValue($column++ .$row_number, $row->unit);
+    //         $sheet->getStyle($column.$row_number)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+    //         $sheet->setCellValue($column++ .$row_number, $row->estimate_price);
+    //         $sheet->getStyle($column.$row_number)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+    //         $sheet->setCellValue($column++ .$row_number, $row->total);
+    //         $sheet->setCellValue($column++ .$row_number, $row->remarks);
+    //         $row_number++;
+    //     }
+    //     $sheet->getStyle('F' .$row_number)->getFont()->setBold(true);        
+    //     $sheet->setCellValue('F' .$row_number, $row->sum_tot);
+    //     $row_number++;
+
+    //     $row_ex = $row_number+1;
+    //     $sheet->getStyle('A' .$row_ex)->getFont()->setBold(true);        
+    //     $sheet->setCellValue('A' .$row_ex, "Prepared,");
+    //     $sheet->getStyle('D' .$row_ex)->getFont()->setBold(true);        
+    //     $sheet->setCellValue('D' .$row_ex, "Reviewed,");
+    //     $sheet->getStyle('G' .$row_ex)->getFont()->setBold(true);        
+    //     $sheet->setCellValue('G' .$row_ex, "Approved,");
+
+    //     $row_ex2 = $row_ex+4;
+    //     $sheet->setCellValue('A' .$row_ex2, $row->realname);
+    //     $sheet->setCellValue('D' .$row_ex2, $row->reviewed);
+    //     $sheet->setCellValue('G' .$row_ex2, $row->approved);
+
+    //     $row_number--;
+    //     $sheet->getStyle("A8:G".$row_number)->applyFromArray(
+    //         array(
+    //             'borders' => [
+    //                 'allBorders' => [
+    //                     'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+    //                     // 'color' => ['argb' => '000000'],
+    //                 ],
+    //             ],
+    //         )
+    //     );
+
+    //     /* Excel File Format */
+    //     $writer = new Xlsx($spreadsheet);
+    //     ob_clean();
+    //     $filename = 'Budged_Request_' . date('Ymd');
+        
+    //     header('Content-Type: application/vnd.ms-excel');
+    //     header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
+    //     header('Cache-Control: max-age=0');
+
+    //     $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+    //     $writer->save('php://output');
+    }
+
 }
 
 /* End of file DNA_aliquotting.php */

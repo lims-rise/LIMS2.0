@@ -102,6 +102,28 @@ class DNA_aliquotting_model extends CI_Model
         return $this->db->get('v_dna_aliq')->row();
     }
 
+    function get_all_with_detail_excel($id)
+    {
+        $data = $this->db->select('a.date_aliquot, a.barcode_monash, c.realname, 
+        b.row_id, b.column_id, b.barcode_dna, a.id_dna')
+            ->from("dna_aliquot a")
+            ->join('dna_aliquot_det b', 'a.id_dna=b.id_dna', 'left')
+            ->join('ref_person c', 'a.id_person=c.id_person', 'left')
+            ->where('a.id_dna', $id)
+            ->where('a.flag', 0)
+            ->where('b.flag', 0)
+            // ->where('l.id', $this->session->userdata('location_id'))
+            ->get()->result();
+            // foreach ($data as $row) {
+            //     // Format estimate_price to show as money value
+            //     $row->estimate_price = number_format($row->estimate_price, 0, '.', ',');
+            //     // Format total_price to show as money value
+            //     $row->total = number_format($row->total, 0, '.', ',');
+            // }            
+            return $data;
+    }
+
+
     // function get_by_id_detail($id)
     // {
     //     $this->db->where('id_delivery_det', $id);

@@ -58,7 +58,11 @@
 	
 			<tr>
 				<td height = '10px'></td>
-				<td><a href="<?php echo site_url('dna_aliquotting') ?>" class="btn btn-warning">Close</a></td>
+				<td>
+                    <button type="button" name="excel" id="excel" class="btn btn-success" onclick="javascript:void(0);"><i class="fa fa-file-excel-o"></i> Excel Crosstab</button>
+                    <button type="button" name="close" id="close" class="btn btn-warning" onclick="location.href='<?php echo site_url('dna_aliquotting'); ?>';"><i class="fa fa-times"></i> Close</button>
+                            <!-- <a href="<?php // echo site_url('dna_aliquotting') ?>" class="btn btn-warning">Close</a> -->
+                </td>
 			</tr>
 	
 		</table>
@@ -140,104 +144,110 @@
 
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
-    <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
-    <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
-    <script type="text/javascript">
-        var table
-        $(document).ready(function() {
+<script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
+<script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
+<script type="text/javascript">
+    var table
+    $(document).ready(function() {
 
-            $('#compose-modal').on('shown.bs.modal', function () {
-                // $('#barcode_sample').val('');     
-                $('#barcode_dna').focus();
-            });        
+        $('#compose-modal').on('shown.bs.modal', function () {
+            // $('#barcode_sample').val('');     
+            $('#barcode_dna').focus();
+        });        
 
-            $('#addtombol').click(function() {
-                $('#mode_det').val('insert');
-                $('#id_dna_det').val('');
-                $('#barcode_dna').val('');
-                $('#comments').val('');
-                $('#compose-modal').modal('show');
-            });
-                            
-            var id_dna = $('#id_dna').val();
-            var base_url = location.hostname;
-            $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
-            {
-                return {
-                    "iStart": oSettings._iDisplayStart,
-                    "iEnd": oSettings.fnDisplayEnd(),
-                    "iLength": oSettings._iDisplayLength,
-                    "iTotal": oSettings.fnRecordsTotal(),
-                    "iFilteredTotal": oSettings.fnRecordsDisplay(),
-                    "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-                    "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-                };
-            };
 
-            table = $("#mytable1").DataTable({
-                // initComplete: function() {
-                //     var api = this.api();
-                //     $('#mytable_filter input')
-                //             .off('.DT')
-                //             .on('keyup.DT', function(e) {
-                //                 if (e.keyCode == 13) {
-                //                     api.search(this.value).draw();
-                //         }
-                //     });
-                // },
-                oLanguage: {
-                    sProcessing: "loading..."
-                },
-                processing: true,
-                serverSide: true,
-                ajax: {"url": "../../dna_aliquotting/subjson?id_dna="+id_dna, "type": "POST"},
-                columns: [
-                    // {
-                    //     "data": "id_dna_det",
-                    //     "orderable": false
-                    // },
-                    {"data": "row_id"},
-                    {"data": "column_id"},
-                    {"data": "barcode_dna"},
-                    {"data": "comments"},
-                    {
-                        "data" : "action",
-                        "orderable": false,
-                        "className" : "text-center"
-                    }
-                ],
-                order: [[0, 'desc'], [1, 'desc']],
-                rowCallback: function(row, data, iDisplayIndex) {
-                    var info = this.fnPagingInfo();
-                    var page = info.iPage;
-                    var length = info.iLength;
-                    // var index = page * length + (iDisplayIndex + 1);
-                    // $('td:eq(0)', row).html(index);
-                }
-            });
 
-            $('#mytable1').on('click', '.btn_edit', function(){
-                let tr = $(this).parent().parent()
-                let data = table.row(tr).data()
-                console.log(data);
-                // var data = this.parents('tr').data();
-                $('#mode_det').val('edit');
-                $('#modal-title').html('<i class="fa fa-pencil-square"></i> Edit DNA aliquot detail <span id="my-another-cool-loader"></span>');
-                $('#id_dna_det').val(data.id_dna_det);
-                $('#barcode_dna').val(data.barcode_dna);
-                $('#comments').val(data.comments);
-                $('#compose-modal').modal('show');
-            });    
-            
-            
-            $('#mytable1 tbody').on('click', 'tr', function () {
-                if ($(this).hasClass('active')) {
-                    $(this).removeClass('active');
-                } else {
-                    table.$('tr.active').removeClass('active');
-                    $(this).addClass('active');
-                }
-            })   
-
+        $('#addtombol').click(function() {
+            $('#mode_det').val('insert');
+            $('#id_dna_det').val('');
+            $('#barcode_dna').val('');
+            $('#comments').val('');
+            $('#compose-modal').modal('show');
         });
+                        
+        var id_dna = $('#id_dna').val();
+        var base_url = location.hostname;
+        $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
+        {
+            return {
+                "iStart": oSettings._iDisplayStart,
+                "iEnd": oSettings.fnDisplayEnd(),
+                "iLength": oSettings._iDisplayLength,
+                "iTotal": oSettings.fnRecordsTotal(),
+                "iFilteredTotal": oSettings.fnRecordsDisplay(),
+                "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+                "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
+            };
+        };
+
+        $('#excel').click(function() {
+            location.href = '../../DNA_aliquotting/excel_crosstab/'+id_dna;
+        });
+
+        table = $("#mytable1").DataTable({
+            // initComplete: function() {
+            //     var api = this.api();
+            //     $('#mytable_filter input')
+            //             .off('.DT')
+            //             .on('keyup.DT', function(e) {
+            //                 if (e.keyCode == 13) {
+            //                     api.search(this.value).draw();
+            //         }
+            //     });
+            // },
+            oLanguage: {
+                sProcessing: "loading..."
+            },
+            processing: true,
+            serverSide: true,
+            ajax: {"url": "../../dna_aliquotting/subjson?id_dna="+id_dna, "type": "POST"},
+            columns: [
+                // {
+                //     "data": "id_dna_det",
+                //     "orderable": false
+                // },
+                {"data": "row_id"},
+                {"data": "column_id"},
+                {"data": "barcode_dna"},
+                {"data": "comments"},
+                {
+                    "data" : "action",
+                    "orderable": false,
+                    "className" : "text-center"
+                }
+            ],
+            order: [[0, 'desc'], [1, 'desc']],
+            rowCallback: function(row, data, iDisplayIndex) {
+                var info = this.fnPagingInfo();
+                var page = info.iPage;
+                var length = info.iLength;
+                // var index = page * length + (iDisplayIndex + 1);
+                // $('td:eq(0)', row).html(index);
+            }
+        });
+
+        $('#mytable1').on('click', '.btn_edit', function(){
+            let tr = $(this).parent().parent()
+            let data = table.row(tr).data()
+            console.log(data);
+            // var data = this.parents('tr').data();
+            $('#mode_det').val('edit');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Edit DNA aliquot detail <span id="my-another-cool-loader"></span>');
+            $('#id_dna_det').val(data.id_dna_det);
+            $('#barcode_dna').val(data.barcode_dna);
+            $('#comments').val(data.comments);
+            $('#compose-modal').modal('show');
+        });    
+        
+        
+        $('#mytable1 tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('active')) {
+                $(this).removeClass('active');
+            } else {
+                table.$('tr.active').removeClass('active');
+                $(this).addClass('active');
+            }
+        })   
+
+    });
 </script>
