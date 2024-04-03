@@ -103,7 +103,7 @@
                         <div class="form-group">
                             <label for="dna_concentration" class="col-sm-4 control-label">DNA concentration</label>
                             <div class="col-sm-8">
-                                <input id="dna_concentration" name="dna_concentration" type="number" class="form-control" placeholder="DNA concentration" required>
+                                <input id="dna_concentration" name="dna_concentration" type="number" step="0.001" class="form-control" placeholder="DNA concentration" required>
                             </div>
                         </div>
 
@@ -349,7 +349,7 @@
         $('#addtombol').click(function() {
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> DNA - New DNA Control<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> DNA - New DNA Concentration<span id="my-another-cool-loader"></span>');
             $('#barcode_dna').attr('readonly', false);
             $('#barcode_dna').val('');
             $('#id_person').val('');
@@ -368,7 +368,7 @@
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> DNA - Update DNA Control<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> DNA - Update DNA Concentration<span id="my-another-cool-loader"></span>');
             $('#barcode_dna').attr('readonly', true);
             $('#barcode_dna').val(data.barcode_dna);
             $('#date_concentration').val(data.date_concentration);

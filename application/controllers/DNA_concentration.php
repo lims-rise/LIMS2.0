@@ -34,14 +34,15 @@ class DNA_concentration extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = strtoupper($this->input->post('barcode_sample',TRUE));
+        $id = strtoupper($this->input->post('barcode_dna',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'barcode_vessel' => strtoupper($this->input->post('barcode_vessel',TRUE)),
-            'sample_type' => $this->input->post('sample_type',TRUE),
+            'barcode_dna' => strtoupper($this->input->post('barcode_dna',TRUE)),
+            'date_concentration' => strtoupper($this->input->post('date_concentration',TRUE)),
+            'id_person' => $this->input->post('id_person',TRUE),
+            'dna_concentration' => $this->input->post('dna_concentration',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -54,9 +55,10 @@ class DNA_concentration extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'barcode_vessel' => strtoupper($this->input->post('barcode_vessel',TRUE)),
-            'sample_type' => $this->input->post('sample_type',TRUE),
+            'barcode_dna' => strtoupper($this->input->post('barcode_dna',TRUE)),
+            'date_concentration' => strtoupper($this->input->post('date_concentration',TRUE)),
+            'id_person' => $this->input->post('id_person',TRUE),
+            'dna_concentration' => $this->input->post('dna_concentration',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
