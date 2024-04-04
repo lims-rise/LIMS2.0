@@ -113,7 +113,7 @@
                         <div class="form-group">
                             <label for="volume" class="col-sm-4 control-label">Volume (mL) added</label>
                             <div class="col-sm-8">
-                                <input id="volume" name="volume" type="number" step="0.01"  class="form-control" placeholder="Volume (mL) added" required>
+                                <input id="volume" name="volume" type="number" step="0.001"  class="form-control" placeholder="Volume (mL) added" required>
                             </div>
                         </div>
 
@@ -293,11 +293,11 @@
         //     $('#time_incubation').timepicker('setTime', new Date());
         //     });
                     
-        $('#volume').on("keyup", function() {
+        $('#volume').on("keyup change click", function() {
             $('#dilution').val($('#volume').val()/100);
         });
 
-        $('#volume2').on("keyup", function() {
+        $('#volume2').on("keyup change click", function() {
             $('#dilution2').val($('#volume2').val()/100);
         });
 
@@ -521,6 +521,7 @@
             // $('#blank_type').val('');
             $('#barcode_colilert').val('');
             $('#volume').val('');
+            $('#dilution').attr('readonly', true);
             $('#dilution').val('');
             $('#comments').val('');
             $('#barcode_colilert2').val('');
@@ -545,6 +546,7 @@
             // $('#blank_type').val(data.blank_type).trigger('change');
             $('#barcode_colilert').val(data.barcode_colilert);
             $('#volume').val(data.volume);
+            $('#dilution').attr('readonly', true);
             $('#dilution').val(data.dilution);
             $('#comments').val(data.comments);
             $('#barcode_colilert2').val(data.barcode_colilert2);
