@@ -13,7 +13,7 @@
 <?php
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl != 7){
-            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New endetec OUT (B,S)</button>";
+            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Endetec Out (B,S)</button>";
         }
 ?>
         

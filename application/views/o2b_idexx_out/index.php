@@ -13,7 +13,7 @@
 <?php
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl != 7){
-            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New IDEXX IN</button>";
+            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New IDEXX Out</button>";
         }
 ?>
         
@@ -506,7 +506,7 @@
         $('#addtombol').click(function() {
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> O2B - New sample IDEXX');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> O2B - New IDEXX - Out');
             $('#barcode_colilert').attr('readonly', false);
             $('#date_conduct_in').attr('readonly', true);
             $('#time_incubation_in').attr('readonly', true);
@@ -540,7 +540,7 @@
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> O2B - Update sample idexx');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> O2B - Update IDEXX - Out');
             $('#barcode_colilert').attr('readonly', true);
             // $('#barcode_colilert').change();             
             $('#date_conduct_in').attr('readonly', true);

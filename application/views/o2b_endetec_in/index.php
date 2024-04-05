@@ -13,7 +13,7 @@
 <?php
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl != 7){
-            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New endetec IN</button>";
+            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Endetec - IN</button>";
         }
 ?>        
         <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
