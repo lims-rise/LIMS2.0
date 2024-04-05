@@ -512,7 +512,7 @@
             $('#time_incubation_in').attr('readonly', true);
             $('#dilution_in').attr('readonly', true);
             $('#barcode_colilert').val('');
-            load_dilution('');
+            // load_dilution('');
             $("#date_conduct").datepicker("setDate",'now');
             // $('#time_incubation').clockpicker("setTime", new Date());
             $('#date_conduct_in').val('');
