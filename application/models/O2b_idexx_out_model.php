@@ -185,6 +185,9 @@ class O2b_idexx_out_model extends CI_Model
         (SELECT barcode_colilert, dilution, time_incubation, flag
         FROM obj2b_idexx1
         UNION ALL 
+        SELECT barcode_colilert2, dilution2, time_incubation, flag
+        FROM obj2b_idexx1
+        UNION ALL         
         SELECT barcode_colilert, dilution, time_incubation, flag
         FROM obj2b_subbs_idexx
         UNION ALL 
