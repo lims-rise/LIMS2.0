@@ -154,7 +154,10 @@ class O2b_idexx_out_model extends CI_Model
         SELECT * FROM
         (SELECT barcode_colilert, dilution as dil, date_conduct AS date_cond, time_incubation as time_i, flag
         FROM obj2b_idexx1
-        UNION ALL 
+        UNION ALL
+        SELECT barcode_colilert2, dilution2 as dil, date_conduct AS date_cond, time_incubation as time_i, flag
+        FROM obj2b_idexx1
+        UNION ALL         
         SELECT b.barcode_colilert, b.dilution as dil, a.date_conduct AS date_cond, b.time_incubation as time_i, a.flag 
         FROM obj2b_bs_stomacher a
         LEFT JOIN obj2b_subbs_idexx b ON a.barcode_bootsock=b.barcode_sample
