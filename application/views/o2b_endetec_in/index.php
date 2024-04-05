@@ -109,7 +109,7 @@
                         <div class="form-group">
                             <label for="volume" class="col-sm-4 control-label">Volume (mL) added</label>
                             <div class="col-sm-8">
-                                <input id="volume" name="volume" type="number" step="0.01"  class="form-control" placeholder="Volume (mL) added" required>
+                                <input id="volume" name="volume" type="number" step="0.001"  class="form-control" placeholder="Volume (mL) added" required>
                             </div>
                         </div>
 
