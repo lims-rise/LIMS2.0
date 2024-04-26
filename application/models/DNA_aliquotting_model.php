@@ -113,6 +113,7 @@ class DNA_aliquotting_model extends CI_Model
             ->where('a.flag', 0)
             ->where('b.flag', 0)
             // ->where('l.id', $this->session->userdata('location_id'))
+            ->order_by('b.row_id, b.column_id ASC')
             ->get()->result();
             // foreach ($data as $row) {
             //     // Format estimate_price to show as money value
