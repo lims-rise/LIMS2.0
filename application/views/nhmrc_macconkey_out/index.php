@@ -5,7 +5,7 @@
                 <div class="box box-black box-solid">
     
                     <div class="box-header">
-                        <h3 class="box-title">Objective 2B - Macconkey out</h3>
+                        <h3 class="box-title">NHMRC - Macconkey out</h3>
                     </div>
         
         <div class="box-body">
@@ -19,7 +19,7 @@
         
         <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
         <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
-		<?php echo anchor(site_url('O2b_macconkey_out/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?></div>
+		<?php echo anchor(site_url('nhmrc_macconkey_out/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?></div>
         <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
             <thead>
                 <tr>
@@ -69,9 +69,9 @@
             <div class="modal-content">
                 <div class="modal-header box">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="modal-title">O2B - New Macconkey out</h4>
+                    <h4 class="modal-title" id="modal-title">NHMRC - New Macconkey out</h4>
                 </div>
-                <form id="formSample"  action= <?php echo site_url('O2b_macconkey_out/save') ?> method="post" class="form-horizontal">
+                <form id="formSample"  action= <?php echo site_url('nhmrc_macconkey_out/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <div class="form-group">
@@ -314,7 +314,7 @@
         function load_freez(data1) {
             $.ajax({
                 type: "GET",
-                url: "O2b_macconkey_out/load_freez?id1="+data1,
+                url: "nhmrc_macconkey_out/load_freez?id1="+data1,
                 dataType: "json",
                 success: function(data) {
                     if (data.length > 0) {
@@ -337,7 +337,7 @@
         function load_freez2(data1) {
             $.ajax({
                 type: "GET",
-                url: "O2b_macconkey_out/load_freez?id1="+data1,
+                url: "nhmrc_macconkey_out/load_freez?id1="+data1,
                 dataType: "json",
                 success: function(data) {
                     if (data.length > 0) {
@@ -360,7 +360,7 @@
         function get_freez(data1, data2, data3, data4) {
             $.ajax({
                 type: "GET",
-                url: "O2b_macconkey_out/get_freez?id1="+data1+"&id2="+data2+"&id3="+data3+"&id4="+data4,
+                url: "nhmrc_macconkey_out/get_freez?id1="+data1+"&id2="+data2+"&id3="+data3+"&id4="+data4,
                 dataType: "json",
                 success: function(data) {
                     if (data.length > 0) {
@@ -402,7 +402,7 @@
             else {
             $.ajax({
                 type: "GET",
-                url: "O2b_macconkey_out/valid_bs?id1="+data1+"&id2=1",
+                url: "nhmrc_macconkey_out/valid_bs?id1="+data1+"&id2=1",
                 data:data1,
                 dataType: "json",
                 success: function(data) {
@@ -455,7 +455,7 @@
             else {
             $.ajax({
                 type: "GET",
-                url: "O2b_macconkey_out/valid_bs?id1="+data1+"&id2=2",
+                url: "nhmrc_macconkey_out/valid_bs?id1="+data1+"&id2=2",
                 data:data1,
                 dataType: "json",
                 success: function(data) {
@@ -508,7 +508,7 @@
             else {
             $.ajax({
                 type: "GET",
-                url: "O2b_macconkey_out/valid_bs?id1="+data1+"&id2=3",
+                url: "nhmrc_macconkey_out/valid_bs?id1="+data1+"&id2=3",
                 data:data1,
                 dataType: "json",
                 success: function(data) {
@@ -566,7 +566,7 @@
             // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "O2b_macconkey_out/json", "type": "POST"},
+            ajax: {"url": "nhmrc_macconkey_out/json", "type": "POST"},
             columns: [
                 // {
                 //     "data": "barcode_sample",
@@ -600,7 +600,7 @@
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> O2B - New Macconkey out<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> NHMRC - New Macconkey out<span id="my-another-cool-loader"></span>');
             $('#bar_macconkey').attr('readonly', false);
             $('#bar_macconkey').val('');
             // $("#date_receipt").datepicker("setDate",'now');
@@ -631,7 +631,7 @@
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> O2B - Update Macconkey out<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> NHMRC - Update Macconkey out<span id="my-another-cool-loader"></span>');
             $('#bar_macconkey').attr('readonly', true);
             $('#bar_macconkey').val(data.bar_macconkey);
             $('#date_process').val(data.date_process);

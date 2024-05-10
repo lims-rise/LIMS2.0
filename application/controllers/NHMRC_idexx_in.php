@@ -6,13 +6,13 @@ if (!defined('BASEPATH'))
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     
-class O2b_macconkey_out extends CI_Controller
+class NHMRC_idexx_in extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         is_login();
-        $this->load->model(['O2b_macconkey_out_model', 'DNA_extraction_model']);
+        $this->load->model('NHMRC_idexx_in_model');
         $this->load->library('form_validation');        
 	    $this->load->library('datatables');
 	    $this->load->library('uuid');
@@ -20,78 +20,74 @@ class O2b_macconkey_out extends CI_Controller
 
     public function index()
     {
-        // $this->load->model('O2b_macconkey_out_model');
-        $data['freez1'] = $this->DNA_extraction_model->getFreezer1();
-        $data['shelf1'] = $this->DNA_extraction_model->getFreezer2();
-        $data['rack1'] = $this->DNA_extraction_model->getFreezer3();
-        $data['draw1'] = $this->DNA_extraction_model->getFreezer4();
-        $data['freez2'] = $this->DNA_extraction_model->getFreezer1();
-        $data['shelf2'] = $this->DNA_extraction_model->getFreezer2();
-        $data['rack2'] = $this->DNA_extraction_model->getFreezer3();
-        $data['draw2'] = $this->DNA_extraction_model->getFreezer4();
-
-        $data['person'] = $this->O2b_macconkey_out_model->getLabtech();
-        $this->template->load('template','O2b_macconkey_out/index', $data);
+        // $this->load->model('NHMRC_idexx_in_model');
+        // $data['person'] = $this->NHMRC_idexx_in_model->getLabtech();
+        // $data['type'] = $this->NHMRC_idexx_in_model->getSampleType();
+        $this->template->load('template','NHMRC_idexx_in/index');
     } 
     
     public function json() {
         header('Content-Type: application/json');
-        echo $this->O2b_macconkey_out_model->json();
+        echo $this->NHMRC_idexx_in_model->json();
     }
 
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = strtoupper($this->input->post('bar_macconkey',TRUE));
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'bar_macconkey' => strtoupper($this->input->post('bar_macconkey',TRUE)),
-            'date_process' => $this->input->post('date_process',TRUE),
-            'time_process' => $this->input->post('time_process',TRUE),
-            'id_person' => $this->input->post('id_person',TRUE),
-            'bar_macsweep1' => strtoupper($this->input->post('bar_macsweep1',TRUE)),
-            'cryobox1' => strtoupper($this->input->post('cryobox1',TRUE)),
-            'bar_macsweep2' => strtoupper($this->input->post('bar_macsweep2',TRUE)),
-            'cryobox2' => strtoupper($this->input->post('cryobox2',TRUE)),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
+            'date_conduct' => $this->input->post('date_conduct',TRUE),
+            'time_incubation' => $this->input->post('time_incubation',TRUE),
+            'barcode_colilert' => strtoupper($this->input->post('barcode_colilert',TRUE)),
+            'volume' => $this->input->post('volume',TRUE),
+            'dilution' => $this->input->post('dilution',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
+            'barcode_colilert2' => strtoupper($this->input->post('barcode_colilert2',TRUE)),
+            'volume2' => $this->input->post('volume2',TRUE),
+            'dilution2' => $this->input->post('dilution2',TRUE),
+            'comments2' => trim($this->input->post('comments2',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
             'date_created' => $dt->format('Y-m-d H:i:s'),
             );
  
-            $this->O2b_macconkey_out_model->insert($data);
+            $this->NHMRC_idexx_in_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');    
         }
         else if ($mode=="edit"){
             $data = array(
-            'bar_macconkey' => strtoupper($this->input->post('bar_macconkey',TRUE)),
-            'date_process' => $this->input->post('date_process',TRUE),
-            'time_process' => $this->input->post('time_process',TRUE),
-            'id_person' => $this->input->post('id_person',TRUE),
-            'bar_macsweep1' => strtoupper($this->input->post('bar_macsweep1',TRUE)),
-            'cryobox1' => strtoupper($this->input->post('cryobox1',TRUE)),
-            'bar_macsweep2' => strtoupper($this->input->post('bar_macsweep2',TRUE)),
-            'cryobox2' => strtoupper($this->input->post('cryobox2',TRUE)),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
+            'date_conduct' => $this->input->post('date_conduct',TRUE),
+            'time_incubation' => $this->input->post('time_incubation',TRUE),
+            'barcode_colilert' => strtoupper($this->input->post('barcode_colilert',TRUE)),
+            'volume' => $this->input->post('volume',TRUE),
+            'dilution' => $this->input->post('dilution',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
+            'barcode_colilert2' => strtoupper($this->input->post('barcode_colilert2',TRUE)),
+            'volume2' => $this->input->post('volume2',TRUE),
+            'dilution2' => $this->input->post('dilution2',TRUE),
+            'comments2' => trim($this->input->post('comments2',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
-            $this->O2b_macconkey_out_model->update($id, $data);
+            $this->NHMRC_idexx_in_model->update($id, $data);
             $this->session->set_flashdata('message', 'Create Record Success');    
         }
 
-        redirect(site_url("O2b_macconkey_out"));
+        redirect(site_url("NHMRC_idexx_in"));
     }
 
     public function delete($id) 
     {
-        $row = $this->O2b_macconkey_out_model->get_by_id($id);
+        $row = $this->NHMRC_idexx_in_model->get_by_id($id);
         // $id_user = $this->input->get('id', TRUE);
         // $lab = $this->input->post('id_lab');
         $data = array(
@@ -99,15 +95,42 @@ class O2b_macconkey_out extends CI_Controller
             );
 
         if ($row) {
-            // $this->O2b_macconkey_out_model->delete($id);
-            $this->O2b_macconkey_out_model->update($id, $data);
+            // $this->NHMRC_idexx_in_model->delete($id);
+            $this->NHMRC_idexx_in_model->update($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('O2b_macconkey_out'));
+            redirect(site_url('NHMRC_idexx_in'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('O2b_macconkey_out'));
+            redirect(site_url('NHMRC_idexx_in'));
         }
     }
+
+    public function valid_bs() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->NHMRC_idexx_in_model->validate1($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+
+    public function valid_bs2() 
+    {
+        $id = $this->input->get('id1');
+        // $id2 = $this->input->get('id2');
+        $data = $this->NHMRC_idexx_in_model->validate2($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    // public function valid_bs3() 
+    // {
+    //     $id = $this->input->get('id1');
+    //     $id2 = $this->input->get('id2');
+    //     $data = $this->NHMRC_idexx_in_model->validate2($id, $id2);
+    //     header('Content-Type: application/json');
+    //     echo json_encode($data);
+    // }
 
 
     // public function _rules() 
@@ -124,33 +147,6 @@ class O2b_macconkey_out extends CI_Controller
 	// $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     // }
 
-    public function load_freez() 
-    {
-        $id = $this->input->get('id1');
-        $data = $this->O2b_macconkey_out_model->load_freez($id);
-        header('Content-Type: application/json');
-        echo json_encode($data);
-    }
-
-    public function get_freez() 
-    {
-        $id1 = $this->input->get('id1');
-        $id2 = $this->input->get('id2');
-        $id3 = $this->input->get('id3');
-        $id4 = $this->input->get('id4');
-        $data = $this->O2b_macconkey_out_model->get_freez($id1, $id2, $id3, $id4);
-        header('Content-Type: application/json');
-        echo json_encode($data);
-    }
-
-    public function valid_bs()
-    {
-        $id = $this->input->get('id1');
-        $type = $this->input->get('id2');
-        $data = $this->O2b_macconkey_out_model->validate1($id, $type);
-        header('Content-Type: application/json');
-        echo json_encode($data);
-    }    
 
     public function excel()
     {
@@ -159,38 +155,42 @@ class O2b_macconkey_out extends CI_Controller
 
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', "Barcode_macconkey"); 
-        $sheet->setCellValue('B1', "Date_process"); 
-        $sheet->setCellValue('C1', "Time_process");
-        $sheet->setCellValue('D1', "Lab_tech");
-        $sheet->setCellValue('E1', "Barcode_mac_sweep1");
-        $sheet->setCellValue('F1', "Cryobox1");
-        $sheet->setCellValue('G1', "Barcode_mac_sweep2");
-        $sheet->setCellValue('H1', "Cryobox2");
-        $sheet->setCellValue('I1', "Comments");
+        $sheet->setCellValue('A1', "Barcode_sample"); 
+        $sheet->setCellValue('B1', "Date_conduct"); 
+        $sheet->setCellValue('C1', "Time_incubation_started");
+        $sheet->setCellValue('D1', "Barcode_colilert");
+        $sheet->setCellValue('E1', "Volume(mL)added_in_bottle");
+        $sheet->setCellValue('F1', "Dilution");
+        $sheet->setCellValue('G1', "Comments");
+        $sheet->setCellValue('H1', "Barcode_colilert_2");
+        $sheet->setCellValue('I1', "Volume_2(mL)added_in_bottle");
+        $sheet->setCellValue('J1', "Dilution_2");
+        $sheet->setCellValue('K1', "Comments_2");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
-        $rdeliver = $this->O2b_macconkey_out_model->get_all();
+        $rdeliver = $this->NHMRC_idexx_in_model->get_all();
     
         // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
         $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
-          $sheet->setCellValue('A'.$numrow, $data->bar_macconkey);
-          $sheet->setCellValue('B'.$numrow, $data->date_process);
-          $sheet->setCellValue('C'.$numrow, $data->time_process);
-          $sheet->setCellValue('D'.$numrow, $data->initial);
-          $sheet->setCellValue('E'.$numrow, $data->bar_macsweep1);
-          $sheet->setCellValue('F'.$numrow, $data->cryobox1);
-          $sheet->setCellValue('G'.$numrow, $data->bar_macsweep2);
-          $sheet->setCellValue('H'.$numrow, $data->cryobox2);
-          $sheet->setCellValue('I'.$numrow, trim($data->comments));
+          $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
+          $sheet->setCellValue('B'.$numrow, $data->date_conduct);
+          $sheet->setCellValue('C'.$numrow, $data->time_incubation);
+          $sheet->setCellValue('D'.$numrow, $data->barcode_colilert);
+          $sheet->setCellValue('E'.$numrow, $data->volume);
+          $sheet->setCellValue('F'.$numrow, $data->dilution);
+          $sheet->setCellValue('G'.$numrow, $data->comments);
+          $sheet->setCellValue('H'.$numrow, $data->barcode_colilert2);
+          $sheet->setCellValue('I'.$numrow, $data->volume2);
+          $sheet->setCellValue('J'.$numrow, $data->dilution2);
+          $sheet->setCellValue('K'.$numrow, trim($data->comments2));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
     $datenow=date("Ymd");
-    $fileName = 'O2B_Macconkey_OUT_'.$datenow.'.csv';
+    $fileName = 'NHMRC_idexx_in_(Water)_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya
@@ -227,8 +227,8 @@ class O2b_macconkey_out extends CI_Controller
     }
 }
 
-/* End of file O2b_macconkey_out.php */
-/* Location: ./application/controllers/O2b_macconkey_out.php */
+/* End of file NHMRC_idexx_in.php */
+/* Location: ./application/controllers/NHMRC_idexx_in.php */
 /* Please DO NOT modify this information : */
 /* Generated by Harviacode Codeigniter CRUD Generator 2022-12-14 03:38:42 */
 /* http://harviacode.com */

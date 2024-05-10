@@ -7,30 +7,26 @@
                 <div class="box box-primary box-solid">
 
                     <div class="box-header">
-                        <h3 class="box-title">REPORTS - Objective 2B REPORT</h3>
+                        <h3 class="box-title">REPORTS - NHMRC REPORT</h3>
                     </div>
                     <div id="buttonContainer" class="box-body">
-                        <a class="btn btn-success btn-sm" id="o2b_reception" href="O2B_sample_reception/excel"><i class="fa fa-file-excel-o"></i><br />Reception</a> 
-                        <a class="btn btn-success btn-sm" id="o2b_bootsock_stomacher" href="O2b_bootsocks_stomacher/excel"><i class="fa fa-file-excel-o"></i><br />B.Stomacher</a>
-                        <a class="btn btn-success btn-sm" id="o2b_weight_before" href="O2b_bootsocks_before/excel"><i class="fa fa-file-excel-o"></i><br />B.Before</a>
-                        <a class="btn btn-success btn-sm" id="o2b_weight_after" href="O2b_bootsocks_after/excel"><i class="fa fa-file-excel-o"></i><br />B.After</a>
-                        <a class="btn btn-success btn-sm" id="o2b_sediment_sampleprep" href="O2b_sample_prep/excel"><i class="fa fa-file-excel-o"></i><br />S.Sampleprep</a>
-                        <a class="btn btn-success btn-sm" id="o2b_otherlab" href="O2b_other_lab/excel"><i class="fa fa-file-excel-o"></i><br />Other Lab</a>
-                        <a class="btn btn-success btn-sm" id="o2b_blank" href="O2b_blank_in/excel"><i class="fa fa-file-excel-o"></i><br />Blank IN</a>
-                        <a class="btn btn-success btn-sm" id="o2b_endetec_inw" href="O2b_endetec_in/excel"><i class="fa fa-file-excel-o"></i><br />Endetec In(W)</a>
-                        <a class="btn btn-success btn-sm" id="o2b_endetec_outw" href="O2b_endetec_out_w/excel"><i class="fa fa-file-excel-o"></i><br />Endetec Out(W)</a>
-                        <a class="btn btn-success btn-sm" id="o2b_endetec_outbs" href="O2b_endetec_out_bs/excel"><i class="fa fa-file-excel-o"></i><br />Endetec Out(BS)</a>
-                        <a class="btn btn-success btn-sm" id="o2b_idexx_in" href="O2b_idexx_in/excel"><i class="fa fa-file-excel-o"></i><br />IDEXX In(W)</a>
-                        <a class="btn btn-success btn-sm" id="o2b_idexx_out" href="O2b_idexx_out/excel"><i class="fa fa-file-excel-o"></i><br />IDEXX Out(All)</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_sample_reception" href="nhmrc_sample_reception/excel"><i class="fa fa-file-excel-o"></i><br />Reception</a> 
+                        <a class="btn btn-success btn-sm" id="nhmrc_bootsocks_before" href="nhmrc_bootsocks_before/excel"><i class="fa fa-file-excel-o"></i><br />B.Before</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_bootsocks_after" href="nhmrc_bootsocks_after/excel"><i class="fa fa-file-excel-o"></i><br />B.After</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_bootsocks_stomacher" href="nhmrc_bootsocks_stomacher/excel"><i class="fa fa-file-excel-o"></i><br />Stomacher(B/T)</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_sample_prep" href="nhmrc_sample_prep/excel"><i class="fa fa-file-excel-o"></i><br />Stomacher (Food)</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_blank_in" href="nhmrc_blank_in/excel"><i class="fa fa-file-excel-o"></i><br />Blank IN</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_idexx_in" href="nhmrc_idexx_in/excel"><i class="fa fa-file-excel-o"></i><br />IDEXX IN (HR)</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_idexx_out" href="nhmrc_idexx_out/excel"><i class="fa fa-file-excel-o"></i><br />IDEXX Out(All)</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_macconkey_in" href="nhmrc_macconkey_in/excel"><i class="fa fa-file-excel-o"></i><br />Mac In</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_macconkey_out" href="nhmrc_macconkey_out/excel"><i class="fa fa-file-excel-o"></i><br />Mac Out</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_metagenomics_br" href="nhmrc_metagenomics_br/excel"><i class="fa fa-file-excel-o"></i><br />Meta (B/R)</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_metagenomics_food" href="nhmrc_metagenomics_food/excel"><i class="fa fa-file-excel-o"></i><br />Meta (Food)</a>
                         <br><br>
-                        <a class="btn btn-success btn-sm" id="o2b_mac1" href="O2b_macconkey_in/excel"><i class="fa fa-file-excel-o"></i><br />Mac In</a>
-                        <a class="btn btn-success btn-sm" id="o2b_mac2" href="O2b_macconkey_out/excel"><i class="fa fa-file-excel-o"></i><br />Mac Out</a>
-                        <a class="btn btn-success btn-sm" id="o2b_meta_wb" href="O2b_metagenomics_wb/excel"><i class="fa fa-file-excel-o"></i><br />Meta (WB)</a>
-                        <a class="btn btn-success btn-sm" id="o2b_meta_sf" href="O2b_metagenomics_sf/excel"><i class="fa fa-file-excel-o"></i><br />Meta (SF)</a>
-                        <a class="btn btn-success btn-sm" id="o2b_mois_i" href="O2b_moisture_initial/excel"><i class="fa fa-file-excel-o"></i><br />Mois (I)</a>
-                        <a class="btn btn-success btn-sm" id="o2b_mois_24" href="O2b_moisture_24/excel"><i class="fa fa-file-excel-o"></i><br />Mois (24)</a>
-                        <a class="btn btn-success btn-sm" id="o2b_mois_48" href="O2b_moisture_48/excel"><i class="fa fa-file-excel-o"></i><br />Mois (48)</a>
-                        <a class="btn btn-success btn-sm" id="o2b_mois_72" href="O2b_moisture_72/excel"><i class="fa fa-file-excel-o"></i><br />Mois (72)</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_moisture_initial" href="nhmrc_moisture_initial/excel"><i class="fa fa-file-excel-o"></i><br />Mois (I)</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_moisture_24" href="nhmrc_moisture_24/excel"><i class="fa fa-file-excel-o"></i><br />Mois (24)</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_moisture_48" href="nhmrc_moisture_48/excel"><i class="fa fa-file-excel-o"></i><br />Mois (48)</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_moisture_72" href="nhmrc_moisture_72/excel"><i class="fa fa-file-excel-o"></i><br />Mois (72)</a>
                     </div>
 
                     <!-- <button id="triggerAllButtons" class="btn btn-primary">Export All</button> -->
@@ -46,11 +42,14 @@
                                 <select class="form-control" id="rep_type" name="rep_type" >
                                     <option>-- Select sample type --</option>
                                     <?php
-                                    echo "<option value='6' >Water</option>
-                                        <option value='6x' >Water (Site-0)</option>
-                                        <option value='9' >Bootsocks</option>
-                                        <option value='7' >Sediment</option>
-                                        <option value='8' >Animal Feces</option>
+                                    echo "<option value='18' >Porch Bootsocks</option>
+                                        <option value='19' >Indoor Bootsocks</option>
+                                        <option value='20' >Outdoor Bootsocks</option>
+                                        <option value='21' >Hand Bootsocks</option>
+                                        <option value='22' >Hand Rinse</option>
+                                        <option value='23' >Food</option>
+                                        <option value='24' >Hand Print</option>
+                                        <option value='25' >Toys</option>
                                         ";
                                     ?>
                                 </select>
@@ -100,8 +99,8 @@
                                             <div class="box-body table-responsive">
                                             <div style="padding-bottom: 10px;">
                                                 <button class='btn btn-success btn-sm' id='export'> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export To Excel </button>
-                                                <?php //echo anchor(site_url('REP_o2b/index2'), '<i class="fa fa-wpforms" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm"'); ?>
-                                                <?php //echo anchor(site_url('REP_o2b/excel/'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?>
+                                                <?php //echo anchor(site_url('REP_nhmrc/index2'), '<i class="fa fa-wpforms" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm"'); ?>
+                                                <?php //echo anchor(site_url('REP_nhmrc/excel/'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?>
                                                 <?php //echo anchor(site_url('kelolamenu/word'), '<i class="fa fa-file-word-o" aria-hidden="true"></i> Export Ms Word', 'class="btn btn-primary btn-sm"'); ?>
                                             </div>
 
@@ -216,7 +215,7 @@ const formattedDate = `${year}-${month}-${day}`;
             if (date2 == '') {
                 date2=formattedDate;
             }
-            document.location.href="REP_o2b/excel?date1="+date1+"&date2="+date2+"&rep="+rep;
+            document.location.href="REP_nhmrc/excel?date1="+date1+"&date2="+date2+"&rep="+rep;
         });
 
     $('#refresh-rep ').click(function() {
@@ -244,7 +243,7 @@ const formattedDate = `${year}-${month}-${day}`;
             ordering: true,
             info: false,
             bFilter: false,
-            ajax: {"url": "REP_o2b/json?date1="+date1+"&date2="+date2+"&rep="+rep, "type": "POST"},
+            ajax: {"url": "REP_nhmrc/json?date1="+date1+"&date2="+date2+"&rep="+rep, "type": "POST"},
             columns: [
                 // {
                 //     "data": "barcode_sample",

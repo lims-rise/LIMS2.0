@@ -3,10 +3,10 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class O2b_macconkey_out_model extends CI_Model
+class NHMRC_macconkey_out_model extends CI_Model
 {
 
-    public $table = 'obj2b_mac2';
+    public $table = 'nhmrc_mac2';
     public $id = 'bar_macconkey';
     public $order = 'DESC';
 
@@ -17,14 +17,13 @@ class O2b_macconkey_out_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('obj2b_mac2.bar_macconkey, obj2b_mac2.date_process, obj2b_mac2.time_process, 
-        ref_person.initial, obj2b_mac2.bar_macsweep1, obj2b_mac2.cryobox1, obj2b_mac2.id_location_80_1, 
-        obj2b_mac2.bar_macsweep2, obj2b_mac2.cryobox2, obj2b_mac2.id_location_80_2, obj2b_mac2.comments, 
-        obj2b_mac2.id_person, obj2b_mac2.lab, obj2b_mac2.flag');
-        $this->datatables->from('obj2b_mac2');
-        $this->datatables->join('ref_person', 'obj2b_mac2.id_person = ref_person.id_person', 'left');
-        $this->datatables->where('obj2b_mac2.lab', $this->session->userdata('lab'));
-        $this->datatables->where('obj2b_mac2.flag', '0');
+        $this->datatables->select('nhmrc_mac2.bar_macconkey, nhmrc_mac2.date_process, nhmrc_mac2.time_process, 
+        ref_person.initial, nhmrc_mac2.bar_macsweep1, nhmrc_mac2.cryobox1, nhmrc_mac2.id_location_80_1, nhmrc_mac2.bar_macsweep2, 
+        nhmrc_mac2.cryobox2, nhmrc_mac2.id_location_80_2, nhmrc_mac2.comments, nhmrc_mac2.id_person, nhmrc_mac2.lab, nhmrc_mac2.flag');
+        $this->datatables->from('nhmrc_mac2');
+        $this->datatables->join('ref_person', 'nhmrc_mac2.id_person = ref_person.id_person', 'left');
+        $this->datatables->where('nhmrc_mac2.lab', $this->session->userdata('lab'));
+        $this->datatables->where('nhmrc_mac2.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
@@ -35,7 +34,7 @@ class O2b_macconkey_out_model extends CI_Model
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                ".anchor(site_url('O2b_macconkey_out/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'bar_macconkey');
+                ".anchor(site_url('NHMRC_macconkey_out/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'bar_macconkey');
         }
         return $this->datatables->generate();
     }
@@ -45,7 +44,7 @@ class O2b_macconkey_out_model extends CI_Model
         $q = $this->db->query('
         SELECT a.bar_macconkey, a.date_process, a.time_process, b.initial, a.bar_macsweep1, 
         a.cryobox1, a.bar_macsweep2, a.cryobox2, a.comments
-        from obj2b_mac2 a 
+        from nhmrc_mac2 a 
         left join ref_person b on a.id_person = b.id_person
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
@@ -120,7 +119,7 @@ class O2b_macconkey_out_model extends CI_Model
         // $this->db->where($this->id, $id);
         // $this->db->delete($this->table);
     // }
-
+    
     function load_freez($id){
         // $this->db->where('barcode_sample', $id);
         // $this->db->where('lab', $this->session->userdata('lab'));
@@ -152,7 +151,7 @@ class O2b_macconkey_out_model extends CI_Model
         return $response;
         // return $this->db->get('ref_location_80')->row();
       }          
-
+          
     function getLabtech(){
         $response = array();
         $this->db->select('*');
@@ -168,15 +167,15 @@ class O2b_macconkey_out_model extends CI_Model
 
         if($type == 1) {
             $q = $this->db->query('
-            SELECT * FROM obj2b_mac1
+            SELECT * FROM nhmrc_mac1
             WHERE bar_macconkey = "'.$id.'"
             AND flag = 0
-            AND bar_macconkey NOT IN (SELECT bar_macconkey FROM obj2b_mac2)
+            AND bar_macconkey NOT IN (SELECT bar_macconkey FROM nhmrc_mac2)
             ');        
             }
         else if($type == 2) {
             $q = $this->db->query('
-            SELECT * FROM obj2b_mac2
+            SELECT * FROM nhmrc_mac2
             WHERE bar_macsweep1 = "'.$id.'"
             AND flag = 0
             ');        
@@ -184,7 +183,7 @@ class O2b_macconkey_out_model extends CI_Model
         }
         else if($type == 3) {
             $q = $this->db->query('
-            SELECT * FROM obj2b_mac2
+            SELECT * FROM nhmrc_mac2
             WHERE bar_macsweep2 = "'.$id.'"
             AND flag = 0
             ');        

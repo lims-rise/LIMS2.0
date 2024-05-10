@@ -59,7 +59,7 @@
                         <div class="form-group">
                             <label for="barcode_bootsocks" class="col-sm-4 control-label">Barcode bootsocks</label>
                             <div class="col-sm-8">
-                                <input id="barcode_bootsocks" name="barcode_bootsocks" type="text" class="form-control" placeholder="Barcode samplebag" required>
+                                <input id="barcode_bootsocks" name="barcode_bootsocks" type="text" class="form-control" placeholder="Barcode bootsocks" required>
                                 <div class="val1tip"></div>
                             </div>
                         </div>

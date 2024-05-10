@@ -3,11 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class O2b_macconkey_out_model extends CI_Model
+class NHMRC_moisture_initial_model extends CI_Model
 {
 
-    public $table = 'obj2b_mac2';
-    public $id = 'bar_macconkey';
+    public $table = 'nhmrc_moisture1';
+    public $id = 'barcode_sample';
     public $order = 'DESC';
 
     function __construct()
@@ -17,50 +17,42 @@ class O2b_macconkey_out_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('obj2b_mac2.bar_macconkey, obj2b_mac2.date_process, obj2b_mac2.time_process, 
-        ref_person.initial, obj2b_mac2.bar_macsweep1, obj2b_mac2.cryobox1, obj2b_mac2.id_location_80_1, 
-        obj2b_mac2.bar_macsweep2, obj2b_mac2.cryobox2, obj2b_mac2.id_location_80_2, obj2b_mac2.comments, 
-        obj2b_mac2.id_person, obj2b_mac2.lab, obj2b_mac2.flag');
-        $this->datatables->from('obj2b_mac2');
-        $this->datatables->join('ref_person', 'obj2b_mac2.id_person = ref_person.id_person', 'left');
-        $this->datatables->where('obj2b_mac2.lab', $this->session->userdata('lab'));
-        $this->datatables->where('obj2b_mac2.flag', '0');
+        $this->datatables->select('barcode_sample, barcode_falcon2, date_moisture, barcode_bootsock, barcode_foil, foil_weight, 
+        time_filter_start, time_filter_finish, wet_weight, time_incubator, comments, lab, flag');
+        $this->datatables->from('nhmrc_moisture1');
+        $this->datatables->where('lab', $this->session->userdata('lab'));
+        $this->datatables->where('flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
-            $this->datatables->add_column('action', '', 'bar_macconkey');
+            $this->datatables->add_column('action', '', 'barcode_sample');
         }
         else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'bar_macconkey');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_sample');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                ".anchor(site_url('O2b_macconkey_out/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'bar_macconkey');
+                ".anchor(site_url('NHMRC_moisture_initial/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'barcode_sample');
         }
         return $this->datatables->generate();
     }
 
     function get_all()
     {
-        $q = $this->db->query('
-        SELECT a.bar_macconkey, a.date_process, a.time_process, b.initial, a.bar_macsweep1, 
-        a.cryobox1, a.bar_macsweep2, a.cryobox2, a.comments
-        from obj2b_mac2 a 
-        left join ref_person b on a.id_person = b.id_person
-        WHERE a.lab = "'.$this->session->userdata('lab').'" 
-        AND a.flag = 0 
-        ');
-        $response = $q->result();
-        return $response;    
+        $this->db->order_by('date_moisture', 'ASC');
+        $this->db->where('lab', $this->session->userdata('lab'));
+        $this->db->where('flag', '0');
+        return $this->db->get('nhmrc_moisture1')->result();
     }
 
     function get_by_id($id)
     {
         $this->db->where($this->id, $id);
-        $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get($this->table)->row();
     }
+
+
 
     // function get_by_id_detail($id)
     // {
@@ -121,6 +113,38 @@ class O2b_macconkey_out_model extends CI_Model
         // $this->db->delete($this->table);
     // }
 
+    // function getLabtech(){
+    //     $response = array();
+    //     $this->db->select('*');
+    //     $this->db->where('position', 'Lab Tech');
+    //     $q = $this->db->get('ref_person');
+    //     $response = $q->result_array();
+    
+    //     return $response;
+    //   }
+
+    //   function getSampleType(){
+
+    //     $response = array();
+    //     // Select record
+    //     $this->db->select('*');
+    //     $this->db->where('obj', 'O2B');
+    //     $q = $this->db->get('ref_sampletype');
+    //     $response = $q->result_array();
+    
+    //     return $response;
+    //   }
+
+    function getLabtech(){
+        $response = array();
+        $this->db->select('*');
+        $this->db->where('position', 'Lab Tech');
+        $q = $this->db->get('ref_person');
+        $response = $q->result_array();
+        return $response;
+      }
+
+
     function load_freez($id){
         // $this->db->where('barcode_sample', $id);
         // $this->db->where('lab', $this->session->userdata('lab'));
@@ -146,57 +170,54 @@ class O2b_macconkey_out_model extends CI_Model
         AND rack = "'.$rack.'"
         AND rack_level = "'.$draw.'"
         AND lab = "'.$this->session->userdata('lab').'" 
-        AND flag = 0 
+        AND flag = 0
         ');        
         $response = $q->result_array();
         return $response;
         // return $this->db->get('ref_location_80')->row();
-      }          
+      }            
 
-    function getLabtech(){
-        $response = array();
-        $this->db->select('*');
-        $this->db->where('position', 'Lab Tech');
-        $this->db->where('flag', '0');
-        $q = $this->db->get('ref_person');
-        $response = $q->result_array();
-    
-        return $response;
-      }
-
-      function validate1($id, $type){
-
-        if($type == 1) {
-            $q = $this->db->query('
-            SELECT * FROM obj2b_mac1
-            WHERE bar_macconkey = "'.$id.'"
-            AND flag = 0
-            AND bar_macconkey NOT IN (SELECT bar_macconkey FROM obj2b_mac2)
-            ');        
-            }
-        else if($type == 2) {
-            $q = $this->db->query('
-            SELECT * FROM obj2b_mac2
-            WHERE bar_macsweep1 = "'.$id.'"
-            AND flag = 0
-            ');        
-                // $this->db->where('bar_macsweep1', $id);
-        }
-        else if($type == 3) {
-            $q = $this->db->query('
-            SELECT * FROM obj2b_mac2
-            WHERE bar_macsweep2 = "'.$id.'"
-            AND flag = 0
-            ');        
-            // $this->db->where('bar_macsweep2', $id);
-        }
-        // $response = $q->result_array();
+      function validate1($id){
+        // $this->db->where('barcode_sample', $id);
+        // $this->db->where('lab', $this->session->userdata('lab'));
         // $q = $this->db->get($this->table);
+        // WHERE barcode_falcon = "'.$id.'"
+
+        $q = $this->db->query('
+        SELECT barcode_sample, stype FROM
+        (SELECT a.barcode_falcon AS barcode_sample, "Bootsocks" as stype
+            FROM nhmrc_bs_stomacher a
+            LEFT JOIN nhmrc_subbs_idexx b ON a.barcode_sample = b.barcode_sample
+            LEFT JOIN nhmrc_mac1 c ON a.barcode_falcon = c.barcode_sample
+        WHERE LENGTH(a.barcode_falcon) > 0
+        AND a.elution_no = "Moisture1"
+        AND a.flag = 0
+        UNION ALL
+        SELECT barcode_sample, "Sediment" as stype FROM nhmrc_receipt 
+        WHERE id_type2b IN (7)
+        AND (png_control <> "Yes" OR png_control is null)
+        AND flag = 0) x
+        WHERE x.barcode_sample = "'.$id.'"
+        AND x.barcode_sample NOT IN (SELECT barcode_sample FROM nhmrc_moisture1)
+        ');        
         $response = $q->result_array();
         return $response;
         // return $this->db->get('ref_location_80')->row();
       }
 
+      function validate2($id){
+        $q = $this->db->query('
+        SELECT a.barcode_falcon AS barcode_sample
+        FROM nhmrc_bs_stomacher a
+        WHERE a.barcode_falcon = "'.$id.'"
+        AND a.elution_no = "Moisture2"
+        AND a.barcode_falcon NOT IN (SELECT barcode_sample FROM nhmrc_moisture1 UNION ALL 
+        SELECT barcode_falcon2 FROM nhmrc_moisture1)
+        AND a.flag = 0
+        ');        
+        $response = $q->result_array();
+        return $response;
+      }      
 }
 
 /* End of file Tbl_delivery_model.php */

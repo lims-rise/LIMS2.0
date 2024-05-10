@@ -22,7 +22,6 @@
                         <a class="btn btn-success btn-sm" id="o2b_endetec_outbs" href="O2b_endetec_out_bs/excel"><i class="fa fa-file-excel-o"></i><br />Endetec Out(BS)</a>
                         <a class="btn btn-success btn-sm" id="o2b_idexx_in" href="O2b_idexx_in/excel"><i class="fa fa-file-excel-o"></i><br />IDEXX In(W)</a>
                         <a class="btn btn-success btn-sm" id="o2b_idexx_out" href="O2b_idexx_out/excel"><i class="fa fa-file-excel-o"></i><br />IDEXX Out(All)</a>
-                        <br><br>
                         <a class="btn btn-success btn-sm" id="o2b_mac1" href="O2b_macconkey_in/excel"><i class="fa fa-file-excel-o"></i><br />Mac In</a>
                         <a class="btn btn-success btn-sm" id="o2b_mac2" href="O2b_macconkey_out/excel"><i class="fa fa-file-excel-o"></i><br />Mac Out</a>
                         <a class="btn btn-success btn-sm" id="o2b_meta_wb" href="O2b_metagenomics_wb/excel"><i class="fa fa-file-excel-o"></i><br />Meta (WB)</a>
@@ -33,15 +32,14 @@
                         <a class="btn btn-success btn-sm" id="o2b_mois_72" href="O2b_moisture_72/excel"><i class="fa fa-file-excel-o"></i><br />Mois (72)</a>
                     </div>
 
-                    <!-- <button id="triggerAllButtons" class="btn btn-primary">Export All</button> -->
-                    <hr>
+                    <button id="triggerAllButtons" class="btn btn-primary">Export All</button>
 
                     <div class="box-body">
                 
                         <!-- <button> </button> -->
                         <!-- <div class="col-md-12 col-xs-12"> -->
                         <div class="form-group">
-                            <label for="rep_type" class="col-sm-3 control-label">Report for sample type</label>
+                            <label for="rep_type" class="col-sm-2 control-label">Report for sample type</label>
                             <div class="col-sm-4">
                                 <select class="form-control" id="rep_type" name="rep_type" >
                                     <option>-- Select sample type --</option>
@@ -148,7 +146,7 @@ const day = String(currentDate.getDate()).padStart(2, '0');
 const formattedDate = `${year}-${month}-${day}`;
 
     $(document).ready(function() {
-/*
+
         // Click event for the trigger button
         $('#triggerAllButtons').on('click', function() {
             // Find all buttons in the container and trigger their clicks
@@ -165,10 +163,11 @@ const formattedDate = `${year}-${month}-${day}`;
             
             // Your button click logic goes here
             // For example, you can open a link using window.location.href
-            window.location.href = $(this).attr('href');
+            console.log("Button clicked: " + $(this).attr('href'));
+            // window.location.href = $(this).attr('href');
         });
 
-*/
+
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
             return {

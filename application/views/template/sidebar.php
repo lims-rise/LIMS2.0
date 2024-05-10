@@ -85,14 +85,15 @@ if ($this->session->userdata('id_user_level') == "") {
                 FROM tbl_menu 
                 WHERE id_menu in (select id_menu from tbl_hak_akses 
                                     where id_user_level=$id_user_level) 
-                                and is_main_menu=0 and is_aktif='y'";
+                                and is_main_menu=0 and is_aktif='y'
+                                ORDER BY id_menu";
             // }
             // else {
             //     echo base_url() . 'auth';
                 // echo anchor('auth/logout',"<i class='fa fa-sign-out'></i> LOGOUT");
             // }
         }else{
-            $sql_menu = "select * from tbl_menu where is_aktif='y' and is_main_menu=0";
+            $sql_menu = "select * from tbl_menu where is_aktif='y' and is_main_menu=0 ORDER BY id_menu";
         }
 
         $main_menu = $this->db->query($sql_menu)->result();

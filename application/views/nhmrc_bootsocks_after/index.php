@@ -3,27 +3,27 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
-                    <div class="box-header"> <h3 class="box-title">Objective 2B - Bootsocks Before</h3> </div>        
+                    <div class="box-header"> <h3 class="box-title">NHMRC - Bootsocks/Toys After</h3> </div>        
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
 <?php
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl != 7){
-            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Bootsock </button>";
+            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Bootsocks/Toys </button>";
         }
 ?>
                             
                             <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
                             <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
-                            <?php echo anchor(site_url('o2b_bootsocks_before/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('nhmrc_bootsocks_after/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?>
                         </div>
                         <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
                             <thead>
                                 <tr>
                                     <!-- <th width="30px">No</th> -->
-                                    <th>Barcode bootsocks</th>
+                                    <th>Barcode bootsocks/toys</th>
                                     <th>Date weighed</th>
-                                    <th>Bootsocks weighed - dry (g) </th>
+                                    <th>Weighed - wet (g) </th>
                                     <th>Comments</th>
                                     <th width="120px">Action</th>
                                 </tr>
@@ -49,17 +49,17 @@
             <div class="modal-content">
                 <div class="modal-header box">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="modal-title">New BOOTSOCKS - weights (before sample collection)</h4>
+                    <h4 class="modal-title" id="modal-title">New BOOTSOCKS/TOYS - weights (after sample collection)</h4>
                 </div>
-                <form id="formSample"  action= <?php echo site_url('o2b_bootsocks_before/save') ?> method="post" class="form-horizontal">
+                <form id="formSample"  action= <?php echo site_url('nhmrc_bootsocks_after/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <!-- <input id="id_samplelog" name="id_samplelog" type="hidden" class="form-control input-sm"> -->
 
                         <div class="form-group">
-                            <label for="barcode_bootsocks" class="col-sm-4 control-label">Barcode bootsocks</label>
+                            <label for="barcode_bootsocks" class="col-sm-4 control-label">Barcode bootsocks/toys</label>
                             <div class="col-sm-8">
-                                <input id="barcode_bootsocks" name="barcode_bootsocks" type="text" class="form-control" placeholder="Barcode bootsocks" required>
+                                <input id="barcode_bootsocks" name="barcode_bootsocks" type="text" class="form-control" placeholder="Barcode bootsocks/toys" required>
                                 <div class="val1tip"></div>
                             </div>
                         </div>
@@ -72,9 +72,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="bootsock_weight_dry" class="col-sm-4 control-label">Bootsock weight - dry (g)</label>
+                            <label for="bootsock_weight_wet" class="col-sm-4 control-label">Weight - wet (g)</label>
                             <div class="col-sm-8">
-                                <input id="bootsock_weight_dry" name="bootsock_weight_dry" type="number" step="0.01" class="form-control" placeholder="Bootsock weight - dry (g)" required>
+                                <input id="bootsock_weight_wet" name="bootsock_weight_wet" type="number" step="0.01" class="form-control" placeholder="Weight - wet (g)" required>
                             </div>
                         </div>
 
@@ -136,31 +136,31 @@
 
         $('#barcode_bootsocks').on("change", function() {
             data1 = $('#barcode_bootsocks').val();
-            ckbar = data1.substring(0,5).toUpperCase();
-            ckarray = ["N-S1-", "F-S1-"];
-            // ckarray = [10, 11, 12];
-            ck = $.inArray(ckbar, ckarray);
-            if (ck == -1) {
-                tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! <strong> ex.(N-S1-XXXXXX / F-S1-XXXXXX) </strong> </span>');
-                $('.val1tip').tooltipster('content', tip);
-                $('.val1tip').tooltipster('show');
-                $('#barcode_bootsocks').val('');     
-                $('#barcode_bootsocks').css({'background-color' : '#FFE6E7'});
-                setTimeout(function(){
-                    $('#barcode_bootsocks').css({'background-color' : '#FFFFFF'});
-                    setTimeout(function(){
-                        $('#barcode_bootsocks').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#barcode_bootsocks').css({'background-color' : '#FFFFFF'});
-                            $('#barcode_bootsocks').focus();
-                        }, 300);                            
-                    }, 300);
-                }, 300);
-            }
-            else {
+            // ckbar = data1.substring(0,5).toUpperCase();
+            // ckarray = ["N-S1-", "F-S1-"];
+            // // ckarray = [10, 11, 12];
+            // ck = $.inArray(ckbar, ckarray);
+            // if (ck == -1) {
+            //     tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! <strong> ex.(N-S1-XXXXXX / F-S1-XXXXXX) </strong> </span>');
+            //     $('.val1tip').tooltipster('content', tip);
+            //     $('.val1tip').tooltipster('show');
+            //     $('#barcode_bootsocks').val('');     
+            //     $('#barcode_bootsocks').css({'background-color' : '#FFE6E7'});
+            //     setTimeout(function(){
+            //         $('#barcode_bootsocks').css({'background-color' : '#FFFFFF'});
+            //         setTimeout(function(){
+            //             $('#barcode_bootsocks').css({'background-color' : '#FFE6E7'});
+            //             setTimeout(function(){
+            //                 $('#barcode_bootsocks').css({'background-color' : '#FFFFFF'});
+            //                 $('#barcode_bootsocks').focus();
+            //             }, 300);                            
+            //         }, 300);
+            //     }, 300);
+            // }
+            // else {
             $.ajax({
                 type: "GET",
-                url: "o2b_bootsocks_before/valid_bs?id1="+data1+"&id2=1",
+                url: "nhmrc_bootsocks_after/valid_bs?id1="+data1+"&id2=1",
                 data:data1,
                 dataType: "json",
                 success: function(data) {
@@ -184,7 +184,7 @@
                     }
                 }
             });
-            }
+            // }
         });
         
         $("input").keypress(function(){
@@ -226,7 +226,7 @@
             // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "o2b_bootsocks_before/json", "type": "POST"},
+            ajax: {"url": "nhmrc_bootsocks_after/json", "type": "POST"},
             columns: [
                 // {
                 //     "data": "id",
@@ -234,7 +234,7 @@
                 // },
                 {"data": "barcode_bootsocks"},
                 {"data": "date_weighed"},
-                {"data": "bootsock_weight_dry"},
+                {"data": "bootsock_weight_wet"},
                 {"data": "comments"},
                 {
                     "data" : "action",
@@ -255,10 +255,10 @@
                 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> O2B - New BOOTSOCKS - weights (before sample collection)<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> NHMRC - New BOOTSOCKS/TOYS - weights (after sample collection)<span id="my-another-cool-loader"></span>');
             $('#barcode_bootsocks').val('');
             $('#barcode_bootsocks').attr('readonly', false);
-            $('#bootsock_weight_dry').val('');
+            $('#bootsock_weight_wet').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
         });
@@ -269,11 +269,11 @@
             let data = table.row(tr).data();
             console.log(data);
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> O2B - Update BOOTSOCKS - weights (before sample collection)<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> NHMRC - Update BOOTSOCKS/TOYS - weights (after sample collection)<span id="my-another-cool-loader"></span>');
             $('#barcode_bootsocks').val(data.barcode_bootsocks);
             $('#barcode_bootsocks').attr('readonly', true);
             $('#date_weighed').val(data.date_weighed);
-            $('#bootsock_weight_dry').val(data.bootsock_weight_dry);
+            $('#bootsock_weight_wet').val(data.bootsock_weight_wet);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });  
@@ -287,7 +287,7 @@
             }
             // var data = table.row($(this)).data();
             // if (data) {
-            //     table_det.ajax.url('o2b_bootsocks_before/subjson?id=' + data.id_receipt).load();
+            //     table_det.ajax.url('nhmrc_bootsocks_after/subjson?id=' + data.id_receipt).load();
             // }
         });
 
