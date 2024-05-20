@@ -211,7 +211,7 @@ class NHMRC_metagenomics_food extends CI_Controller
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
     $datenow=date("Ymd");
-    $fileName = 'O2B_Metagenomics_(Sediment_&_Feces)_'.$datenow.'.csv';
+    $fileName = 'NHMRC_Metagenomics_(Food)_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya

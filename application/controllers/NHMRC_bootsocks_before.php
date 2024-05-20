@@ -208,7 +208,7 @@ class NHMRC_bootsocks_before extends CI_Controller
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
     $datenow=date("Ymd");
-    $fileName = 'O2B_BOOTSOCKS_weights_before_'.$datenow.'.csv';
+    $fileName = 'NHMRC_BT_weights_before_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya

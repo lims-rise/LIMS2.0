@@ -232,21 +232,21 @@ class NHMRC_sample_prep extends CI_Controller
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', "Barcode_sample");
-        $sheet->setCellValue('B1', "Date_conduct");
-        $sheet->setCellValue('C1', "Elution");
-        $sheet->setCellValue('D1', "Elution_comments");
-        $sheet->setCellValue('E1', "Barcode_tube");
-        $sheet->setCellValue('F1', "Food_weight");
-        $sheet->setCellValue('G1', "Barcode_endetec");
-        $sheet->setCellValue('H1', "Volume_falcon");
-        $sheet->setCellValue('I1', "Dilution_endetec");
-        $sheet->setCellValue('J1', "Time_incubation_endetec");
-        $sheet->setCellValue('K1', "Comments_endetec");
-        $sheet->setCellValue('L1', "Barcode_colilert");
-        $sheet->setCellValue('M1', "Volume_IDEXX");
-        $sheet->setCellValue('N1', "Dilution_IDEXX");
-        $sheet->setCellValue('O1', "Time_incubation_IDEXX");
-        $sheet->setCellValue('P1', "Comments_IDEXX");
+        $sheet->setCellValue('B1', "Sample_type");
+        $sheet->setCellValue('C1', "Date_conduct");
+        $sheet->setCellValue('D1', "Elution_no");
+        $sheet->setCellValue('E1', "Barcode_food");
+        $sheet->setCellValue('F1', "Elution");
+        $sheet->setCellValue('G1', "Elution_comments");
+        $sheet->setCellValue('H1', "Food_weight");
+        $sheet->setCellValue('I1', "Barcode_colilert");
+        $sheet->setCellValue('J1', "Barcode_valcon1");
+        $sheet->setCellValue('K1', "Volume_valcon1");
+        $sheet->setCellValue('L1', "Barcode_valcon2");
+        $sheet->setCellValue('M1', "Volume_valcon2");
+        $sheet->setCellValue('N1', "Dilution");
+        $sheet->setCellValue('O1', "Time_incubation");
+        $sheet->setCellValue('P1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -256,18 +256,18 @@ class NHMRC_sample_prep extends CI_Controller
         $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
           $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
-          $sheet->setCellValue('B'.$numrow, $data->date_conduct);
-          $sheet->setCellValue('C'.$numrow, $data->elution);
-          $sheet->setCellValue('D'.$numrow, $data->elu_comments);
-          $sheet->setCellValue('E'.$numrow, $data->barcode_tube);
-          $sheet->setCellValue('F'.$numrow, $data->food_weight);
-          $sheet->setCellValue('G'.$numrow, $data->barcode_endetec);
-          $sheet->setCellValue('H'.$numrow, $data->volume_falcon);
-          $sheet->setCellValue('I'.$numrow, $data->end_dilution);
-          $sheet->setCellValue('J'.$numrow, $data->end_time_incubation);
-          $sheet->setCellValue('K'.$numrow, trim($data->end_comments));
-          $sheet->setCellValue('L'.$numrow, $data->barcode_colilert);
-          $sheet->setCellValue('M'.$numrow, $data->volume);
+          $sheet->setCellValue('B'.$numrow, $data->sampletype);
+          $sheet->setCellValue('C'.$numrow, $data->date_conduct);
+          $sheet->setCellValue('D'.$numrow, $data->elution_no);
+          $sheet->setCellValue('E'.$numrow, $data->barcode_food);
+          $sheet->setCellValue('F'.$numrow, $data->elution);
+          $sheet->setCellValue('G'.$numrow, $data->elu_comments);
+          $sheet->setCellValue('H'.$numrow, $data->food_weight);
+          $sheet->setCellValue('I'.$numrow, $data->barcode_colilert);
+          $sheet->setCellValue('J'.$numrow, $data->barcode_falcon1);
+          $sheet->setCellValue('K'.$numrow, $data->volume_falcon1);
+          $sheet->setCellValue('L'.$numrow, $data->barcode_falcon2);
+          $sheet->setCellValue('M'.$numrow, $data->volume_falcon2);
           $sheet->setCellValue('N'.$numrow, $data->dilution);
           $sheet->setCellValue('O'.$numrow, $data->time_incubation);
           $sheet->setCellValue('P'.$numrow, trim($data->comments));          

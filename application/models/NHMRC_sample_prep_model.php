@@ -62,11 +62,15 @@ class NHMRC_sample_prep_model extends CI_Model
     function get_all()
     {
         $q = $this->db->query('
-        SELECT a.barcode_sample, a.date_conduct, a.elution_no, a.barcode_food, a.elution, a.elu_comments, 
-        a.barcode_falcon1, a.barcode_falcon2, a.food_weight, a.food_comments, a.volume_stomacher, a.comments,
-        c.barcode_colilert, c.volume, c.dilution, c.time_incubation, c.comments
-        FROM nhmrc_sample_prep a
-        LEFT JOIN nhmrc_subsd_idexx c ON a.barcode_sample=c.barcode_sample
+        SELECT b.barcode_sample, d.sampletype, 
+        a.date_conduct, a.elution_no, a.barcode_food, a.elution, a.elu_comments, a.food_weight, 
+        c.barcode_colilert, c.barcode_falcon1, c.volume_falcon1, c.barcode_falcon2, c.volume_falcon2, 
+        c.dilution, c.time_incubation, c.comments
+        FROM nhmrc_receipt b
+        LEFT JOIN nhmrc_sample_prep a ON b.barcode_sample=a.barcode_sample
+        LEFT JOIN nhmrc_subsd_idexx c ON a.barcode_food=c.barcode_food
+        LEFT JOIN ref_sampletype d ON b.id_type2b=d.id_sampletype
+        WHERE b.id_type2b = 23
         AND a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');

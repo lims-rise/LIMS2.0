@@ -163,7 +163,7 @@ class NHMRC_blank_in extends CI_Controller
         }
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
     $datenow=date("Ymd");
-    $fileName = 'O2B_Blank-In(Endetec-Idexx)_'.$datenow.'.csv';
+    $fileName = 'NHMRC_Blank-In(Idexx)_'.$datenow.'.csv';
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya

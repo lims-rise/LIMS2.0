@@ -84,6 +84,7 @@ class NHMRC_bootsocks_stomacher_model extends CI_Model
         $q = $this->db->query('
         SELECT 
         a.barcode_sample AS barcode_sample, 
+		b.sampletype AS sampletype,
         g.date_conduct AS stomacher_date_conduct,
         g.barcode_bootsock AS stomacher_barcode_bootsocks1,
         g.elution_no AS stomacher_elution_number_Micro1,
@@ -107,14 +108,6 @@ class NHMRC_bootsocks_stomacher_model extends CI_Model
         t.elu_comments AS stomacher_elution_Moisture2_comment,
         t.barcode_falcon AS stomacher_barcode_falcon_Moisture2,
         t.volume_stomacher AS stomacher_volume_Moisture2,
-        h.barcode_endetec AS stom_endet_barcode_endetec,
-        h.barcode_falcon1 AS stom_endet_barcode_falcon1,
-        h.volume_falcon1 AS stom_endet_volume_falcon1,
-        h.barcode_falcon2 AS stom_endet_barcode_falcon2,
-        h.volume_falcon2 AS stom_endet_volume_falcon2,
-        h.dilution AS stom_endet_dilution,
-        h.time_incubation AS stom_endet_time_incu_start,
-        h.comments AS stom_endet_comments,
         j.barcode_colilert AS stom_idexx_barcode_colilert,
         j.barcode_falcon1 AS stom_idexx_barcode_falcon1,
         j.volume_falcon1 AS stom_idexx_volume_falcon1,
@@ -128,9 +121,9 @@ class NHMRC_bootsocks_stomacher_model extends CI_Model
         LEFT JOIN nhmrc_bs_stomacher o ON a.barcode_sample=o.barcode_sample AND o.elution_no="Micro2"
         LEFT JOIN nhmrc_bs_stomacher s ON a.barcode_sample=s.barcode_sample AND s.elution_no="Moisture1"
         LEFT JOIN nhmrc_bs_stomacher t ON a.barcode_sample=t.barcode_sample AND t.elution_no="Moisture2"
-        LEFT JOIN nhmrc_subbs_endetec h ON a.barcode_sample=h.barcode_sample
-        LEFT JOIN nhmrc_subbs_idexx j ON a.barcode_sample=j.barcode_sample
-        WHERE a.id_type2b = 9
+        LEFT JOIN nhmrc_subbs_idexx j ON g.barcode_bootsock=j.barcode_sample
+		LEFT JOIN ref_sampletype b ON a.id_type2b = b.id_sampletype
+        WHERE a.id_type2b IN (18,19,20,21,25)
         AND a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
