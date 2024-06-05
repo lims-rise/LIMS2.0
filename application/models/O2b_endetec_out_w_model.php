@@ -19,10 +19,10 @@ class O2b_endetec_out_w_model extends CI_Model
     function json() {
         $this->datatables->select('obj2b_endetec2.barcode_endetec, obj2b_endetec2.date_conduct, obj2b_endetec2.time_ecoli, 
         obj2b_endetec2.volume_ecoli, obj2b_endetec2.ecoli_cfu, obj2b_endetec2.total_coliforms, obj2b_endetec2.total_coli_cfu, 
-        obj2b_endetec2.comments, obj2b_endetec2.lab, obj2b_endetec2.flag, obj2b_endetec1.date_conduct AS date_conduct_in, 
-        obj2b_endetec1.time_incubation AS time_incubation_in, obj2b_endetec1.dilution AS dilution_in');
+        obj2b_endetec2.comments, obj2b_endetec2.lab, obj2b_endetec2.flag, v_all_end_in.date_conduct AS date_conduct_in, 
+        v_all_end_in.time_incubation AS time_incubation_in, v_all_end_in.dilution AS dilution_in');
         $this->datatables->from('obj2b_endetec2');
-        $this->datatables->join('obj2b_endetec1', 'obj2b_endetec2.barcode_endetec = obj2b_endetec1.barcode_endetec', 'left');
+        $this->datatables->join('v_all_end_in', 'obj2b_endetec2.barcode_endetec = v_all_end_in.barcode_endetec', 'left');
         $this->datatables->where('obj2b_endetec2.lab', $this->session->userdata('lab'));
         $this->datatables->where('obj2b_endetec2.flag', '0');
 
