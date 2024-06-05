@@ -143,19 +143,19 @@ class O2b_endetec_out_w_model extends CI_Model
         // $q = $this->db->get($this->table);
         $q = $this->db->query('
         SELECT * FROM
-        (SELECT barcode_endetec AS barcode, date_conduct AS date, time_incubation AS time, dilution AS dil, flag 
-        FROM obj2b_endetec1 
+        (SELECT d.barcode_endetec AS barcode, d.date_conduct AS date, d.time_incubation AS time, d.dilution AS dil, d.flag 
+        FROM obj2b_endetec1 d
         UNION ALL
-        SELECT a.barcode_endetec AS barcode, b.date_conduct AS date, a.time_incubation AS time, a.dilution AS dil, flag
+        SELECT a.barcode_endetec AS barcode, b.date_conduct AS date, a.time_incubation AS time, a.dilution AS dil, a.flag
         FROM obj2b_subbs_endetec a
         LEFT JOIN obj2b_bs_stomacher b ON a.barcode_sample=b.barcode_bootsock
         UNION ALL
-        SELECT a.barcode_endetec AS barcode, b.date_conduct AS date, a.time_incubation AS time, a.dilution AS dil, flag
+        SELECT a.barcode_endetec AS barcode, b.date_conduct AS date, a.time_incubation AS time, a.dilution AS dil, a.flag
         FROM obj2b_subsd_endetec a
         LEFT JOIN obj2b_sediment_prep b ON a.barcode_sample=b.barcode_sample
         UNION ALL
-        SELECT barcode_endidx AS barcode, date_conduct AS date, time_incubation AS time, dilution AS dil, flag
-        FROM obj2b_blanks WHERE blank_type="Endetec") x
+        SELECT c.barcode_endidx AS barcode, c.date_conduct AS date, c.time_incubation AS time, c.dilution AS dil, c.flag
+        FROM obj2b_blanks c WHERE c.blank_type="Endetec") x
         WHERE x.barcode NOT IN (SELECT barcode_endetec FROM obj2b_endetec2)
         AND x.barcode = "'.$id.'"
         AND x.flag = 0
