@@ -394,6 +394,10 @@
                     
         $('#barcode_sample').on("change", function() {
             data1 = $('#barcode_sample').val();
+            ckbar = data1.substring(0,5).toUpperCase();
+            ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
+            ck = $.inArray(ckbar, ckarray);
+            if (ck == -1) {
             $.ajax({
                 type: "GET",
                 url: "O2b_metagenomics_wb/valid_bs?id1="+data1,
@@ -434,6 +438,7 @@
                     }
                 }
             });
+        }
             // }
             // $('.val1tip').tooltipster('content', 'Barcode :' + $(this).val()+' salah input, seharusnya memakai kode bla bla bla');
             // setTimeout(function(){
