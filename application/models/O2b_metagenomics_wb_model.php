@@ -214,15 +214,16 @@ class O2b_metagenomics_wb_model extends CI_Model
             GROUP BY barcode_bootsock) x
         LEFT JOIN obj2b_subbs_idexx b ON x.barcode_bootsock = b.barcode_sample
         LEFT JOIN obj2b_mac1 c ON x.barcode_sample = c.barcode_sample
-        WHERE LENGTH(x.barcode_sample) > 0
-        UNION ALL
-        SELECT barcode_sample, "Water" as stype, 0 as vol 
-        FROM obj2b_receipt 
-        WHERE id_type2b IN (6)
-        AND flag = 0) y
+        WHERE LENGTH(x.barcode_sample) > 0) y
         WHERE y.barcode_sample = "'.$id.'"
         AND y.barcode_sample NOT IN (SELECT barcode_sample FROM obj2b_metagenomics)
         ');        
+
+        // UNION ALL
+        // SELECT barcode_sample, "Water" as stype, 0 as vol 
+        // FROM obj2b_receipt 
+        // WHERE id_type2b IN (6)
+        // AND flag = 0
         $response = $q->result_array();
         return $response;
         // return $this->db->get('ref_location_80')->row();
