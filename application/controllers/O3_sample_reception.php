@@ -141,7 +141,7 @@ class O3_sample_reception extends CI_Controller
         $sheet->setCellValue('C1', "Time_receipt");
         $sheet->setCellValue('D1', "Lab_tech");
         $sheet->setCellValue('E1', "Sample_type");
-        $sheet->setCellValue('F1', "P&G_control");
+        $sheet->setCellValue('F1', "PnG_control");
         $sheet->setCellValue('G1', "Cold_chain");
         $sheet->setCellValue('H1', "Cont_intact");
         $sheet->setCellValue('I1', "Comments");
