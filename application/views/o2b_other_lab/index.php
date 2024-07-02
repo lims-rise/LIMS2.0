@@ -112,6 +112,7 @@
                             <label for="barcode_rise_lab" class="col-sm-4 control-label">Rise lab barcode</label>
                             <div class="col-sm-8">
                                 <input id="barcode_rise_lab" name="barcode_rise_lab" type="text" class="form-control" placeholder="Rise lab barcode">
+                                <div class="val6tip"></div>
                             </div>
                         </div>
 
@@ -121,6 +122,7 @@
                             <label for="barcode_nitro" class="col-sm-4 control-label">BKTL chemistry barcode</label>
                             <div class="col-sm-8">
                                 <input id="barcode_nitro" name="barcode_nitro" type="text" class="form-control" placeholder="BKTL chemistry barcode">
+                                <div class="val2tip"></div>
                             </div>
                         </div>
 
@@ -139,6 +141,7 @@
                             <label for="barcode_nitro2" class="col-sm-4 control-label">BBLK chemistry barcode</label>
                             <div class="col-sm-8">
                                 <input id="barcode_nitro2" name="barcode_nitro2" type="text" class="form-control" placeholder="BBLK chemistry barcode">
+                                <div class="val3tip"></div>
                             </div>
                         </div>
 
@@ -159,6 +162,7 @@
                             <label for="barcode_microbiology" class="col-sm-4 control-label">BKTL micro barcode</label>
                             <div class="col-sm-8">
                                 <input id="barcode_microbiology" name="barcode_microbiology" type="text" class="form-control" placeholder="BKTL micro barcode">
+                                <div class="val4tip"></div>
                             </div>
                         </div>
 
@@ -177,6 +181,7 @@
                             <label for="barcode_microbiology2" class="col-sm-4 control-label">BBLK micro barcode</label>
                             <div class="col-sm-8">
                                 <input id="barcode_microbiology2" name="barcode_microbiology2" type="text" class="form-control" placeholder="BBLK micro barcode">
+                                <div class="val5tip"></div>
                             </div>
                         </div>
 
@@ -218,6 +223,7 @@
 
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -234,7 +240,7 @@
         vibrate: true        // vibrate the device when dragging clock hand
         });                
 
-        $('.val1tip').tooltipster({
+        $('.val1tip,.val2tip,.val3tip,.val4tip,.val5tip,.val6tip').tooltipster({
             animation: 'swing',
             delay: 1,
             theme: 'tooltipster-default',
@@ -251,8 +257,27 @@
         // function checkBarcode() { col-sm-8
         // $('.modal-body').click(function() {
         $('#barcode_sample').click(function() {
-            $('.val1tip').tooltipster('hide');   
-        // $('#barcode_sample').val('');     
+            $('.val1tip,.val2tip,.val3tip,.val4tip,.val5tip,.val6tip').tooltipster('hide');   
+        });
+
+        $('#barcode_nitro').click(function() {
+            $('.val1tip,.val2tip,.val3tip,.val4tip,.val5tip,.val6tip').tooltipster('hide');   
+        });
+
+        $('#barcode_nitro2').click(function() {
+            $('.val1tip,.val2tip,.val3tip,.val4tip,.val5tip,.val6tip').tooltipster('hide');   
+        });
+
+        $('#barcode_microbiology').click(function() {
+            $('.val1tip,.val2tip,.val3tip,.val4tip,.val5tip,.val6tip').tooltipster('hide');   
+        });
+
+        $('#barcode_microbiology2').click(function() {
+            $('.val1tip,.val2tip,.val3tip,.val4tip,.val5tip,.val6tip').tooltipster('hide');   
+        });
+
+        $('#barcode_rise_lab').click(function() {
+            $('.val1tip,.val2tip,.val3tip,.val4tip,.val5tip,.val6tip').tooltipster('hide');   
         });
 
         // $('.col-sm-8').click(function() {
@@ -262,14 +287,13 @@
         // });
 
         $("#compose-modal").on('hide.bs.modal', function(){
-            $('.val1tip').tooltipster('hide');   
+            $('.val1tip,.val2tip,.val3tip,.val4tip,.val5tip,.val6tip').tooltipster('hide');   
             // $('#barcode_sample').val('');     
         });
 
-
         $('#barcode_sample').on("change", function() {
             data1 = $('#barcode_sample').val();
-l            // ckbar = data1.substring(0,5);
+            // ckbar = data1.substring(0,5);
             // ckarray = ["N0-B0-", "N-F0-", "N-P1-", "F-B0-", "F-F0-", "F-P1-",];
             // ckarray = [10, 11, 12];
             // ck = $.inArray(ckbar, ckarray);
@@ -325,6 +349,219 @@ l            // ckbar = data1.substring(0,5);
             // setTimeout(function(){
             //     $('.val1tip').tooltipster('hide');        
             // }, 5000);
+        });
+
+        $('#barcode_nitro').on("change", function() {
+            var data1 = $('#barcode_nitro').val();
+            var data2 = $('#barcode_nitro2').val();
+            var data3 = $('#barcode_rise_lab').val();
+            var data4 = $('#barcode_microbiology').val();
+            var data5 = $('#barcode_microbiology2').val();
+            if (data1 === data2 || data1 === data3 || data1 === data4 || data1 === data5) {
+                tip = $('<span><i class="fa fa-exclamation-triangle"></i> This barcode is already in the form !</span>');
+                $('.val2tip').tooltipster('content', tip);
+                $('.val2tip').tooltipster('show');   
+                $('#barcode_nitro').val('');      
+                setTimeout(function(){
+                    $('#barcode_nitro').css({'background-color' : '#FFFFFF'});
+                }, 300);                            
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "O2b_other_lab/valid_nitro?id1="+data1,
+                data:data1,
+                dataType: "json",
+                success: function(data) {
+                    if (data.length > 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !</span>');
+                        $('.val2tip').tooltipster('content', tip);
+                        $('.val2tip').tooltipster('show');
+                        $('#barcode_nitro').focus();
+                        $('#barcode_nitro').val('');     
+                        $('#barcode_nitro').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_nitro').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_nitro').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_nitro').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
+
+        $('#barcode_nitro2').on("change", function() {
+            var data1 = $('#barcode_nitro2').val();
+            var data2 = $('#barcode_nitro').val();
+            var data3 = $('#barcode_rise_lab').val();
+            var data4 = $('#barcode_microbiology').val();
+            var data5 = $('#barcode_microbiology2').val();
+            if (data1 === data2 || data1 === data3 || data1 === data4 || data1 === data5) {
+                tip = $('<span><i class="fa fa-exclamation-triangle"></i> This barcode is already in the form !</span>');
+                $('.val3tip').tooltipster('content', tip);
+                $('.val3tip').tooltipster('show');   
+                $('#barcode_nitro2').val('');      
+                setTimeout(function(){
+                    $('#barcode_nitro2').css({'background-color' : '#FFFFFF'});
+                }, 300);                            
+            }
+            $.ajax({
+                type: "GET",
+                url: "O2b_other_lab/valid_nitro?id1="+data1,
+                data:data1,
+                dataType: "json",
+                success: function(data) {
+                    if (data.length > 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !</span>');
+                        $('.val3tip').tooltipster('content', tip);
+                        $('.val3tip').tooltipster('show');
+                        $('#barcode_nitro2').focus();
+                        $('#barcode_nitro2').val('');     
+                        $('#barcode_nitro2').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_nitro2').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_nitro2').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_nitro2').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });        
+
+        $('#barcode_microbiology').on("change", function() {
+            var data1 = $('#barcode_microbiology').val();
+            var data2 = $('#barcode_nitro2').val();
+            var data3 = $('#barcode_nitro').val();
+            var data4 = $('#barcode_rise_lab').val();
+            var data5 = $('#barcode_microbiology2').val();
+            if (data1 === data2 || data1 === data3 || data1 === data4 || data1 === data5) {
+                tip = $('<span><i class="fa fa-exclamation-triangle"></i> This barcode is already in the form !</span>');
+                $('.val4tip').tooltipster('content', tip);
+                $('.val4tip').tooltipster('show');   
+                $('#barcode_microbiology').val('');      
+                setTimeout(function(){
+                    $('#barcode_microbiology').css({'background-color' : '#FFFFFF'});
+                }, 300);                            
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "O2b_other_lab/valid_nitro?id1="+data1,
+                data:data1,
+                dataType: "json",
+                success: function(data) {
+                    if (data.length > 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !</span>');
+                        $('.val4tip').tooltipster('content', tip);
+                        $('.val4tip').tooltipster('show');
+                        $('#barcode_microbiology').focus();
+                        $('#barcode_microbiology').val('');     
+                        $('#barcode_microbiology').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_microbiology').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_microbiology').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_microbiology').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });        
+
+        $('#barcode_microbiology2').on("change", function() {
+            var data1 = $('#barcode_microbiology2').val();
+            var data2 = $('#barcode_microbiology').val();
+            var data3 = $('#barcode_nitro2').val();
+            var data4 = $('#barcode_nitro').val();
+            var data5 = $('#barcode_rise_lab').val();
+            if (data1 === data2 || data1 === data3 || data1 === data4 || data1 === data5) {
+                tip = $('<span><i class="fa fa-exclamation-triangle"></i> This barcode is already in the form !</span>');
+                $('.val5tip').tooltipster('content', tip);
+                $('.val5tip').tooltipster('show');   
+                $('#barcode_microbiology2').val('');      
+                setTimeout(function(){
+                    $('#barcode_microbiology2').css({'background-color' : '#FFFFFF'});
+                }, 300);                            
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "O2b_other_lab/valid_nitro?id1="+data1,
+                data:data1,
+                dataType: "json",
+                success: function(data) {
+                    if (data.length > 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !</span>');
+                        $('.val5tip').tooltipster('content', tip);
+                        $('.val5tip').tooltipster('show');
+                        $('#barcode_microbiology2').focus();
+                        $('#barcode_microbiology2').val('');     
+                        $('#barcode_microbiology2').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_microbiology2').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_microbiology2').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_microbiology2').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });                
+
+        $('#barcode_rise_lab').on("change", function() {
+            var data1 = $('#barcode_rise_lab').val();
+            var data2 = $('#barcode_microbiology2').val();
+            var data3 = $('#barcode_microbiology').val();
+            var data4 = $('#barcode_nitro2').val();
+            var data5 = $('#barcode_nitro').val();
+            if (data1 === data2 || data1 === data3 || data1 === data4 || data1 === data5) {
+                tip = $('<span><i class="fa fa-exclamation-triangle"></i> This barcode is already in the form !</span>');
+                $('.val6tip').tooltipster('content', tip);
+                $('.val6tip').tooltipster('show');   
+                $('#barcode_rise_lab').val('');      
+                setTimeout(function(){
+                    $('#barcode_rise_lab').css({'background-color' : '#FFFFFF'});
+                }, 300);                            
+            }
+            $.ajax({
+                type: "GET",
+                url: "O2b_other_lab/valid_nitro?id1="+data1,
+                data:data1,
+                dataType: "json",
+                success: function(data) {
+                    if (data.length > 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !</span>');
+                        $('.val6tip').tooltipster('content', tip);
+                        $('.val6tip').tooltipster('show');
+                        $('#barcode_rise_lab').focus();
+                        $('#barcode_rise_lab').val('');     
+                        $('#barcode_rise_lab').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_rise_lab').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_rise_lab').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_rise_lab').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
         });
 
         // $("input").focusout(function(){

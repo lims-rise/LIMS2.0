@@ -131,6 +131,18 @@ class O2b_other_lab extends CI_Controller
         // $data['location'] = $this->O3_filter_paper_model->find_loc($id);
     }
 
+    public function valid_nitro() 
+    {
+        $id = $this->input->get('id1');
+        // echo $id;
+        $data = $this->O2b_other_lab_model->validate_nitro($id);
+
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        // return $this->response->setJSON($data);
+        // $data['location'] = $this->O3_filter_paper_model->find_loc($id);
+    }
+
 
     // public function _rules() 
     // {
