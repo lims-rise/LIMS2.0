@@ -242,7 +242,7 @@
                     "className" : "text-center"
                 }
             ],
-            order: [[0, 'desc']],
+            order: [[1, 'desc']],
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;

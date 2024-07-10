@@ -113,6 +113,11 @@ class O2b_other_lab_model extends CI_Model
     {
         $this->db->insert($this->table, $data);
     }
+
+    function insert_reception($data)
+    {
+        $this->db->insert('obj2b_receipt', $data);
+    }
     
     // update data
     function update($id, $data)

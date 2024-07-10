@@ -588,7 +588,7 @@
                     } else {
                         $('#barcode_sample').css({'background-color' : '#FFFFFF'});
                         // $('#barcode_sample').attr('readonly', false);
-                        // $('#barcode_sample').val('');
+                        $('#barcode_sample').val('');
                         $('#barcode_sample').focus();
                     }
                 });
