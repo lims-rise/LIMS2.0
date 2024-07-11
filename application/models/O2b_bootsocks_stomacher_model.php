@@ -129,7 +129,18 @@ class O2b_bootsocks_stomacher_model extends CI_Model
         LEFT JOIN obj2b_bs_stomacher s ON a.barcode_sample=s.barcode_sample AND s.elution_no="Moisture1"
         LEFT JOIN obj2b_bs_stomacher t ON a.barcode_sample=t.barcode_sample AND t.elution_no="Moisture2"
         LEFT JOIN obj2b_subbs_endetec h ON a.barcode_sample=h.barcode_sample
-        LEFT JOIN obj2b_subbs_idexx j ON a.barcode_sample=j.barcode_sample
+        LEFT JOIN (SELECT DISTINCT z.barcode_colilert, z.barcode_sample
+                FROM 
+                (SELECT a.barcode_sample, b.barcode_colilert
+                FROM obj2b_bs_stomacher a
+                LEFT JOIN obj2b_subbs_idexx b ON a.barcode_sample = b.barcode_sample
+                UNION ALL
+                SELECT a.barcode_sample, b.barcode_colilert
+                FROM obj2b_bs_stomacher a
+                LEFT JOIN obj2b_subbs_idexx b ON a.barcode_bootsock = b.barcode_sample) z
+                WHERE z.barcode_colilert is not NULL
+                ) x ON g.barcode_sample=x.barcode_sample
+        LEFT JOIN obj2b_subbs_idexx j ON j.barcode_colilert=x.barcode_colilert
         WHERE a.id_type2b = 9
         AND a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
