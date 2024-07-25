@@ -224,6 +224,18 @@ class O2b_sample_prep extends CI_Controller
         // $data['location'] = $this->O3_filter_paper_model->find_loc($id);
     }
 
+    public function valid_coli() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->O2b_sample_prep_model->valid_coli($id);
+
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        // return $this->response->setJSON($data);
+        // $data['location'] = $this->O3_filter_paper_model->find_loc($id);
+    }
+
+
     // public function valid_boots() 
     // {
     //     $id = $this->input->get('id1');
