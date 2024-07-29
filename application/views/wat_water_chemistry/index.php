@@ -82,12 +82,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="date_process" class="col-sm-4 control-label">Date process</label>
                             <div class="col-sm-8">
                                 <input id="date_process" name="date_process" type="date" class="form-control" placeholder="Date process" value="<?php echo date("Y-m-d"); ?>">
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label for="ammonia" class="col-sm-4 control-label">Ammonia (NH3-N) mg/L</label>

@@ -39,7 +39,7 @@ class Wat_water_chemistry extends CI_Controller
         if ($mode=="insert"){
             $data = array(
             'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'date_process' => $this->input->post('date_process',TRUE),
+            // 'date_process' => $this->input->post('date_process',TRUE),
             'ammonia' => $this->input->post('ammonia',TRUE),
             'nitrate' => $this->input->post('nitrate',TRUE),
             'nitrite' => $this->input->post('nitrite',TRUE),
@@ -76,7 +76,7 @@ class Wat_water_chemistry extends CI_Controller
         else if ($mode=="edit"){
             $data = array(
                 'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-                'date_process' => $this->input->post('date_process',TRUE),
+                // 'date_process' => $this->input->post('date_process',TRUE),
                 'ammonia' => $this->input->post('ammonia',TRUE),
                 'nitrate' => $this->input->post('nitrate',TRUE),
                 'nitrite' => $this->input->post('nitrite',TRUE),

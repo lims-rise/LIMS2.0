@@ -24,7 +24,7 @@ class Wat_water_chemistry_model extends CI_Model
         // $this->datatables->where('lab', $this->session->userdata('lab'));
         // $this->datatables->where('flag', '0');
 
-        $this->datatables->select('a.barcode_sample, a.date_process, c.lab AS water_lab,
+        $this->datatables->select('a.barcode_sample, d.date_arrival AS date_process, c.lab AS water_lab,
         c.barcode_sample AS parent_barcode, b.sampletype AS sampletype2bwat,
         a.ammonia, a.nitrate, a.nitrite, a.ph, a.bod, a.aluminium, a.barium,
         a.iron, a.chrome, a.cadmium, a.manganese, a.nickel, a.zinc, a.copper,
@@ -64,6 +64,7 @@ class Wat_water_chemistry_model extends CI_Model
             where LENGTH(barcode_rise_lab) > 0 ) c', 'a.barcode_sample = c.barcode', 'left');    
         }
         $this->datatables->join('ref_sampletype b', 'c.id_type2bwat = b.id_sampletype', 'left');
+        $this->datatables->join('obj2b_receipt d', 'c.barcode_sample = d.barcode_sample', 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
         $this->datatables->where('a.flag', '0');     
 
