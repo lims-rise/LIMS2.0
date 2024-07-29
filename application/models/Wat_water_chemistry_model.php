@@ -87,7 +87,7 @@ class Wat_water_chemistry_model extends CI_Model
         if ($this->session->userdata('lab') == 1) {
             $q = $this->db->query('SELECT 
             a.barcode_sample AS barcode_sample,
-            a.date_process AS date_process,
+            d.date_arrival AS date_process,
             c.lab AS water_lab,
             c.barcode_sample AS parent_barcode,
             b.sampletype AS sampletype2bwat,
@@ -133,6 +133,7 @@ class Wat_water_chemistry_model extends CI_Model
                 SELECT barcode_rise_lab AS barcode, "RISE Lab" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
                 where LENGTH(barcode_rise_lab) > 0) c ON a.barcode_sample = c.barcode 
             left join ref_sampletype b on c.id_type2bwat = b.id_sampletype
+            left join obj2b_receipt d on c.barcode_sample = d.barcode_sample
             WHERE a.lab = "'.$this->session->userdata('lab').'" 
             AND a.flag = 0
             ORDER BY a.barcode_sample, a.date_process
@@ -141,7 +142,7 @@ class Wat_water_chemistry_model extends CI_Model
         else {
             $q = $this->db->query('SELECT 
             a.barcode_sample AS barcode_sample,
-            a.date_process AS date_process,
+            d.date_arrival AS date_process,
             c.lab AS water_lab,
             c.barcode_sample AS parent_barcode,
             b.sampletype AS sampletype2bwat,
@@ -187,6 +188,7 @@ class Wat_water_chemistry_model extends CI_Model
                 SELECT barcode_rise_lab AS barcode, "RISE Lab" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
                 where LENGTH(barcode_rise_lab) > 0) c ON a.barcode_sample = c.barcode 
             left join ref_sampletype b on c.id_type2bwat = b.id_sampletype
+            left join obj2b_receipt d on c.barcode_sample = d.barcode_sample
             WHERE a.lab = "'.$this->session->userdata('lab').'" 
             AND a.flag = 0
             ORDER BY a.barcode_sample, a.date_process
