@@ -128,12 +128,12 @@
             //         ".anchor(site_url('consumables_new_order/deleteConsumablesNewOrder/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id_neworder');
             // }
             else {
-                $this->datatables->add_column('action', anchor(site_url('consumables_order_detail/readConsumablesOrderDetail/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                    ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                    ".anchor(site_url('consumables_new_order/deleteConsumablesNewOrder/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'id_neworder');
+                // $this->datatables->add_column('action', anchor(site_url('consumables_order_detail/readConsumablesOrderDetail/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+                //     ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+                //     ".anchor(site_url('consumables_new_order/deleteConsumablesNewOrder/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'id_neworder');
 
-                    // $this->datatables->add_column('action','<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                    // ".anchor(site_url('consumables_new_order/deleteConsumablesNewOrder/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'id_neworder');
+                    $this->datatables->add_column('action','<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+                    ".anchor(site_url('consumables_new_order/deleteConsumablesNewOrder/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'id_neworder');
             }
             return $this->datatables->generate();
         }
