@@ -22,8 +22,8 @@ class DNA_sample_control extends CI_Controller
     {
         // $this->load->model('DNA_sample_control_model');
         // $data['person'] = $this->DNA_sample_control_model->getLabtech();
-        // $data['type'] = $this->DNA_sample_control_model->getSampleType();
-        $this->template->load('template','dna_sample_control/index');
+        $data['dnatype'] = $this->DNA_sample_control_model->getSampleDNA();
+        $this->template->load('template','dna_sample_control/index', $data);
     } 
     
     public function json() {
@@ -41,7 +41,11 @@ class DNA_sample_control extends CI_Controller
             $data = array(
             'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'barcode_vessel' => strtoupper($this->input->post('barcode_vessel',TRUE)),
-            'sample_type' => $this->input->post('sample_type',TRUE),
+            'barcode_vessel2' => strtoupper($this->input->post('barcode_vessel2',TRUE)),
+            'barcode_vessel3' => strtoupper($this->input->post('barcode_vessel3',TRUE)),
+            'barcode_vessel4' => strtoupper($this->input->post('barcode_vessel4',TRUE)),
+            'barcode_vessel5' => strtoupper($this->input->post('barcode_vessel5',TRUE)),
+            'id_sample' => $this->input->post('id_sample',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -56,7 +60,11 @@ class DNA_sample_control extends CI_Controller
             $data = array(
             'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'barcode_vessel' => strtoupper($this->input->post('barcode_vessel',TRUE)),
-            'sample_type' => $this->input->post('sample_type',TRUE),
+            'barcode_vessel2' => strtoupper($this->input->post('barcode_vessel2',TRUE)),
+            'barcode_vessel3' => strtoupper($this->input->post('barcode_vessel3',TRUE)),
+            'barcode_vessel4' => strtoupper($this->input->post('barcode_vessel4',TRUE)),
+            'barcode_vessel5' => strtoupper($this->input->post('barcode_vessel5',TRUE)),
+            'id_sample' => $this->input->post('id_sample',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),

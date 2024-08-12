@@ -13,6 +13,8 @@ class Welcome_model extends CI_Model
     function __construct()
     {
         parent::__construct();
+        // $this->main_db = $this->load->database('main_db', TRUE);       
+        $this->load->database();
     }
 
     function get_by_id()
@@ -21,6 +23,37 @@ class Welcome_model extends CI_Model
         return $this->db->get($this->table)->row();
                 
     }
+
+    // public function get_deleted_records($main_table, $lab_table, $column)
+    // {
+    //     // Get data from the client/lab database
+    //     $this->db->select($column);
+    //     $lab_query = $this->db->get($lab_table);
+    //     $lab_data = array_column($lab_query->result_array(), $column);
+
+    //     $lab = $this->session->userdata('lab');
+    //     // Get data from the main database
+    //     $this->main_db->select($column);
+    //     $this->main_db->where('lab', $lab);
+    //     $main_query = $this->main_db->get($main_table);
+    //     $main_data = $main_query->result_array();
+
+    //     // Find records in main database not present in lab database
+    //     $deleted_records = array_filter($main_data, function($record) use ($lab_data, $column) {
+    //         return !in_array($record[$column], $lab_data);
+    //     });
+
+    //     return $deleted_records;
+    // }
+
+
+    // public function delete_records($main_table, $deleted_records, $column)
+    // {
+    //     $lab = $this->session->userdata('lab');
+    //     foreach ($deleted_records as $record) {
+    //         $this->main_db->where('lab', $lab);
+    //         $this->main_db->delete($main_table, array($column => $record[$column]));        }
+    // }    
 
     // datatables
     function get_sum() {

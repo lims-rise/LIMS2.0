@@ -17,10 +17,14 @@ class DNA_sample_control_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, barcode_vessel, sample_type, comments, lab, flag');
+        $this->datatables->select('dna_control.barcode_sample, dna_control.barcode_vessel,
+        dna_control.barcode_vessel2, dna_control.barcode_vessel3, dna_control.barcode_vessel4,
+        dna_control.barcode_vessel5,ref_sampledna.sample, 
+        dna_control.comments, dna_control.lab, dna_control.flag, dna_control.id_sample');
         $this->datatables->from('dna_control');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        $this->datatables->join('ref_sampledna', 'dna_control.id_sample = ref_sampledna.id_sample', 'left');
+        $this->datatables->where('dna_control.lab', $this->session->userdata('lab'));
+        $this->datatables->where('dna_control.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'barcode_sample');
@@ -119,17 +123,13 @@ class DNA_sample_control_model extends CI_Model
     //     return $response;
     //   }
 
-    //   function getSampleType(){
-
-    //     $response = array();
-    //     // Select record
-    //     $this->db->select('*');
-    //     $this->db->where('obj', 'O3');
-    //     $q = $this->db->get('ref_sampletype');
-    //     $response = $q->result_array();
-    
-    //     return $response;
-    //   }
+      function getSampleDNA(){
+        $response = array();
+        $this->db->select('*');
+        $q = $this->db->get('ref_sampledna');
+        $response = $q->result_array();
+        return $response;
+      }
 
     //   function validate1($id){
     //     $this->db->where('barcode_sample', $id);

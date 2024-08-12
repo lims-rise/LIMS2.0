@@ -23,9 +23,13 @@
                 <tr>
                     <!-- <th width="30px">No</th> -->
 		    <th>Barcode sample</th>
-		    <th>Barcode vessel</th>
 		    <th>Sample type</th>
-		    <th>Comments</th>
+		    <th>Barcode vessel</th>
+		    <th>Barcode vessel2</th>
+		    <th>Barcode vessel3</th>
+		    <th>Barcode vessel4</th>
+		    <th>Barcode vessel5</th>
+		    <!-- <th>Comments</th> -->
 		    <th>Action</th>
                 </tr>
             </thead>
@@ -65,6 +69,26 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="id_sample" class="col-sm-4 control-label">Sample Type</label>
+                            <div class="col-sm-8">
+                            <select id='id_sample' name="id_sample" class="form-control">
+                                <option>-- Select sample type --</option>
+                                <?php
+                                foreach($dnatype as $row){
+									if ($id_sample == $row['id_sample']) {
+										echo "<option value='".$row['id_sample']."' selected='selected'>".$row['sample']."</option>";
+									}
+									else {
+                                        echo "<option value='".$row['id_sample']."'>".$row['sample']."</option>";
+                                    }
+                                }
+                                    ?>
+                            </select>
+                            <!-- <input id="description" name="description" type="text" class="form-control input-sm" placeholder="Item Description" required> -->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="barcode_vessel" class="col-sm-4 control-label">Barcode vessel</label>
                             <div class="col-sm-8">
                                 <input id="barcode_vessel" name="barcode_vessel" type="text" class="form-control" placeholder="Barcode vessel" required>
@@ -72,11 +96,41 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="barcode_vessel2" class="col-sm-4 control-label">Barcode vessel 2</label>
+                            <div class="col-sm-8">
+                                <input id="barcode_vessel2" name="barcode_vessel2" type="text" class="form-control" placeholder="Barcode vessel 2" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="barcode_vessel3" class="col-sm-4 control-label">Barcode vessel 3</label>
+                            <div class="col-sm-8">
+                                <input id="barcode_vessel3" name="barcode_vessel3" type="text" class="form-control" placeholder="Barcode vessel 3" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="barcode_vessel4" class="col-sm-4 control-label">Barcode vessel 4</label>
+                            <div class="col-sm-8">
+                                <input id="barcode_vessel4" name="barcode_vessel4" type="text" class="form-control" placeholder="Barcode vessel 4" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="barcode_vessel5" class="col-sm-4 control-label">Barcode vessel 5</label>
+                            <div class="col-sm-8">
+                                <input id="barcode_vessel5" name="barcode_vessel5" type="text" class="form-control" placeholder="Barcode vessel 5" required>
+                            </div>
+                        </div>
+
+
+<!-- 
+                        <div class="form-group">
                             <label for="sample_type" class="col-sm-4 control-label">Sample Type</label>
                             <div class="col-sm-8">
                                 <input id="sample_type" name="sample_type" type="text" class="form-control" placeholder="Sample Type" required>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- <div class="form-group">
                             <label for="id_type" class="col-sm-4 control-label">Sample Type</label>
@@ -119,128 +173,33 @@
 
     var table
     $(document).ready(function() {
-        
-        // $('.clockpicker').clockpicker({
-        // placement: 'bottom', // clock popover placement
-        // align: 'left',       // popover arrow align
-        // donetext: 'Done',     // done button text
-        // autoclose: true,    // auto close when minute is selected
-        // vibrate: true        // vibrate the device when dragging clock hand
-        // });                
-
-        // $('.val1tip').tooltipster({
-        //     animation: 'swing',
-        //     delay: 1,
-        //     theme: 'tooltipster-default',
-        //     // touchDevices: false,
-        //     // trigger: 'hover',
-        //     autoClose: true,
-        //     position: 'bottom',
-        //     // content: $('<span><i class="fa fa-exclamation-triangle"></i> <strong> This text is in bold case !</strong></span>')
-        //     // content: $('<span><img src="../assets/img/ttd.jpg" /> <strong>This text is in bold case !</strong></span>')
-        //     // content: 'Test tip'
-        // });
-
-
-        // function checkBarcode() { col-sm-8
-        // $('.modal-body').click(function() {
-        // $('#barcode_sample').click(function() {
-        //     $('.val1tip').tooltipster('hide');   
-        // // $('#barcode_sample').val('');     
-        // });
-
-        // $('.col-sm-8').click(function() {
-
-            // $('.val1tip').tooltipster('hide');   
-            // $('#barcode_sample').val('');     
-        // });
-
-        // $("#compose-modal").on('hide.bs.modal', function(){
-        //     $('.val1tip').tooltipster('hide');   
-        //     // $('#barcode_sample').val('');     
-        // });
-
-
-        // $('#barcode_sample').on("change", function() {
-        //     data1 = $('#barcode_sample').val();
-        //     ckbar = data1.substring(0,5);
-        //     ckarray = ["N-B0-", "N-F0-", "N-P1-", "F-B0-", "F-F0-", "F-P1-",];
-        //     // ckarray = [10, 11, 12];
-        //     ck = $.inArray(ckbar, ckarray);
-        //     if (ck == -1) {
-        //         tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! <strong></br> ex.(N-B0-XXXXXX / F-B0-XXXXXX) </br> (N-F0-XXXXXX / F-F0-XXXXXX) </br> (N-P1-XXXXXX / F-P1-XXXXXX) </strong> </span>');
-        //         $('.val1tip').tooltipster('content', tip);
-        //         $('.val1tip').tooltipster('show');
-        //         $('#barcode_sample').val('');     
-        //         $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //         setTimeout(function(){
-        //             $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //             setTimeout(function(){
-        //                 $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //                 setTimeout(function(){
-        //                     $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //                     $('#barcode_sample').focus();
-        //                 }, 300);                            
-        //             }, 300);
-        //         }, 300);
-        //     }
-        //     else {
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "dna_sample_control/valid_bs?id1="+data1,
-        //         data:data1,
-        //         dataType: "json",
-        //         success: function(data) {
-        //             // var barcode = '';
-        //             if (data.length > 0) {
-        //                 tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !</span>');
-        //                 $('.val1tip').tooltipster('content', tip);
-        //                 $('.val1tip').tooltipster('show');
-        //                 $('#barcode_sample').focus();
-        //                 $('#barcode_sample').val('');     
-        //                 $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //                 setTimeout(function(){
-        //                     $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //                     setTimeout(function(){
-        //                         $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //                         setTimeout(function(){
-        //                             $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //                         }, 300);                            
-        //                     }, 300);
-        //                 }, 300);
-
-        //                 // barcode = data[0].barcode_sample;
-        //                 // console.log(data);
-        //             }
-        //         }
-        //     });
-        //     }
-        //     // $('.val1tip').tooltipster('content', 'Barcode :' + $(this).val()+' salah input, seharusnya memakai kode bla bla bla');
-        //     // setTimeout(function(){
-        //     //     $('.val1tip').tooltipster('hide');        
-        //     // }, 5000);
-        // });
-
-        // $("input").focusout(function(){
-        //     if ($('#barcode_sample').val() == ""){
-        //         tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode sample <strong> is required !</strong></span>');
-        //         $('.val1tip').tooltipster('content', tip);
-        //         $('.val1tip').tooltipster('show');
-        //         $('#barcode_sample').focus();
-        //         // $('.val1tip').tooltipster('hide');   
-        //     }
-        // });
-
-        // $("input").keypress(function(){
-        //     // $('#barcode_sample').val('');     
-        //     $('.val1tip').tooltipster('hide');   
-        // });
 
         $('#compose-modal').on('shown.bs.modal', function () {
             // $('#barcode_sample').val('');     
             $('#barcode_sample').focus();
         });        
                 
+        $('#id_sample').on("change", function() {
+            var data1 = parseInt($('#id_sample').val(), 10);
+            $('#barcode_vessel2').val('');
+            $('#barcode_vessel3').val('');
+            $('#barcode_vessel4').val('');
+            $('#barcode_vessel5').val('');
+
+            if ([4, 8, 12, 16, 20].includes(data1)) {
+                $('#barcode_vessel2').attr('readonly', false);
+                $('#barcode_vessel3').attr('readonly', false);
+                $('#barcode_vessel4').attr('readonly', false);
+                $('#barcode_vessel5').attr('readonly', false);
+            }
+            else {
+                $('#barcode_vessel2').attr('readonly', true);
+                $('#barcode_vessel3').attr('readonly', true);
+                $('#barcode_vessel4').attr('readonly', true);
+                $('#barcode_vessel5').attr('readonly', true);
+            }
+        });        
+        
         var base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
@@ -279,9 +238,13 @@
                 //     "orderable": false
                 // },
                 {"data": "barcode_sample"},
+                {"data": "sample"},
                 {"data": "barcode_vessel"},
-                {"data": "sample_type"},
-                {"data": "comments"},
+                {"data": "barcode_vessel2"},
+                {"data": "barcode_vessel3"},
+                {"data": "barcode_vessel4"},
+                {"data": "barcode_vessel5"},
+                // {"data": "comments"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -308,7 +271,15 @@
             // $("#date_receipt").datepicker("setDate",'now');
             // $('#time_receipt').timepicker('setTime', new Date());
             $('#barcode_vessel').val('');
-            $('#sample_type').val('');
+            $('#barcode_vessel2').val('');
+            $('#barcode_vessel2').attr('readonly', true);
+            $('#barcode_vessel3').val('');
+            $('#barcode_vessel3').attr('readonly', true);
+            $('#barcode_vessel4').val('');
+            $('#barcode_vessel4').attr('readonly', true);
+            $('#barcode_vessel5').val('');
+            $('#barcode_vessel5').attr('readonly', true);
+            $('#id_sample').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
         });
@@ -324,7 +295,11 @@
             $('#barcode_sample').attr('readonly', true);
             $('#barcode_sample').val(data.barcode_sample);
             $('#barcode_vessel').val(data.barcode_vessel);
-            $('#sample_type').val(data.sample_type).trigger('change');
+            $('#barcode_vessel2').val(data.barcode_vessel2);
+            $('#barcode_vessel3').val(data.barcode_vessel3);
+            $('#barcode_vessel4').val(data.barcode_vessel4);
+            $('#barcode_vessel5').val(data.barcode_vessel5);
+            $('#id_sample').val(data.sample_type).trigger('change');
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });  
