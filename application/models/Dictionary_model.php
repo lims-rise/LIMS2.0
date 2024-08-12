@@ -36,6 +36,13 @@ class Dictionary_model extends CI_Model
             $this->datatables->add_column('action', anchor(site_url('dictionary/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"> Detail</i>', array('class' => 'btn btn-info btn-sm')), 'id');
         }
         else {
+            // $this->datatables->add_column('reception', anchor(site_url('Dictionary/delete/$1'),'<i class="fa fa-eye" aria-hidden="true"> show</i>','class="btn btn-warning btn-sm btn-primary btn-block" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id');
+            $this->datatables->add_column('reception', 
+                '<button class="btn btn-warning btn-sm btn-primary btn-block" onclick="showRestriction($1)">
+                    <i class="fa fa-eye" aria-hidden="true"></i> Show
+                </button>', 
+                'id'
+            );
             $this->datatables->add_column('action', anchor(site_url('dictionary/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"> Detail</i>', array('class' => 'btn btn-info btn-sm'))." 
                ".anchor(site_url('Dictionary/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id');
         }
@@ -68,6 +75,12 @@ class Dictionary_model extends CI_Model
         // $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get($this->table)->row();
+    }
+
+    function get_data_restriction_by_id($id)
+    {
+        $this->db->where('restriction_id', $id);
+        return $this->db->get('dictionary_restriction')->row();
     }
 
     // function get_by_id_detail($id)
