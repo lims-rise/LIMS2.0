@@ -299,7 +299,7 @@
             $('#barcode_vessel3').val(data.barcode_vessel3);
             $('#barcode_vessel4').val(data.barcode_vessel4);
             $('#barcode_vessel5').val(data.barcode_vessel5);
-            $('#id_sample').val(data.sample_type).trigger('change');
+            $('#id_sample').val(data.id_sample).trigger('change');
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });  
