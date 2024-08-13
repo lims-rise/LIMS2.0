@@ -135,9 +135,13 @@ class DNA_sample_control extends CI_Controller
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', "Barcode_sample"); 
-        $sheet->setCellValue('B1', "Barcode_vessel"); 
-        $sheet->setCellValue('C1', "Sample_type");
-        $sheet->setCellValue('D1', "Comments");
+        $sheet->setCellValue('B1', "Sample_type");
+        $sheet->setCellValue('C1', "Barcode_vessel"); 
+        $sheet->setCellValue('D1', "Barcode_vessel2"); 
+        $sheet->setCellValue('E1', "Barcode_vessel3"); 
+        $sheet->setCellValue('F1', "Barcode_vessel4"); 
+        $sheet->setCellValue('G1', "Barcode_vessel5"); 
+        $sheet->setCellValue('H1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -147,9 +151,13 @@ class DNA_sample_control extends CI_Controller
         $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
           $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
-          $sheet->setCellValue('B'.$numrow, $data->barcode_vessel);
-          $sheet->setCellValue('C'.$numrow, $data->sample_type);
-          $sheet->setCellValue('D'.$numrow, trim($data->comments));
+          $sheet->setCellValue('B'.$numrow, $data->sample);
+          $sheet->setCellValue('C'.$numrow, $data->barcode_vessel);
+          $sheet->setCellValue('D'.$numrow, $data->barcode_vessel2);
+          $sheet->setCellValue('E'.$numrow, $data->barcode_vessel3);
+          $sheet->setCellValue('F'.$numrow, $data->barcode_vessel4);
+          $sheet->setCellValue('G'.$numrow, $data->barcode_vessel5);
+          $sheet->setCellValue('H'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

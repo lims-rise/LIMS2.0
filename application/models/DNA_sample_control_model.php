@@ -41,10 +41,21 @@ class DNA_sample_control_model extends CI_Model
 
     function get_all()
     {
-        $this->db->order_by($this->id, 'ASC');
-        $this->db->where('lab', $this->session->userdata('lab'));
-        $this->db->where('flag', '0');
-        return $this->db->get('dna_control')->result();
+        $this->db->select('dna_control.barcode_sample, ref_sampledna.sample, dna_control.barcode_vessel,dna_control.barcode_vessel2,
+        dna_control.barcode_vessel3,dna_control.barcode_vessel4,dna_control.barcode_vessel5,dna_control.comments,
+        dna_control.flag, dna_control.id_sample,dna_control.lab'); 
+        $this->db->from('dna_control');
+        $this->db->join('ref_sampledna', 'dna_control.id_sample = ref_sampledna.id_sample', 'left'); // Adjust the columns and table names
+        $this->db->where('dna_control.lab', $this->session->userdata('lab'));
+        $this->db->where('dna_control.flag', '0');
+        $this->db->order_by('dna_control.' . $this->id, 'ASC');
+        return $this->db->get()->result();
+        
+        // Execute the query and return the results
+        // $this->db->order_by($this->id, 'ASC');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('dna_control')->result();
     }
 
     function get_by_id($id)
