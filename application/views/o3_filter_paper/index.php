@@ -472,7 +472,7 @@
                 }
             ],
             order: [[1, 'desc']],
-            order: [[0, 'desc']],
+            // order: [[0, 'desc']],
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
