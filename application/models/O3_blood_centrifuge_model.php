@@ -50,6 +50,7 @@ class O3_blood_centrifuge_model extends CI_Model
     function subjson($id) {
         $this->datatables->select('barcode_sample, comments, id_bc');
         $this->datatables->from('obj3_blood_centrifuge_det');
+        $this->datatables->where('obj3_blood_centrifuge_det.lab', $this->session->userdata('lab'));
         $this->datatables->where('id_bc', $id);
         $this->datatables->where('flag', '0');
 
@@ -81,7 +82,7 @@ class O3_blood_centrifuge_model extends CI_Model
         a.id_person, a.lab, a.flag
         from obj3_blood_centrifuge a
         left join ref_person b on a.id_person=b.id_person
-        left join obj3_blood_centrifuge_det c on a.id=c.id_bc 
+        left join obj3_blood_centrifuge_det c on a.id=c.id_bc AND c.lab = "'.$this->session->userdata('lab').'" 
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0
         ORDER BY a.id
