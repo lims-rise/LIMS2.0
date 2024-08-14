@@ -340,6 +340,23 @@
             });
         }
 
+        function loadLoc(data1) {
+            $.ajax({
+                type: "GET",
+                url: "o3_filter_paper/load_loc?id1="+data1,
+                dataType: "json",
+                success: function(data) {
+                    // console.log(data);
+                    // var id_loc = '';
+                    // $("#idfrez").val('');
+                    if (data.length > 0) {
+                        console.log(data);
+                        $("#idfrez").val(data[0].id);
+                    }
+                }
+            });
+        }
+
         // function loadLoc(data1) {
         //     $.ajax({
         //         type: "GET",
@@ -486,7 +503,7 @@
         $('#mytable').on('click', '.btn_edit', function(){
             let tr = $(this).parent().parent();
             let data = table.row(tr).data();
-            console.log(data);
+            // console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> O3 - Update Sample Filter Paper<span id="my-another-cool-loader"></span>');
@@ -496,8 +513,8 @@
             $('#time_process').val(data.time_process);
             $('#id_person').val(data.id_person).trigger('change');
             $('#freezer_bag').val(data.freezer_bag);
-            $('#idfrez').val(data.id_location_80);
-            // loadLoc(data.id_location_80);
+            // $('#idfrez').val(data.id_location_80);
+            loadLoc(data.id_location_80);
             findcryo(data.freezer_bag);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
