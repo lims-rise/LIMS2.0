@@ -83,7 +83,7 @@ class REP_o3 extends CI_Controller
                 'SELECT a.ID AS ID, a.date_process AS Date_process, c.initial AS Lab_tech, 
                 a.centrifuge_time AS Centrifuge_time, TRIM(a.comments) AS Comments, b.barcode_sample AS Barcode_sample, b.comments AS Comments_sample
                 FROM obj3_blood_centrifuge a
-                LEFT JOIN obj3_blood_centrifuge_det b ON a.id = b.id_bc AND b.lab = "'.$this->session->userdata('lab').'" 
+                LEFT JOIN obj3_blood_centrifuge_det b ON a.id = b.id_bc AND b.flag = 0 AND b.lab = "'.$this->session->userdata('lab').'" 
                 LEFT JOIN ref_person c ON a.id_person = c.id_person
                 WHERE (a.date_process >= "'.$date1.'"
                 AND a.date_process <= "'.$date2.'")
