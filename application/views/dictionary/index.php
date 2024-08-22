@@ -197,7 +197,7 @@
             success: function(response) {
                 if (response && typeof response === 'object') {
 
-                    let restrictionContent = '<ul style="list-style-type:none; font-size: 16px">';
+                    let restrictionContent = '<ul style="list-style-type:none; font-size: 15px">';
                     restrictionContent += '<div><li class="text">New Barcode :</li> <br> <span class="restriction"><i class="fa fa-exclamation-triangle" style="color: white ;"></i> ' + (response.new_restriction_barcode ? response.new_restriction_barcode : 'N/A') + '</span></div> <br>';
 
                     if (response.restriction_barcode_exists) {
