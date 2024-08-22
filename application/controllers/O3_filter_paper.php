@@ -74,7 +74,8 @@ class O3_filter_paper extends CI_Controller
                 'time_process' => $this->input->post('time_process',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
                 'freezer_bag' => strtoupper($this->input->post('freezer_bag',TRUE)),
-                'id_location_80' => $freezid->id,
+                'id_location_80' => $freezerloc->id_location_80,
+                // 'id_location_80' => $freezid->id,
                 'comments' => $this->input->post('comments',TRUE),
                 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
@@ -100,12 +101,15 @@ class O3_filter_paper extends CI_Controller
                 'cryobox' => strtoupper($this->input->post('freezer_bag',TRUE)),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
                 );
     
             // $freezid = $this->O3_filter_paper_model->getFreezerIN($id);
-            $this->O3_filter_paper_model->update_freezer($this->input->post('idfrez',TRUE), $data);
+            $this->O3_filter_paper_model->insert_freezer($data);
+            // $this->O3_filter_paper_model->update_freezer($this->input->post('idfrez',TRUE), $data);
             $this->session->set_flashdata('message', 'Create Record Success');          
 
             $data = array(
@@ -114,7 +118,8 @@ class O3_filter_paper extends CI_Controller
                 'time_process' => $this->input->post('time_process',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
                 'freezer_bag' => strtoupper($this->input->post('freezer_bag',TRUE)),
-                'id_location_80' => $this->input->post('idfrez',TRUE),
+                'id_location_80' => $freezerloc->id_location_80,
+                // 'id_location_80' => $this->input->post('idfrez',TRUE),
                 'comments' => trim($this->input->post('comments',TRUE)),
                 // 'uuid' => $this->uuid->v4(),
                 'lab' => $this->session->userdata('lab'),

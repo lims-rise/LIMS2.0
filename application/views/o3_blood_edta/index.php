@@ -137,7 +137,7 @@
                         <div class="form-group">
                             <label for="barcode_wb" class="col-sm-4 control-label">Barcode Whole Blood</label>
                             <div class="col-sm-8">
-                                <input id="barcode_wb" name="barcode_wb" type="text" class="form-control" placeholder="Barcode Whole Blood" required>
+                                <input id="barcode_wb" name="barcode_wb" type="text" class="form-control" placeholder="Barcode Whole Blood">
                                 <div class="val2tip"></div>
                             </div>
                         </div>
@@ -146,7 +146,7 @@
                         <div class="form-group">
                             <label for="vol_aliquotwb" class="col-sm-4 control-label">Volume Aliquot-WB</label>
                             <div class="col-sm-8">
-                            <select class="form-control" id="vol_aliquotwb" name="vol_aliquotwb" required>
+                            <select class="form-control" id="vol_aliquotwb" name="vol_aliquotwb">
                                         <option value="">-- Select Volume Aliquot WB --</option>
                                         <?php
                                         echo "<option value='200uL' >200uL</option>
@@ -159,7 +159,7 @@
                         <div class="form-group">
                             <label for="cryoboxwb" class="col-sm-4 control-label">Cryobox-WB</label>
                             <div class="col-sm-8">
-                                <input id="cryoboxwb" name="cryoboxwb" type="text" class="form-control" placeholder="Cryobox-WB" required>
+                                <input id="cryoboxwb" name="cryoboxwb" type="text" class="form-control" placeholder="Cryobox-WB">
                             </div>
                         </div>
 
