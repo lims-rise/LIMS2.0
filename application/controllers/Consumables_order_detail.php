@@ -50,13 +50,16 @@
         {
             $mode = $this->input->post('mode',TRUE);
             $id = strtoupper($this->input->post('id_orderdetail',TRUE));
-            $id_order = $this->input->post('id_neworder2',TRUE);
+            $id_order = $this->input->post('idx_order',TRUE);
             $dt = new DateTime();
+            // var_dump($id);
+            // die();
 
             if ($mode == 'insert') {
                 $data = array(
-                    'new_order_id' => $this->input->post('id_neworder2',TRUE),
-                    'order_number' => $this->input->post('order_number',TRUE),
+                    // 'new_order_id' => $this->input->post('id_neworder2',TRUE),
+                    'id_order' => $this->input->post('idx_order',TRUE),
+                    // 'order_number' => $this->input->post('order_number',TRUE),
                     'ordered' => $this->input->post('ordered',TRUE),
                     'received' => $this->input->post('received',TRUE),
                     'amount_received' => $this->input->post('amount_received', TRUE),
@@ -79,8 +82,9 @@
                 $this->session->set_flashdata('message', 'Create Record Success');  
             } else if ($mode == 'edit') {
                 $data = array(
-                    'new_order_id' => $this->input->post('id_neworder2',TRUE),
-                    'order_number' => $this->input->post('order_number',TRUE),
+                    // 'new_order_id' => $this->input->post('id_neworder2',TRUE),
+                    'id_order' => $this->input->post('idx_order',TRUE),
+                    // 'order_number' => $this->input->post('order_number',TRUE),
                     'ordered' => $this->input->post('ordered',TRUE),
                     'received' => $this->input->post('received',TRUE),
                     'amount_received' => $this->input->post('amount_received', TRUE),
@@ -96,8 +100,7 @@
                     'date_created' => $dt->format('Y-m-d H:i:s'),
                 );
 
-                // var_dump($data);
-                // die();
+ 
                 $this->Consumables_order_detail_model->updateConsumablesOrderDetail($id, $data);
                 $this->session->set_flashdata('message', 'Update Record Success');  
             }
@@ -134,7 +137,7 @@
         {
             $row = $this->Consumables_order_detail_model->getById($id);
             if ($row) {
-                $idParent = $row->new_order_id;
+                $idParent = $row->id_order;
                 // var_dump($idParent);
                 // die();
                 $this->Consumables_order_detail_model->destroyConsumablesOrderDetail($id);
@@ -153,8 +156,8 @@
             $row = $this->Consumables_order_detail_model->get_detail($id);
             if ($row) {
                 $data = array(
-                    'id_neworder' => $row->id_neworder,
-                    'product_id' => $row->product_id,
+                    'id_order' => $row->id_order,
+                    'id_stock' => $row->id_stock,
                     'product_name' => $row->product_name,
                     'quantity_ordering' => $row->quantity_ordering,
                     'unit_ordering' => $row->unit_ordering,

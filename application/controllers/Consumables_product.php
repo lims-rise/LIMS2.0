@@ -18,8 +18,9 @@ class Consumables_product extends CI_Controller {
     public function index()
     {
         // $this->load->model('O3_sample_reception_model');
-        $data['product'] = $this->Consumables_product_model->getAllConsumablesProduct();
+        // $data['product'] = $this->Consumables_product_model->getAllConsumablesProduct();
         // $data['type'] = $this->O3_sample_reception_model->getSampleType();\
+        $data['stock'] = $this->Consumables_product_model->getStock();
         // var_dump($data);
         // die();
         $this->template->load('template','consumables_product/index', $data);
@@ -30,6 +31,13 @@ class Consumables_product extends CI_Controller {
         echo $this->Consumables_product_model->jsonGetProduct();
     }
 
+    public function getStockDetails()
+    {
+        $idStock = $this->input->post('idStock');
+        $stock = $this->Consumables_product_model->getStockById($idStock);
+        echo json_encode($stock);
+    }
+
     public function saveConsumablesProduct() 
     {
         $mode = $this->input->post('mode',TRUE);
@@ -38,10 +46,10 @@ class Consumables_product extends CI_Controller {
 
         if ($mode == "insert") {
             $data = array(
-                'product_name' => $this->input->post('product_name',TRUE),
+                'id_stock' => $this->input->post('id_stock',TRUE),
                 'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
                 'quantity' => $this->input->post('quantity',TRUE),
-                'units' => $this->input->post('units', TRUE),
+                // 'units' => $this->input->post('units', TRUE),
                 'item_description' => $this->input->post('item_description',TRUE),
                 'date_collected' => $this->input->post('date_collected',TRUE),
                 'time_collected' => $this->input->post('time_collected',TRUE),
@@ -58,10 +66,13 @@ class Consumables_product extends CI_Controller {
             
         } else if ($mode == "edit") {
             $data = array(
-                'product_name' => $this->input->post('product_name',TRUE),
+                // 'product_name' => $this->input->post('product_name',TRUE),
+                // 'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
+                // 'quantity' => $this->input->post('quantity',TRUE),
+                // 'units' => $this->input->post('units', TRUE),
+                'id_stock' => $this->input->post('id_stock',TRUE),
                 'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
                 'quantity' => $this->input->post('quantity',TRUE),
-                'units' => $this->input->post('units', TRUE),
                 'item_description' => $this->input->post('item_description',TRUE),
                 'date_collected' => $this->input->post('date_collected',TRUE),
                 'time_collected' => $this->input->post('time_collected',TRUE),

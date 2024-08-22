@@ -29,10 +29,17 @@
         function index()
         {
             // $data['InStock'] = $this->Consumables_new_order_model->getInstock();
-            $data['productName'] = $this->Consumables_new_order_model->getProduct();
+            $data['stockName'] = $this->Consumables_new_order_model->getStock();
             // var_dump($data);
             // die();
             $this->template->load('template', 'consumables_new_order/index', $data);
+        }
+
+        public function getStockDetails()
+        {
+            $idStock = $this->input->post('idStock');
+            $stock = $this->Consumables_new_order_model->getStockById($idStock);
+            echo json_encode($stock);
         }
 
     /**
@@ -44,10 +51,10 @@
      *
      * @return void
      */
-        public function jsonNewOrder()
+        public function jsonOrder()
         {
             header('Content-Type: application/json');
-            echo $this->Consumables_new_order_model->jsonGetNewOrder();
+            echo $this->Consumables_new_order_model->jsonGetOrder();
         }
 
         /**
@@ -55,18 +62,19 @@
          *
          * @return void
          */
-        public function saveConsumablesNewOrder()
+        public function saveConsumablesOrder()
         {
             $mode = $this->input->post('mode',TRUE);
-            $id = strtoupper($this->input->post('id_neworder',TRUE));
+            $id = strtoupper($this->input->post('id_order',TRUE));
             $dt = new DateTime();
-            $c = $this->input->post('product_id', TRUE);
+            $c = $this->input->post('id_stock', TRUE);
 
             // var_dump($c);
             // die();
             if ($mode == "insert") {
                 $data = array(
-                    'product_id' => $this->input->post('product_id',TRUE),
+                    // 'product_id' => $this->input->post('product_id',TRUE),
+                    'id_stock' => $this->input->post('id_stock',TRUE),
                     'quantity_ordering' => $this->input->post('quantity_ordering',TRUE),
                     'unit_ordering' => $this->input->post('unit_ordering',TRUE),
                     'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
@@ -86,13 +94,14 @@
                 
                 // var_dump($data);
                 // die();
-                $this->Consumables_new_order_model->insertConsumablesNewOrder($data);
+                $this->Consumables_new_order_model->insertConsumablesOrder($data);
                 // $this->Consumables_new_order_model->updateQtyProduct($id_product,$this->input->post('quantity_per_unit',TRUE));
                 
                 $this->session->set_flashdata('message', 'Create Record Success');  
             } else if ($mode == "edit") {
                 $data = array(
-                    'product_id' => $this->input->post('product_id',TRUE),
+                    // 'product_id' => $this->input->post('product_id',TRUE),
+                    'id_stock' => $this->input->post('id_stock',TRUE),
                     'quantity_ordering' => $this->input->post('quantity_ordering',TRUE),
                     'unit_ordering' => $this->input->post('unit_ordering',TRUE),
                     'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
@@ -109,7 +118,7 @@
                     'user_created' => $this->session->userdata('id_users'),
                     'date_created' => $dt->format('Y-m-d H:i:s'), 
                 );
-                $this->Consumables_new_order_model->updateConsumablesNewOrder($id, $data);
+                $this->Consumables_new_order_model->updateConsumablesOrder($id, $data);
                 $this->session->set_flashdata('message', 'Update Record Success');  
             }
 
@@ -124,11 +133,11 @@
          * @throws Some_Exception_Class description of exception
          * @return Some_Return_Value
          */
-        public function deleteConsumablesNewOrder($id)
+        public function deleteConsumablesOrder($id)
         {
             $row = $this->Consumables_new_order_model->getById($id);
             if ($row) {
-                $this->Consumables_new_order_model->destroyConsumablesNewOrder($id);
+                $this->Consumables_new_order_model->destroyConsumablesOrder($id);
                 $this->session->set_flashdata('message', 'Delete Record Success');
                 redirect(site_url('Consumables_new_order'));
             } else {

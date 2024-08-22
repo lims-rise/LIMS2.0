@@ -5,7 +5,7 @@
                 <div class="box box-black box-solid">
     
                     <div class="box-header">
-                        <h3 class="box-title">Lab Consumables - Product</h3>
+                        <h3 class="box-title">Lab Consumables - Consumables</h3>
                     </div>
         
                     <div class="box-body">
@@ -13,7 +13,7 @@
                             <?php
                                     $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 7){
-                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Product </button>";
+                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Consumables </button>";
                                     }
                             ?>
                             <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
@@ -25,9 +25,9 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Product Name</th>
-                                        <th>Unit of Measure</th>
                                         <th>Quantity</th>
-                                        <th>Units</th>
+                                        <th>Unit of Measure</th>
+                                        <!-- <th>Units</th> -->
                                         <th>Item Description</th>
                                         <th>Date Collected</th>
                                         <th>Time Collected </th>
@@ -66,10 +66,37 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="product_name" class="col-sm-4 control-label">Product Name</label>
                             <div class="col-sm-8">
                                 <input id="product_name" name="product_name" type="text" class="form-control" placeholder="Product Name" required>
+                                <div class="val1tip"></div>
+                            </div>
+                        </div> -->
+                        
+                        <div class="form-group">
+							<label for="id" class="col-sm-4 control-label">Product Name</label>
+							<div class="col-sm-8" >
+								<select id='id_stock' name="id_stock" class="form-control stockSelect">
+									<option>-- Select testing type --</option>
+									<?php
+									foreach($stock as $row){
+										if ($id == $row['id_stock']) {
+											echo "<option value='".$row['id_stock']."' selected='selected'>".$row['product_name']."</option>";
+										}
+										else {
+											echo "<option value='".$row['id_stock']."'>".$row['product_name']."</option>";
+										}
+									}
+										?>
+								</select>
+							</div>
+						</div>
+
+                        <div class="form-group">
+                            <label for="quantity" class="col-sm-4 control-label">Quantity</label>
+                            <div class="col-sm-8">
+                                <input id="quantity" name="quantity" type="number" class="form-control" placeholder="Quantity" required>
                                 <div class="val1tip"></div>
                             </div>
                         </div>
@@ -82,21 +109,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="quantity" class="col-sm-4 control-label">Quantity</label>
-                            <div class="col-sm-8">
-                                <input id="quantity" name="quantity" type="number" class="form-control" placeholder="Quantity" required>
-                                <div class="val1tip"></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="units" class="col-sm-4 control-label">Units</label>
                             <div class="col-sm-8">
                                 <input id="units" name="units" type="text" class="form-control" placeholder="Units" required>
                                 <div class="val1tip"></div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label for="item_description" class="col-sm-4 control-label">Item Description</label>
@@ -244,6 +263,33 @@
     var rowNum = 1;
     $(document).ready(function() {
         
+
+        $('.stockSelect').change(function() {
+            var idStock = $(this).val(); // get ID by selected
+       
+            if (idStock) {
+                $.ajax({
+                    url: '<?php echo site_url('Consumables_product/getStockDetails'); ?>',
+                    type: 'POST',
+                    data: {idStock: idStock},
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#unit_of_measure').val(response.unit_of_measure || '');
+                        $('#item_description').val(response.item_description || '');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX error:', textStatus, errorThrown);
+                        $('#unit_of_measure').val(''); // Kosongkan field jika ada error
+                        $('#item_description').val(''); // Kosongkan field jika ada error
+                    }
+                });
+            } else {
+                $('#unit_of_measure').val('');
+                $('#item_description').val('');
+            }
+        });
+
+
         $('.clockpicker').clockpicker({
         placement: 'bottom', // clock popover placement
         align: 'left',       // popover arrow align
@@ -296,9 +342,9 @@
             columns: [
                 {"data": "id"},
                 {"data": "product_name"},
-                {"data": "unit_of_measure"},
                 {"data": "quantity"},
-                {"data": "units"},
+                {"data": "unit_of_measure"},
+                // {"data": "units"},
                 {"data": "item_description"},
                 {"data": "date_collected"},
 				{"data": "time_collected"},
@@ -324,11 +370,12 @@
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - New Product<span id="my-another-cool-loader"></span>');
             $('#idx').hide();
-            $('#product_name').val('');
+            $('#id_stock').val('');
+            // $('#product_name').val('');
             $('#unit_of_measure').val('');
             $('#item_description').val('');
             $('#quantity').val('');
-            $('#units').val('');
+            // $('#units').val('');
             $('#compose-modal').modal('show');
         });
 
@@ -338,13 +385,21 @@
             console.log(data);
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Consumables - Update Product<span id="my-another-cool-loader"></span>');
-            $('#id').attr('readonly', true);
-            $('#idx').show();
+            $('#idx').hide();
             $('#id').val(data.id);
-            $('#product_name').val(data.product_name);
+            $('#id').attr('readonly', true);
+            // $('#product_name').val(data.product_name);
+
+            // Set the value of the dropdown based on the testing_type
+				$('#id_stock option').each(function() {
+					if ($(this).text() === data.product_name) {
+						$(this).prop('selected', true);
+					}
+				});
+
             $('#unit_of_measure').val(data.unit_of_measure);
             $('#quantity').val(data.quantity);
-            $('#units').val(data.units);
+            // $('#units').val(data.units);
             $('#item_description').val(data.item_description);
             $('#date_collected').val(data.date_collected).trigger('change');
             $('#time_collected').val(data.time_collected).trigger('change');

@@ -4,8 +4,8 @@
     class Consumables_stock_used_model extends CI_Model
     {
 
-        public $table = 'consumables_stock_used';
-        public $id = 'id_stockused';
+        public $table = 'consumables_stock';
+        public $id = 'id_stock';
         public $order = 'ASC';
 
         function __construct()
@@ -20,25 +20,30 @@
      */
         function jsonGetStockUsed()
         {
-            $this->datatables->select('consumables_stock_used.id_stockused, consumables_stock_used.product_id, consumables_products.product_name,
-                consumables_stock_used.quantity, consumables_stock_used.unit, consumables_stock_used.n_campaigns, consumables_stock_used.comments,
-                consumables_stock_used.minimum_stock, consumables_stock_used.date_collected, consumables_stock_used.time_collected
-            ');
-            $this->datatables->from('consumables_stock_used');
-            $this->datatables->join('consumables_products', 'consumables_stock_used.product_id = consumables_products.id', 'right');
-            $this->datatables->where('consumables_stock_used.flag', '0');
+            // $this->datatables->select('consumables_stock.id_stockused, consumables_stock.product_id, consumables_products.product_name,
+            //     consumables_stock.quantity, consumables_stock.unit, consumables_stock.n_campaigns, consumables_stock.comments,
+            //     consumables_stock.minimum_stock, consumables_stock.date_collected, consumables_stock.time_collected
+            // ');
+            $this->datatables->select('consumables_stock.id_stock, consumables_stock.product_name,
+            consumables_stock.quantity, consumables_stock.unit, consumables_stock.quantity_per_unit, consumables_stock.unit_of_measure, consumables_stock.used, consumables_stock.comments, consumables_stock.item_description,
+            consumables_stock.minimum_stock, consumables_stock.date_collected
+        ');
+            $this->datatables->from('consumables_stock');
+            // $this->datatables->join('consumables_products', 'consumables_stock.product_id = consumables_products.id', 'right');
+            $this->datatables->where('lab', $this->session->userdata('lab'));
+            $this->datatables->where('consumables_stock.flag', '0');
 
             $lvl = $this->session->userdata('id_user_level');
             if ($lvl == 7){
-                $this->datatables->add_column('action', '', 'id_stockused');
+                $this->datatables->add_column('action', '', 'id_stock');
             }
             else if (($lvl == 2) | ($lvl == 3)){
-                $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'id_stockused');
+                $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'id_stock');
             }
             else {
                 // $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-primary btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_sample');
                 $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                    ".anchor(site_url('consumables_stock_used/deleteConsumablesStockUsed/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id_stockused');
+                    ".anchor(site_url('consumables_stock_used/deleteConsumablesStockUsed/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id_stock');
             }
             return $this->datatables->generate();
         }
@@ -48,23 +53,23 @@
          *
          * @return array Result set of products
          */
-        function getProduct()
-        {
-            $response = array();
-            $this->db->select('*');
-            $this->db->where('flag', '0');
-            $q = $this->db->get('consumables_products');
-            $response = $q->result_array();
-            return $response;
-        }
+        // function getProduct()
+        // {
+        //     $response = array();
+        //     $this->db->select('*');
+        //     $this->db->where('flag', '0');
+        //     $q = $this->db->get('consumables_products');
+        //     $response = $q->result_array();
+        //     return $response;
+        // }
 
-        function getProductById($productId)
-        {
-            $this->db->select('unit_of_measure');
-            $this->db->where('id', $productId);
-            $q = $this->db->get('consumables_products');
-            return $q->row_array();
-        }
+        // function getProductById($productId)
+        // {
+        //     $this->db->select('unit_of_measure');
+        //     $this->db->where('id', $productId);
+        //     $q = $this->db->get('consumables_products');
+        //     return $q->row_array();
+        // }
 
     /**
      * Inserts data into the 'consumables_stock_used' table.
@@ -74,7 +79,7 @@
      */
         function insertConsumablesStockUsed($data)
         {
-            $this->db->insert('consumables_stock_used', $data);
+            $this->db->insert('consumables_stock', $data);
         }
 
         /**
@@ -86,8 +91,8 @@
          */
         function updateConsumablesStockUsed($id, $data)
         {  
-            $this->db->where($id, $id);
-            $this->db->update('consumables_stock_used', $data);
+            $this->db->where($this->id, $id);
+            $this->db->update('consumables_stock', $data);
         }
 
         /**
@@ -100,7 +105,7 @@
         function destroyConsumablesSTockUsed($id)
         {
             $this->db->where($this->id, $id);
-            $this->db->delete('consumables_stock_used');
+            $this->db->delete('consumables_stock');
         }
 
     /**
@@ -113,7 +118,48 @@
         {
             $this->db->where($this->id, $id);
             $this->db->where('flag', '0');
-            return $this->db->get('consumables_stock_used')->row();
+            return $this->db->get('consumables_stock')->row();
         }
+
+
+        // function checkStockLevelsAndSendNotification()
+        // {
+        //     log_message('debug', 'Started checking stock levels.');
+        //     // Load email library
+        //     $this->load->library('email');  
+        //     // Get all products
+        //     $this->db->select('id_stock, quantity, minimum_stock');
+        //     $query = $this->db->get('consumables_stock');
+        //     $stockData = $query->result_array();
+    
+        //     foreach ($stockData as $data) {
+        //         $id_stock = $data['id_stock'];
+        //         $quantity = $data['quantity'];
+        //         $minimumStock = $data['minimum_stock'];
+    
+        //         // Check if quantity is approaching minimum stock
+        //         if ($quantity <= $minimumStock + 10) {
+        //             // Get product details
+        //             $this->db->select('product_name');
+        //             $this->db->where('id_stock', $id_stock);
+        //             $productQuery = $this->db->get('consumables_stock');
+        //             $product = $productQuery->row_array();
+    
+        //             // Prepare email
+        //             $this->email->from('uhqdev@gmail.com', 'uhqdev');
+        //             $this->email->to('ulhaqitcom@gmail.com');
+        //             $this->email->subject('Stock Alert: ' . $product['product_name']);
+        //             $this->email->message('The stock for product ' . $product['product_name'] . ' is approaching the minimum level. Current quantity: ' . $quantity . ', Minimum stock: ' . $minimumStock . '.' . "\n" . 'Please update the stock levels as soon as possible.');
+    
+        //             // Send email
+        //             if ($this->email->send()) {
+        //                echo 'Email sent successfully.';
+        //             } else {
+        //                 echo 'Error sending email: ' . $this->email->print_debugger();
+        //             }
+        //         }
+        //     }
+        //     log_message('debug', 'Finished checking stock levels.');
+        // }
     }
 ?>

@@ -4,7 +4,7 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Lab Consumables - New Order</h3>
+                        <h3 class="box-title">Lab Consumables - Order</h3>
                     </div>
 
                         <div class="box-body">
@@ -61,7 +61,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="modal-title">Consumables - New Order</h4>
                 </div>
-                <form id="formSample"  action= <?php echo site_url('consumables_new_order/saveConsumablesNewOrder') ?> method="post" class="form-horizontal">
+                <form id="formSample"  action= <?php echo site_url('consumables_new_order/saveConsumablesOrder') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
 
@@ -73,17 +73,17 @@
                         </div>
 
                         <div class="form-group">
-							<label for="product_id" class="col-sm-4 control-label">Product Name</label>
+							<label for="id_stock" class="col-sm-4 control-label">Product Name</label>
 							<div class="col-sm-8" >
-								<select id='product_id' name="product_id" class="form-control">
+								<select id='id_stock' name="id_stock" class="form-control stockSelect">
 									<option>-- Select testing type --</option>
 									<?php
-									foreach($productName as $row){
-										if ($id == $row['id']) {
-											echo "<option value='".$row['id']."' selected='selected'>".$row['product_name']."</option>";
+									foreach($stockName as $row){
+										if ($id_stock == $row['id_stock']) {
+											echo "<option value='".$row['id_stock']."' selected='selected'>".$row['product_name']."</option>";
 										}
 										else {
-											echo "<option value='".$row['id']."'>".$row['product_name']."</option>";
+											echo "<option value='".$row['id_stock']."'>".$row['product_name']."</option>";
 										}
 									}
 										?>
@@ -123,7 +123,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="unit_of_measure" class="col-sm-4 control-label">Unit Of Measure</label>
                             <div class="col-sm-8" >
                                 <select id='unit_of_measure' name="unit_of_measure" class="form-control" required>
@@ -141,7 +141,16 @@
                                 </select>
                                 <div class="val1tip"></div>
                             </div>
+                        </div> -->
+
+                        <div class="form-group">
+                            <label for="unit_of_measure" class="col-sm-4 control-label">Unit Of Measure</label>
+                            <div class="col-sm-8">
+                                <input id="unit_of_measure" name="unit_of_measure" type="text" class="form-control" placeholder="Unit Of Measure" required>
+                                <div class="val1tip"></div>
+                            </div>
                         </div>
+
                         <div class="form-group">
                             <label for="vendor" class="col-sm-4 control-label">Vendor</label>
                             <div class="col-sm-8">
@@ -244,9 +253,9 @@
             // content: 'Test tip'
         });
 
-        $('#product_id').change(function() {
-    console.log('Selected value:', $(this).val());
-});
+        $('#id_stock').change(function() {
+            console.log('Selected value:', $(this).val());
+        });
 
         // Fungsi untuk menghitung total quantity
         function calculateTotalQuantity() {
@@ -272,6 +281,27 @@
             // $('#barcode_sample').val('');     
         });
 
+        $('.stockSelect').change(function() {
+            var idStock = $(this).val();
+            $.ajax({
+                url: '<?php echo site_url('Consumables_new_order/getStockDetails'); ?>',
+                type: 'POST',
+                data: { idStock: idStock },
+                dataType: 'json',
+                success: function(response) {
+                    $('#unit_ordering').val(response.unit || '');
+                    $('#unit_of_measure').val(response.unit_of_measure || '');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error:', textStatus, errorThrown);
+                    $('#unit_ordering').val('');
+                    $('#unit_of_measure').val('');
+                }
+            });
+            $('#unit_ordering').val('');
+            $('#unit_of_measure').val('');
+        });
+
         var base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
@@ -293,9 +323,9 @@
             },
             processing: true,
             serverSide: true,
-            ajax: {"url": "consumables_new_order/jsonNewOrder", "type": "POST"},
+            ajax: {"url": "consumables_new_order/jsonOrder", "type": "POST"},
             columns: [
-                {"data": "id_neworder"},
+                {"data": "id_order"},
                 {"data": "product_name"},
                 {"data": "quantity_ordering"},
                 {"data": "unit_ordering"},
@@ -330,13 +360,16 @@
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - New Order <span id="my-another-cool-loader"></span>');
             $('#idx').hide();
-            $('#product_id').val('');
+            // $('#product_id').val('');
+            $('#id_stock').val('');
             $('#quantity_ordering').val('');
             $('#unit_ordering').val('');
+            $('#unit_ordering').attr('readonly', true);
             $('#quantity_per_unit').val('');
             $('#total_quantity_ordered').attr('readonly', true);
             $('#total_quantity_ordered').val('');
             $('#unit_of_measure').val('');
+            $('#unit_of_measure').attr('readonly', true);
             $('#vendor').val('');
             $('#indonesia_comments').val('');
             $('#melbourne_comments').val('');
@@ -350,12 +383,14 @@
             console.log(data);
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Consumables - Update New Order <span id="my-another-cool-loader"></span>');
-            $('#id_neworder').attr('readonly', true);
-            $('#idx').show();
-            $('#id_neworder').val(data.id_neworder);
+            // $('#id_neworder').attr('readonly', true);
+            // $('#id_neworder').val(data.id_neworder);
+            $('#idx').hide();
+            $('#id_order').val(data.id_order);
+            $('#id_order').attr('readonly', true);
             	
             // Set the value of the dropdown based on the testing_type
-				$('#product_id option').each(function() {
+				$('#id_stock option').each(function() {
 					if ($(this).text() === data.product_name) {
 						$(this).prop('selected', true);
 					}

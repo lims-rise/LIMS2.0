@@ -27,15 +27,15 @@ class Consumables_in_stock extends CI_Controller {
     public function index()
     {
         $data['inStock'] = $this->Consumables_in_stock_model->getAllConsumablesInStock();
-        $data['productName'] = $this->Consumables_in_stock_model->getProduct();
+        $data['stockName'] = $this->Consumables_in_stock_model->getStock();
         $this->template->load('template','consumables_in_stock/index', $data);
     } 
 
-    public function getProductDetails()
+    public function getStockDetails()
     {
-        $productId = $this->input->post('productId'); // Mendapatkan ID produk dari AJAX request
-        $product = $this->Consumables_in_stock_model->getProductById($productId);
-        echo json_encode($product); // Mengembalikan data sebagai JSON
+        $idStock = $this->input->post('idStock');
+        $stock = $this->Consumables_in_stock_model->getStockById($idStock);
+        echo json_encode($stock);
     }
 
 
@@ -64,7 +64,8 @@ class Consumables_in_stock extends CI_Controller {
         if ($mode == "insert") {
 
             $data = array(
-                'product_id' => $this->input->post('id',TRUE),
+                 // 'product_id' => $this->input->post('id',TRUE),
+                'id_stock' => $this->input->post('id_stock',TRUE),
                 'closed_container' => $this->input->post('closed_container',TRUE),
                 'unit_measure_lab' => $this->input->post('unit_measure_lab',TRUE),
                 'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
@@ -72,8 +73,9 @@ class Consumables_in_stock extends CI_Controller {
                 'total_quantity' => $this->input->post('total_quantity',TRUE),
                 'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
                 'expired_date' => $this->input->post('expired_date',TRUE),
-                'indonesia_comments' => $this->input->post('indonesia_comments',TRUE),
-                'melbourne_comments' => $this->input->post('melbourne_comments',TRUE),
+                'comments' => $this->input->post('comments',TRUE),
+                // 'indonesia_comments' => $this->input->post('indonesia_comments',TRUE),
+                // 'melbourne_comments' => $this->input->post('melbourne_comments',TRUE),
                 'date_collected' => $this->input->post('date_collected',TRUE),
                 'time_collected' => $this->input->post('time_collected',TRUE),
                 'flag' => '0',
@@ -90,7 +92,8 @@ class Consumables_in_stock extends CI_Controller {
             }
         } else if ($mode == "edit") {
             $data = array(
-                'product_id' => $this->input->post('id',TRUE),
+                // 'product_id' => $this->input->post('id',TRUE),
+                'id_stock' => $this->input->post('id_stock',TRUE),
                 'closed_container' => $this->input->post('closed_container',TRUE),
                 'unit_measure_lab' => $this->input->post('unit_measure_lab',TRUE),
                 'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
@@ -98,8 +101,9 @@ class Consumables_in_stock extends CI_Controller {
                 'total_quantity' => $this->input->post('total_quantity',TRUE),
                 'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
                 'expired_date' => $this->input->post('expired_date',TRUE),
-                'indonesia_comments' => $this->input->post('indonesia_comments',TRUE),
-                'melbourne_comments' => $this->input->post('melbourne_comments',TRUE),
+                'comments' => $this->input->post('comments',TRUE),
+                // 'indonesia_comments' => $this->input->post('indonesia_comments',TRUE),
+                // 'melbourne_comments' => $this->input->post('melbourne_comments',TRUE),
                 'date_collected' => $this->input->post('date_collected',TRUE),
                 'time_collected' => $this->input->post('time_collected',TRUE),
                 'flag' => '0',
@@ -107,6 +111,9 @@ class Consumables_in_stock extends CI_Controller {
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
+
+            // var_dump($data);
+            // die();
             $result = $this->Consumables_in_stock_model->updatetConsumablesInStock($id, $data);
             if ($result) {
                 $this->session->set_flashdata('message', 'Stock updated successfully.');
@@ -114,6 +121,8 @@ class Consumables_in_stock extends CI_Controller {
                 $this->session->set_flashdata('message', 'Failed to update stock.');
             } 
         }
+         // Check stock levels and send notification after saving data
+        $this->Consumables_in_stock_model->checkStockLevelsAndSendNotification();
         redirect(site_url("Consumables_in_stock"));
     }
 

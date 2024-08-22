@@ -31,16 +31,18 @@ class Consumables_stock_used extends CI_Controller
      */
     public function index() 
     {
-        $data['product'] = $this->Consumables_stock_used_model->getProduct();
-        $this->template->load('template', 'consumables_stock_used/index', $data);
+        // $data['product'] = $this->Consumables_stock_used_model->getProduct();
+        // $this->template->load('template', 'consumables_stock_used/index', $data);
+        // $this->Consumables_stock_used_model->checkStockLevelsAndSendNotification();
+        $this->template->load('template', 'consumables_stock_used/index');
     }
 
-    public function getProductDetails()
-    {
-        $productId = $this->input->post('productId');
-        $product = $this->Consumables_stock_used_model->getProductById($productId);
-        echo json_encode($product);
-    }
+    // public function getProductDetails()
+    // {
+    //     $productId = $this->input->post('productId');
+    //     $product = $this->Consumables_stock_used_model->getProductById($productId);
+    //     echo json_encode($product);
+    // }
 
 
 
@@ -73,20 +75,26 @@ class Consumables_stock_used extends CI_Controller
     public function saveConsumablesStockUsed()
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = strtoupper($this->input->post('id_stockused',TRUE));
+        $id = strtoupper($this->input->post('id_stock',TRUE));
         $dt = new DateTime();
 
         if ($mode == "insert") {
             $data = array(
-                'product_id' => $this->input->post('id',TRUE),
+                // 'product_id' => $this->input->post('id',TRUE),
+                'product_name' => $this->input->post('product_name',TRUE),
                 'quantity' => $this->input->post('quantity',TRUE),
-                'unit' => $this->input->post('unit_of_measure',TRUE),
-                'n_campaigns' => $this->input->post('n_campaigns',TRUE),
+                'unit' => $this->input->post('unit',TRUE),
+                'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
+                'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
+                'used' => $this->input->post('used',TRUE),
+                // 'n_campaigns' => $this->input->post('n_campaigns',TRUE),
+                'item_description' => $this->input->post('item_description', TRUE),
                 'comments' => $this->input->post('comments', TRUE),
                 'minimum_stock' => $this->input->post('minimum_stock',TRUE),
                 'date_collected' => $this->input->post('date_collected',TRUE),
-                'time_collected' => $this->input->post('time_collected',TRUE),
+                // 'time_collected' => $this->input->post('time_collected',TRUE),
                 'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
@@ -98,15 +106,21 @@ class Consumables_stock_used extends CI_Controller
             $this->session->set_flashdata('message', 'Create Record Success');  
         } else if ($mode == "edit"){
             $data = array(
-                'product_id' => $this->input->post('id',TRUE),
+                // 'product_id' => $this->input->post('id',TRUE),
+                'product_name' => $this->input->post('product_name',TRUE),
                 'quantity' => $this->input->post('quantity',TRUE),
-                'unit' => $this->input->post('unit_of_measure',TRUE),
-                'n_campaigns' => $this->input->post('n_campaigns',TRUE),
+                'unit' => $this->input->post('unit',TRUE),
+                'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
+                'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
+                'used' => $this->input->post('used',TRUE),
+                // 'n_campaigns' => $this->input->post('n_campaigns',TRUE),
+                'item_description' => $this->input->post('item_description', TRUE),
                 'comments' => $this->input->post('comments', TRUE),
                 'minimum_stock' => $this->input->post('minimum_stock',TRUE),
                 'date_collected' => $this->input->post('date_collected',TRUE),
-                'time_collected' => $this->input->post('time_collected',TRUE),
+                // 'time_collected' => $this->input->post('time_collected',TRUE),
                 'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
@@ -139,6 +153,19 @@ class Consumables_stock_used extends CI_Controller
             redirect(site_url('Consumables_stock_used'));
         }
     }
+
+    // public function check_stock_levels()
+    // {
+    //     $this->Consumables_stock_used_model->checkStockLevelsAndSendNotification();
+    //     echo "Stock levels checked and notifications sent if necessary.";
+    // }
+
+    // public function run_stock_check() {
+    //     $this->load->model('Consumables_stock_used_model');
+    //     $this->Consumables_stock_used_model->checkStockLevelsAndSendNotification();
+    //     echo 'Stock check completed';
+    // }
+
 }
 
 ?>

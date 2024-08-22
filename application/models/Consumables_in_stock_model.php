@@ -25,13 +25,14 @@
          */
         function jsonGetInStock() 
         {
-            $this->datatables->select('consumables_in_stock.id_instock, consumables_in_stock.product_id, consumables_products.product_name, consumables_in_stock.closed_container,
+            $this->datatables->select('consumables_in_stock.id_instock, consumables_in_stock.id_stock, consumables_stock.product_name, consumables_in_stock.closed_container,
             consumables_in_stock.unit_measure_lab, consumables_in_stock.quantity_per_unit, consumables_in_stock.loose_items,
             consumables_in_stock.total_quantity, consumables_in_stock.unit_of_measure, consumables_in_stock.expired_date,
-            consumables_in_stock.indonesia_comments, consumables_in_stock.melbourne_comments, consumables_in_stock.date_collected, consumables_in_stock.time_collected');
+            consumables_in_stock.comments, consumables_in_stock.date_collected, consumables_in_stock.time_collected');
             $this->datatables->from('consumables_in_stock');
-            $this->datatables->join('consumables_products', 'consumables_in_stock.product_id = consumables_products.id', 'right');
+            $this->datatables->join('consumables_stock', 'consumables_in_stock.id_stock = consumables_stock.id_stock', 'right');
             $this->datatables->where('consumables_in_stock.flag', '0');
+            $this->datatables->add_column('quantity_with_unit', '$1 $2', 'total_quantity,unit_of_measure');
 
             $lvl = $this->session->userdata('id_user_level');
             if ($lvl == 7){
@@ -70,23 +71,41 @@
          *
          * @return array Data of all products
          */
-        function getProduct()
+        // function getProduct()
+        // {
+        //     $response = array();
+        //     $this->db->select('*');
+        //     $this->db->where('flag', '0');
+        //     $q = $this->db->get('consumables_products');
+        //     $response = $q->result_array();
+        //     return $response;
+        // }
+
+        function getStock()
         {
             $response = array();
             $this->db->select('*');
             $this->db->where('flag', '0');
-            $q = $this->db->get('consumables_products');
+            $q = $this->db->get('consumables_stock');
             $response = $q->result_array();
             return $response;
         }
 
-        function getProductById($productId)
+        function getStockById($idStock)
         {
-            $this->db->select('unit_of_measure'); // Ubah sesuai dengan nama kolom yang relevan
-            $this->db->where('id', $productId);
-            $q = $this->db->get('consumables_products');
-            return $q->row_array(); // Mengembalikan hasil sebagai array
+            $this->db->select('unit, unit_of_measure, quantity_per_unit');
+            $this->db->where('id_stock', $idStock);
+            $q = $this->db->get('consumables_stock');
+            return $q->row_array();
         }
+
+        // function getProductById($productId)
+        // {
+        //     $this->db->select('unit_of_measure'); // Ubah sesuai dengan nama kolom yang relevan
+        //     $this->db->where('id', $productId);
+        //     $q = $this->db->get('consumables_products');
+        //     return $q->row_array(); // Mengembalikan hasil sebagai array
+        // }
 
     /**
      * Inserts data into the "consumables_in_stock" table.
@@ -107,12 +126,12 @@
             $id_instock = $this->db->insert_id();
 
             // update product quantity
-            $product_id = $data['product_id'];
+            $id_stock = $data['id_stock'];
             $closed_container_subs = $data['closed_container'];
 
             $this->db->set('quantity', 'quantity - ' . (int)$closed_container_subs, FALSE);
-            $this->db->where('product_id', $product_id);
-            $this->db->update('consumables_stock_used');
+            $this->db->where('id_stock', $id_stock);
+            $this->db->update('consumables_stock');
             $this->db->trans_complete();  // Completing transaction
 
             return $this->db->trans_status(); // Return true if the transaction succeeded
@@ -152,10 +171,10 @@
                 $this->db->update('consumables_in_stock', $data);
 
                 // update product quantity
-                $product_id = $data['product_id'];
+                $id_stock = $data['id_stock'];
                 $this->db->set('quantity', 'quantity - ' . (int)$closed_container_diff, FALSE);
-                $this->db->where('product_id', $product_id);
-                $this->db->update('consumables_stock_used');
+                $this->db->where('id_stock', $id_stock);
+                $this->db->update('consumables_stock');
             }
 
             // if ($old_stock) {
@@ -214,10 +233,10 @@
                 $this->db->delete('consumables_in_stock');
     
                 // Update product quantity
-                $product_id = $stock->product_id;
+                $id_stock = $stock->id_stock;
                 $this->db->set('quantity', 'quantity + ' . (int)$closed_container_to_remove, FALSE);
-                $this->db->where('product_id', $product_id);
-                $this->db->update('consumables_stock_used');
+                $this->db->where('id_stock', $id_stock);
+                $this->db->update('consumables_stock');
             }
     
             $this->db->trans_complete(); // Complete transaction
@@ -237,6 +256,47 @@
             $this->db->where($this->id, $id);
             $this->db->where('flag', '0');
             return $this->db->get('consumables_in_stock')->row();
+        }
+
+
+        function checkStockLevelsAndSendNotification()
+        {
+            log_message('debug', 'Started checking stock levels.');
+            $this->load->library('email');  
+    
+            // Get all products
+            $this->db->select('id_stock, quantity, minimum_stock');
+            $query = $this->db->get('consumables_stock');
+            $stockData = $query->result_array();
+    
+            foreach ($stockData as $data) {
+                $id_stock = $data['id_stock'];
+                $quantity = $data['quantity'];
+                $minimumStock = $data['minimum_stock'];
+    
+                // Check if quantity is approaching minimum stock
+                if ($quantity <= $minimumStock + 10) {
+                    // Get product details
+                    $this->db->select('product_name');
+                    $this->db->where('id_stock', $id_stock);
+                    $productQuery = $this->db->get('consumables_stock');
+                    $product = $productQuery->row_array();
+    
+                    // Prepare email
+                    $this->email->from('uhqdev@gmail.com', 'LIMS2.0 - Alerts');
+                    $this->email->to('ulhaq.ulhaq@monash.edu');
+                    $this->email->subject('Stock Info: ' . $product['product_name']);
+                    $this->email->message('The stock for product ' . $product['product_name'] . ' is approaching the minimum level. Current quantity: ' . $quantity . ', Minimum stock: ' . $minimumStock . '.' . "\n" . 'Please update the stock levels as soon as possible.');
+    
+                    // Send email
+                    if ($this->email->send()) {
+                        log_message('debug', 'Email sent successfully for product ' . $product['product_name']);
+                    } else {
+                        log_message('error', 'Error sending email for product ' . $product['product_name'] . ': ' . $this->email->print_debugger());
+                    }
+                }
+            }
+            log_message('debug', 'Finished checking stock levels.');
         }
 
         

@@ -11,9 +11,9 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="id_neworder" class="col-sm-4 control-label">ID New Order</label>
+                                        <label for="id_order" class="col-sm-4 control-label">ID Order</label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" id="id_neworder" name="id_neworder" value="<?php echo $id_neworder ?>" disabled>
+                                            <input class="form-control" id="id_order" name="id_order" value="<?php echo $id_order ?>" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="form-group">
+                                <div class="form-group">
                                         <label for="product_name" class="col-sm-4 control-label">Product Name</label>
                                         <div class="col-sm-8">
                                             <input class="form-control" id="product_name" name="product_name" value="<?php echo $product_name ?>" disabled>
@@ -82,7 +82,7 @@
                                 <?php
                                         $lvl = $this->session->userdata('id_user_level');
                                         if ($lvl != 7) {
-                                            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> Order Detail </button>";
+                                            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> Detail </button>";
                                         }
                                 ?>
                                 <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
@@ -95,7 +95,7 @@
                                     <tr>
                                         <th>No</th>
                                         <!-- <th>Order Name</th> -->
-                                        <th>Order Number</th>
+                                        <!-- <th>Order Number</th> -->
                                         <th>Ordered</th>
                                         <th>Received</th>
                                         <th>Amount Received</th>
@@ -146,7 +146,7 @@
                         <div class="form-group">
                                 <div class="col-sm-9">
                                     <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-									<input id="id_neworder2" name="id_neworder2" type="hidden" class="form-control input-sm">
+									<input id="idx_order" name="idx_order" type="hidden" class="form-control input-sm">
                                     <input id="unit_reference1" name="unit_reference1" type="hidden" class="form-control input-sm">
                                     <input id="progress1" name="progress1" type="hidden" class="form-control input-sm">
                                 </div>
@@ -177,13 +177,13 @@
 							</div>
 						</div> -->
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="order_number" class="col-sm-4 control-label">Order Number</label>
                             <div class="col-sm-8">
                                 <input id="order_number" name="order_number" type="text" class="form-control" placeholder="Order Number" required>
                                 <div class="val1tip"></div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label for="ordered" class="col-sm-4 control-label">Ordered</label>
@@ -318,11 +318,12 @@
         
 
 
-        var id_neworder = $('#id_neworder').val();
-        var quantityPerUnit = $('#quantity_per_unit').val();
-        var unitOfMeasure = $('#unit_of_measure').val();
-        var unitOrdering = $('#unit_ordering').val();
-        var result = quantityPerUnit + unitOfMeasure + '/' + unitOrdering;
+        let id_order = $('#id_order').val();
+        console.log(id_order);
+        let quantityPerUnit = $('#quantity_per_unit').val();
+        let unitOfMeasure = $('#unit_of_measure').val();
+        let unitOrdering = $('#unit_ordering').val();
+        let result = quantityPerUnit + unitOfMeasure + '/' + unitOrdering;
         $('#unit_reference1').val(result);
         $('#unit_reference').val(result);
 
@@ -364,12 +365,12 @@
             },
             processing: true,
             serverSide: true,
-            ajax: {"url": "../../consumables_order_detail/jsonOrderDetail?id2="+ id_neworder, "type": "POST"},
+            ajax: {"url": "../../consumables_order_detail/jsonOrderDetail?id2="+ id_order, "type": "POST"},
             // ajax: {"url": "../../Water_sample_reception/subjson2?id2="+ sample_id, "type": "POST"},
             columns: [
                 {"data": "id_orderdetail"},
                 // {"data": "product_name"},
-                {"data": "order_number"},
+                // {"data": "order_number"},
                 {"data": "ordered"},
                 {"data": "received"},
                 {"data": "amount_received"},
@@ -419,8 +420,8 @@
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - Order Detail <span id="my-another-cool-loader"></span>');
             $('#idx').hide();
-            $('#id_neworder2').val(id_neworder); // Assuming sample_id is defined somewhere
-            $('#order_number').val('');
+            $('#idx_order').val(id_order); // Assuming sample_id is defined somewhere
+            // $('#order_number').val('');
             $('#ordered').val('');
             $('#ordered').on('change', function() {
             var orderedItem = $('#ordered').val();
@@ -447,7 +448,7 @@
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Consumables - Update Order Detail <span id="my-another-cool-loader"></span>');
             $('#id_orderdetail').attr('readonly', true);
-            $('#idx').show();
+            $('#idx').hide();
             $('#id_orderdetail').val(data.id_orderdetail);
             	
             // Set the value of the dropdown based on the testing_type
@@ -467,12 +468,12 @@
                 $('#progress1').val('Not Done');
             }
             });
-            $('#id_neworder2').val(data.new_order_id);
-            $('#order_number').val(data.order_number);
+            $('#idx_order').val(data.id_order);
+            // $('#order_number').val(data.order_number);
             $('#ordered').val(data.ordered);
             $('#received').val(data.received);
             $('#amount_received').val(data.amount_received);
-            $('#amount_received').val(data.amount_received);
+            // $('#amount_received').val(data.amount_received);
             $('#unit_reference1').val(data.unit_reference);
             $('#contact_supplier_progress').val(data.contact_supplier_progress);
             $('#progress').val(data.progress);

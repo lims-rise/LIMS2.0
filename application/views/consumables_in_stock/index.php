@@ -11,7 +11,7 @@
                                 <?php
                                         $lvl = $this->session->userdata('id_user_level');
                                         if ($lvl != 7){
-                                            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> In Stock </button>";
+                                            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New In Stock </button>";
                                         }
                                 ?>
                                 <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
@@ -24,17 +24,18 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Product Name</th>
-                                        <th>Add number of closed containers</th>
+                                        <th>Number of closed containers</th>
                                         <th>Unit of measure counted in the lab</th>
                                         <th>Quantity Measured per Unit</th>
-                                        <th>Add number of loose items </th>
-                                        <th>Total Quantity</th>
                                         <th>Unit Of Measure</th>
-                                        <th>Experied Date</th>
-                                        <th>Indonesia Comments</th>
-                                        <th>Melbourne Comments</th>
+                                        <th>Number of loose items </th>
+                                        <th>Total Quantity</th>
                                         <th>Date Collected</th>
-                                        <th>Time Collected </th>
+                                        <th>Experied Date</th>
+                                        <th>Comments</th>
+                                        <!-- <th>Indonesia Comments</th> -->
+                                        <!-- <th>Melbourne Comments</th> -->
+                                        <!-- <th>Time Collected </th> -->
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -72,17 +73,17 @@
                         </div>
 
                         <div class="form-group">
-							<label for="id" class="col-sm-4 control-label">Product Name</label>
+							<label for="id_stock" class="col-sm-4 control-label">Product Name</label>
 							<div class="col-sm-8" >
-								<select id='id' name="id" class="form-control productSelect">
-									<option>-- Select testing type --</option>
+								<select id='id_stock' name="id_stock" class="form-control stockSelect">
+									<option>-- Select Product Name --</option>
 									<?php
-									foreach($productName as $row){
-										if ($id == $row['id']) {
-											echo "<option value='".$row['id']."' selected='selected'>".$row['product_name']."</option>";
+									foreach($stockName as $row){
+										if ($id == $row['id_stock']) {
+											echo "<option value='".$row['id_stock']."' selected='selected'>".$row['product_name']."</option>";
 										}
 										else {
-											echo "<option value='".$row['id']."'>".$row['product_name']."</option>";
+											echo "<option value='".$row['id_stock']."'>".$row['product_name']."</option>";
 										}
 									}
 										?>
@@ -90,13 +91,22 @@
 							</div>
 						</div>
 
-                        <div class="form-group">
-                            <label for="closed_container" class="col-sm-4 control-label">Add number of Closed Containers</label>
+                        <!-- <div class="form-group">
+                            <label for="closed_container" class="col-sm-4 control-label">Number of Closed Containers</label>
                             <div class="col-sm-8">
-                                <input id="closed_container" name="closed_container" type="number" class="form-control" placeholder="Add number of Closed Containers" required>
+                                <input id="closed_container" name="closed_container" type="number" class="form-control" placeholder="Number of Closed Containers" required>
+                                <div class="val1tip"></div>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group">
+                            <label for="closed_container" class="col-sm-4 control-label">Number of Closed Containers</label>
+                            <div class="col-sm-8">
+                                <input id="closed_container" name="closed_container" type="number" class="form-control" placeholder="Number of Closed Containers" required>
                                 <div class="val1tip"></div>
                             </div>
                         </div>
+
 
                         <div class="form-group">
                             <label for="unit_measure_lab" class="col-sm-4 control-label">Unit of measure counted in the lab</label>
@@ -115,9 +125,17 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="loose_items" class="col-sm-4 control-label">Add number of loose items </label>
+                            <label for="unit_of_measure" class="col-sm-4 control-label">Unit of Measure</label>
                             <div class="col-sm-8">
-                                <input id="loose_items" name="loose_items" type="number" class="form-control" placeholder="Add number of loose items " required>
+                                <input id="unit_of_measure" name="unit_of_measure" type="text" class="form-control" placeholder="Unit of Measure" required>
+                                <div class="val1tip"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loose_items" class="col-sm-4 control-label">Number of loose items </label>
+                            <div class="col-sm-8">
+                                <input id="loose_items" name="loose_items" type="number" class="form-control" placeholder="Number of loose items " required>
                                 <div class="val1tip"></div>
                             </div>
                         </div>
@@ -126,10 +144,14 @@
                         <div class="form-group">
                             <label for="total_quantity" class="col-sm-4 control-label">Total Quantity (Unit of Measure)</label>
                             <div class="col-sm-8">
-                                <input id="total_quantity" name="total_quantity" type="number" class="form-control" placeholder="Total Quantity (Unit of Measure)" required>
+                                <div class="input-group input-group1">
+                                    <input id="total_quantity" name="total_quantity" type="number" class="form-control" placeholder="Total Quantity" required>
+                                    <input id="unit_of_measure1" class="form-control unit-of-measure" disabled>
+                                </div>
                                 <div class="val1tip"></div>
                             </div>
                         </div>
+
 
                         <!-- <div class="form-group">
 							<label for="unit_of_measure" class="col-sm-4 control-label">Unit Of Measure</label>
@@ -149,14 +171,6 @@
 								</select>
 							</div>
 						</div> -->
-
-                        <div class="form-group">
-                            <label for="unit_of_measure" class="col-sm-4 control-label">Unit of Measure</label>
-                            <div class="col-sm-8">
-                                <input id="unit_of_measure" name="unit_of_measure" type="text" class="form-control" placeholder="Unit of Measure" required>
-                                <div class="val1tip"></div>
-                            </div>
-                        </div>
 
                         <div class="form-group">
 							<label for="expired_date" class="col-sm-4 control-label">Experied Date</label>
@@ -188,6 +202,14 @@
 						</div>
 
                         <div class="form-group">
+                            <label for="comments" class="col-sm-4 control-label">Comment</label>
+                            <div class="col-sm-8">
+                                <textarea id="comments" name="comments" class="form-control" placeholder="Comment"> </textarea>
+                                <div class="val1tip"></div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
                             <label for="indonesia_comments" class="col-sm-4 control-label">Indonesia Comment</label>
                             <div class="col-sm-8">
                                 <textarea id="indonesia_comments" name="indonesia_comments" class="form-control" placeholder="Indonesia Comment"> </textarea>
@@ -202,7 +224,7 @@
                                 <textarea id="melbourne_comments" name="melbourne_comments" class="form-control" placeholder="Melbourne Comment"> </textarea>
                                 <div class="val1tip"></div>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <!-- <div class="form-group">
@@ -310,6 +332,28 @@
     <!-- END MODAL -->
 </div>
 
+<style>
+.input-group1 {
+    display: flex;
+    align-items: center; /* Vertically center align items */
+}
+
+.input-group1 .form-control {
+    margin: 0; /* Remove default margins */
+}
+
+.input-group1 .total-quantity {
+    flex: 3; /* Take up more space */
+    margin-right: -1px; /* Adjust spacing to ensure no extra gap */
+}
+
+.input-group1 .unit-of-measure {
+    flex: 1; /* Take up less space */
+    width: 100px; /* Adjust width as needed */
+    text-align: center; /* Center text */
+    border-left: 0; /* Remove border on the left to avoid double borders */
+}
+</style>
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
@@ -321,27 +365,35 @@
     var table;
     var rowNum = 1;
     $(document).ready(function() {
-
-        $('.productSelect').change(function() {
-            var productId = $(this).val(); // Mendapatkan ID produk yang dipilih
-            if (productId) {
+        $('.stockSelect').change(function() {
+            var idStock = $(this).val(); // Mendapatkan ID produk yang dipilih
+            if (idStock) {
                 $.ajax({
-                    url: '<?php echo site_url('Consumables_in_stock/getProductDetails'); ?>', // URL untuk request AJAX
+                    url: '<?php echo site_url('Consumables_in_stock/getStockDetails'); ?>', // URL untuk request AJAX
                     type: 'POST',
-                    data: { productId: productId }, // Data yang dikirim ke server
+                    data: { idStock: idStock }, // Data yang dikirim ke server
                     dataType: 'json', // Format data yang diharapkan dari server
                     success: function(response) {
                         // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
+                        $('#unit_measure_lab').val(response.unit || '');
                         $('#unit_of_measure').val(response.unit_of_measure || '');
+                        $('#unit_of_measure1').val(response.unit_of_measure || '');
+                        $('#quantity_per_unit').val(response.quantity_per_unit || '');
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         // Menangani error jika terjadi kesalahan dalam request
                         console.error('AJAX error:', textStatus, errorThrown);
-                        $('#unit_of_measure').val(''); // Kosongkan field jika ada error
+                        $('#unit_measure_lab').val(''); // Kosongkan field jika ada error
+                        $('#unit_of_measure').val('');
+                        $('#unit_of_measure1').val('');
+                        $('#quantity_per_unit').val('');
                     }
                 });
             } else {
-                $('#unit_of_measure').val(''); // Kosongkan jika tidak ada produk yang dipilih
+                $('#unit_measure_lab').val(''); // Kosongkan jika tidak ada produk yang dipilih
+                $('#unit_of_measure').val('');
+                $('#unit_of_measure1').val('');
+                $('#quantity_per_unit').val('');
             }
         });
         
@@ -418,14 +470,15 @@
                 {"data": "closed_container"},
                 {"data": "unit_measure_lab"},
                 {"data": "quantity_per_unit"},
-                {"data": "loose_items"},
-                {"data": "total_quantity"},
                 {"data": "unit_of_measure"},
+                {"data": "loose_items"},
+                {"data": "quantity_with_unit"},
                 {"data": "expired_date"},
-                {"data": "indonesia_comments"},
-                {"data": "melbourne_comments"},
+                {"data": "comments"},
+                // {"data": "indonesia_comments"},
+                // {"data": "melbourne_comments"},
                 {"data": "date_collected"},
-				{"data": "time_collected"},
+				// {"data": "time_collected"},
                 {
                     "data": "action",
                     "orderable": false,
@@ -444,19 +497,41 @@
 
 
         $('#addtombol').click(function() {
+             // Initially disable the "Number of Closed Containers" field
+            // $('#closed_container').prop('disabled', true);
+
+            // Enable the field when a product is selected
+            $('#id_stock').change(function() {
+                let selectedProduct = $(this).val(); // Get the selected product value
+                if (selectedProduct) {
+                    $('#closed_container').attr('readonly', false); // Enable field
+                } else {
+                    $('#closed_container').attr('readonly', true);// Disable field
+                }
+            });
+
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - In Stock <span id="my-another-cool-loader"></span>');
             $('#idx').hide();
-            $('#id').val('');
+            // $('#id').val('');
+            $('#id_stock').val('');
             $('#closed_container').val('');
+            $('#closed_container').attr('readonly', true);
             $('#unit_measure_lab').val('');
+            $('#unit_measure_lab').attr('readonly', true);
             $('#quantity_per_unit').val('');
+            $('#quantity_per_unit').attr('readonly', true);
             $('#loose_items').val('');
+            $('#total_quantity').val('');
             $('#total_quantity').attr('readonly', true);
+            $('#unit_of_measure').val('');
             $('#unit_of_measure').attr('readonly', true);
-            $('#indonesia_comments').val('');
-            $('#melbourne_comments').val('');
+            $('#unit_of_measure1').val('');
+            $('#unit_of_measure1').attr('readonly', true);
+            $('#comments').val('');
+            // $('#indonesia_comments').val('');
+            // $('#melbourne_comments').val('');
             $('#compose-modal').modal('show');
         });
 
@@ -471,22 +546,28 @@
             $('#id_instock').val(data.id_instock);
             	
             // Set the value of the dropdown based on the testing_type
-				$('#id option').each(function() {
+				$('#id_stock option').each(function() {
 					if ($(this).text() === data.product_name) {
 						$(this).prop('selected', true);
 					}
 				});
             $('#closed_container').val(data.closed_container);
+            $('#closed_container').attr('readonly', false);
             $('#unit_measure_lab').val(data.unit_measure_lab);
+            $('#unit_measure_lab').attr('readonly', true);
             $('#quantity_per_unit').val(data.quantity_per_unit);
+            $('#quantity_per_unit').attr('readonly', true);
             $('#loose_items').val(data.loose_items);
             $('#total_quantity').val(data.total_quantity);
             $('#total_quantity').attr('readonly', true);
             $('#unit_of_measure').val(data.unit_of_measure);
             $('#unit_of_measure').attr('readonly', true);
+            $('#unit_of_measure1').val(data.unit_of_measure);
+            $('#unit_of_measure1').attr('readonly', true);
             $('#expired_date').val(data.expired_date).trigger('change');
-            $('#indonesia_comments').val(data.indonesia_comments);
-            $('#melbourne_comments').val(data.melbourne_comments);
+            $('#comments').val(data.comments);
+            // $('#indonesia_comments').val(data.indonesia_comments);
+            // $('#melbourne_comments').val(data.melbourne_comments);
             $('#date_collected').val(data.date_collected).trigger('change');
             $('#time_collected').val(data.time_collected).trigger('change');
             $('#compose-modal').modal('show');

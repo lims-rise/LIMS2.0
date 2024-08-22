@@ -4,14 +4,14 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Lab Consumables - Stock Used</h3>
+                        <h3 class="box-title">Lab Consumables - Stock</h3>
                     </div>
                         <div class="box-body">
                             <div style="padding-bottom: 10px;">
                                 <?php
                                         $lvl = $this->session->userdata('id_user_level');
                                         if ($lvl != 7){
-                                            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> Stock Used </button>";
+                                            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Stock </button>";
                                         }
                                 ?>
                                 <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
@@ -26,11 +26,14 @@
                                         <th>Product Name</th>
                                         <th>Quantity</th>
                                         <th>Unit</th>
-                                        <th>N Campaigns</th>
-                                        <th>Comments</th>
+                                        <th>Quantity Per Unit</th>
+                                        <th>Unit of Measure</th>
+                                        <th>Used</th>
                                         <th>Minimum Stock</th>
+                                        <th>Item Description</th>
+                                        <th>Comments</th>
                                         <th>Date Collected</th>
-                                        <th>Time Collected </th>
+                                        <!-- <th>Time Collected </th> -->
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -61,13 +64,13 @@
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
 
                         <div class="form-group" id="idx">
-                            <label for="id_stockused" class="col-sm-4 control-label">ID Stock Used</label>
+                            <label for="id_stock" class="col-sm-4 control-label">ID Stock Used</label>
                             <div class="col-sm-8">
-                                <input id="id_stockused" name="id_stockused" placeholder="Id stock Used" type="text" class="form-control">
+                                <input id="id_stock" name="id_stock" placeholder="Id stock Used" type="text" class="form-control">
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
 							<label for="id" class="col-sm-4 control-label">Product Name</label>
 							<div class="col-sm-8" >
 								<select id='id' name="id" class="form-control productSelect">
@@ -84,7 +87,15 @@
 										?>
 								</select>
 							</div>
-						</div>
+						</div> -->
+
+                        <div class="form-group">
+                            <label for="product_name" class="col-sm-4 control-label">Product Name</label>
+                            <div class="col-sm-8">
+                                <input id="product_name" name="product_name" type="text" class="form-control" placeholder="Product Name" required>
+                                <div class="val1tip"></div>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label for="quantity" class="col-sm-4 control-label">Quantity</label>
@@ -114,20 +125,44 @@
 						</div> -->
 
                         <div class="form-group">
-                            <label for="unit_of_measure" class="col-sm-4 control-label">Unit</label>
+                            <label for="unit" class="col-sm-4 control-label">Unit</label>
                             <div class="col-sm-8">
-                                <input id="unit_of_measure" name="unit_of_measure" type="text" class="form-control" placeholder="Unit" required>
+                                <input id="unit" name="unit" type="text" class="form-control" placeholder="Unit (ex. bottle)" required>
                                 <div class="val1tip"></div>
                             </div>
                         </div>
 
                         <div class="form-group">
+                            <label for="quantity_per_unit" class="col-sm-4 control-label">Quantity Per Unit</label>
+                            <div class="col-sm-8">
+                                <input id="quantity_per_unit" name="quantity_per_unit" type="number" class="form-control" placeholder="Quantity Per Unit" required>
+                                <div class="val1tip"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="unit_of_measure" class="col-sm-4 control-label">Unit of Measure</label>
+                            <div class="col-sm-8">
+                                <input id="unit_of_measure" name="unit_of_measure" type="text" class="form-control" placeholder="Unit (ex. grams)" required>
+                                <div class="val1tip"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="used" class="col-sm-4 control-label">Used</label>
+                            <div class="col-sm-8">
+                                <input id="used" name="used" type="number" class="form-control" placeholder="Used" required>
+                                <div class="val1tip"></div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group">
                             <label for="n_campaigns" class="col-sm-4 control-label">N Campaigns</label>
                             <div class="col-sm-8">
                                 <input id="n_campaigns" name="n_campaigns" type="text" class="form-control" placeholder="N Campaigns" required>
                                 <div class="val1tip"></div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label for="minimum_stock" class="col-sm-4 control-label">Minimum Stock</label>
@@ -144,7 +179,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<label for="time_collected" class="col-sm-4 control-label">Time product collected</label>
 							<div class="col-sm-8">
 								<div class="input-group clockpicker">
@@ -157,7 +192,15 @@
 									</span>
 								</div>
 							</div>
-						</div>
+						</div> -->
+
+                        <div class="form-group">
+                            <label for="item_description" class="col-sm-4 control-label">Item Description</label>
+                            <div class="col-sm-8">
+                                <textarea id="item_description" name="item_description" class="form-control" placeholder="Item Description"> </textarea>
+                                <div class="val1tip"></div>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label for="comments" class="col-sm-4 control-label">Comment</label>
@@ -283,27 +326,27 @@
     var rowNum = 1;
     $(document).ready(function() {
 
-        $('.productSelect').change(function() {
-            var productId = $(this).val(); // get ID by selected
+        // $('.productSelect').change(function() {
+        //     var productId = $(this).val(); // get ID by selected
        
-            if (productId) {
-                $.ajax({
-                    url: '<?php echo site_url('Consumables_stock_used/getProductDetails'); ?>',
-                    type: 'POST',
-                    data: {productId: productId},
-                    dataType: 'json',
-                    success: function(response) {
-                        $('#unit_of_measure').val(response.unit_of_measure || '');
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('AJAX error:', textStatus, errorThrown);
-                        $('#unit_of_measure').val(''); // Kosongkan field jika ada error
-                    }
-                });
-            } else {
-                $('#unit_of_measure').val('');
-            }
-        });
+        //     if (productId) {
+        //         $.ajax({
+        //             url: '<?php echo site_url('Consumables_stock_used/getProductDetails'); ?>',
+        //             type: 'POST',
+        //             data: {productId: productId},
+        //             dataType: 'json',
+        //             success: function(response) {
+        //                 $('#unit_of_measure').val(response.unit_of_measure || '');
+        //             },
+        //             error: function(jqXHR, textStatus, errorThrown) {
+        //                 console.error('AJAX error:', textStatus, errorThrown);
+        //                 $('#unit_of_measure').val(''); // Kosongkan field jika ada error
+        //             }
+        //         });
+        //     } else {
+        //         $('#unit_of_measure').val('');
+        //     }
+        // });
         
         $('.clockpicker').clockpicker({
         placement: 'bottom', // clock popover placement
@@ -355,15 +398,19 @@
             serverSide: true,
             ajax: {"url": "consumables_stock_used/jsonStockUsed", "type": "POST"},
             columns: [
-                {"data": "id_stockused"},
+                {"data": "id_stock"},
                 {"data": "product_name"},
                 {"data": "quantity"},
                 {"data": "unit"},
-                {"data": "n_campaigns"},
-                {"data": "comments"},
+                {"data": "quantity_per_unit"},
+                {"data": "unit_of_measure"},
+                {"data": "used"},
+                // {"data": "n_campaigns"},
                 {"data": "minimum_stock"},
+                {"data": "item_description"},
+                {"data": "comments"},
                 {"data": "date_collected"},
-				{"data": "time_collected"},
+				// {"data": "time_collected"},
                 {
                     "data": "action",
                     "orderable": false,
@@ -386,10 +433,16 @@
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - Stock Used <span id="my-another-cool-loader"></span>');
             $('#idx').hide();
-            $('#id').val('');
+            $('#product_name').val('');
+            // $('#id').val('');
             $('#quantity').val('');
-            $('#unit_of_measure').attr('readonly', true);
-            $('#n_campaigns').val('');
+            // $('#unit_of_measure').attr('readonly', true);
+            $('#unit').val('');
+            $('#quantity_per_unit').val('');
+            $('#unit_of_measure').val('');
+            $('#used').val('');
+            // $('#n_campaigns').val('');
+            $('#item_description').val('');
             $('#comments').val('');
             $('#minimum_stock').val('');
             $('#compose-modal').modal('show');
@@ -401,24 +454,29 @@
             console.log(data);
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Consumables - Update Product<span id="my-another-cool-loader"></span>');
-            $('#id_stockused').attr('readonly', true);
-            $('#idx').show();
-            $('#id_stockused').val(data.id_stockused);
+            $('#id_stock').attr('readonly', true);
+            $('#idx').hide();
+            $('#id_stock').val(data.id_stock);
             	
             // Set the value of the dropdown based on the testing_type
-				$('#id option').each(function() {
-					if ($(this).text() === data.product_name) {
-						$(this).prop('selected', true);
-					}
-				});
+				// $('#id option').each(function() {
+				// 	if ($(this).text() === data.product_name) {
+				// 		$(this).prop('selected', true);
+				// 	}
+				// });
+            $('#product_name').val(data.product_name);
             $('#quantity').val(data.quantity);
-            $('#unit_of_measure').val(data.unit);
-            $('#unit_of_measure').attr('readonly', true);
-            $('#n_campaigns').val(data.n_campaigns);
+            $('#unit').val(data.unit);
+            $('#quantity_per_unit').val(data.quantity_per_unit);
+            $('#unit_of_measure').val(data.unit_of_measure);
+            $('#used').val(data.used);
+            // $('#unit_of_measure').attr('readonly', true);
+            // $('#n_campaigns').val(data.n_campaigns);
+            $('#item_description').val(data.item_description);
             $('#comments').val(data.comments);
             $('#minimum_stock').val(data.minimum_stock);
             $('#date_collected').val(data.date_collected).trigger('change');
-            $('#time_collected').val(data.time_collected).trigger('change');
+            // $('#time_collected').val(data.time_collected).trigger('change');
             $('#compose-modal').modal('show');
         }); 
 
