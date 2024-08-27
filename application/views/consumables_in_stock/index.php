@@ -4,14 +4,14 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Lab Consumables - In Stock</h3>
+                        <h3 class="box-title">Lab Consumables - Stock Take</h3>
                     </div>
                         <div class="box-body">
                             <div style="padding-bottom: 10px;">
                                 <?php
                                         $lvl = $this->session->userdata('id_user_level');
                                         if ($lvl != 7){
-                                            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New In Stock </button>";
+                                            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Stock Take </button>";
                                         }
                                 ?>
                                 <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
@@ -512,7 +512,7 @@
 
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - In Stock <span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - Insert Stock Take <span id="my-another-cool-loader"></span>');
             $('#idx').hide();
             // $('#id').val('');
             $('#id_stock').val('');
@@ -540,7 +540,7 @@
             let data = table.row(tr).data();
             console.log(data);
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Consumables - Update Product<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Consumables - Update Stock Take <span id="my-another-cool-loader"></span>');
             $('#id_instock').attr('readonly', true);
             $('#idx').hide();
             $('#id_instock').val(data.id_instock);
