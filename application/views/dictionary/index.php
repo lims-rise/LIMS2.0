@@ -24,6 +24,7 @@
                     <th>End Date</th>
                     <th>Detail</th>
                     <th>Comments</th>
+                    <th>Restriction</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -110,9 +111,45 @@
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->        
+    </div><!-- /.modal -->
+    
+
+    <!-- MODAL RECEPTION -->
+	<div class="modal fade" id="restriction-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Restriction</h4>
+				</div>
+				<div class="modal-body">
+					<div id="restriction-content">
+						<!-- Content will be loaded here dynamically -->
+					</div>
+				</div>
+				<div class="modal-footer clearfix">
+					<!-- <button type="button" id="confirm-save" class="btn btn-primary"><i class="fa fa-save"></i> Ok</button> -->
+					<button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 </div>
+<style>
+    .restriction {
+        background-color: #31363F;
+        color: #FFFFFF;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .text {
+        font-size: 23px;
+    }
+</style>
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
@@ -121,8 +158,87 @@
 
     var table
     var tabledet
+    // function showRestriction(id) {
+    //     $.ajax({
+    //         url: '<?php echo site_url('Dictionary/get_restriction_data'); ?>',
+    //         type: 'GET',
+    //         data: { id: id },
+    //         dataType: 'json',
+    //         success: function(response) {
+    //             if (response && typeof response === 'object') {
+
+    //                 let confirmationContent = '<ul style="list-style-type:none; font-size: 16px">';
+    //                 confirmationContent += '<div><li class="text">New Barcode :</li> <br> <span class="restriction"><i class="fa fa-exclamation-triangle" style="color: white ;"></i> ' + (response.new_restriction_barcode ? response.new_restriction_barcode : 'N/A') + '</span></div> <br>';
+    //                 confirmationContent += '<div><li class="text">Barcode Exists :</li> <br> <span class="restriction"><i class="fa fa-exclamation-triangle" style="color: white ;"></i> ' + (response.restriction_barcode_exists ? response.restriction_barcode_exists : 'N/A') + '</span></div>';
+    //                 confirmationContent += '</ul>';
+
+    //                 $('#confirmation-content').html(confirmationContent);
+    //             } else {
+    //                 $('#confirmation-content').html('<p><strong>No restriction available.</strong></p>');
+    //             }
+
+    //             // show confirmation modal
+    //             $('#confirm-modal').modal('show');
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error('AJAX Error:', status, error);
+    //             $('#confirmation-content').html('<p>Error retrieving data. Please try again later.</p>');
+    //             $('#confirm-modal').modal('show');
+    //         }
+    //     });
+    // }
+
+    function showRestriction(id) {
+        $.ajax({
+            url: '<?php echo site_url('Dictionary/get_restriction_data'); ?>',
+            type: 'GET',
+            data: { id: id },
+            dataType: 'json',
+            success: function(response) {
+                if (response && typeof response === 'object') {
+
+                    let restrictionContent = '<ul style="list-style-type:none; font-size: 15px">';
+                    restrictionContent += '<div><li class="text">New Barcode :</li> <br> <span class="restriction"><i class="fa fa-exclamation-triangle" style="color: white ;"></i> ' + (response.new_restriction_barcode ? response.new_restriction_barcode : 'N/A') + '</span></div> <br>';
+
+                    if (response.restriction_barcode_exists) {
+
+                        let barcodeExists = response.restriction_barcode_exists;
+                        let parts = barcodeExists.split(',');
+
+                        restrictionContent += '<div><li class="text">Barcode Exists :</li> <br>';
+                        parts.map(part => {
+                            // confirmationContent += '<span class="restriction"><i class="fa fa-exclamation-triangle" style="color: white ;"></i> ' + part.trim() + '</span><br>';
+                            restrictionContent += '<span class="restriction" style="display: inline-block; margin-bottom: 5px;"><i class="fa fa-exclamation-triangle" style="color: white ;"></i> ' + part.trim() + '</span><br>';
+                        });
+                        restrictionContent += '</div>';
+                    } else {
+                        restrictionContent += '<div><li class="text">Barcode Exists :</li> <br> <span class="restriction"><i class="fa fa-exclamation-triangle" style="color: white ;"></i> N/A</span></div>';
+                    }
+
+                    restrictionContent += '</ul>';
+                    $('#restriction-content').html(restrictionContent);
+                } else {
+                    let noRestrictionContent = '<ul style="list-style-type:none; font-size: 16px">';
+                        noRestrictionContent += '<div><li class="text"></li> <br> <span class="restriction"><i class="fa fa-exclamation-triangle" style="color: white ;"></i> No restriction available.</span></div> <br>';
+                    noRestrictionContent += '</ul>';
+                    $('#restriction-content').html(noRestrictionContent);
+                }
+
+                // show restriction
+                $('#restriction-modal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+                $('#restriction-content').html('<p>Error retrieving data, check your connection. Please try again later.</p>');
+                $('#restriction-modal').modal('show');
+            }
+        });
+    }
+
+
     // var id_dic=$('#id').val();
     $(document).ready(function() {
+
         
         // $('.clockpicker').clockpicker({
         // placement: 'bottom', // clock popover placement
@@ -212,6 +328,11 @@
                 {"data": "end_date"},
                 {"data": "dictionary_id"},
                 {"data": "comments"},
+                {
+                    "data" : "restriction",
+                    "orderable": false,
+                    "className" : "text-center"
+                },
                 {
                     "data" : "action",
                     "orderable": false,

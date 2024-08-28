@@ -40,6 +40,14 @@ class Dictionary extends CI_Controller
         // echo $this->Dictionary_model->jsondetail();
     }
 
+    public function get_restriction_data() {
+        $id = $this->input->get('id', TRUE);
+        // Ambil data berdasarkan ID
+        $data = $this->Dictionary_model->get_data_restriction_by_id($id);
+        echo json_encode($data);
+    }
+    
+
     public function read($id) 
     {
         $row = $this->Dictionary_model->get_by_id($id);
