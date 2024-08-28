@@ -203,6 +203,93 @@ class Wat_water_chemistry_model extends CI_Model
         // return $this->db->get('v_lab_chemistry')->result();
     }
 
+    function get_all_conv()
+    {
+        if ($this->session->userdata('lab') == 1) {
+            $q = $this->db->query('SELECT 
+            a.barcode_sample AS barcode_sample,
+            d.date_arrival AS date_process,
+            c.lab AS water_lab,
+            c.barcode_sample AS parent_barcode,
+            b.sampletype AS sampletype2bwat,
+            CASE WHEN c.id_type2bwat NOT IN (11, 15, 16, 17) THEN a.ammonia * 0.8224
+                ELSE a.ammonia
+            END AS ammonia,
+            CASE WHEN c.id_type2bwat IN (11, 15, 16, 17) THEN 
+                CASE WHEN a.nitrate * 0.2259 = 0 THEN a.nitrate
+                    ELSE a.nitrate * 0.2259
+                END
+                ELSE a.nitrate
+            END AS nitrate,
+            CASE WHEN c.id_type2bwat IN (11, 15, 16, 17) THEN 
+                CASE WHEN a.nitrite * 0.3045 = 0 THEN a.nitrite
+                    ELSE a.nitrite * 0.3045
+                END								
+                ELSE a.nitrite
+            END AS nitrite,
+            a.notes AS notes,
+            c.id_type2bwat AS id_type2bwat,
+            a.lab, a.flag
+            from obj2b_chemistry_lab a 
+            LEFT JOIN (SELECT barcode_nitro AS barcode, "BTKL Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+                where LENGTH(barcode_nitro) > 0
+                UNION ALL
+                SELECT barcode_nitro2 AS barcode, "BBLK Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+                where LENGTH(barcode_nitro2) > 0) c ON a.barcode_sample = c.barcode 
+            left join ref_sampletype b on c.id_type2bwat = b.id_sampletype
+            left join obj2b_receipt d on c.barcode_sample = d.barcode_sample
+            WHERE a.flag = 0
+				AND c.lab IS NOT NULL
+                AND a.lab = "'.$this->session->userdata('lab').'" 
+            ORDER BY a.date_process, a.barcode_sample
+            ');
+        }
+        else {
+            $q = $this->db->query('SELECT 
+            a.barcode_sample AS barcode_sample,
+            d.date_arrival AS date_process,
+            c.lab AS water_lab,
+            c.barcode_sample AS parent_barcode,
+            b.sampletype AS sampletype2bwat,
+            CASE WHEN c.id_type2bwat NOT IN (11, 15, 16, 17) THEN a.ammonia * 0.8224
+                ELSE a.ammonia
+            END AS ammonia,
+            CASE WHEN c.id_type2bwat IN (11, 15, 16, 17) THEN 
+                CASE WHEN a.nitrate * 0.2259 = 0 THEN a.nitrate
+                    ELSE a.nitrate * 0.2259
+                END
+            END AS nitrate,
+            CASE WHEN c.id_type2bwat IN (11, 15, 16, 17) THEN 
+                CASE WHEN a.nitrite * 0.3045 = 0 THEN a.nitrite
+                    ELSE a.nitrite * 0.3045
+                END								
+            END AS nitrite,
+            a.notes AS notes,
+            c.id_type2bwat AS id_type2bwat,
+            a.lab, a.flag
+            from obj2b_chemistry_lab a 
+            LEFT JOIN (SELECT barcode_nitro AS barcode, "WAF Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+                where LENGTH(barcode_nitro) > 0
+                UNION ALL
+                SELECT barcode_nitro2 AS barcode, "Other Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+                where LENGTH(barcode_nitro2) > 0) c ON a.barcode_sample = c.barcode 
+            left join ref_sampletype b on c.id_type2bwat = b.id_sampletype
+            left join obj2b_receipt d on c.barcode_sample = d.barcode_sample
+            WHERE a.flag = 0
+				AND c.lab IS NOT NULL
+                AND a.lab = "'.$this->session->userdata('lab').'" 
+            ORDER BY a.date_process, a.barcode_sample
+            ');
+        }
+        $response = $q->result();
+        return $response;
+        
+        // $this->db->order_by('date_process', 'ASC');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $this->db->where('flag', '0');
+        // return $this->db->get('v_lab_chemistry')->result();
+    }
+
     function get_by_id($id)
     {
         $this->db->where($this->id, $id);

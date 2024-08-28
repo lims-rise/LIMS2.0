@@ -19,7 +19,8 @@
         
         <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
         <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
-		<?php echo anchor(site_url('wat_water_chemistry/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?></div>
+		<?php echo anchor(site_url('wat_water_chemistry/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Standard', 'class="btn btn-success"'); ?>
+		<?php echo anchor(site_url('wat_water_chemistry/excel_conv'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Conversion', 'class="btn btn-success"'); ?></div>
         <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
             <thead>
                 <tr>
