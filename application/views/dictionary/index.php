@@ -329,7 +329,7 @@
                 {"data": "dictionary_id"},
                 {"data": "comments"},
                 {
-                    "data" : "reception",
+                    "data" : "restriction",
                     "orderable": false,
                     "className" : "text-center"
                 },
