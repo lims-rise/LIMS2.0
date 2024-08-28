@@ -184,14 +184,17 @@ class Dictionary extends CI_Controller
                 `format`      AS `Format`,
                 `description` AS `Description`,
                 dictionary_id AS Sub_dictionary_id,
+                new_restriction_barcode AS Restriction_barcode,
+                restriction_barcode_exists AS Restriction_barcode_exists,
                 `start_date`  AS `Start_date`,
                 end_date      AS End_date,
                 comments      AS Comments
-                from dictionary 
+                from dictionary
+                LEFT JOIN dictionary_restriction ON dictionary.id = dictionary_restriction.restriction_id
                 ORDER BY module ASC
                 ',
                 array('ID', 'Module', 'Subheadings', 'Column_name', 'Variable_label', 'Variable_report', 
-                'Variable_type', 'Format', 'Description', 'Sub_dictionary_id', 'Start_date', 'End_date', 'Comments'), // Columns for Sheet1
+                'Variable_type', 'Format', 'Description', 'Sub_dictionary_id', 'Restriction_barcode', 'Restriction_barcode_exists', 'Start_date', 'End_date', 'Comments'), // Columns for Sheet1
             ),
             array(
                 'Sub_Dictionary',
