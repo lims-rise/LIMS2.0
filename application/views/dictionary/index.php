@@ -140,7 +140,7 @@
     .restriction {
         background-color: #31363F;
         color: #FFFFFF;
-        padding: 2px 5px;
+        padding: 0px 10px;
         border-radius: 3px;
         font-size: 18px;
         font-weight: bold;
