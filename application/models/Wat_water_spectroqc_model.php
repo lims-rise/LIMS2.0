@@ -98,7 +98,7 @@ class Wat_water_spectroqc_model extends CI_Model
       $response = array();
       $this->db->select('*');
       $this->db->where('id_spec', $id);
-      // $this->db->where('lab', $this->session->userdata('lab'));
+      $this->db->where('lab', $this->session->userdata('lab'));
       $this->db->where('flag', '0');
       $q = $this->db->get('v_spectro');
       $response = $q->row();
