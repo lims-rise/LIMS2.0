@@ -24,6 +24,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Product Name</th>
+                                        <th>Objective</th>
                                         <th>Number of closed containers</th>
                                         <th>Unit of measure counted in the lab</th>
                                         <th>Quantity Measured per Unit</th>
@@ -31,7 +32,7 @@
                                         <th>Number of loose items </th>
                                         <th>Total Quantity</th>
                                         <th>Date Collected</th>
-                                        <th>Experied Date</th>
+                                        <th>Time Collected</th>
                                         <th>Comments</th>
                                         <!-- <th>Indonesia Comments</th> -->
                                         <!-- <th>Melbourne Comments</th> -->
@@ -84,6 +85,25 @@
 										}
 										else {
 											echo "<option value='".$row['id_stock']."'>".$row['product_name']."</option>";
+										}
+									}
+										?>
+								</select>
+							</div>
+						</div>
+
+                        <div class="form-group">
+							<label for="id_objective" class="col-sm-4 control-label">Objective</label>
+							<div class="col-sm-8" >
+								<select id='id_objective' name="id_objective" class="form-control stockSelect">
+									<option>-- Select Objective --</option>
+									<?php
+									foreach($objectives as $row){
+										if ($id == $row['id_objective']) {
+											echo "<option value='".$row['id_objective']."' selected='selected'>".$row['objective']."</option>";
+										}
+										else {
+											echo "<option value='".$row['id_objective']."'>".$row['objective']."</option>";
 										}
 									}
 										?>
@@ -467,18 +487,19 @@
             columns: [
                 {"data": "id_instock"},
                 {"data": "product_name"},
+                {"data": "objective"},
                 {"data": "closed_container"},
                 {"data": "unit_measure_lab"},
                 {"data": "quantity_per_unit"},
                 {"data": "unit_of_measure"},
                 {"data": "loose_items"},
                 {"data": "quantity_with_unit"},
-                {"data": "expired_date"},
-                {"data": "comments"},
+                // {"data": "expired_date"},
                 // {"data": "indonesia_comments"},
                 // {"data": "melbourne_comments"},
                 {"data": "date_collected"},
-				// {"data": "time_collected"},
+                {"data": "time_collected"},
+                {"data": "comments"},
                 {
                     "data": "action",
                     "orderable": false,
@@ -516,6 +537,7 @@
             $('#idx').hide();
             // $('#id').val('');
             $('#id_stock').val('');
+            $('#id_objective').val('');
             $('#closed_container').val('');
             $('#closed_container').attr('readonly', true);
             $('#unit_measure_lab').val('');
@@ -546,11 +568,16 @@
             $('#id_instock').val(data.id_instock);
             	
             // Set the value of the dropdown based on the testing_type
-				$('#id_stock option').each(function() {
-					if ($(this).text() === data.product_name) {
-						$(this).prop('selected', true);
-					}
-				});
+			$('#id_stock option').each(function() {
+				if ($(this).text() === data.product_name) {
+					$(this).prop('selected', true);
+				}
+			});
+            $('#id_objective option').each(function() {
+				if ($(this).text() === data.objective) {
+					$(this).prop('selected', true);
+				}
+			});
             $('#closed_container').val(data.closed_container);
             $('#closed_container').attr('readonly', false);
             $('#unit_measure_lab').val(data.unit_measure_lab);

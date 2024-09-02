@@ -25,12 +25,13 @@
          */
         function jsonGetInStock() 
         {
-            $this->datatables->select('consumables_in_stock.id_instock, consumables_in_stock.id_stock, consumables_stock.product_name, consumables_in_stock.closed_container,
+            $this->datatables->select('consumables_in_stock.id_instock, consumables_in_stock.id_stock, ref_objective.id_objective, ref_objective.objective, consumables_stock.product_name, consumables_in_stock.closed_container,
             consumables_in_stock.unit_measure_lab, consumables_in_stock.quantity_per_unit, consumables_in_stock.loose_items,
             consumables_in_stock.total_quantity, consumables_in_stock.unit_of_measure, consumables_in_stock.expired_date,
             consumables_in_stock.comments, consumables_in_stock.date_collected, consumables_in_stock.time_collected');
             $this->datatables->from('consumables_in_stock');
-            $this->datatables->join('consumables_stock', 'consumables_in_stock.id_stock = consumables_stock.id_stock', 'right');
+            $this->datatables->join('consumables_stock', 'consumables_in_stock.id_stock = consumables_stock.id_stock', 'left');
+            $this->datatables->join('ref_objective', 'consumables_in_stock.id_objective = ref_objective.id_objective', 'left');
             $this->datatables->where('consumables_in_stock.flag', '0');
             $this->datatables->add_column('quantity_with_unit', '$1 $2', 'total_quantity,unit_of_measure');
 
@@ -97,6 +98,16 @@
             $this->db->where('id_stock', $idStock);
             $q = $this->db->get('consumables_stock');
             return $q->row_array();
+        }
+
+        function getObjective()
+        {
+            $response = array();
+            $this->db->select('id_objective, objective');
+            $this->db->where('flag', '0');
+            $q = $this->db->get('ref_objective');
+            $response = $q->result_array();
+            return $response;
         }
 
         // function getProductById($productId)

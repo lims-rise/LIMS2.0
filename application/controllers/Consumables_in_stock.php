@@ -28,6 +28,7 @@ class Consumables_in_stock extends CI_Controller {
     {
         $data['inStock'] = $this->Consumables_in_stock_model->getAllConsumablesInStock();
         $data['stockName'] = $this->Consumables_in_stock_model->getStock();
+        $data['objectives'] = $this->Consumables_in_stock_model->getObjective();
         $this->template->load('template','consumables_in_stock/index', $data);
     } 
 
@@ -66,6 +67,7 @@ class Consumables_in_stock extends CI_Controller {
             $data = array(
                  // 'product_id' => $this->input->post('id',TRUE),
                 'id_stock' => $this->input->post('id_stock',TRUE),
+                'id_objective' => $this->input->post('id_objective',TRUE),
                 'closed_container' => $this->input->post('closed_container',TRUE),
                 'unit_measure_lab' => $this->input->post('unit_measure_lab',TRUE),
                 'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
@@ -83,6 +85,9 @@ class Consumables_in_stock extends CI_Controller {
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
+
+            // var_dump($data);
+            // die();
     
             $result = $this->Consumables_in_stock_model->insertConsumablesInStock($data);
             if ($result) {
@@ -94,6 +99,7 @@ class Consumables_in_stock extends CI_Controller {
             $data = array(
                 // 'product_id' => $this->input->post('id',TRUE),
                 'id_stock' => $this->input->post('id_stock',TRUE),
+                'id_objective' => $this->input->post('id_objective',TRUE),
                 'closed_container' => $this->input->post('closed_container',TRUE),
                 'unit_measure_lab' => $this->input->post('unit_measure_lab',TRUE),
                 'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
