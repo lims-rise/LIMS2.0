@@ -6,7 +6,7 @@
 			</div>
 			<form role="form"  id="formKeg" method="post" class="form-horizontal">
 				<div class="box-body">
-					<input type="text" class="form-control " id="id_spec" name="id_spec" value="<?php echo $id_spec ?>">
+					<input type="hidden" class="form-control " id="id_spec" name="id_spec" value="<?php echo $id_spec ?>">
 					<!-- <input id="id_spec" name="id_spec" type="hidden" class="form-control input-sm"> -->
 
 					<div class="form-group">
