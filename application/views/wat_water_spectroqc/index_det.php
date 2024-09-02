@@ -238,6 +238,29 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
+        <!-- MODAL CONFIRMATION DELETE DETAIL -->
+        <div class="modal fade" id="confirm-modal-detail" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header" style="background-color: #dd4b39; color: white;">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+						<h4 class="modal-title"><i class="fa fa-trash"></i> Detail Spectro | Delete <span id="my-another-cool-loader"></span></h4>
+					</div>
+					<div class="modal-body">
+						<div id="confirmation-content">
+							<div class="modal-body">
+								<p class="text-center" style="font-size: 15px;">Are you sure you want to delete sample <span id="id" style="font-weight: bold;"></span> ?</p>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer clearfix">
+						<button type="button" id="confirm-save-detail" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -245,6 +268,41 @@
 <script type="text/javascript">
 	var table
 	$(document).ready(function() {
+
+		function showConfirmationDetail(url) {
+            deleteUrl = url; // Set the URL to the variable
+            $('#confirm-modal-detail').modal('show');
+        }
+
+        // Handle the delete detail button click
+        $(document).on('click', '.btn_delete_detail', function() {
+            let id = $(this).data('id');
+            let url = '<?php echo site_url('Wat_water_spectroqc/delete'); ?>/' + id;
+            $('#confirm-modal-detail #id').text(id);
+            console.log(id);
+            showConfirmationDetail(url);
+        });
+
+        // When the confirm-save-detail button is clicked
+        $('#confirm-save-detail').click(function() {
+            $.ajax({
+                url: deleteUrl,
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                complete: function() {
+                    $('#confirm-modal-detail').modal('hide');
+                    location.reload();
+                }
+            });
+        });
+
 		$('.noEnterSubmit').keypress(function (e) {
 			if (e.which == 13) return false;
 		});
