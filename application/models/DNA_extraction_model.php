@@ -444,9 +444,10 @@ class DNA_extraction_model extends CI_Model
             WHERE barcode = "'. $id .'"
             AND vessel IN (SELECT barcode_sample FROM freezer_in)
             UNION ALL
-            SELECT barcode_vessel AS barcode, sample_type AS `type`  FROM dna_control
+            SELECT a.barcode_vessel AS barcode, b.sample AS `type` FROM dna_control a
+            LEFT JOIN ref_sampledna b ON a.id_sample=b.id_sample
             WHERE barcode_vessel = "'. $id .'"
-            AND flag = 0
+            AND a.flag = 0
             UNION ALL
             SELECT barcode_sample AS barcode, CONCAT("O2B ", b.sampletype) AS `type`
             FROM obj2b_receipt a
