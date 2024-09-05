@@ -99,27 +99,43 @@ if ($this->session->userdata('id_user_level') == "") {
         $main_menu = $this->db->query($sql_menu)->result();
         
         foreach ($main_menu as $menu){
+            // Check if menu is active
+            $activeClass = ($this->uri->segment(1) == $menu->url) ? 'active' : '';
+
             // chek is have sub menu
             $this->db->where('is_main_menu',$menu->id_menu);
             $this->db->where('is_aktif','y');
             $this->db->order_by('id_menu', 'ASC');
             $submenu = $this->db->get('tbl_menu');
+
+            // Determine if any sub-menu is active
+            $subActive = false;
+                foreach ($submenu->result() as $sub) {
+                    if ($this->uri->segment(1) == $sub->url) {
+                        $subActive = true;
+                        break;
+                    }
+                }
+
             if($submenu->num_rows()>0){
+                $isOpen = $subActive ? 'display: block;' : 'display: none;';
                 // display sub menu
-                echo "<li class='treeview'>
+                echo "<li class='treeview $activeClass'>
                     <a href='#'>
                         <i class='$menu->icon'></i> <span>".strtoupper($menu->title)."</span>
                         <span class='pull-right-container'>
                             <i class='fa fa-angle-left pull-right'></i>
                         </span>
                     </a>
-                    <ul class='treeview-menu' style='display: none'>";
+                    <ul class='treeview-menu' style='$isOpen'>";
                     foreach ($submenu->result() as $sub){
+                        $subActiveClass = ($this->uri->segment(1) == $sub->url) ? 'active' : '';
                         if ($sub->icon == 'sep'){
                             echo "<hr>";
                         }
                         else {
-                            echo "<li>".anchor($sub->url,"<i class='$sub->icon'></i> ".($sub->title))."</li>"; 
+                            // echo "<li>".anchor($sub->url,"<i class='$sub->icon'></i> ".($sub->title))."</li>"; 
+                            echo "<li class='$subActiveClass'>".anchor($sub->url,"<i class='$sub->icon'></i> ".($sub->title))."</li>";
                         }
                         // echo "<li>".anchor($sub->url,"<i class='$sub->icon'></i> ".($sub->title))."</li>"; 
                     }
@@ -127,7 +143,7 @@ if ($this->session->userdata('id_user_level') == "") {
                 </li>";
             }else{
                 // display main menu
-                echo "<li>";
+                echo "<li class='$activeClass'>";
                 echo anchor($menu->url,"<i class='".$menu->icon."'></i> ".strtoupper($menu->title));
                 echo "</li>";
             }
@@ -215,6 +231,24 @@ $(document).ready(function(){
     //             $(window).scrollLeft()) + "px");
     //     return this;
     // }
+
+    // Handle click events for treeview menus
+        $('.treeview > a').on('click', function(e) {
+            let $parent = $(this).parent();
+            if ($parent.hasClass('active')) {
+                // If already active, close it
+                $parent.removeClass('active').find('.treeview-menu').slideUp();
+            } else {
+                // Close other open menus
+                $('.treeview.active').removeClass('active').find('.treeview-menu').slideUp();
+                // Open the clicked menu
+                $parent.addClass('active').find('.treeview-menu').slideDown();
+            }
+            e.preventDefault();
+        });
+
+    // Open active menu by default
+        $('.treeview.active > a').trigger('click');
 });
 
 </script>

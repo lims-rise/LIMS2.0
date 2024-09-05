@@ -99,7 +99,30 @@
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->        
+    </div><!-- /.modal -->
+    
+    <!-- MODAL CONFIRMATION DELETE -->
+    <div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dd4b39; color: white;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-trash"></i> Sample Ended | Delete <span id="my-another-cool-loader"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="confirmation-content">
+                        <div class="modal-body">
+                            <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
+                    <button type="button" id="confirm-save" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 </div>
 
@@ -110,6 +133,40 @@
 
     var table
     $(document).ready(function() {
+
+        function showConfirmation(url) {
+            deleteUrl = url; // Set the URL to the variable
+            $('#confirm-modal').modal('show');
+        }
+
+        // Handle the delete button click
+        $(document).on('click', '.btn_delete', function() {
+            let id = $(this).data('id');
+            let url = '<?php echo site_url('SE_sample_ended/delete'); ?>/' + id;
+            $('#confirm-modal #id').text(id);
+            console.log(id);
+            showConfirmation(url);
+        });
+
+        // When the confirm-save button is clicked
+        $('#confirm-save').click(function() {
+            $.ajax({
+                url: deleteUrl,
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                complete: function() {
+                    $('#confirm-modal').modal('hide');
+                    location.reload();
+                }
+            });
+        });
         
         $('.clockpicker').clockpicker({
         placement: 'bottom', // clock popover placement

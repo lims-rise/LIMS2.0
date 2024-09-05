@@ -937,7 +937,12 @@
                 else {
                     table_det1.ajax.url('o2b_bootsocks_stomacher/subjson?id=' + data.barcode_bootsock).load();
                 }                
-                table_det2.ajax.url('o2b_bootsocks_stomacher/subjson2?id=' + data.barcode_bootsock).load();
+                if (data.barcode_bootsock == "") {
+                    table_det2.ajax.url('o2b_bootsocks_stomacher/subjson2?id=' + data.barcode_sample).load();
+                }
+                else {
+                    table_det2.ajax.url('o2b_bootsocks_stomacher/subjson2?id=' + data.barcode_bootsock).load();
+                }                
             }
         });
 

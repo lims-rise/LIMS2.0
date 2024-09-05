@@ -28,16 +28,16 @@ class Wat_water_spectroqc_model extends CI_Model
         $this->datatables->where('obj2b_spectro_crm.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
-            $this->datatables->add_column('action', '', 'id_spec');
+            $this->datatables->add_column('action', anchor(site_url('wat_water_spectroqc/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_spec');
         }
         else if (($lvl == 2) | ($lvl == 3)){
             $this->datatables->add_column('action', anchor(site_url('wat_water_spectroqc/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_spec');
         }
         else {
-            $this->datatables->add_column('action', anchor(site_url('wat_water_spectroqc/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+            $this->datatables->add_column('action', anchor(site_url('wat_water_spectroqc/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('wat_water_spectroqc/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id_spec');
+                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_spec');
         }
         return $this->datatables->generate();
     }
@@ -58,7 +58,7 @@ class Wat_water_spectroqc_model extends CI_Model
       }
       else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('wat_water_spectroqc/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id_spec');
+                ".'<button type="button" class="btn_delete_detail btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_spec');
         }
       return $this->datatables->generate();
   }
@@ -98,7 +98,7 @@ class Wat_water_spectroqc_model extends CI_Model
       $response = array();
       $this->db->select('*');
       $this->db->where('id_spec', $id);
-      // $this->db->where('lab', $this->session->userdata('lab'));
+      $this->db->where('lab', $this->session->userdata('lab'));
       $this->db->where('flag', '0');
       $q = $this->db->get('v_spectro');
       $response = $q->row();

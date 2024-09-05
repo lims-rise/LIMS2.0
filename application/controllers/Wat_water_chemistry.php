@@ -39,7 +39,7 @@ class Wat_water_chemistry extends CI_Controller
         if ($mode=="insert"){
             $data = array(
             'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'date_process' => $this->input->post('date_process',TRUE),
+            // 'date_process' => $this->input->post('date_process',TRUE),
             'ammonia' => $this->input->post('ammonia',TRUE),
             'nitrate' => $this->input->post('nitrate',TRUE),
             'nitrite' => $this->input->post('nitrite',TRUE),
@@ -76,7 +76,7 @@ class Wat_water_chemistry extends CI_Controller
         else if ($mode=="edit"){
             $data = array(
                 'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-                'date_process' => $this->input->post('date_process',TRUE),
+                // 'date_process' => $this->input->post('date_process',TRUE),
                 'ammonia' => $this->input->post('ammonia',TRUE),
                 'nitrate' => $this->input->post('nitrate',TRUE),
                 'nitrite' => $this->input->post('nitrite',TRUE),
@@ -269,6 +269,52 @@ class Wat_water_chemistry extends CI_Controller
         // $writer->save('php://output');
            
     }
+
+    public function excel_conv()
+    {
+        // $date1=$this->input->get('date1');
+        // $date2=$this->input->get('date2');
+
+        $spreadsheet = new Spreadsheet();    
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', "Barcode Sample");
+        $sheet->setCellValue('B1', "Date process");
+        $sheet->setCellValue('C1', "Laboratory");
+        $sheet->setCellValue('D1', "Parent barcode");
+        $sheet->setCellValue('E1', "Water type");
+        $sheet->setCellValue('F1', "Ammonia conversion (NH3-N) mg/L");
+        $sheet->setCellValue('G1', "Nitrate conversion (NO3-N) mg/L");
+        $sheet->setCellValue('H1', "Nitrite conversion (NO2-N) mg/L");
+        $sheet->setCellValue('I1', "Notes");        
+        // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
+
+        // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
+        $rdeliver = $this->Wat_water_chemistry_model->get_all_conv();
+    
+        // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
+        $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
+        foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
+            $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
+            $sheet->setCellValue('B'.$numrow, $data->date_process);
+            $sheet->setCellValue('C'.$numrow, $data->water_lab);
+            $sheet->setCellValue('D'.$numrow, $data->parent_barcode);
+            $sheet->setCellValue('E'.$numrow, $data->sampletype2bwat);
+            $sheet->setCellValue('F'.$numrow, $data->ammonia);
+            $sheet->setCellValue('G'.$numrow, $data->nitrate);
+            $sheet->setCellValue('H'.$numrow, $data->nitrite);
+            $sheet->setCellValue('I'.$numrow, trim($data->notes));
+            //   $no++; // Tambah 1 setiap kali looping
+            $numrow++; // Tambah 1 setiap kali looping
+        }
+    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+    $datenow=date("Ymd");
+    $fileName = 'Water_Chemistry_Conversion_'.$datenow.'.csv';
+
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya
+    header('Cache-Control: max-age=0');
+    $writer->save('php://output');
+    }    
 }
 
 /* End of file Wat_water_chemistry.php */

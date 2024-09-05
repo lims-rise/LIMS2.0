@@ -202,7 +202,7 @@
                             <label for="barcode_endetec" class="col-sm-4 control-label">Barcode endetec</label>
                             <div class="col-sm-8">
                                 <input id="barcode_endetec" name="barcode_endetec" type="text" class="form-control" placeholder="Barcode endetec" required>
-                                <!-- <div class="val1tip"></div> -->
+                                <div class="val4tip"></div>
                             </div>
                         </div>
 
@@ -272,7 +272,7 @@
                             <label for="barcode_colilert" class="col-sm-4 control-label">Barcode colilert</label>
                             <div class="col-sm-8">
                                 <input id="barcode_colilert" name="barcode_colilert" type="text" class="form-control" placeholder="Barcode colilert" required>
-                                <!-- <div class="val1tip"></div> -->
+                                <div class="val3tip"></div>
                             </div>
                         </div>
 
@@ -404,7 +404,7 @@
         //     $('#volume_falcon_id1').keyup();
         // });
 
-        $('.val1tip, .val2tip').tooltipster({
+        $('.val1tip, .val2tip, .val3tip, .val4tip').tooltipster({
                 animation: 'swing',
                 delay: 1,
                 theme: 'tooltipster-default',
@@ -414,16 +414,16 @@
 
 
         $('#barcode_sample').click(function() {
-            $('.val1tip, .val2tip').tooltipster('hide');   
+            $('.val1tip, .val2tip, .val3tip, .val4tip').tooltipster('hide');   
         });
 
         $("#compose-modal").on('hide.bs.modal', function(){
-            $('.val1tip, .val2tip').tooltipster('hide');   
+            $('.val1tip, .val2tip, .val3tip, .val4tip').tooltipster('hide');   
             // $('#barcode_sample').val('');     
         });
 
         $("#detail-modal").on('hide.bs.modal', function(){
-            $('.val1tip, .val2tip').tooltipster('hide');   
+            $('.val1tip, .val2tip, .val3tip, .val4tip').tooltipster('hide');   
             // $('#barcode_sample').val('');     
         });
 
@@ -497,6 +497,68 @@
                 }
             });
             // }
+        });
+
+        $('#barcode_colilert').on("change", function() {
+            data1 = $('#barcode_colilert').val();
+            $.ajax({
+                type: "GET",
+                url: "O2b_sample_prep/valid_coli?id1="+data1,
+                // data:data1,
+                dataType: "json",
+                success: function(data) {
+                console.log(data);
+                    // var barcode = '';
+                    if (data.length > 0) {
+                            tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !!</span>');
+                            $('.val3tip').tooltipster('content', tip);
+                            $('.val3tip').tooltipster('show');
+                            $('#barcode_colilert').focus();
+                            $('#barcode_colilert').val('');     
+                            $('#barcode_colilert').css({'background-color' : '#FFE6E7'});
+                            setTimeout(function(){
+                                $('#barcode_colilert').css({'background-color' : '#FFFFFF'});
+                                setTimeout(function(){
+                                    $('#barcode_colilert').css({'background-color' : '#FFE6E7'});
+                                    setTimeout(function(){
+                                        $('#barcode_colilert').css({'background-color' : '#FFFFFF'});
+                                    }, 300);                            
+                                }, 300);
+                            }, 300);
+                        }
+                }
+            });
+        });
+
+        $('#barcode_endetec').on("change", function() {
+            data1 = $('#barcode_endetec').val();
+            $.ajax({
+                type: "GET",
+                url: "O2b_sample_prep/valid_ende?id1="+data1,
+                // data:data1,
+                dataType: "json",
+                success: function(data) {
+                console.log(data);
+                    // var barcode = '';
+                    if (data.length > 0) {
+                            tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !!</span>');
+                            $('.val4tip').tooltipster('content', tip);
+                            $('.val4tip').tooltipster('show');
+                            $('#barcode_endetec').focus();
+                            $('#barcode_endetec').val('');     
+                            $('#barcode_endetec').css({'background-color' : '#FFE6E7'});
+                            setTimeout(function(){
+                                $('#barcode_endetec').css({'background-color' : '#FFFFFF'});
+                                setTimeout(function(){
+                                    $('#barcode_endetec').css({'background-color' : '#FFE6E7'});
+                                    setTimeout(function(){
+                                        $('#barcode_endetec').css({'background-color' : '#FFFFFF'});
+                                    }, 300);                            
+                                }, 300);
+                            }, 300);
+                        }
+                }
+            });
         });
 
         // $('#barcode_bootsock').on("change", function() {
@@ -573,12 +635,12 @@
         // });        
 
         $("input").keypress(function(){
-            $('.val1tip, .val2tip').tooltipster('hide');   
+            $('.val1tip, .val2tip, .val3tip, .val4tip').tooltipster('hide');   
         });
 
         $('#compose-modal').on('shown.bs.modal', function () {
             $('#barcode_sample').focus();
-        });        
+        });      
         
         $('#detail-modal').on('shown.bs.modal', function () {
             $('#barcode_endetec').focus();
@@ -867,9 +929,10 @@
         //         .prop("checked", "")
         //         .end();
         // });
-        // $('.modal').on('hidden.bs.modal', function() {
-        //     $(this).find('form')[0].reset();
-        // });
+        $('.modal').on('hidden.bs.modal', function() {
+            $(this).find('form')[0].reset();
+            $('.val1tip, .val2tip, .val3tip, .val4tip').tooltipster('hide');   
+        });
         // $('.modal').on('shown.bs.modal', function() {
         //     lastfocus = $(this);
         //     $('input:enabled:visible:not([readonly="readonly"])', this).get(0).select();

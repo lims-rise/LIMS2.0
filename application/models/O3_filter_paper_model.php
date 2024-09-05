@@ -229,9 +229,10 @@ class O3_filter_paper_model extends CI_Model
       function find_loc($id){
         // $this->db->where('id_location_80', $id);
         // $q = $this->db->get('ref_location_80');
-        $this->db->where('id', $id);
+        $this->db->where('id_location_80', $id);
         $this->db->where('flag', '0');
-        $q = $this->db->get('v_findcryo');
+        $q = $this->db->get('freezer_in');
+        // $q = $this->db->get('v_findcryo');
         $response = $q->result_array();
         return $response;
         // return $this->db->get('ref_location_80')->row();
@@ -265,7 +266,7 @@ class O3_filter_paper_model extends CI_Model
         AND x.flag = 0
         AND x.cryobox = "'.$id.'" 
         GROUP BY x.cryobox
-        ORDER BY id 
+        ORDER BY id ASC
         ');
         //$url = $this->db->where('id_user_level',$user['id_user_level'])->get('tbl_user_level')->row();
         $response = $q->result_array();

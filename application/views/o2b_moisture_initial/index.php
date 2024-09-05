@@ -349,7 +349,7 @@
                 success: function(data) {
                     // var barcode = '';
                     if (data.length == 0) {
-                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is not on reception or is already in the system !</span>');
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is not on Sample Reception or not on Bootsock Stomacher or is already in the system !</span>');
                         $('.val1tip').tooltipster('content', tip);
                         $('.val1tip').tooltipster('show');
                         $('#barcode_sample').focus();

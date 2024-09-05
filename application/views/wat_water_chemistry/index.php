@@ -19,7 +19,8 @@
         
         <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
         <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
-		<?php echo anchor(site_url('wat_water_chemistry/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?></div>
+		<?php echo anchor(site_url('wat_water_chemistry/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Standard', 'class="btn btn-success"'); ?>
+		<?php echo anchor(site_url('wat_water_chemistry/excel_conv'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Conversion', 'class="btn btn-success"'); ?></div>
         <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
             <thead>
                 <tr>
@@ -82,12 +83,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="date_process" class="col-sm-4 control-label">Date process</label>
                             <div class="col-sm-8">
                                 <input id="date_process" name="date_process" type="date" class="form-control" placeholder="Date process" value="<?php echo date("Y-m-d"); ?>">
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label for="ammonia" class="col-sm-4 control-label">Ammonia (NH3-N) mg/L</label>
@@ -265,7 +266,30 @@
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->        
+    </div><!-- /.modal -->   
+    
+    <!-- MODAL CONFIRMATION DELETE -->
+    <div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dd4b39; color: white;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-trash"></i> Water Module - Water Chemistry | Delete <span id="my-another-cool-loader"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="confirmation-content">
+                        <div class="modal-body">
+                            <p class="text-center" style="font-size: 15px;">Are you sure you want to delete sample <span id="id" style="font-weight: bold;"></span> ?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
+                    <button type="button" id="confirm-save" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 </div>
 
@@ -276,6 +300,40 @@
 
 var table
 $(document).ready(function() {
+
+    function showConfirmation(url) {
+            deleteUrl = url; // Set the URL to the variable
+            $('#confirm-modal').modal('show');
+        }
+
+        // Handle the delete button click
+        $(document).on('click', '.btn_delete', function() {
+            let id = $(this).data('id');
+            let url = '<?php echo site_url('Wat_water_chemistry/delete'); ?>/' + id;
+            $('#confirm-modal #id').text(id);
+            console.log(id);
+            showConfirmation(url);
+        });
+
+        // When the confirm-save button is clicked
+        $('#confirm-save').click(function() {
+            $.ajax({
+                url: deleteUrl,
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                complete: function() {
+                    $('#confirm-modal').modal('hide');
+                    location.reload();
+                }
+            });
+        });
 
     function toNumber(anum) {
         anum = anum || 0;
@@ -477,7 +535,7 @@ $(document).ready(function() {
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> O3 - Update Feces KK 1<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Update Water Chemistry<span id="my-another-cool-loader"></span>');
             $('#barcode_sample').attr('readonly', true);
             $('#barcode_sample').val(data.barcode_sample);
             $('#date_process').val(data.date_process);

@@ -131,7 +131,7 @@ class REP_o2b_model extends CI_Model
         l.cryobox2 AS mac2_cryobox2,
         l.comments AS mac2_comments    
         FROM obj2b_receipt a
-        LEFT JOIN obj2b_chemistry b ON a.barcode_sample=b.barcode_sample
+        LEFT JOIN obj2b_chemistry b ON a.barcode_sample=b.barcode_sample AND b.flag = 0 AND b.lab = "'.$this->session->userdata('lab').'" 
         LEFT JOIN obj2b_endetec1 c ON a.barcode_sample=c.barcode_sample
         LEFT JOIN obj2b_endetec2 d ON c.barcode_endetec=d.barcode_endetec
         LEFT JOIN obj2b_idexx1 e ON a.barcode_sample=e.barcode_sample
@@ -315,7 +315,7 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_subbs_idexx x ON g.barcode_bootsock=x.barcode_sample
         LEFT JOIN obj2b_endetec3 i ON w.barcode_endetec=i.barcode_endetec
         LEFT JOIN obj2b_idexx2 k ON x.barcode_colilert=k.barcode_colilert
-        LEFT JOIN obj2b_metagenomics l ON l.barcode_sample=g.barcode_sample AND g.elution_no="Micro1"
+        LEFT JOIN obj2b_metagenomics l ON (l.barcode_sample=g.barcode_falcon OR l.barcode_sample=g.barcode_sample) AND g.elution_no="Micro1"
         LEFT JOIN obj2b_mac1 p ON p.barcode_sample=g.barcode_falcon AND g.elution_no="Micro1"
         LEFT JOIN obj2b_mac2 q ON q.bar_macconkey=p.bar_macconkey
         LEFT JOIN ref_sampletype m ON a.id_type2b=m.id_sampletype

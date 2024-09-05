@@ -36,6 +36,8 @@ class O2b_other_lab extends CI_Controller
         $mode = $this->input->post('mode',TRUE);
         $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
+        $cdate = $dt->format('Y-m-d');
+        $ctime = $dt->format('H:i:s');
 
         if ($mode=="insert"){
             $data = array(
@@ -58,6 +60,29 @@ class O2b_other_lab extends CI_Controller
             );
  
             $this->O2b_other_lab_model->insert($data);
+
+            $id_type2bwat = $this->input->post('id_type2bwat', TRUE);
+
+            if ($id_type2bwat !== null) {
+                if (strpos($id_type2bwat, '15') !== false || 
+                    strpos($id_type2bwat, '16') !== false || 
+                    strpos($id_type2bwat, '17') !== false) {            
+                    $data = array(
+                        'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
+                        'date_arrival' => $cdate,
+                        'time_arrival' => $ctime,
+                        'id_type2b' => '6',
+                        'png_control' => 'Yes',
+                        'comments' => 'WATER CONTROL',
+                        'uuid' => $this->uuid->v4(),
+                        'lab' => $this->session->userdata('lab'),
+                        'user_created' => $this->session->userdata('id_users'),
+                        'date_created' => $dt->format('Y-m-d H:i:s'),
+                        );
+                                    
+                    $this->O2b_other_lab_model->insert_reception($data);    
+                }
+            }
             $this->session->set_flashdata('message', 'Create Record Success');    
         }
         else if ($mode=="edit"){
@@ -124,6 +149,18 @@ class O2b_other_lab extends CI_Controller
         $id = $this->input->get('id1');
         // echo $id;
         $data = $this->O2b_other_lab_model->validate1($id);
+
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        // return $this->response->setJSON($data);
+        // $data['location'] = $this->O3_filter_paper_model->find_loc($id);
+    }
+
+    public function valid_nitro() 
+    {
+        $id = $this->input->get('id1');
+        // echo $id;
+        $data = $this->O2b_other_lab_model->validate_nitro($id);
 
         header('Content-Type: application/json');
         echo json_encode($data);

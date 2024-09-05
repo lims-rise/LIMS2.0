@@ -12,6 +12,26 @@ class Welcome extends CI_Controller {
 
 
     public function index() {
+
+        // $tables_to_compare = array(
+        //     array('main_table' => 'obj3_sam_rec', 'lab_table' => 'obj3_sam_rec', 'column' => 'barcode_sample'),
+        //     // array('main_table' => 'obj3_sst_aliquots', 'lab_table' => 'obj3_sst_aliquots', 'column' => 'barcode_sample'),
+        //     // Add more tables and columns as needed
+        // );
+
+        // foreach ($tables_to_compare as $tables) {
+        //     $main_table = $tables['main_table'];
+        //     $lab_table = $tables['lab_table'];
+        //     $column = $tables['column'];
+
+        //     // Get deleted records from the client/lab database
+        //     $deleted_records = $this->Welcome_model->get_deleted_records($main_table, $lab_table, $column);
+        //     // Delete these records from the main database
+        //     //$this->Welcome_model->delete_records($main_table, $deleted_records, $column);
+        // }
+
+        // echo "Comparison and cleanup completed.";
+
         // $row = "";
         //$this->load->view('table');
         $row = $this->Welcome_model->get_by_id();

@@ -17,11 +17,6 @@ class O3_blood_centrifuge_model extends CI_Model
 
     // datatables
     function json() {
-        // $this->datatables->select('id, date_process, initial, centrifuge_time, comments, id_person, lab');
-        // $this->datatables->from('v_obj3bcentrifuge');
-        // $this->datatables->where('lab', $this->session->userdata('lab'));
-        // $this->datatables->where('flag', '0');
-
         $this->datatables->select('obj3_blood_centrifuge.id, obj3_blood_centrifuge.date_process, ref_person.initial, 
         obj3_blood_centrifuge.centrifuge_time, obj3_blood_centrifuge.comments, obj3_blood_centrifuge.id_person, 
         obj3_blood_centrifuge.lab, obj3_blood_centrifuge.flag');
@@ -50,6 +45,7 @@ class O3_blood_centrifuge_model extends CI_Model
     function subjson($id) {
         $this->datatables->select('barcode_sample, comments, id_bc');
         $this->datatables->from('obj3_blood_centrifuge_det');
+        $this->datatables->where('obj3_blood_centrifuge_det.lab', $this->session->userdata('lab'));
         $this->datatables->where('id_bc', $id);
         $this->datatables->where('flag', '0');
 
@@ -81,7 +77,7 @@ class O3_blood_centrifuge_model extends CI_Model
         a.id_person, a.lab, a.flag
         from obj3_blood_centrifuge a
         left join ref_person b on a.id_person=b.id_person
-        left join obj3_blood_centrifuge_det c on a.id=c.id_bc 
+        left join obj3_blood_centrifuge_det c on a.id=c.id_bc AND c.flag = 0 AND c.lab = "'.$this->session->userdata('lab').'" 
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0
         ORDER BY a.id

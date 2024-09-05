@@ -114,7 +114,7 @@ class DNA_extraction_model extends CI_Model
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                ".anchor(site_url('dna_extraction/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'a.barcode_sample');
+                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'barcode_sample');
         }
         return $this->datatables->generate();
     }
@@ -444,9 +444,10 @@ class DNA_extraction_model extends CI_Model
             WHERE barcode = "'. $id .'"
             AND vessel IN (SELECT barcode_sample FROM freezer_in)
             UNION ALL
-            SELECT barcode_vessel AS barcode, sample_type AS `type`  FROM dna_control
+            SELECT a.barcode_vessel AS barcode, b.sample AS `type` FROM dna_control a
+            LEFT JOIN ref_sampledna b ON a.id_sample=b.id_sample
             WHERE barcode_vessel = "'. $id .'"
-            AND flag = 0
+            AND a.flag = 0
             UNION ALL
             SELECT barcode_sample AS barcode, CONCAT("O2B ", b.sampletype) AS `type`
             FROM obj2b_receipt a

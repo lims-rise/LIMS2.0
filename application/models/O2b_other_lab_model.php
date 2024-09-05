@@ -113,6 +113,11 @@ class O2b_other_lab_model extends CI_Model
     {
         $this->db->insert($this->table, $data);
     }
+
+    function insert_reception($data)
+    {
+        $this->db->insert('obj2b_receipt', $data);
+    }
     
     // update data
     function update($id, $data)
@@ -171,6 +176,20 @@ class O2b_other_lab_model extends CI_Model
 
       function validate1($id){
         $this->db->where('barcode_sample', $id);
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        $q = $this->db->get($this->table);
+        $response = $q->result_array();
+        return $response;
+        // return $this->db->get('ref_location_80')->row();
+      }
+
+      function validate_nitro($id){
+        $this->db->where('barcode_nitro', $id);
+        $this->db->or_where('barcode_nitro2', $id);
+        $this->db->or_where('barcode_microbiology', $id);
+        $this->db->or_where('barcode_microbiology2', $id);
+        $this->db->or_where('barcode_rise_lab', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
         $q = $this->db->get($this->table);

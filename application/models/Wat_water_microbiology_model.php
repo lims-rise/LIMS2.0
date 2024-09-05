@@ -28,36 +28,20 @@ class Wat_water_microbiology_model extends CI_Model
         a.volume_ecoli, a.comments, c.id_type2bwat, a.lab, a.flag');
         $this->datatables->from('obj2b_wat_microby a');
         if ($this->session->userdata('lab') == 1) {
-            $this->datatables->join('(SELECT barcode_nitro AS barcode, "BTKL Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-            where LENGTH(barcode_nitro) > 0
-            UNION ALL
-            SELECT barcode_nitro2 AS barcode, "BBLK Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-            where LENGTH(barcode_nitro2) > 0
-            UNION ALL
+            $this->datatables->join('(
             SELECT barcode_microbiology AS barcode, "BTKL Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
             where LENGTH(barcode_microbiology) > 0
             UNION ALL
             SELECT barcode_microbiology2 AS barcode, "BBLK Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-            where LENGTH(barcode_microbiology2) > 0
-            UNION ALL
-            SELECT barcode_rise_lab AS barcode, "RISE Lab" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-            where LENGTH(barcode_rise_lab) > 0 ) c', 'a.barcode_sample = c.barcode', 'left');
+            where LENGTH(barcode_microbiology2) > 0) c', 'a.barcode_sample = c.barcode', 'left');
         }
         else {
-            $this->datatables->join('(SELECT barcode_nitro AS barcode, "WAF Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-            where LENGTH(barcode_nitro) > 0
-            UNION ALL
-            SELECT barcode_nitro2 AS barcode, "Other Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-            where LENGTH(barcode_nitro2) > 0
-            UNION ALL
+            $this->datatables->join('(
             SELECT barcode_microbiology AS barcode, "WAF Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
             where LENGTH(barcode_microbiology) > 0
             UNION ALL
             SELECT barcode_microbiology2 AS barcode, "Other Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-            where LENGTH(barcode_microbiology2) > 0
-            UNION ALL
-            SELECT barcode_rise_lab AS barcode, "RISE Lab" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-            where LENGTH(barcode_rise_lab) > 0 ) c', 'a.barcode_sample = c.barcode', 'left');
+            where LENGTH(barcode_microbiology2) > 0) c', 'a.barcode_sample = c.barcode', 'left');
         }
         $this->datatables->join('ref_sampletype b', 'c.id_type2bwat = b.id_sampletype', 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
@@ -72,7 +56,7 @@ class Wat_water_microbiology_model extends CI_Model
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                ".anchor(site_url('wat_water_microbiology/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'barcode_sample');
+            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'barcode_sample');
         }
         return $this->datatables->generate();
     }
@@ -87,20 +71,11 @@ class Wat_water_microbiology_model extends CI_Model
             b.sampletype, a.total_coliforms, a.volume_ecoli, a.comments, c.id_type2bwat,
             a.lab, a.flag
             FROM obj2b_wat_microby a
-            LEFT JOIN (SELECT barcode_nitro AS barcode, "BTKL Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-                where LENGTH(barcode_nitro) > 0
-                UNION ALL
-                SELECT barcode_nitro2 AS barcode, "BBLK Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-                where LENGTH(barcode_nitro2) > 0
-                UNION ALL
-                SELECT barcode_microbiology AS barcode, "BTKL Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            LEFT JOIN (SELECT barcode_microbiology AS barcode, "BTKL Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
                 where LENGTH(barcode_microbiology) > 0
                 UNION ALL
                 SELECT barcode_microbiology2 AS barcode, "BBLK Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-                where LENGTH(barcode_microbiology2) > 0
-                UNION ALL
-                SELECT barcode_rise_lab AS barcode, "RISE Lab" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-                where LENGTH(barcode_rise_lab) > 0) c ON a.barcode_sample = c.barcode
+                where LENGTH(barcode_microbiology2) > 0) c ON a.barcode_sample = c.barcode
             LEFT JOIN ref_sampletype b ON c.id_type2bwat=b.id_sampletype 
             WHERE a.lab = "'.$this->session->userdata('lab').'" 
             AND a.flag = 0
@@ -115,20 +90,11 @@ class Wat_water_microbiology_model extends CI_Model
             b.sampletype, a.total_coliforms, a.volume_ecoli, a.comments, c.id_type2bwat,
             a.lab, a.flag
             FROM obj2b_wat_microby a
-            LEFT JOIN (SELECT barcode_nitro AS barcode, "WAF Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-                where LENGTH(barcode_nitro) > 0
-                UNION ALL
-                SELECT barcode_nitro2 AS barcode, "Other Chemistry" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-                where LENGTH(barcode_nitro2) > 0
-                UNION ALL
-                SELECT barcode_microbiology AS barcode, "WAF Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
+            LEFT JOIN (SELECT barcode_microbiology AS barcode, "WAF Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
                 where LENGTH(barcode_microbiology) > 0
                 UNION ALL
                 SELECT barcode_microbiology2 AS barcode, "Other Micro" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-                where LENGTH(barcode_microbiology2) > 0
-                UNION ALL
-                SELECT barcode_rise_lab AS barcode, "RISE Lab" AS lab, barcode_sample, id_type2bwat FROM obj2b_chemistry
-                where LENGTH(barcode_rise_lab) > 0) c ON a.barcode_sample = c.barcode
+                where LENGTH(barcode_microbiology2) > 0) c ON a.barcode_sample = c.barcode
             LEFT JOIN ref_sampletype b ON c.id_type2bwat=b.id_sampletype 
             WHERE a.lab = "'.$this->session->userdata('lab').'" 
             AND a.flag = 0

@@ -199,6 +199,28 @@ class O2b_sample_prep_model extends CI_Model
         // return $this->db->get('ref_location_80')->row();
       }
 
+      function valid_coli($id){
+        $this->db->where('barcode_colilert', $id);
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $q = $this->db->get('obj2b_bs_stomacher');
+        $q = $this->db->get('obj2b_subsd_idexx');
+        $response = $q->result_array();
+        return $response;
+        // return $this->db->get('ref_location_80')->row();
+      }
+
+      function valid_ende($id){
+        $this->db->where('barcode_endetec', $id);
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $q = $this->db->get('obj2b_bs_stomacher');
+        $q = $this->db->get('obj2b_subsd_endetec');
+        $response = $q->result_array();
+        return $response;
+        // return $this->db->get('ref_location_80')->row();
+      }
+
     //   function validate2($id){
     //     $this->db->where('A1', $id);
     //     // $this->db->where('lab', $this->session->userdata('lab'));
