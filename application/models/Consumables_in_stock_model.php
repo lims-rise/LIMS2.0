@@ -45,7 +45,7 @@
             else {
                 // $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-primary btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_sample');
                 $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                    ".anchor(site_url('consumables_in_stock/deleteConsumablesInStock/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id_instock');
+                    ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_instock');
             }
             return $this->datatables->generate();
         }
@@ -99,6 +99,17 @@
             $q = $this->db->get('consumables_stock');
             return $q->row_array();
         }
+
+        function getStockByObjective($id_objective)
+        {
+            $this->db->select('consumables_stock.id_stock, consumables_stock.product_name');
+            $this->db->join('ref_consumables', 'ref_consumables.id_stock = consumables_stock.id_stock');
+            $this->db->where('ref_consumables.id_objective', $id_objective);
+            $q = $this->db->get('consumables_stock');
+            return $q->result_array();
+        }
+        
+
 
         function getObjective()
         {

@@ -86,7 +86,7 @@ class Consumables_stock_used extends CI_Controller
                 'unit' => $this->input->post('unit',TRUE),
                 'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
                 'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
-                'used' => $this->input->post('used',TRUE),
+                // 'used' => $this->input->post('used',TRUE),
                 // 'n_campaigns' => $this->input->post('n_campaigns',TRUE),
                 'item_description' => $this->input->post('item_description', TRUE),
                 'comments' => $this->input->post('comments', TRUE),
@@ -112,7 +112,7 @@ class Consumables_stock_used extends CI_Controller
                 'unit' => $this->input->post('unit',TRUE),
                 'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
                 'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
-                'used' => $this->input->post('used',TRUE),
+                // 'used' => $this->input->post('used',TRUE),
                 // 'n_campaigns' => $this->input->post('n_campaigns',TRUE),
                 'item_description' => $this->input->post('item_description', TRUE),
                 'comments' => $this->input->post('comments', TRUE),
@@ -131,7 +131,7 @@ class Consumables_stock_used extends CI_Controller
             $this->Consumables_stock_used_model->updateConsumablesStockUsed($id, $data);
             $this->session->set_flashdata('message', 'Update Record Success'); 
         }
-        redirect(site_url("Consumables_stock_used"));
+        redirect(site_url("consumables_stock_used"));
     }
 
     /**
@@ -147,10 +147,10 @@ class Consumables_stock_used extends CI_Controller
         if ($row) {
             $this->Consumables_stock_used_model->destroyConsumablesSTockUsed($id);
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('Consumables_stock_used'));
+            redirect(site_url('consumables_stock_used'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('Consumables_stock_used'));
+            redirect(site_url('consumables_stock_used'));
         }
     }
 

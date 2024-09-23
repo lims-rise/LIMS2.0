@@ -71,7 +71,7 @@
 
         function getStockById($idStock)
         {
-            $this->db->select('unit, unit_of_measure');
+            $this->db->select('unit, unit_of_measure, quantity_per_unit');
             $this->db->where('id_stock', $idStock);
             $q = $this->db->get('consumables_stock');
             return $q->row_array();
@@ -112,16 +112,34 @@
 
         function jsonGetOrder()
         {
-            $this->datatables->select('consumables_order.id_order,  consumables_order.id_stock, consumables_stock.product_name,
-            consumables_order.quantity_ordering, consumables_order.unit_ordering, consumables_order.quantity_per_unit,
-            consumables_order.total_quantity_ordered, consumables_order.unit_of_measure, consumables_order.vendor,
-            consumables_order.indonesia_comments, consumables_order.melbourne_comments, consumables_order.order_decision,
-            consumables_order.date_collected, consumables_order.time_collected
-            ');
+            $this->datatables->select('consumables_order.id_order, 
+                consumables_order.id_stock, 
+                consumables_stock.product_name,
+                consumables_order.quantity_ordering, 
+                consumables_order.unit_ordering, 
+                consumables_order.quantity_per_unit,
+                consumables_order.total_quantity_ordered, 
+                consumables_order.unit_of_measure, 
+                consumables_order.vendor,
+                consumables_order.date_ordered, 
+                consumables_order.time_ordered,
+                COALESCE(SUM(consumables_order_detail.amount_received), 0) AS received,
+                (consumables_order.quantity_ordering - COALESCE(SUM(consumables_order_detail.amount_received), 0)) AS remaining_quantity,
+                IF(COALESCE(SUM(consumables_order_detail.amount_received), 0) = consumables_order.quantity_ordering, "Completed", "Uncompleted") AS status');
             $this->datatables->from('consumables_order');
-            // $this->datatables->join('consumables_in_stock', 'consumables_new_order.product_id = consumables_in_stock.id_instock', 'left');
             $this->datatables->join('consumables_stock', 'consumables_order.id_stock = consumables_stock.id_stock', 'left');
-            $this->datatables->where('consumables_order.flag', '0');
+            $this->datatables->join('consumables_order_detail', 'consumables_order.id_order = consumables_order_detail.id_order', 'left');
+            $this->datatables->group_by('consumables_order.id_order');
+
+            // Add column with styling
+            $this->datatables->add_column('received', '<div class="container"><button type="button" class="btn-transparent-green">$1</button></div>', 'received');
+            $this->datatables->add_column('remaining_quantity', '<div class="container"><button type="button" class="btn-transparent-red">$1</button></div>', 'remaining_quantity');
+
+              // Add column with status styling
+              $this->datatables->add_column('status', '
+              <div class="container">
+                  <button type="button" class="btn-status-$1">$1</button>
+              </div>', 'status');
 
             $lvl = $this->session->userdata('id_user_level');
             if ($lvl == 7){
@@ -136,9 +154,9 @@
             //         ".anchor(site_url('consumables_new_order/deleteConsumablesNewOrder/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id_neworder');
             // }
             else {
-                $this->datatables->add_column('action', anchor(site_url('consumables_order_detail/readConsumablesOrderDetail/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+                $this->datatables->add_column('action', anchor(site_url('consumables_order_detail/readConsumablesOrderDetail/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
                     ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                    ".anchor(site_url('consumables_new_order/deleteConsumablesOrder/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'id_order');
+                    ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_order');
 
                     // $this->datatables->add_column('action','<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
                     // ".anchor(site_url('consumables_new_order/deleteConsumablesNewOrder/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'id_order');

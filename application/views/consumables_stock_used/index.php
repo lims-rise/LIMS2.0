@@ -16,7 +16,7 @@
                                 ?>
                                 <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
                                 <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
-                                <?php //echo anchor(site_url('o3_sample_reception/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?>
+                                <?php echo anchor(site_url('controller/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?>
                             </div>
                             <div class="table-responsive">
                             <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -28,11 +28,11 @@
                                         <th>Unit</th>
                                         <th>Quantity Per Unit</th>
                                         <th>Unit of Measure</th>
-                                        <th>Used</th>
+                                        <!-- <th>Used</th> -->
                                         <th>Minimum Stock</th>
                                         <th>Item Description</th>
-                                        <th>Comments</th>
                                         <th>Date Collected</th>
+                                        <th>Comments</th>
                                         <!-- <th>Time Collected </th> -->
                                         <th>Action</th>
                                     </tr>
@@ -44,6 +44,7 @@
             </div>
         </div>
     </section>
+
     <style>
         .table tbody tr.selected {
             color: white !important;
@@ -148,13 +149,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="used" class="col-sm-4 control-label">Used</label>
                             <div class="col-sm-8">
                                 <input id="used" name="used" type="number" class="form-control" placeholder="Used" required>
                                 <div class="val1tip"></div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- <div class="form-group">
                             <label for="n_campaigns" class="col-sm-4 control-label">N Campaigns</label>
@@ -314,6 +315,30 @@
         </div><!-- /.modal-dialog -->
     </div>
     <!-- END MODAL -->
+
+    <!-- MODAL CONFIRMATION DELETE -->
+    <div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dd4b39; color: white;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-trash"></i>  In Stock | Delete <span id="my-another-cool-loader"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="confirmation-content">
+                        <div class="modal-body">
+                            <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
+                    <button type="button" id="confirm-save" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 </div>
 
 
@@ -347,6 +372,41 @@
         //         $('#unit_of_measure').val('');
         //     }
         // });
+
+        function showConfirmation(url) {
+            deleteUrl = url; // Set the URL to the variable
+            $('#confirm-modal').modal('show');
+        }
+
+        // Handle the delete button click
+        $(document).on('click', '.btn_delete', function() {
+            let id = $(this).data('id');
+            let url = '<?php echo site_url('consumables_stock_used/deleteConsumablesStockUsed'); ?>/' + id;
+            $('#confirm-modal #id').text(id);
+            console.log(id);
+            showConfirmation(url);
+        });
+
+        // When the confirm-save button is clicked
+        $('#confirm-save').click(function() {
+            $.ajax({
+                url: deleteUrl,
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                complete: function() {
+                    $('#confirm-modal').modal('hide');
+                    location.reload();
+                }
+            });
+        });
+
         
         $('.clockpicker').clockpicker({
         placement: 'bottom', // clock popover placement
@@ -374,6 +434,11 @@
             $('.val1tip').tooltipster('hide');   
             // $('#barcode_sample').val('');     
         });
+
+        $("#compose-modal").on('shown.bs.modal', function(){
+            $('#product_name').focus(); 
+        });
+
 
         var base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -404,12 +469,12 @@
                 {"data": "unit"},
                 {"data": "quantity_per_unit"},
                 {"data": "unit_of_measure"},
-                {"data": "used"},
+                // {"data": "used"},
                 // {"data": "n_campaigns"},
                 {"data": "minimum_stock"},
                 {"data": "item_description"},
-                {"data": "comments"},
                 {"data": "date_collected"},
+                {"data": "comments"},
 				// {"data": "time_collected"},
                 {
                     "data": "action",
@@ -417,7 +482,7 @@
                     "className": "text-center"
                 }
             ],
-            order: [[1, 'desc']],
+            order: [[0, 'desc']],
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
@@ -440,7 +505,7 @@
             $('#unit').val('');
             $('#quantity_per_unit').val('');
             $('#unit_of_measure').val('');
-            $('#used').val('');
+            // $('#used').val('');
             // $('#n_campaigns').val('');
             $('#item_description').val('');
             $('#comments').val('');
@@ -469,7 +534,7 @@
             $('#unit').val(data.unit);
             $('#quantity_per_unit').val(data.quantity_per_unit);
             $('#unit_of_measure').val(data.unit_of_measure);
-            $('#used').val(data.used);
+            // $('#used').val(data.used);
             // $('#unit_of_measure').attr('readonly', true);
             // $('#n_campaigns').val(data.n_campaigns);
             $('#item_description').val(data.item_description);

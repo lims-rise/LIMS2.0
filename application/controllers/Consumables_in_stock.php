@@ -39,6 +39,14 @@ class Consumables_in_stock extends CI_Controller {
         echo json_encode($stock);
     }
 
+    public function getStockByObjective()
+    {
+        $id_objective = $this->input->post('id_objective');
+        $data = $this->Consumables_in_stock_model->getStockByObjective($id_objective);
+        echo json_encode($data);
+    }
+
+
 
     /**
      * Retrieves the JSON representation of the in stock consumables.
@@ -118,8 +126,8 @@ class Consumables_in_stock extends CI_Controller {
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
 
-            // var_dump($data);
-            // die();
+            var_dump($data);
+            die();
             $result = $this->Consumables_in_stock_model->updatetConsumablesInStock($id, $data);
             if ($result) {
                 $this->session->set_flashdata('message', 'Stock updated successfully.');
@@ -129,7 +137,7 @@ class Consumables_in_stock extends CI_Controller {
         }
          // Check stock levels and send notification after saving data
         $this->Consumables_in_stock_model->checkStockLevelsAndSendNotification();
-        redirect(site_url("Consumables_in_stock"));
+        redirect(site_url("consumables_in_stock"));
     }
 
     /**
@@ -144,10 +152,10 @@ class Consumables_in_stock extends CI_Controller {
         if ($row) {
             $this->Consumables_in_stock_model->destroyConsumablesInStock($id);
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('Consumables_in_stock'));
+            redirect(site_url('consumables_in_stock'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('Consumables_in_stock'));
+            redirect(site_url('consumables_in_stock'));
         }
     }
 

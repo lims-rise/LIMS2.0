@@ -60,15 +60,16 @@
                     // 'new_order_id' => $this->input->post('id_neworder2',TRUE),
                     'id_order' => $this->input->post('idx_order',TRUE),
                     // 'order_number' => $this->input->post('order_number',TRUE),
-                    'ordered' => $this->input->post('ordered',TRUE),
+                    // 'ordered' => $this->input->post('ordered',TRUE),
+                    'name_received' => $this->input->post('name_received',TRUE),
                     'received' => $this->input->post('received',TRUE),
                     'amount_received' => $this->input->post('amount_received', TRUE),
                     'unit_reference' => $this->input->post('unit_reference1',TRUE),
                     'date_received' => $this->input->post('date_received',TRUE),
+                    'time_received' => $this->input->post('time_received',TRUE),
                     'contact_supplier_progress' => $this->input->post('contact_supplier_progress',TRUE),
-                    'progress' => $this->input->post('progress1',TRUE),
-                    'date_collected' => $this->input->post('date_collected',TRUE),
-                    'time_collected' => $this->input->post('time_collected',TRUE),
+                    'comments' => $this->input->post('comments',TRUE),
+                    // 'progress' => $this->input->post('progress1',TRUE),
                     'flag' => '0',
                     'uuid' => $this->uuid->v4(),
                     'user_created' => $this->session->userdata('id_users'),
@@ -85,15 +86,18 @@
                     // 'new_order_id' => $this->input->post('id_neworder2',TRUE),
                     'id_order' => $this->input->post('idx_order',TRUE),
                     // 'order_number' => $this->input->post('order_number',TRUE),
-                    'ordered' => $this->input->post('ordered',TRUE),
+                    // 'ordered' => $this->input->post('ordered',TRUE),
+                    'name_received' => $this->input->post('name_received',TRUE),
                     'received' => $this->input->post('received',TRUE),
                     'amount_received' => $this->input->post('amount_received', TRUE),
                     'unit_reference' => $this->input->post('unit_reference1',TRUE),
                     'date_received' => $this->input->post('date_received',TRUE),
+                    'time_received' => $this->input->post('time_received',TRUE),
                     'contact_supplier_progress' => $this->input->post('contact_supplier_progress',TRUE),
-                    'progress' => $this->input->post('progress1',TRUE),
-                    'date_collected' => $this->input->post('date_collected',TRUE),
-                    'time_collected' => $this->input->post('time_collected',TRUE),
+                    'comments' => $this->input->post('comments',TRUE),
+                    // 'progress' => $this->input->post('progress1',TRUE),
+                    // 'date_collected' => $this->input->post('date_collected',TRUE),
+                    // 'time_collected' => $this->input->post('time_collected',TRUE),
                     'flag' => '0',
                     'uuid' => $this->uuid->v4(),
                     'user_created' => $this->session->userdata('id_users'),
@@ -105,7 +109,7 @@
                 $this->session->set_flashdata('message', 'Update Record Success');  
             }
 
-            redirect(site_url("Consumables_order_detail/readConsumablesOrderDetail/".$id_order));
+            redirect(site_url("consumables_order_detail/readConsumablesOrderDetail/".$id_order));
         }
 
     /**
@@ -142,10 +146,10 @@
                 // die();
                 $this->Consumables_order_detail_model->destroyConsumablesOrderDetail($id);
                 $this->session->set_flashdata('message', 'Delete Record Success');
-                redirect(site_url("Consumables_order_detail/readConsumablesOrderDetail/".$idParent));
+                redirect(site_url("consumables_order_detail/readConsumablesOrderDetail/".$idParent));
             } else {
                 $this->session->set_flashdata('message', 'Record Not Found');
-                redirect(site_url("Consumables_order_detail/readConsumablesOrderDetail/".$idParent));
+                redirect(site_url("consumables_order_detail/readConsumablesOrderDetail/".$idParent));
             }
         }
 
@@ -164,13 +168,12 @@
                     'quantity_per_unit' => $row->quantity_per_unit,
                     'total_quantity_ordered' => $row->total_quantity_ordered,
                     'unit_of_measure' => $row->unit_of_measure,
-                    'indonesia_comments' => $row->indonesia_comments,
-                    'melbourne_comments' => $row->melbourne_comments,
-                    'order_decision' => $row->order_decision,
+                    'date_ordered' => $row->date_ordered,
+                    'time_ordered' => $row->time_ordered,
                     );
                     // var_dump($data);S
                     // die();
-                    $this->template->load('template','Consumables_order_detail/index', $data);
+                    $this->template->load('template','consumables_order_detail/index', $data);
             }
             else {
                 // $this->template->load('template','Water_sample_reception/index_det');

@@ -53,10 +53,9 @@
      */
         function jsonGetOrderDetail($id2)
         {
-            $this->datatables->select('order_detail.id_orderdetail, order_detail.id_order, stock.product_name, 
-            order_detail.ordered, order_detail.received, order_detail.amount_received, 
-            order_detail.unit_reference, order_detail.date_received, order_detail.contact_supplier_progress, order_detail.progress, 
-            order_detail.date_collected, order_detail.time_collected');
+            $this->datatables->select('order_detail.id_orderdetail, order_detail.id_order, stock.product_name, order_detail.name_received,
+            order_detail.received, order_detail.amount_received, 
+            order_detail.unit_reference, order_detail.date_received, order_detail.time_received, order_detail.contact_supplier_progress, order_detail.comments');
             $this->datatables->from('consumables_order_detail as order_detail');
             $this->datatables->join('consumables_order as order', 'order_detail.id_order = order.id_order', 'left');
             // $this->datatables->join('consumables_in_stock', 'consumables_new_order.stock_id = consumables_in_stock.id_instock', 'left');
@@ -73,7 +72,7 @@
             } else {
                 // $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-primary btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_sample');
                 $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                    ".anchor(site_url('consumables_order_detail/deleteConsumablesOrderDetail/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id_orderdetail');
+                    ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_orderdetail');
             }
             
             return $this->datatables->generate();
@@ -109,34 +108,52 @@
             $this->db->insert('consumables_order_detail', $data);
             $id_orderDetail = $this->db->insert_id();
 
-            //update consumables quantity
-            $q = $this->db->get('consumables_order');
-            $data1 = $q->row_array();
-            $quantity_per_unit = $data1['quantity_per_unit'];
+            // $q = $this->db->get('consumables_order_detail');
+            // $data1 = $q->row_array();
+            // $quantity_per_unit = $data1['amount_received'];
 
-            $q1 = $this->db->get('consumables_in_stock');
-            $data2 = $q1->row_array();
-            $total_quantity = $data2['total_quantity'];
+            //update consumables quantity
+            // $q = $this->db->get('consumables_order');
+            // $data1 = $q->row_array();
+            // $quantity_per_unit = $data1['quantity_per_unit'];
+
+            // $q1 = $this->db->get('consumables_in_stock');
+            // $data2 = $q1->row_array();
+            // $total_quantity = $data2['total_quantity'];
             // var_dump($total_quantity);
             // die();
 
+            // $this->db->select('*');
+            // $this->db->from('consumables_order_detail');
+            // $this->db->join('consumables_order', 'consumables_order_detail.id_order = consumables_order.id_order', 'left');
+            // $this->db->where('consumables_order_detail.id_order', $data['id_order']);
+            // $this->db->where('consumables_order_detail.flag', '0');
+            // $q2 = $this->db->get();
+            // $data3 = $q2->result_array();
+            // $id_orderDetail = $data3[0]['id_stock'];
+            // var_dump($id_orderDetail);
+            // die();
             $this->db->select('*');
             $this->db->from('consumables_order_detail');
             $this->db->join('consumables_order', 'consumables_order_detail.id_order = consumables_order.id_order', 'left');
+            $this->db->join('consumables_stock', 'consumables_stock.id_stock = consumables_order.id_stock', 'left');
             $this->db->where('consumables_order_detail.id_order', $data['id_order']);
             $this->db->where('consumables_order_detail.flag', '0');
             $q2 = $this->db->get();
             $data3 = $q2->result_array();
-            $id_orderDetail = $data3[0]['id_stock'];
+            $id_stock = $data3[0]['id_stock'];
             // var_dump($id_orderDetail);
             // die();
-            $amount_received_subs = $data['amount_received'];
+
+            // $amount_received_subs = $data['amount_received'];
+            $amount_received = $data['amount_received'];
             // $test = ((int)$total_quantity + ((int)$amount_received_subs * (int)$quantity_per_unit));
-            // var_dump($test);
+            // var_dump($amount_received);
             // die();
-            $this->db->set('quantity', 'quantity + ' . ((int)$total_quantity + ((int)$amount_received_subs * (int)$quantity_per_unit)), FALSE);
-            $this->db->where('id_stock', $id_orderDetail);
-            $this->db->update('consumables');
+            // $this->db->set('quantity', 'quantity + ' . ((int)$total_quantity + ((int)$amount_received_subs * (int)$quantity_per_unit)), FALSE);
+            $this->db->set('quantity', 'quantity + ' . ((int)$amount_received), FALSE);
+            $this->db->where('id_stock', $id_stock);
+            $this->db->update('consumables_stock');
             $this->db->trans_complete();
 
             return $this->db->trans_status();
@@ -180,13 +197,22 @@
                 $this->db->update('consumables_order_detail', $data);
 
                 // Get additional details for updating consumables stock
-                $this->db->where('id_order', $data['id_order']);
-                $order = $this->db->get('consumables_order')->row_array();
-                $quantity_per_unit = $order['quantity_per_unit'];
+                // $this->db->where('id_order', $data['id_order']);
+                // $order = $this->db->get('consumables_order')->row_array();
+                // $quantity_per_unit = $order['quantity_per_unit'];
 
                 
                 // var_dump($total_quantity);
                 // die();
+
+                // $this->db->select('*');
+                // $this->db->from('consumables_order_detail');
+                // $this->db->join('consumables_order', 'consumables_order_detail.id_order = consumables_order.id_order', 'left');
+                // $this->db->where('consumables_order_detail.id_order', $data['id_order']);
+                // $this->db->where('consumables_order_detail.flag', '0');
+                // $q2 = $this->db->get();
+                // $data3 = $q2->result_array();
+                // $id_orderDetail = $data3[0]['id_stock'];
 
                 $this->db->select('*');
                 $this->db->from('consumables_order_detail');
@@ -195,15 +221,16 @@
                 $this->db->where('consumables_order_detail.flag', '0');
                 $q2 = $this->db->get();
                 $data3 = $q2->result_array();
-                $id_orderDetail = $data3[0]['id_stock'];
+                $id_stock = $data3[0]['id_stock'];
 
                 // $test = ((int)$amount_received_diff * (int)$quantity_per_unit);
                 // var_dump($test);
                 // die();
 
-                $this->db->set('quantity', 'quantity + ' . ((int)$amount_received_diff * (int)$quantity_per_unit), FALSE);
-                $this->db->where('id_stock', $id_orderDetail);
-                $this->db->update('consumables');
+                // $this->db->set('quantity', 'quantity + ' . ((int)$amount_received_diff * (int)$quantity_per_unit), FALSE);
+                $this->db->set('quantity', 'quantity + ' . ((int)$amount_received_diff), FALSE);
+                $this->db->where('id_stock', $id_stock);
+                $this->db->update('consumables_stock');
             }
 
             $this->db->trans_complete(); // Completing Transaction
@@ -250,19 +277,21 @@
             if ($order_detail) {
                 // Calculate quantity to be reduced
                 $amount_received = $order_detail->amount_received;
+                // var_dump($amount_received);
+                // die();
 
                 // Get associated order data
-                $this->db->where('id_order', $order_detail->id_order);
-                $order = $this->db->get('consumables_order')->row();
-                $quantity_per_unit = $order->quantity_per_unit;
+                // $this->db->where('id_order', $order_detail->id_order);
+                // $order = $this->db->get('consumables_order')->row();
+                // $quantity_per_unit = $order->quantity_per_unit;
 
-                $q1 = $this->db->get('consumables_in_stock');
-                $data2 = $q1->row_array();
-                $total_quantity = $data2['total_quantity'];
+                // $q1 = $this->db->get('consumables_in_stock');
+                // $data2 = $q1->row_array();
+                // $total_quantity = $data2['total_quantity'];
 
 
                 // Calculate quantity to be adjusted in consumables stock
-                $quantity_to_adjust = ($total_quantity + ($amount_received * $quantity_per_unit));
+                // $quantity_to_adjust = ($total_quantity + ($amount_received * $quantity_per_unit));
                 // var_dump($quantity_to_adjust);
                 // die();
 
@@ -282,9 +311,10 @@
                 $this->db->delete('consumables_order_detail');
 
                 // Update consumables quantity
-                $this->db->set('quantity', 'quantity - ' . (int)$quantity_to_adjust, FALSE);
+                // $this->db->set('quantity', 'quantity - ' . (int)$quantity_to_adjust, FALSE);
+                $this->db->set('quantity', 'quantity - ' . (int)$amount_received, FALSE);
                 $this->db->where('id_stock', $id_stock);
-                $this->db->update('consumables');
+                $this->db->update('consumables_stock');
             }
 
             $this->db->trans_complete(); // Complete transaction
@@ -300,8 +330,7 @@
             $this->db->select('order.id_order, order.id_stock, stock.product_name,
                 order.quantity_ordering, order.unit_ordering, order.quantity_per_unit,
                 order.total_quantity_ordered, order.unit_of_measure, order.vendor,
-                order.indonesia_comments, order.melbourne_comments, order.order_decision,
-                order.date_collected, order.time_collected
+                order.date_ordered, order.time_ordered
             ');
             $this->db->from('consumables_order as order');
             // $this->db->join('consumables_in_stock as instock', 'new_order.stock_id = instock.id_instock', 'left');

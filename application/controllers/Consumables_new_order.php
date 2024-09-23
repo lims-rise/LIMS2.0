@@ -81,11 +81,8 @@
                     'total_quantity_ordered' => $this->input->post('total_quantity_ordered', TRUE),
                     'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
                     'vendor' => $this->input->post('vendor',TRUE),
-                    'indonesia_comments' => $this->input->post('indonesia_comments',TRUE),
-                    'melbourne_comments' => $this->input->post('melbourne_comments',TRUE),
-                    'order_decision' => $this->input->post('order_decision',TRUE),
-                    'date_collected' => $this->input->post('date_collected',TRUE),
-                    'time_collected' => $this->input->post('time_collected',TRUE),
+                    'date_ordered' => $this->input->post('date_ordered',TRUE),
+                    'time_ordered' => $this->input->post('time_ordered',TRUE),
                     'flag' => '0',
                     'uuid' => $this->uuid->v4(),
                     'user_created' => $this->session->userdata('id_users'),
@@ -108,11 +105,8 @@
                     'total_quantity_ordered' => $this->input->post('total_quantity_ordered', TRUE),
                     'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
                     'vendor' => $this->input->post('vendor',TRUE),
-                    'indonesia_comments' => $this->input->post('indonesia_comments',TRUE),
-                    'melbourne_comments' => $this->input->post('melbourne_comments',TRUE),
-                    'order_decision' => $this->input->post('order_decision',TRUE),
-                    'date_collected' => $this->input->post('date_collected',TRUE),
-                    'time_collected' => $this->input->post('time_collected',TRUE),
+                    'date_ordered' => $this->input->post('date_ordered',TRUE),
+                    'time_ordered' => $this->input->post('time_ordered',TRUE),
                     'flag' => '0',
                     'uuid' => $this->uuid->v4(),
                     'user_created' => $this->session->userdata('id_users'),
@@ -122,7 +116,7 @@
                 $this->session->set_flashdata('message', 'Update Record Success');  
             }
 
-            redirect(site_url("Consumables_new_order"));
+            redirect(site_url("consumables_new_order"));
         }
 
 
@@ -139,10 +133,10 @@
             if ($row) {
                 $this->Consumables_new_order_model->destroyConsumablesOrder($id);
                 $this->session->set_flashdata('message', 'Delete Record Success');
-                redirect(site_url('Consumables_new_order'));
+                redirect(site_url('consumables_new_order'));
             } else {
                 $this->session->set_flashdata('message', 'Record Not Found');
-                redirect(site_url('Consumables_new_order'));
+                redirect(site_url('consumables_new_order'));
             }
         }
 
