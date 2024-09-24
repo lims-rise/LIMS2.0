@@ -1,6 +1,13 @@
 <?php
 
 if(!defined('BASEPATH')) exit('No direct script access allowed');
+require 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Reader\Csv;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Google\Client as google_client;
+use Google\Service\Drive as google_drive;
 
 class Consumables_stock_used extends CI_Controller
 {
@@ -122,8 +129,8 @@ class Consumables_stock_used extends CI_Controller
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
             // var_dump($data);
@@ -165,6 +172,83 @@ class Consumables_stock_used extends CI_Controller
     //     $this->Consumables_stock_used_model->checkStockLevelsAndSendNotification();
     //     echo 'Stock check completed';
     // }
+
+    public function excel() {
+        $spreadsheet = new Spreadsheet();    
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', "Product Name"); 
+        $sheet->setCellValue('B1', "Quantity"); 
+        $sheet->setCellValue('C1', "Unit");
+        $sheet->setCellValue('D1', "Quantity Per Unit");
+        $sheet->setCellValue('E1', "Unit of Measure");
+        $sheet->setCellValue('F1', "Item Description");
+        $sheet->setCellValue('G1', "Comments");
+        $sheet->setCellValue('H1', "Date Collected");
+
+        $in_stock = $this->Consumables_stock_used_model->get_all();
+    
+        $numrow = 2;
+        foreach($in_stock as $data){ 
+            if (property_exists($data, 'product_name')) {
+                $sheet->setCellValue('A'.$numrow, $data->product_name);
+            } else {
+                $sheet->setCellValue('A'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'quantity')) {
+                $sheet->setCellValue('B'.$numrow, $data->quantity);
+            } else {
+                $sheet->setCellValue('B'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'unit')) {
+                $sheet->setCellValue('C'.$numrow, $data->unit);
+            } else {
+                $sheet->setCellValue('C'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'quantity_per_unit')) {
+                $sheet->setCellValue('D'.$numrow, $data->quantity_per_unit);
+            } else {
+                $sheet->setCellValue('D'.$numrow, '');
+            }
+
+            if (property_exists($data, 'unit_of_measure')) {
+                $sheet->setCellValue('F'.$numrow, $data->unit_of_measure);
+            } else {
+                $sheet->setCellValue('F'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'item_description')) {
+                $sheet->setCellValue('E'.$numrow, $data->item_description);
+            } else {
+                $sheet->setCellValue('E'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'comments')) {
+                $sheet->setCellValue('G'.$numrow, $data->comments);
+            } else {
+                $sheet->setCellValue('G'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'date_collected')) {
+                $sheet->setCellValue('H'.$numrow, $data->date_collected);
+            } else {
+                $sheet->setCellValue('H'.$numrow, '');
+            }
+    
+            $numrow++;
+        }
+
+        // Set header untuk file excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Report_In_stock.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        // Tampilkan file excel
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
 
 }
 

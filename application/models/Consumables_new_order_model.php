@@ -129,6 +129,8 @@
             $this->datatables->from('consumables_order');
             $this->datatables->join('consumables_stock', 'consumables_order.id_stock = consumables_stock.id_stock', 'left');
             $this->datatables->join('consumables_order_detail', 'consumables_order.id_order = consumables_order_detail.id_order', 'left');
+            $this->datatables->where('consumables_order.flag', '0');
+            $this->datatables->where('consumables_order.lab', $this->session->userdata('lab'));
             $this->datatables->group_by('consumables_order.id_order');
 
             // Add column with styling
@@ -310,5 +312,19 @@
         //     $response = $q->row();
         //     return $response;
         // }
+
+        function get_all() {
+            $this->db->select('co.id_order, co.id_stock, cs.product_name, co.quantity_ordering, co.unit_ordering, 
+                co.quantity_per_unit, co.total_quantity_ordered, co.unit_of_measure, co.vendor, co.date_ordered, 
+                co.time_ordered, COALESCE(SUM(cod.amount_received), 0) AS received, 
+                (co.quantity_ordering - COALESCE(SUM(cod.amount_received), 0)) AS remaining_quantity, 
+                IF(COALESCE(SUM(cod.amount_received), 0) = co.quantity_ordering, "Completed", "Uncompleted") AS status');
+            $this->db->from('consumables_order AS co');
+            $this->db->join('consumables_stock AS cs', 'co.id_stock = cs.id_stock', 'left');
+            $this->db->join('consumables_order_detail AS cod', 'co.id_order = cod.id_order', 'left');
+            $this->db->group_by('co.id_order');
+            $query = $this->db->get();
+            return $query->result();
+        }
     }
 ?>

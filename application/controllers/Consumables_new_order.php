@@ -1,5 +1,12 @@
 <?php
     if(!defined('BASEPATH')) exit('No direct script access allowed');
+    require 'vendor/autoload.php';
+    use PhpOffice\PhpSpreadsheet\IOFactory;
+    use PhpOffice\PhpSpreadsheet\Spreadsheet;
+    use PhpOffice\PhpSpreadsheet\Reader\Csv;
+    use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+    use Google\Client as google_client;
+    use Google\Service\Drive as google_drive;
 
     class Consumables_new_order extends CI_Controller 
     {
@@ -84,6 +91,7 @@
                     'date_ordered' => $this->input->post('date_ordered',TRUE),
                     'time_ordered' => $this->input->post('time_ordered',TRUE),
                     'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
                     'uuid' => $this->uuid->v4(),
                     'user_created' => $this->session->userdata('id_users'),
                     'date_created' => $dt->format('Y-m-d H:i:s'),
@@ -108,9 +116,10 @@
                     'date_ordered' => $this->input->post('date_ordered',TRUE),
                     'time_ordered' => $this->input->post('time_ordered',TRUE),
                     'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
                     'uuid' => $this->uuid->v4(),
-                    'user_created' => $this->session->userdata('id_users'),
-                    'date_created' => $dt->format('Y-m-d H:i:s'), 
+                    'user_updated' => $this->session->userdata('id_users'),
+                    'date_updated' => $dt->format('Y-m-d H:i:s'), 
                 );
                 $this->Consumables_new_order_model->updateConsumablesOrder($id, $data);
                 $this->session->set_flashdata('message', 'Update Record Success');  
@@ -166,6 +175,110 @@
         //         // $this->template->load('template','Water_sample_reception/index_det');
         //     }
         // }
+
+
+        public function excel() {
+            $spreadsheet = new Spreadsheet();    
+            $sheet = $spreadsheet->getActiveSheet();
+            $sheet->setCellValue('A1', "Product Name"); 
+            $sheet->setCellValue('B1', "Quantity Ordering"); 
+            $sheet->setCellValue('C1', "Unit Ordering");
+            $sheet->setCellValue('D1', "Quantity Per Unit");
+            $sheet->setCellValue('E1', "Total Quantity Ordered");
+            $sheet->setCellValue('F1', "Unit of Measure");
+            $sheet->setCellValue('G1', "Vendor");
+            $sheet->setCellValue('H1', "Date Ordered");
+            $sheet->setCellValue('I1', "Time Ordered");
+            $sheet->setCellValue('J1', "Remaining Quantity");
+            $sheet->setCellValue('K1', "Received Quantity");
+            $sheet->setCellValue('L1', "Status");
+    
+            $order = $this->Consumables_new_order_model->get_all();
+            $numrow = 2;
+            foreach($order as $data){ 
+                if (property_exists($data, 'product_name')) {
+                    $sheet->setCellValue('A'.$numrow, $data->product_name);
+                } else {
+                    $sheet->setCellValue('A'.$numrow, '');
+                }
+        
+                if (property_exists($data, 'quantity_ordering')) {
+                    $sheet->setCellValue('B'.$numrow, $data->quantity_ordering);
+                } else {
+                    $sheet->setCellValue('B'.$numrow, '');
+                }
+        
+                if (property_exists($data, 'unit_ordering')) {
+                    $sheet->setCellValue('C'.$numrow, $data->unit_ordering);
+                } else {
+                    $sheet->setCellValue('C'.$numrow, '');
+                }
+        
+                if (property_exists($data, 'quantity_per_unit')) {
+                    $sheet->setCellValue('D'.$numrow, $data->quantity_per_unit);
+                } else {
+                    $sheet->setCellValue('D'.$numrow, '');
+                }
+    
+                if (property_exists($data, 'total_quantity_ordered')) {
+                    $sheet->setCellValue('F'.$numrow, $data->total_quantity_ordered);
+                } else {
+                    $sheet->setCellValue('F'.$numrow, '');
+                }
+        
+                if (property_exists($data, 'unit_of_measure')) {
+                    $sheet->setCellValue('E'.$numrow, $data->unit_of_measure);
+                } else {
+                    $sheet->setCellValue('E'.$numrow, '');
+                }
+        
+                if (property_exists($data, 'vendor')) {
+                    $sheet->setCellValue('G'.$numrow, $data->vendor);
+                } else {
+                    $sheet->setCellValue('G'.$numrow, '');
+                }
+        
+                if (property_exists($data, 'date_ordered')) {
+                    $sheet->setCellValue('H'.$numrow, $data->date_ordered);
+                } else {
+                    $sheet->setCellValue('H'.$numrow, '');
+                }
+        
+                if (property_exists($data, 'time_ordered')) {
+                    $sheet->setCellValue('I'.$numrow, $data->time_ordered);
+                } else {
+                    $sheet->setCellValue('I'.$numrow, '');
+                }
+        
+                if (property_exists($data, 'remaining_quantity')) {
+                    $sheet->setCellValue('J'.$numrow, $data->remaining_quantity);
+                } else {
+                    $sheet->setCellValue('J'.$numrow, '');
+                }
+    
+                if (property_exists($data, 'received')) {
+                    $sheet->setCellValue('K'.$numrow, $data->received);
+                } else {
+                    $sheet->setCellValue('K'.$numrow, '');
+                }
+    
+                if (property_exists($data, 'status')) {
+                    $sheet->setCellValue('L'.$numrow, $data->status);
+                } else {
+                    $sheet->setCellValue('L'.$numrow, '');
+                }
+                $numrow++;
+            }
+    
+            // Set header untuk file excel
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="Report_Order.xlsx"');
+            header('Cache-Control: max-age=0');
+    
+            // Tampilkan file excel
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+        }
 
     }
 ?>

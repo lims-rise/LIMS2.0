@@ -2,6 +2,14 @@
 
 if (!defined('BASEPATH'))
 exit('No direct script access allowed');
+require 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Reader\Csv;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Google\Client as google_client;
+use Google\Service\Drive as google_drive;
+
 
 class Consumables_in_stock extends CI_Controller {
 
@@ -89,6 +97,7 @@ class Consumables_in_stock extends CI_Controller {
                 'date_collected' => $this->input->post('date_collected',TRUE),
                 'time_collected' => $this->input->post('time_collected',TRUE),
                 'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
@@ -121,9 +130,10 @@ class Consumables_in_stock extends CI_Controller {
                 'date_collected' => $this->input->post('date_collected',TRUE),
                 'time_collected' => $this->input->post('time_collected',TRUE),
                 'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
             var_dump($data);
@@ -157,6 +167,109 @@ class Consumables_in_stock extends CI_Controller {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('consumables_in_stock'));
         }
+    }
+
+    public function excel() {
+        $spreadsheet = new Spreadsheet();    
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', "Objective"); 
+        $sheet->setCellValue('B1', "Product Name"); 
+        $sheet->setCellValue('C1', "Close Container");
+        $sheet->setCellValue('D1', "Unit Measure Lab");
+        $sheet->setCellValue('E1', "Quantity Per Unit");
+        $sheet->setCellValue('F1', "Loose Items");
+        $sheet->setCellValue('G1', "Total Quantity");
+        $sheet->setCellValue('H1', "Unit of Measure");
+        $sheet->setCellValue('I1', "Expired Date");
+        $sheet->setCellValue('J1', "Comments");
+        $sheet->setCellValue('K1', "Date Collected");
+        $sheet->setCellValue('L1', "Time Collected");
+
+        $stock_take = $this->Consumables_in_stock_model->get_all();
+        $numrow = 2;
+        foreach($stock_take as $data){ 
+            if (property_exists($data, 'objective')) {
+                $sheet->setCellValue('A'.$numrow, $data->objective);
+            } else {
+                $sheet->setCellValue('A'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'product_name')) {
+                $sheet->setCellValue('B'.$numrow, $data->product_name);
+            } else {
+                $sheet->setCellValue('B'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'closed_container')) {
+                $sheet->setCellValue('C'.$numrow, $data->closed_container);
+            } else {
+                $sheet->setCellValue('C'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'unit_measure_lab')) {
+                $sheet->setCellValue('D'.$numrow, $data->unit_measure_lab);
+            } else {
+                $sheet->setCellValue('D'.$numrow, '');
+            }
+
+            if (property_exists($data, 'quantity_per_unit')) {
+                $sheet->setCellValue('F'.$numrow, $data->quantity_per_unit);
+            } else {
+                $sheet->setCellValue('F'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'loose_items')) {
+                $sheet->setCellValue('E'.$numrow, $data->loose_items);
+            } else {
+                $sheet->setCellValue('E'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'total_quantity')) {
+                $sheet->setCellValue('G'.$numrow, $data->total_quantity);
+            } else {
+                $sheet->setCellValue('G'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'unit_of_measure')) {
+                $sheet->setCellValue('H'.$numrow, $data->unit_of_measure);
+            } else {
+                $sheet->setCellValue('H'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'expired_date')) {
+                $sheet->setCellValue('I'.$numrow, $data->expired_date);
+            } else {
+                $sheet->setCellValue('I'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'comments')) {
+                $sheet->setCellValue('J'.$numrow, $data->comments);
+            } else {
+                $sheet->setCellValue('J'.$numrow, '');
+            }
+
+            if (property_exists($data, 'date_collected')) {
+                $sheet->setCellValue('K'.$numrow, $data->date_collected);
+            } else {
+                $sheet->setCellValue('K'.$numrow, '');
+            }
+
+            if (property_exists($data, 'time_collected')) {
+                $sheet->setCellValue('L'.$numrow, $data->time_collected);
+            } else {
+                $sheet->setCellValue('L'.$numrow, '');
+            }
+            $numrow++;
+        }
+
+        // Set header untuk file excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Report_Stock_take.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        // Tampilkan file excel
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
     }
 
 }

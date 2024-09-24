@@ -16,7 +16,7 @@
                                 ?>
                                 <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
                                 <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
-                                <?php echo anchor(site_url('controller/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?>
+                                <?php echo anchor(site_url('consumables_in_stock/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?>
                             </div>
                             <div class="table-responsive">
                             <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -472,7 +472,7 @@
     $(document).ready(function() {
 
         $('.stockSelect').chosen({
-            placeholder_text_single: "-- Select testing type --",
+            placeholder_text_single: "-- Select Product Name --",
             no_results_text: "No results matched"
         });
         $('.chosen-container').each(function() {

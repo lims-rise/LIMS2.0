@@ -161,5 +161,13 @@
         //     }
         //     log_message('debug', 'Finished checking stock levels.');
         // }
+
+        function get_all() {
+            $this->db->select('cs.product_name, cs.quantity, cs.unit, cs.quantity_per_unit, cs.unit_of_measure, cs.item_description, cs.comments, cs.date_collected');
+            $this->db->from('consumables_stock AS cs');
+            $this->db->where('cs.flag', '0');
+            $query = $this->db->get();
+            return $query->result();
+        }
     }
 ?>

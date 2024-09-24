@@ -33,6 +33,7 @@
             $this->datatables->join('consumables_stock', 'consumables_in_stock.id_stock = consumables_stock.id_stock', 'left');
             $this->datatables->join('ref_objective', 'consumables_in_stock.id_objective = ref_objective.id_objective', 'left');
             $this->datatables->where('consumables_in_stock.flag', '0');
+            $this->datatables->where('consumables_in_stock.lab', $this->session->userdata('lab'));
             $this->datatables->add_column('quantity_with_unit', '$1 $2', 'total_quantity,unit_of_measure');
 
             $lvl = $this->session->userdata('id_user_level');
@@ -321,6 +322,16 @@
             log_message('debug', 'Finished checking stock levels.');
         }
 
+        function get_all() {
+            $this->db->select('ro.objective, cs.product_name, cis.closed_container, cis.unit_measure_lab, cis.quantity_per_unit, 
+            cis.loose_items, cis.total_quantity, cis.unit_of_measure, cis.expired_date, cis.comments, cis.date_collected, cis.time_collected');
+            $this->db->from('consumables_in_stock AS cis');
+            $this->db->join('consumables_stock AS cs', 'cis.id_stock = cs.id_stock', 'left');
+            $this->db->join('ref_objective AS ro', 'cis.id_objective = ro.id_objective', 'left');
+            $this->db->where('cis.flag', '0');
+            $query = $this->db->get();
+            return $query->result();
+        }
         
     }
 
