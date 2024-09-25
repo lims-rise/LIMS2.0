@@ -67,22 +67,24 @@
                                             <input class="form-control" id="time_ordered" name="time_ordered" value="<?php echo $time_ordered ?>" disabled>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="status" class="col-sm-4 control-label">Status</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" id="status" name="time_ordered" value="<?php echo $status ?>" disabled>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </form>
                         <div class="box-body">
                             <div style="padding-bottom: 10px;">
-                                
                                 <?php
                                         $lvl = $this->session->userdata('id_user_level');
                                         if ($lvl != 7) {
-                                            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> Recieved </button>";
+                                            echo "<button class='btn btn-primary received' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> Recieved </button>";
                                         }
                                 ?>
-                                <?php //echo anchor(site_url('tbl_delivery/new'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Delivery', 'class="btn btn-danger btn-sm"'); ?>
-                                <?php //echo anchor(site_url('tbl_delivery/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Sample', 'class="btn btn-danger btn-sm"'); ?>
-                                <?php //echo anchor(site_url('o3_sample_reception/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?>
                             </div>
                             <div class="table-responsive">
                             <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -97,7 +99,7 @@
                                         <th>Status Received</th>
                                         <th>Unit Reference</th>
                                         <th>Date Received</th>
-                                        <th>Date Received</th>
+                                        <th>Time Received</th>
                                         <th>Contact Supplier</th>
                                         <th>Comments</th>
                                         <!-- <th>Progress</th> -->
@@ -325,6 +327,25 @@
     let rowNum = 1;
     let idName = $('#id_name').val();
     $(document).ready(function() {
+
+        // Function to update the button status
+        function updateButtonStatus() {
+                let status = $('#status').val(); 
+                console.log(status);
+                if (status === 'Uncompleted') {
+                    $('#addtombol').prop('disabled', false);
+                } if (status === 'Completed') {
+                    $('#addtombol').prop('disabled', true);
+                }
+            }
+
+            // Call the function initially
+            updateButtonStatus();
+
+            // Add the event listener to the change status
+            $('#status').change(function() {
+                updateButtonStatus();
+            });
 
         function showConfirmation(url) {
             deleteUrl = url; // Set the URL to the variable

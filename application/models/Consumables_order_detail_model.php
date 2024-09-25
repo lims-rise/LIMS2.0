@@ -323,22 +323,41 @@
         }
 
 
-        function get_detail($id)
-        {
-        $response = array();
+        // function get_detail($id)
+        // {
+        // $response = array();
 
-            $this->db->select('order.id_order, order.id_stock, stock.product_name,
-                order.quantity_ordering, order.unit_ordering, order.quantity_per_unit,
-                order.total_quantity_ordered, order.unit_of_measure, order.vendor,
-                order.date_ordered, order.time_ordered
-            ');
-            $this->db->from('consumables_order as order');
-            // $this->db->join('consumables_in_stock as instock', 'new_order.stock_id = instock.id_instock', 'left');
-            $this->db->join('consumables_stock as stock', 'order.id_stock = stock.id_stock', 'left');
-            $this->db->where('order.id_order', $id);
-            $this->db->where('order.flag', '0');
-            $q = $this->db->get();
-            $response = $q->row();
+        //     $this->db->select('order.id_order, order.id_stock, stock.product_name,
+        //         order.quantity_ordering, order.unit_ordering, order.quantity_per_unit,
+        //         order.total_quantity_ordered, order.unit_of_measure, order.vendor,
+        //         order.date_ordered, order.time_ordered
+        //     ');
+        //     $this->db->from('consumables_order as order');
+        //     // $this->db->join('consumables_in_stock as instock', 'new_order.stock_id = instock.id_instock', 'left');
+        //     $this->db->join('consumables_stock as stock', 'order.id_stock = stock.id_stock', 'left');
+        //     $this->db->where('order.id_order', $id);
+        //     $this->db->where('order.flag', '0');
+        //     $q = $this->db->get();
+        //     $response = $q->row();
+        //     return $response;
+        // }
+
+
+        function get_detail($id) {
+            $response = array();
+            $this->db->select('co.id_order, co.id_stock, cs.product_name, co.quantity_ordering, co.unit_ordering, 
+                co.quantity_per_unit, co.total_quantity_ordered, co.unit_of_measure, co.vendor, co.date_ordered, 
+                co.time_ordered, COALESCE(SUM(cod.amount_received), 0) AS received, 
+                (co.quantity_ordering - COALESCE(SUM(cod.amount_received), 0)) AS remaining_quantity, 
+                IF(COALESCE(SUM(cod.amount_received), 0) = co.quantity_ordering, "Completed", "Uncompleted") AS status');
+            $this->db->from('consumables_order AS co');
+            $this->db->join('consumables_stock AS cs', 'co.id_stock = cs.id_stock', 'left');
+            $this->db->join('consumables_order_detail AS cod', 'co.id_order = cod.id_order', 'left');
+            $this->db->where('co.id_order', $id);
+            $this->db->where('co.flag', '0');
+            $this->db->group_by('co.id_order');
+            $query = $this->db->get();
+            $response =  $query->row();
             return $response;
         }
     }

@@ -177,108 +177,195 @@
         // }
 
 
+        // public function excel() {
+        //     $spreadsheet = new Spreadsheet();    
+        //     $sheet = $spreadsheet->getActiveSheet();
+        //     $sheet->setCellValue('A1', "Product Name"); 
+        //     $sheet->setCellValue('B1', "Quantity Ordering"); 
+        //     $sheet->setCellValue('C1', "Unit Ordering");
+        //     $sheet->setCellValue('D1', "Quantity Per Unit");
+        //     $sheet->setCellValue('E1', "Total Quantity Ordered");
+        //     $sheet->setCellValue('F1', "Unit of Measure");
+        //     $sheet->setCellValue('G1', "Vendor");
+        //     $sheet->setCellValue('H1', "Date Ordered");
+        //     $sheet->setCellValue('I1', "Time Ordered");
+        //     $sheet->setCellValue('J1', "Remaining Quantity");
+        //     $sheet->setCellValue('K1', "Received Quantity");
+        //     $sheet->setCellValue('L1', "Status");
+        //     $sheet->setCellValue('M1', "Received By");
+    
+        //     $order = $this->Consumables_new_order_model->get_all();
+        //     $numrow = 2;
+        //     foreach($order as $data){ 
+        //         if (property_exists($data, 'product_name')) {
+        //             $sheet->setCellValue('A'.$numrow, $data->product_name);
+        //         } else {
+        //             $sheet->setCellValue('A'.$numrow, '');
+        //         }
+        
+        //         if (property_exists($data, 'quantity_ordering')) {
+        //             $sheet->setCellValue('B'.$numrow, $data->quantity_ordering);
+        //         } else {
+        //             $sheet->setCellValue('B'.$numrow, '');
+        //         }
+        
+        //         if (property_exists($data, 'unit_ordering')) {
+        //             $sheet->setCellValue('C'.$numrow, $data->unit_ordering);
+        //         } else {
+        //             $sheet->setCellValue('C'.$numrow, '');
+        //         }
+        
+        //         if (property_exists($data, 'quantity_per_unit')) {
+        //             $sheet->setCellValue('D'.$numrow, $data->quantity_per_unit);
+        //         } else {
+        //             $sheet->setCellValue('D'.$numrow, '');
+        //         }
+    
+        //         if (property_exists($data, 'total_quantity_ordered')) {
+        //             $sheet->setCellValue('F'.$numrow, $data->total_quantity_ordered);
+        //         } else {
+        //             $sheet->setCellValue('F'.$numrow, '');
+        //         }
+        
+        //         if (property_exists($data, 'unit_of_measure')) {
+        //             $sheet->setCellValue('E'.$numrow, $data->unit_of_measure);
+        //         } else {
+        //             $sheet->setCellValue('E'.$numrow, '');
+        //         }
+        
+        //         if (property_exists($data, 'vendor')) {
+        //             $sheet->setCellValue('G'.$numrow, $data->vendor);
+        //         } else {
+        //             $sheet->setCellValue('G'.$numrow, '');
+        //         }
+        
+        //         if (property_exists($data, 'date_ordered')) {
+        //             $sheet->setCellValue('H'.$numrow, $data->date_ordered);
+        //         } else {
+        //             $sheet->setCellValue('H'.$numrow, '');
+        //         }
+        
+        //         if (property_exists($data, 'time_ordered')) {
+        //             $sheet->setCellValue('I'.$numrow, $data->time_ordered);
+        //         } else {
+        //             $sheet->setCellValue('I'.$numrow, '');
+        //         }
+        
+        //         if (property_exists($data, 'remaining_quantity')) {
+        //             $sheet->setCellValue('J'.$numrow, $data->remaining_quantity);
+        //         } else {
+        //             $sheet->setCellValue('J'.$numrow, '');
+        //         }
+    
+        //         if (property_exists($data, 'received')) {
+        //             $sheet->setCellValue('K'.$numrow, $data->received);
+        //         } else {
+        //             $sheet->setCellValue('K'.$numrow, '');
+        //         }
+
+        //         if (property_exists($data, 'status')) {
+        //             $sheet->setCellValue('L'.$numrow, $data->status);
+        //         } else {
+        //             $sheet->setCellValue('L'.$numrow, '');
+        //         }
+    
+        //         if (property_exists($data, 'received_by')) {
+        //             $sheet->setCellValue('M'.$numrow, $data->received_by);
+        //         } else {
+        //             $sheet->setCellValue('M'.$numrow, '');
+        //         }
+        //         $numrow++;
+        //     }
+    
+        //     // Set header untuk file excel
+        //     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        //     header('Content-Disposition: attachment;filename="Report_Order.xlsx"');
+        //     header('Cache-Control: max-age=0');
+    
+        //     // Tampilkan file excel
+        //     $writer = new Xlsx($spreadsheet);
+        //     $writer->save('php://output');
+        // }
+
+
         public function excel() {
             $spreadsheet = new Spreadsheet();    
-            $sheet = $spreadsheet->getActiveSheet();
-            $sheet->setCellValue('A1', "Product Name"); 
-            $sheet->setCellValue('B1', "Quantity Ordering"); 
-            $sheet->setCellValue('C1', "Unit Ordering");
-            $sheet->setCellValue('D1', "Quantity Per Unit");
-            $sheet->setCellValue('E1', "Total Quantity Ordered");
-            $sheet->setCellValue('F1', "Unit of Measure");
-            $sheet->setCellValue('G1', "Vendor");
-            $sheet->setCellValue('H1', "Date Ordered");
-            $sheet->setCellValue('I1', "Time Ordered");
-            $sheet->setCellValue('J1', "Remaining Quantity");
-            $sheet->setCellValue('K1', "Received Quantity");
-            $sheet->setCellValue('L1', "Status");
-    
+        
+            // First sheet - Order Data
+            $sheet1 = $spreadsheet->getActiveSheet();
+            $sheet1->setTitle('Orders');
+            $sheet1->setCellValue('A1', "Product Name"); 
+            $sheet1->setCellValue('B1', "Quantity Ordering"); 
+            $sheet1->setCellValue('C1', "Unit Ordering");
+            $sheet1->setCellValue('D1', "Quantity Per Unit");
+            $sheet1->setCellValue('E1', "Total Quantity Ordered");
+            $sheet1->setCellValue('F1', "Unit of Measure");
+            $sheet1->setCellValue('G1', "Vendor");
+            $sheet1->setCellValue('H1', "Date Ordered");
+            $sheet1->setCellValue('I1', "Time Ordered");
+            $sheet1->setCellValue('J1', "Remaining Quantity");
+            $sheet1->setCellValue('K1', "Received Quantity");
+            $sheet1->setCellValue('L1', "Status");
+            $sheet1->setCellValue('M1', "Received By");
+        
             $order = $this->Consumables_new_order_model->get_all();
             $numrow = 2;
-            foreach($order as $data){ 
-                if (property_exists($data, 'product_name')) {
-                    $sheet->setCellValue('A'.$numrow, $data->product_name);
-                } else {
-                    $sheet->setCellValue('A'.$numrow, '');
-                }
-        
-                if (property_exists($data, 'quantity_ordering')) {
-                    $sheet->setCellValue('B'.$numrow, $data->quantity_ordering);
-                } else {
-                    $sheet->setCellValue('B'.$numrow, '');
-                }
-        
-                if (property_exists($data, 'unit_ordering')) {
-                    $sheet->setCellValue('C'.$numrow, $data->unit_ordering);
-                } else {
-                    $sheet->setCellValue('C'.$numrow, '');
-                }
-        
-                if (property_exists($data, 'quantity_per_unit')) {
-                    $sheet->setCellValue('D'.$numrow, $data->quantity_per_unit);
-                } else {
-                    $sheet->setCellValue('D'.$numrow, '');
-                }
-    
-                if (property_exists($data, 'total_quantity_ordered')) {
-                    $sheet->setCellValue('F'.$numrow, $data->total_quantity_ordered);
-                } else {
-                    $sheet->setCellValue('F'.$numrow, '');
-                }
-        
-                if (property_exists($data, 'unit_of_measure')) {
-                    $sheet->setCellValue('E'.$numrow, $data->unit_of_measure);
-                } else {
-                    $sheet->setCellValue('E'.$numrow, '');
-                }
-        
-                if (property_exists($data, 'vendor')) {
-                    $sheet->setCellValue('G'.$numrow, $data->vendor);
-                } else {
-                    $sheet->setCellValue('G'.$numrow, '');
-                }
-        
-                if (property_exists($data, 'date_ordered')) {
-                    $sheet->setCellValue('H'.$numrow, $data->date_ordered);
-                } else {
-                    $sheet->setCellValue('H'.$numrow, '');
-                }
-        
-                if (property_exists($data, 'time_ordered')) {
-                    $sheet->setCellValue('I'.$numrow, $data->time_ordered);
-                } else {
-                    $sheet->setCellValue('I'.$numrow, '');
-                }
-        
-                if (property_exists($data, 'remaining_quantity')) {
-                    $sheet->setCellValue('J'.$numrow, $data->remaining_quantity);
-                } else {
-                    $sheet->setCellValue('J'.$numrow, '');
-                }
-    
-                if (property_exists($data, 'received')) {
-                    $sheet->setCellValue('K'.$numrow, $data->received);
-                } else {
-                    $sheet->setCellValue('K'.$numrow, '');
-                }
-    
-                if (property_exists($data, 'status')) {
-                    $sheet->setCellValue('L'.$numrow, $data->status);
-                } else {
-                    $sheet->setCellValue('L'.$numrow, '');
-                }
+            foreach($order as $data) {
+                $sheet1->setCellValue('A'.$numrow, property_exists($data, 'product_name') ? $data->product_name : '');
+                $sheet1->setCellValue('B'.$numrow, property_exists($data, 'quantity_ordering') ? $data->quantity_ordering : '');
+                $sheet1->setCellValue('C'.$numrow, property_exists($data, 'unit_ordering') ? $data->unit_ordering : '');
+                $sheet1->setCellValue('D'.$numrow, property_exists($data, 'quantity_per_unit') ? $data->quantity_per_unit : '');
+                $sheet1->setCellValue('E'.$numrow, property_exists($data, 'total_quantity_ordered') ? $data->total_quantity_ordered : '');
+                $sheet1->setCellValue('F'.$numrow, property_exists($data, 'unit_of_measure') ? $data->unit_of_measure : '');
+                $sheet1->setCellValue('G'.$numrow, property_exists($data, 'vendor') ? $data->vendor : '');
+                $sheet1->setCellValue('H'.$numrow, property_exists($data, 'date_ordered') ? $data->date_ordered : '');
+                $sheet1->setCellValue('I'.$numrow, property_exists($data, 'time_ordered') ? $data->time_ordered : '');
+                $sheet1->setCellValue('J'.$numrow, property_exists($data, 'remaining_quantity') ? $data->remaining_quantity : '');
+                $sheet1->setCellValue('K'.$numrow, property_exists($data, 'received') ? $data->received : '');
+                $sheet1->setCellValue('L'.$numrow, property_exists($data, 'status') ? $data->status : '');
+                $sheet1->setCellValue('M'.$numrow, property_exists($data, 'received_by') ? $data->received_by : '');
                 $numrow++;
             }
-    
-            // Set header untuk file excel
+        
+            // Second sheet - Add another set of data
+            $sheet2 = $spreadsheet->createSheet();
+            $sheet2->setTitle('Detail Received');
+            $sheet2->setCellValue('A1', "Received By");
+            $sheet2->setCellValue('B1', "Product Name");
+            $sheet2->setCellValue('C1', "Amount Received");
+            $sheet2->setCellValue('D1', "Date Received");
+            $sheet2->setCellValue('E1', "Time Received");
+            $sheet2->setCellValue('F1', "Contact Supplier");
+            $sheet2->setCellValue('G1', "Comments");
+            // Add more headers and data for the second sheet as needed
+            // For example, populate it with your second query results
+        
+            // Sample data for the second sheet (replace with actual query)
+            $detailReceived = $this->Consumables_new_order_model->get_received(); // Assume this gets another dataset
+            // var_dump($detailReceived);
+            // die();
+            $numrow2 = 2;
+            foreach($detailReceived as $data) {
+                $sheet2->setCellValue('A'.$numrow2, property_exists($data, 'name_received') ? $data->name_received : '');
+                $sheet2->setCellValue('B'.$numrow2, property_exists($data, 'product_name') ? $data->product_name : '');
+                $sheet2->setCellValue('C'.$numrow2, property_exists($data, 'amount_received') ? $data->amount_received : '');
+                $sheet2->setCellValue('D'.$numrow2, property_exists($data, 'date_received') ? $data->date_received : '');
+                $sheet2->setCellValue('E'.$numrow2, property_exists($data, 'time_received') ? $data->time_received : '');
+                $sheet2->setCellValue('F'.$numrow2, property_exists($data, 'contact_supplier_progress') ? $data->contact_supplier_progress : '');
+                $sheet2->setCellValue('G'.$numrow2, property_exists($data, 'comments') ? $data->comments : '');
+                $numrow2++;
+            }
+        
+            // Set headers for the output file
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment;filename="Report_Order.xlsx"');
             header('Cache-Control: max-age=0');
-    
-            // Tampilkan file excel
+        
+            // Save the spreadsheet to output
             $writer = new Xlsx($spreadsheet);
             $writer->save('php://output');
         }
+        
 
     }
 ?>

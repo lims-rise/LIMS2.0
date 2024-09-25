@@ -318,11 +318,23 @@
                 co.quantity_per_unit, co.total_quantity_ordered, co.unit_of_measure, co.vendor, co.date_ordered, 
                 co.time_ordered, COALESCE(SUM(cod.amount_received), 0) AS received, 
                 (co.quantity_ordering - COALESCE(SUM(cod.amount_received), 0)) AS remaining_quantity, 
-                IF(COALESCE(SUM(cod.amount_received), 0) = co.quantity_ordering, "Completed", "Uncompleted") AS status');
+                IF(COALESCE(SUM(cod.amount_received), 0) = co.quantity_ordering, "Completed", "Uncompleted") AS status,
+                GROUP_CONCAT(cod.name_received SEPARATOR ", ") AS received_by');
             $this->db->from('consumables_order AS co');
             $this->db->join('consumables_stock AS cs', 'co.id_stock = cs.id_stock', 'left');
             $this->db->join('consumables_order_detail AS cod', 'co.id_order = cod.id_order', 'left');
             $this->db->group_by('co.id_order');
+            $query = $this->db->get();
+            return $query->result();
+        }
+
+        function get_received() {
+            $this->db->select('cod.name_received, cs.product_name, cod.amount_received, cod.date_received, cod.time_received, cod.contact_supplier_progress, cod.comments');
+            $this->db->from('consumables_order_detail AS cod');
+            $this->db->join('consumables_order AS co', 'cod.id_order = co.id_order', 'left');
+            $this->db->join('consumables_stock AS cs', 'co.id_stock = cs.id_stock', 'left');
+            $this->db->where('cod.flag', '0');
+            $this->db->group_by('cod.id_orderdetail');
             $query = $this->db->get();
             return $query->result();
         }

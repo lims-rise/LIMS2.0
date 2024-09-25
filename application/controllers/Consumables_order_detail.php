@@ -170,14 +170,40 @@
                     'unit_of_measure' => $row->unit_of_measure,
                     'date_ordered' => $row->date_ordered,
                     'time_ordered' => $row->time_ordered,
+                    'received' => $row->received,
+                    'remaining_quantity' => $row->remaining_quantity,
+                    'status' => $row->status,
                     );
-                    // var_dump($data);S
+                    // var_dump($data);
                     // die();
                     $this->template->load('template','consumables_order_detail/index', $data);
             }
             else {
                 // $this->template->load('template','Water_sample_reception/index_det');
             }
+            // $row = $this->Consumables_order_detail_model->get_detail($id);
+            // if ($row) {
+            //     $data = array();
+            //     foreach ($row as $item) {
+            //         $data[] = array(
+            //             'id_order' => $item->id_order,
+            //             'id_stock' => $item->id_stock,
+            //             'product_name' => $item->product_name,
+            //             'quantity_ordering' => $item->quantity_ordering,
+            //             'unit_ordering' => $item->unit_ordering,
+            //             'quantity_per_unit' => $item->quantity_per_unit,
+            //             'total_quantity_ordered' => $item->total_quantity_ordered,
+            //             'unit_of_measure' => $item->unit_of_measure,
+            //             'vendor' => $item->vendor,
+            //             'date_ordered' => $item->date_ordered,
+            //             'time_ordered' => $item->time_ordered,
+            //             'received' => $item->received,
+            //             'remaining_quantity' => $item->remaining_quantity,
+            //             'status' => $item->status,
+            //         );
+            //     }
+            //     $this->template->load('template', 'consumables_order_detail/index', $data);
+            // }
         }
     }
 ?>
