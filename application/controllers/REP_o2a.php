@@ -65,7 +65,7 @@ class REP_o2a extends CI_Controller
                 'SELECT b.barcode_sample AS Barcode_storagebag, a.date_receipt AS Date_receipt, 
                 c.initial AS Delivered_by, d.initial AS Received_by, a.sample_type AS Sample_type
                 from obj2a_receipt a 
-                LEFT JOIN obj2a_receipt_det b ON a.id_receipt = b.id_receipt
+                LEFT JOIN obj2a_receipt_det b ON a.id_receipt = b.id_receipt AND b.lab = "'.$this->session->userdata('lab').'" 
                 LEFT JOIN ref_person c ON a.id_delivered = c.id_person
                 LEFT JOIN ref_person d ON a.id_received = d.id_person
                 WHERE  (a.date_receipt >= "'.$date1.'"
