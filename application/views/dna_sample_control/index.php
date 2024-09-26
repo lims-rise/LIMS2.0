@@ -98,28 +98,28 @@
                         <div class="form-group">
                             <label for="barcode_vessel2" class="col-sm-4 control-label">Barcode vessel 2</label>
                             <div class="col-sm-8">
-                                <input id="barcode_vessel2" name="barcode_vessel2" type="text" class="form-control" placeholder="Barcode vessel 2" required>
+                                <input id="barcode_vessel2" name="barcode_vessel2" type="text" class="form-control" placeholder="Barcode vessel 2">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="barcode_vessel3" class="col-sm-4 control-label">Barcode vessel 3</label>
                             <div class="col-sm-8">
-                                <input id="barcode_vessel3" name="barcode_vessel3" type="text" class="form-control" placeholder="Barcode vessel 3" required>
+                                <input id="barcode_vessel3" name="barcode_vessel3" type="text" class="form-control" placeholder="Barcode vessel 3">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="barcode_vessel4" class="col-sm-4 control-label">Barcode vessel 4</label>
                             <div class="col-sm-8">
-                                <input id="barcode_vessel4" name="barcode_vessel4" type="text" class="form-control" placeholder="Barcode vessel 4" required>
+                                <input id="barcode_vessel4" name="barcode_vessel4" type="text" class="form-control" placeholder="Barcode vessel 4">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="barcode_vessel5" class="col-sm-4 control-label">Barcode vessel 5</label>
                             <div class="col-sm-8">
-                                <input id="barcode_vessel5" name="barcode_vessel5" type="text" class="form-control" placeholder="Barcode vessel 5" required>
+                                <input id="barcode_vessel5" name="barcode_vessel5" type="text" class="form-control" placeholder="Barcode vessel 5">
                             </div>
                         </div>
 
