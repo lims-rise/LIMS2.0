@@ -125,7 +125,8 @@
                 consumables_order.time_ordered,
                 COALESCE(SUM(consumables_order_detail.amount_received), 0) AS received,
                 (consumables_order.quantity_ordering - COALESCE(SUM(consumables_order_detail.amount_received), 0)) AS remaining_quantity,
-                IF(COALESCE(SUM(consumables_order_detail.amount_received), 0) = consumables_order.quantity_ordering, "Completed", "Uncompleted") AS status');
+                IF(COALESCE(SUM(consumables_order_detail.amount_received), 0) = consumables_order.quantity_ordering, "Completed", "Uncompleted") AS status,
+                consumables_order.date_created, consumables_order.date_updated, GREATEST(consumables_order.date_created, consumables_order.date_updated) AS latest_date');
             $this->datatables->from('consumables_order');
             $this->datatables->join('consumables_stock', 'consumables_order.id_stock = consumables_stock.id_stock', 'left');
             $this->datatables->join('consumables_order_detail', 'consumables_order.id_order = consumables_order_detail.id_order', 'left');
@@ -163,6 +164,10 @@
                     // $this->datatables->add_column('action','<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
                     // ".anchor(site_url('consumables_new_order/deleteConsumablesNewOrder/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'id_order');
             }
+
+            // Order by latest date
+            $this->db->order_by('latest_date', 'DESC');
+
             return $this->datatables->generate();
         }
 

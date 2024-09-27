@@ -26,7 +26,7 @@
             // ');
             $this->datatables->select('consumables_stock.id_stock, consumables_stock.product_name,
             consumables_stock.quantity, consumables_stock.unit, consumables_stock.quantity_per_unit, consumables_stock.unit_of_measure, consumables_stock.comments, consumables_stock.item_description,
-            consumables_stock.minimum_stock, consumables_stock.date_collected
+            consumables_stock.minimum_stock, consumables_stock.date_collected, consumables_stock.date_created, consumables_stock.date_updated, GREATEST(consumables_stock.date_created, consumables_stock.date_updated) AS latest_date
         ');
             $this->datatables->from('consumables_stock');
             // $this->datatables->join('consumables_products', 'consumables_stock.product_id = consumables_products.id', 'right');
@@ -45,6 +45,10 @@
                 $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
                     ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_stock');
             }
+
+            // Order by latest date
+            $this->db->order_by('latest_date', 'DESC');
+
             return $this->datatables->generate();
         }
 

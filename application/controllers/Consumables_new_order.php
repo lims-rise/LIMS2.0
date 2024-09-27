@@ -76,8 +76,6 @@
             $dt = new DateTime();
             $c = $this->input->post('id_stock', TRUE);
 
-            // var_dump($c);
-            // die();
             if ($mode == "insert") {
                 $data = array(
                     // 'product_id' => $this->input->post('product_id',TRUE),
@@ -121,6 +119,8 @@
                     'user_updated' => $this->session->userdata('id_users'),
                     'date_updated' => $dt->format('Y-m-d H:i:s'), 
                 );
+                // var_dump($data);
+                // die();
                 $this->Consumables_new_order_model->updateConsumablesOrder($id, $data);
                 $this->session->set_flashdata('message', 'Update Record Success');  
             }

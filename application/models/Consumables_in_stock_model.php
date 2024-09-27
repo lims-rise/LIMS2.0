@@ -28,7 +28,8 @@
             $this->datatables->select('consumables_in_stock.id_instock, consumables_in_stock.id_stock, ref_objective.id_objective, ref_objective.objective, consumables_stock.product_name, consumables_in_stock.closed_container,
             consumables_in_stock.unit_measure_lab, consumables_in_stock.quantity_per_unit, consumables_in_stock.loose_items,
             consumables_in_stock.total_quantity, consumables_in_stock.unit_of_measure, consumables_in_stock.expired_date,
-            consumables_in_stock.comments, consumables_in_stock.date_collected, consumables_in_stock.time_collected');
+            consumables_in_stock.comments, consumables_in_stock.date_collected, consumables_in_stock.time_collected,  
+            consumables_in_stock.date_created, consumables_in_stock.date_updated, GREATEST(consumables_in_stock.date_created, consumables_in_stock.date_updated) AS latest_date');
             $this->datatables->from('consumables_in_stock');
             $this->datatables->join('consumables_stock', 'consumables_in_stock.id_stock = consumables_stock.id_stock', 'left');
             $this->datatables->join('ref_objective', 'consumables_in_stock.id_objective = ref_objective.id_objective', 'left');
@@ -48,6 +49,10 @@
                 $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
                     ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_instock');
             }
+
+            // Order by latest date
+            $this->db->order_by('latest_date', 'DESC');
+
             return $this->datatables->generate();
         }
 

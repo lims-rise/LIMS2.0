@@ -136,8 +136,8 @@ class Consumables_in_stock extends CI_Controller {
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
-            var_dump($data);
-            die();
+            // var_dump($data);
+            // die();
             $result = $this->Consumables_in_stock_model->updatetConsumablesInStock($id, $data);
             if ($result) {
                 $this->session->set_flashdata('message', 'Stock updated successfully.');
