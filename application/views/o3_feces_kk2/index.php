@@ -170,7 +170,7 @@
                         <div class="form-group">
                             <label for="ascaris" class="col-sm-4 control-label">Ascaris Lumbricoides</label>
                             <div class="col-sm-3">
-                                <input id="ascaris" name="ascaris" type="number" class="form-control" placeholder="#Eggs" required>
+                                <input id="ascaris" name="ascaris" type="number" min="0" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
                                 <input id="ascaris_com" name="ascaris_com" type="text" class="form-control" placeholder="Comments">
@@ -180,7 +180,7 @@
                         <div class="form-group">
                             <label for="hookworm" class="col-sm-4 control-label">Hookworm</label>
                             <div class="col-sm-3">
-                                <input id="hookworm" name="hookworm" type="number" class="form-control" placeholder="#Eggs" required>
+                                <input id="hookworm" name="hookworm" type="number" min="0" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
                                 <input id="hookworm_com" name="hookworm_com" type="text" class="form-control" placeholder="Comments">
@@ -190,7 +190,7 @@
                         <div class="form-group">
                             <label for="trichuris" class="col-sm-4 control-label">Trichuris trichura</label>
                             <div class="col-sm-3">
-                                <input id="trichuris" name="trichuris" type="number" class="form-control" placeholder="#Eggs" required>
+                                <input id="trichuris" name="trichuris" type="number" min="0" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
                                 <input id="trichuris_com" name="trichuris_com" type="text" class="form-control" placeholder="Comments">
@@ -200,7 +200,7 @@
                         <div class="form-group">
                             <label for="strongyloides" class="col-sm-4 control-label">Strongyloides stercoralis</label>
                             <div class="col-sm-3">
-                                <input id="strongyloides" name="strongyloides" type="number" class="form-control" placeholder="#Eggs" required>
+                                <input id="strongyloides" name="strongyloides" type="number" min="0" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
                                 <input id="strongyloides_com" name="strongyloides_com" type="text" class="form-control" placeholder="Comments">
@@ -210,7 +210,7 @@
                         <div class="form-group">
                             <label for="taenia" class="col-sm-4 control-label">Taenia spps</label>
                             <div class="col-sm-3">
-                                <input id="taenia" name="taenia" type="number" class="form-control" placeholder="#Eggs" required>
+                                <input id="taenia" name="taenia" type="number" min="0" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
                                 <input id="taenia_com" name="taenia_com" type="text" class="form-control" placeholder="Comments">
@@ -220,7 +220,7 @@
                         <div class="form-group">
                             <label for="other" class="col-sm-4 control-label">Other</label>
                             <div class="col-sm-3">
-                                <input id="other" name="other" type="number" class="form-control" placeholder="#Eggs" required>
+                                <input id="other" name="other" type="number" min="0" class="form-control" placeholder="#Eggs" required>
                             </div>
                             <div class="col-sm-5">
                                 <input id="other_com" name="other_com" type="text" class="form-control" placeholder="Comments">
@@ -331,8 +331,40 @@
             }, 3000);                            
         });
 
-        $('#id_person').on("change", function() {
-            //$('#bar_kkslide').trigger('change');
+        $('#ascaris').on("change", function() {
+            if (($('#ascaris').val() < 0) || $('#ascaris').val() == "-0") {
+                $('#ascaris').val("0")
+            }
+        });
+
+        $('#hookworm').on("change", function() {
+            if (($('#hookworm').val() < 0) || $('#hookworm').val() == "-0") {
+                $('#hookworm').val("0")
+            }
+        });
+
+        $('#trichuris').on("change", function() {
+            if (($('#trichuris').val() < 0) || $('#trichuris').val() == "-0") {
+                $('#trichuris').val("0")
+            }
+        });
+
+        $('#strongyloides').on("change", function() {
+            if (($('#strongyloides').val() < 0) || $('#strongyloides').val() == "-0") {
+                $('#strongyloides').val("0")
+            }
+        });
+
+        $('#taenia').on("change", function() {
+            if (($('#taenia').val() < 0) || $('#taenia').val() == "-0") {
+                $('#taenia').val("0")
+            }
+        });
+
+        $('#other').on("change", function() {
+            if (($('#other').val() < 0) || $('#other').val() == "-0") {
+                $('#other').val("0")
+            }
         });
 
         $('#bar_kkslide').on("change", function() {
