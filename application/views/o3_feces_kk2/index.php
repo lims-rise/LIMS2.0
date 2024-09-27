@@ -72,7 +72,7 @@
             <div class="modal-content">
                 <div class="modal-header box">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="modal-title">O3 - New Feces KK 1</h4>
+                    <h4 class="modal-title" id="modal-title">O3 - New Feces KK 2</h4>
                 </div>
                 <form id="formSample"  action= <?php echo site_url('o3_feces_kk2/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
@@ -504,7 +504,7 @@
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> O3 - New Feces KK 1<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> O3 - New Feces KK 2<span id="my-another-cool-loader"></span>');
             $('#bar_kkslide').attr('readonly', false);
             $('#bar_kkslide').val('');
             // $("#date_receipt").datepicker("setDate",'now');
@@ -537,7 +537,7 @@
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> O3 - Update Feces KK 1<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> O3 - Update Feces KK 2<span id="my-another-cool-loader"></span>');
             $('#bar_kkslide').attr('readonly', true);
             $('#bar_kkslide').val(data.bar_kkslide);
             $('#date_process').val(data.date_process);
