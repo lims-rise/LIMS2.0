@@ -303,8 +303,8 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_bs_stomacher t ON a.barcode_sample=t.barcode_sample AND t.elution_no="Moisture2"
         LEFT JOIN obj2b_moisture1 d ON a.barcode_sample=d.barcode_sample
         LEFT JOIN obj2b_moisture1 r ON s.barcode_falcon=r.barcode_sample AND s.elution_no="Moisture1"
-        LEFT JOIN obj2b_moisture2 e ON r.barcode_foil=e.barcode_foil
-        LEFT JOIN obj2b_moisture3 f ON r.barcode_foil=f.barcode_foil
+        LEFT JOIN obj2b_moisture2 e ON (r.barcode_foil=e.barcode_foil OR d.barcode_foil=e.barcode_foil)
+        LEFT JOIN obj2b_moisture3 f ON (r.barcode_foil=f.barcode_foil OR d.barcode_foil=f.barcode_foil)
         LEFT JOIN obj2b_bootsocks_before b ON b.barcode_bootsocks=g.barcode_bootsock AND g.elution_no="Micro1"
         LEFT JOIN obj2b_bootsocks_after c ON c.barcode_bootsocks=g.barcode_bootsock AND g.elution_no="Micro1"
         LEFT JOIN obj2b_bootsocks_before u ON u.barcode_bootsocks=s.barcode_bootsock AND s.elution_no="Moisture1"
