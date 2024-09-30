@@ -23,8 +23,8 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Product Name</th>
                                         <th>Objective</th>
+                                        <th>Product Name</th>
                                         <th>Number of closed containers</th>
                                         <th>Unit of measure counted in the lab</th>
                                         <th>Quantity Measured per Unit</th>
@@ -708,8 +708,8 @@
             ajax: {"url": "consumables_in_stock/jsonInStock", "type": "POST"},
             columns: [
                 {"data": "id_instock"},
-                {"data": "product_name"},
                 {"data": "objective"},
+                {"data": "product_name"},
                 {"data": "closed_container"},
                 {"data": "unit_measure_lab"},
                 {"data": "quantity_per_unit"},
