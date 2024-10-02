@@ -161,6 +161,10 @@ class NHMRC_idexx_out_model extends CI_Model
         SELECT b.barcode_colilert, b.dilution as dil, a.date_conduct AS date_cond, b.time_incubation as time_i, a.flag 
         FROM nhmrc_bs_stomacher a
         LEFT JOIN nhmrc_subbs_idexx b ON a.barcode_bootsock=b.barcode_sample
+        UNION ALL         
+        SELECT b.barcode_colilert, b.dilution as dil, a.date_conduct AS date_cond, b.time_incubation as time_i, a.flag 
+        FROM nhmrc_sample_prep a
+        LEFT JOIN nhmrc_subsd_idexx b ON a.barcode_food=b.barcode_food
         UNION ALL 
         SELECT e.barcode_endidx, e.dilution as dil, e.date_conduct AS date_cond, e.time_incubation as time_i, flag
         FROM nhmrc_blanks e
