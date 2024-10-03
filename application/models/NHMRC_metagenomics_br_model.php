@@ -219,6 +219,11 @@ class NHMRC_metagenomics_br_model extends CI_Model
         SELECT barcode_sample, "Water" as stype, 0 as vol 
         FROM nhmrc_receipt 
         WHERE id_type2b IN (6)
+        AND flag = 0
+        UNION ALL
+        SELECT barcode_sample, "Hand Rinse" as stype, 0 as vol 
+        FROM nhmrc_receipt 
+        WHERE id_type2b IN (22)
         AND flag = 0) y
         WHERE y.barcode_sample = "'.$id.'"
         AND y.barcode_sample NOT IN (SELECT barcode_sample FROM nhmrc_metagenomics)
