@@ -219,10 +219,20 @@ class DNA_aliquotting_model extends CI_Model
       }
 
       function validate1($id){
-        $this->db->where('barcode_dna', $id);
+        $this->db->where('meta_box', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        $q = $this->db->get($this->table);
+        $q = $this->db->get('dna_extraction');
+        $response = $q->result_array();
+        return $response;
+        // return $this->db->get('ref_location_80')->row();
+      }
+
+      function validate2($id){
+        $this->db->where('barcode_metagenomics', $id);
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        $q = $this->db->get('dna_extraction');
         $response = $q->result_array();
         return $response;
         // return $this->db->get('ref_location_80')->row();

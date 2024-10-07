@@ -218,6 +218,18 @@ class DNA_aliquotting extends CI_Controller
         // $data['location'] = $this->O3_filter_paper_model->find_loc($id);
     }
 
+    public function valid_dna() 
+    {
+        $id = $this->input->get('id1');
+        // echo $id;
+        $data = $this->DNA_aliquotting_model->validate2($id);
+
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        // return $this->response->setJSON($data);
+        // $data['location'] = $this->O3_filter_paper_model->find_loc($id);
+    }
+
 
     // public function _rules() 
     // {
