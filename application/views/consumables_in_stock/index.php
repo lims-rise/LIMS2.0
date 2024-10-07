@@ -66,6 +66,7 @@
                 <form id="formSample"  action= <?php echo site_url('consumables_in_stock/saveConsumablesInStock') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
+                        <input id="id_stock1" name="id_stock1" type="hidden" class="form-control input-sm">
 
                         <div class="form-group" id="idx">
                             <label for="id_instock" class="col-sm-4 control-label">ID In Stock</label>
@@ -74,7 +75,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
 							<label for="id_objective" class="col-sm-4 control-label">Objective</label>
 							<div class="col-sm-8" >
 								<select id='id_objective' name="id_objective" class="form-control idObjectiveSelect">
@@ -91,7 +92,23 @@
 										?>
 								</select>
 							</div>
-						</div>
+						</div> -->
+
+                        <div class="form-group">
+                            <label for="id_objective" class="col-sm-4 control-label">Objective</label>
+                            <div class="col-sm-4">
+                                <?php foreach ($objectives as $row): ?>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="id_objective[]" class="idObjectiveSelect" value="<?php echo $row['id_objective']; ?>"> <?php echo $row['objective']; ?>
+                                            <input type="hidden" name="id_objective1[]" class="idObjectiveSelect1" value="<?php echo $row['id_objective']; ?>">
+                                        </label>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+
+
 
                         <!-- <div class="form-group">
 							<label for="id_stock" class="col-sm-4 control-label">Product Name</label>
@@ -523,52 +540,61 @@
             });
         });
 
+        // Event listener untuk dropdown Objective
         // $('.idObjectiveSelect').change(function() {
-        //     let id_objective = $(this).val();
+        //     let id_objective = $(this).val(); 
         //     if (id_objective) {
         //         $.ajax({
-        //             url: '<?php echo site_url('Consumables_in_stock/getStockByObjective'); ?>',
+        //             url: '<?php echo site_url('Consumables_in_stock/getStockByObjective'); ?>', 
         //             type: 'POST',
-        //             data: { id_objective: id_objective },
+        //             data: { id_objective: id_objective }, 
         //             dataType: 'json', 
         //             success: function(response) {
         //                 let $stockSelect = $('#id_stock');
-        //                 $stockSelect.empty();
-                        
-        //                 // Add default option
+        //                 $stockSelect.empty(); // Clear existing options
         //                 $stockSelect.append('<option value="">-- Select Product Name --</option>');
-
+                        
         //                 // Add new options based on response
         //                 $.each(response, function(index, item) {
         //                     $stockSelect.append('<option value="' + item.id_stock + '">' + item.product_name + '</option>');
         //                 });
+
+        //                 // Re-initialize Chosen after updating options
+        //                 $stockSelect.trigger('chosen:updated');
+           
         //             },
         //             error: function(jqXHR, textStatus, errorThrown) {
         //                 console.error('AJAX error:', textStatus, errorThrown);
         //             }
         //         });
         //     } else {
-        //         // Clear existing options if no objective is selected
         //         let $stockSelect = $('#id_stock');
-        //         $stockSelect.empty();
-        //         $stockSelect.append('<option value="">-- Select Product Name --</option>');
+        //         $stockSelect.empty(); // Clear existing options
+        //         $stockSelect.append('<option value="">-- Select Product Name --</option>'); // Add default option
+
+        //         // Re-initialize Chosen after clearing options
+        //         $stockSelect.trigger('chosen:updated');
         //     }
         // });
 
-        // Event listener untuk dropdown Objective
         $('.idObjectiveSelect').change(function() {
-            let id_objective = $(this).val(); 
-            if (id_objective) {
+            let id_objectives = [];
+            $('.idObjectiveSelect:checked').each(function() {
+                id_objectives.push($(this).val());
+            });
+
+            let $stockSelect = $('#id_stock');
+            $stockSelect.empty(); // Clear existing options
+            $stockSelect.append('<option value="">-- Select Product Name --</option>'); // Add default option
+
+            if (id_objectives.length > 0) {
+                console.log(id_objectives);
                 $.ajax({
-                    url: '<?php echo site_url('Consumables_in_stock/getStockByObjective'); ?>', 
+                    url: '<?php echo site_url('Consumables_in_stock/getStockByObjective'); ?>',
                     type: 'POST',
-                    data: { id_objective: id_objective }, 
-                    dataType: 'json', 
+                    data: { id_objectives: id_objectives }, // Ensure parameter name is correct
+                    dataType: 'json',
                     success: function(response) {
-                        let $stockSelect = $('#id_stock');
-                        $stockSelect.empty(); // Clear existing options
-                        $stockSelect.append('<option value="">-- Select Product Name --</option>');
-                        
                         // Add new options based on response
                         $.each(response, function(index, item) {
                             $stockSelect.append('<option value="' + item.id_stock + '">' + item.product_name + '</option>');
@@ -576,21 +602,17 @@
 
                         // Re-initialize Chosen after updating options
                         $stockSelect.trigger('chosen:updated');
-           
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.error('AJAX error:', textStatus, errorThrown);
                     }
                 });
             } else {
-                let $stockSelect = $('#id_stock');
-                $stockSelect.empty(); // Clear existing options
-                $stockSelect.append('<option value="">-- Select Product Name --</option>'); // Add default option
-
                 // Re-initialize Chosen after clearing options
                 $stockSelect.trigger('chosen:updated');
             }
         });
+
 
         $('.stockSelect').change(function() {
             let idStock = $(this).val();
@@ -679,9 +701,9 @@
             // Bersihkan form
             $('#formSample').find('input, textarea').val('');
             $('#formSample').find('input[type=checkbox], input[type=radio]').prop('checked', false);
-            
             // Bersihkan nilai yang dipilih dalam select
             $('#formSample select').val('').trigger('change');
+            location.reload();
         });
         
         var base_url = location.hostname;
@@ -825,17 +847,39 @@
             $('#idx').hide();
             $('#id_instock').val(data.id_instock);
             	
-            // Set the value of the objective dropdown and trigger change event
-            $('#id_objective').val(data.id_objective).trigger('change');
+       // Reset all checkboxes before setting them
+    $('.idObjectiveSelect').prop('checked', false).prop('disabled', true);
+
+            // Pastikan data.id_objective valid dan adalah array
+            if (Array.isArray(data.id_objective)) {
+                data.id_objective.forEach(function(obj) {
+                    // Cek dan centang checkbox berdasarkan value
+                    $('.idObjectiveSelect[value="' + obj + '"]').prop('checked', true);
+                });
+            } else if (data.id_objective && typeof data.id_objective === 'string') {
+                // Jika data.id_objective adalah string, ubah menjadi array
+                data.id_objective.split(',').map(Number).forEach(function(obj) {
+                    $('.idObjectiveSelect[value="' + obj + '"]').prop('checked', true);
+                    $('.idObjectiveSelect1').val([obj]);
+                });
+            }
+
+            // Trigger change event jika diperlukan
+            $('.idObjectiveSelect').trigger('change');
+
+
+
+
 
             // Tunggu hingga AJAX selesai dan dropdown diisi
             let interval = setInterval(function() {
                 // Cek apakah lebih dari satu opsi tersedia (default + data baru)
-
                 if ($('#id_stock').find('option').length > 1) {
                     // Set nilai dropdown produk berdasarkan id_stock
-                    $('#id_stock').val(data.id_stock); // Set the value of product dropdown
+                    $('#id_stock').val(data.id_stock).prop('disabled', true); // Set the value of product dropdown
                     $('#id_stock').trigger('chosen:updated'); // Update Chosen
+                    $('#id_stock1').val(data.id_stock); // Set the value of product dropdown
+                    $('#id_stock1').trigger('chosen:updated'); // Update Chosen
                     clearInterval(interval); // Hentikan interval
                 }
             }, 100); // Cek setiap 100ms hingga dropdown terisi

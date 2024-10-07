@@ -35,6 +35,13 @@ class Consumables_report extends CI_Controller
         echo $this->Consumables_report_model->json($date1,$date2,$objective,$stock);
     }
 
+    public function getStockByObjective()
+    {
+        $id_objective = $this->input->post('id_objective');
+        $data = $this->Consumables_report_model->getStockByObjective($id_objective);
+        echo json_encode($data);
+    }
+
 
     public function excel()
     {
