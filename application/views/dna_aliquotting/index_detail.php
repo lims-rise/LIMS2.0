@@ -156,6 +156,43 @@
         });        
 
 
+        $('#barcode_dna').on("change", function() {
+            data1 = $('#barcode_dna').val();
+            $.ajax({
+                type: "GET",
+                url: "../../dna_aliquotting/valid_dna?id1="+data1,
+                data:data1,
+                dataType: "json",
+                success: function(data) {
+                    // var barcode = '';
+                    if (data.length > 0) {
+                        // $('#type').val(data[0].type);   
+                        // $('#barcode_monash').focus();
+                        // barcode = data[0].barcode_sample;
+                        // console.log(data);
+                    }
+                    else {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> not found in the metagenomic - DNA extraction module !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#barcode_dna').focus();
+                        $('#barcode_dna').val('');     
+                        $('#type').val('');   
+                        $('#barcode_dna').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_dna').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_dna').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_dna').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
+
 
         $('#addtombol').click(function() {
             $('#mode_det').val('insert');
@@ -183,6 +220,7 @@
         $('#excel').click(function() {
             location.href = '../../DNA_aliquotting/excel_crosstab/'+id_dna;
         });
+
 
         table = $("#mytable1").DataTable({
             // initComplete: function() {

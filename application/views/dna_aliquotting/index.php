@@ -200,6 +200,44 @@
             });
         });
         
+
+        $('#barcode_monash').on("change", function() {
+            data1 = $('#barcode_monash').val();
+            $.ajax({
+                type: "GET",
+                url: "dna_aliquotting/valid_bs?id1="+data1,
+                data:data1,
+                dataType: "json",
+                success: function(data) {
+                    // var barcode = '';
+                    if (data.length > 0) {
+                        // $('#type').val(data[0].type);   
+                        // $('#barcode_monash').focus();
+                        // barcode = data[0].barcode_sample;
+                        // console.log(data);
+                    }
+                    else {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> not found in the meta box - DNA extraction module !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#barcode_monash').focus();
+                        $('#barcode_monash').val('');     
+                        $('#type').val('');   
+                        $('#barcode_monash').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_monash').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_monash').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_monash').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
+
         // $('.clockpicker').clockpicker({
         // placement: 'bottom', // clock popover placement
         // align: 'left',       // popover arrow align
