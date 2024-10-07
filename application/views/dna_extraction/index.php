@@ -709,6 +709,7 @@
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> DNA Extraction - Update Sample<span id="my-another-cool-loader"></span>');
             $('#barcode_sample').attr('readonly', true);
             $('#barcode_sample').val(data.barcode_sample);
+            $('#date_extraction').val(data.date_extraction);
             $('#id_person').val(data.id_person);
             $('#kit_lot').val(data.kit_lot);
             $('#type').attr('readonly', true);
