@@ -69,6 +69,15 @@ class Consumables_report_model extends CI_Model
         return $response;
     }
 
+    function getStockByObjective($id_objective)
+    {
+        $this->db->select('consumables_stock.id_stock, consumables_stock.product_name');
+        $this->db->join('ref_consumables', 'ref_consumables.id_stock = consumables_stock.id_stock');
+        $this->db->where('ref_consumables.id_objective', $id_objective);
+        $q = $this->db->get('consumables_stock');
+        return $q->result_array();
+    }
+
 }
 
 /* End of file Tbl_customer_model.php */

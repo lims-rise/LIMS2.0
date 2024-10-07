@@ -154,7 +154,7 @@ const formattedDate = `${year}-${month}-${day}`;
             let id_objective = $(this).val(); 
             if (id_objective) {
                 $.ajax({
-                    url: '<?php echo site_url('Consumables_in_stock/getStockByObjective'); ?>', 
+                    url: '<?php echo site_url('Consumables_report/getStockByObjective'); ?>', 
                     type: 'POST',
                     data: { id_objective: id_objective }, 
                     dataType: 'json', 
