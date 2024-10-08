@@ -3,10 +3,10 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class NHMRC_metagenomics_food_model extends CI_Model
+class NHMRC_sample_entry_model extends CI_Model
 {
 
-    public $table = 'nhmrc_meta_food';
+    public $table = 'nhmrc_sample_entry';
     public $id = 'barcode_sample';
     public $order = 'DESC';
 
@@ -14,21 +14,18 @@ class NHMRC_metagenomics_food_model extends CI_Model
     {
         parent::__construct();
     }
-    // date_format(nhmrc_meta_food.time_started,"%H:%i") AS time_started,
-    // date_format(nhmrc_meta_food.time_finished,"%H:%i") AS time_finished,
+    // date_format(nhmrc_sample_entry.time_started,"%H:%i") AS time_started,
+    // date_format(nhmrc_sample_entry.time_finished,"%H:%i") AS time_finished,
 
     // datatables
     function json() {
-        $this->datatables->select('a.barcode_sample, a.date_conduct, 
-        a.barcode_dna1, a.weight_sub1, a.barcode_storage1, a.position_tube1,
-        concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS location1, 
-        a.barcode_dna2, a.weight_sub2, a.barcode_storage2, a.position_tube2, 
-        concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS location2,
-        a.comments, a.id_location_801, a.id_location_802, a.lab, a.flag
+        $this->datatables->select('a.barcode_sample, a.barcode_bottle, a.date_conduct, 
+        a.vol_aliquot, a.barcode_box, a.position_tube,
+        concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS location,
+        a.comments, a.id_location_80, a.lab, a.flag
         ');
-        $this->datatables->from('nhmrc_meta_food a');
-        $this->datatables->join('ref_location_80 b', 'a.id_location_801 = b.id_location_80 AND b.lab = '.$this->session->userdata('lab') , 'left');
-        $this->datatables->join('ref_location_80 c', 'a.id_location_802 = c.id_location_80 AND c.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->from('nhmrc_sample_entry a');
+        $this->datatables->join('ref_location_80 b', 'a.id_location_80 = b.id_location_80 AND b.lab = '.$this->session->userdata('lab') , 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
         $this->datatables->where('a.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
@@ -48,14 +45,11 @@ class NHMRC_metagenomics_food_model extends CI_Model
     function get_all()
     {
         $q = $this->db->query('
-        SELECT a.barcode_sample, a.date_conduct, a.barcode_dna1, a.weight_sub1, a.barcode_storage1, a.position_tube1,
-        concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS Location_tube1,
-        a.barcode_dna2, a.weight_sub2, a.barcode_storage2, a.position_tube2,
-        concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS Location_tube2,
+        SELECT a.barcode_sample, a.barcode_bottle, a.date_conduct, a.vol_aliquot, a.barcode_box, a.position_tube,
+        concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS location,
         a.comments
-        from nhmrc_meta_food a 
-        left join ref_location_80 b on a.id_location_801 = b.id_location_80 AND b.lab = "'.$this->session->userdata('lab').'" 
-        left join ref_location_80 c on a.id_location_802 = c.id_location_80 AND c.lab = "'.$this->session->userdata('lab').'"     
+        from nhmrc_sample_entry a 
+        left join ref_location_80 b on a.id_location_80 = b.id_location_80 AND b.lab = "'.$this->session->userdata('lab').'" 
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
@@ -204,8 +198,8 @@ class NHMRC_metagenomics_food_model extends CI_Model
         $q = $this->db->query('
         SELECT barcode_sample FROM nhmrc_receipt 
         WHERE barcode_sample = "'.$id.'"
-        AND id_type2b IN (23)
-        AND barcode_sample NOT IN (SELECT barcode_sample FROM nhmrc_meta_food)
+        AND id_type2b IN (22)
+        AND barcode_sample NOT IN (SELECT barcode_sample FROM nhmrc_sample_entry)
         AND flag = 0 
         ');        
         $response = $q->result_array();
@@ -213,77 +207,77 @@ class NHMRC_metagenomics_food_model extends CI_Model
         // return $this->db->get('ref_location_80')->row();
       }
 
-      function validate2($id){
-        $q = $this->db->query('
-        SELECT cryobarcode, barcode_sample FROM (
-            SELECT barcode_p1a AS cryobarcode, barcode_sample
-            FROM obj3_edta_aliquots
-            WHERE flag = 0 
-            UNION ALL
-            SELECT barcode_p2a AS cryobarcode, barcode_sample
-            FROM obj3_edta_aliquots
-            WHERE flag = 0 
-            UNION ALL
-            SELECT barcode_p3a AS cryobarcode, barcode_sample
-            FROM obj3_edta_aliquots
-            WHERE flag = 0 
-            UNION ALL
-            SELECT packed_cells AS cryobarcode, barcode_sample
-            FROM obj3_edta_aliquots
-            WHERE flag = 0 
-            UNION ALL
-            SELECT barcode_sst1 AS cryobarcode, barcode_sample
-            FROM obj3_sst_aliquots
-            WHERE flag = 0 
-            UNION ALL
-            SELECT barcode_sst2 AS cryobarcode, barcode_sample
-            FROM obj3_sst_aliquots
-            WHERE flag = 0 
-            UNION ALL
-            SELECT barcode_wb AS cryobarcode, barcode_sample
-            FROM obj3_edta_wholeblood
-            WHERE flag = 0 
-            UNION ALL
-            SELECT aliquot1 AS cryobarcode, barcode_sample
-            FROM obj3_faliquot
-            WHERE flag = 0 
-            UNION ALL
-            SELECT aliquot2 AS cryobarcode, barcode_sample
-            FROM obj3_faliquot
-            WHERE flag = 0 
-            UNION ALL
-            SELECT aliquot3 AS cryobarcode, barcode_sample
-            FROM obj3_faliquot
-            WHERE flag = 0 
-            UNION ALL
-            SELECT aliquot_zymo AS cryobarcode, barcode_sample
-            FROM obj3_faliquot
-            WHERE flag = 0 
-            UNION ALL
-            SELECT bar_macsweep1 AS cryobarcode, bar_macconkey AS barcode_sample
-            FROM obj3_fmac2
-            WHERE flag = 0 
-            UNION ALL
-            SELECT bar_macsweep2 AS cryobarcode, bar_macconkey AS barcode_sample
-            FROM obj3_fmac2
-            WHERE flag = 0 
-            UNION ALL
-            SELECT barcode_dna1 AS cryobarcode, barcode_sample
-            FROM nhmrc_meta_food
-            WHERE flag = 0 
-            UNION ALL
-            SELECT barcode_dna2 AS cryobarcode, barcode_sample
-            FROM nhmrc_meta_food
-            WHERE flag = 0 
-            UNION ALL
-            SELECT barcode_dna_bag AS cryobarcode, barcode_sample
-            FROM obj2b_metagenomics
-            WHERE flag = 0) x
-            WHERE x.cryobarcode = "'.$id.'"
-            ');        
-        $response = $q->result_array();
-        return $response;
-      }      
+    //   function validate2($id){
+    //     $q = $this->db->query('
+    //     SELECT cryobarcode, barcode_sample FROM (
+    //         SELECT barcode_p1a AS cryobarcode, barcode_sample
+    //         FROM obj3_edta_aliquots
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT barcode_p2a AS cryobarcode, barcode_sample
+    //         FROM obj3_edta_aliquots
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT barcode_p3a AS cryobarcode, barcode_sample
+    //         FROM obj3_edta_aliquots
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT packed_cells AS cryobarcode, barcode_sample
+    //         FROM obj3_edta_aliquots
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT barcode_sst1 AS cryobarcode, barcode_sample
+    //         FROM obj3_sst_aliquots
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT barcode_sst2 AS cryobarcode, barcode_sample
+    //         FROM obj3_sst_aliquots
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT barcode_wb AS cryobarcode, barcode_sample
+    //         FROM obj3_edta_wholeblood
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT aliquot1 AS cryobarcode, barcode_sample
+    //         FROM obj3_faliquot
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT aliquot2 AS cryobarcode, barcode_sample
+    //         FROM obj3_faliquot
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT aliquot3 AS cryobarcode, barcode_sample
+    //         FROM obj3_faliquot
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT aliquot_zymo AS cryobarcode, barcode_sample
+    //         FROM obj3_faliquot
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT bar_macsweep1 AS cryobarcode, bar_macconkey AS barcode_sample
+    //         FROM obj3_fmac2
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT bar_macsweep2 AS cryobarcode, bar_macconkey AS barcode_sample
+    //         FROM obj3_fmac2
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT barcode_dna1 AS cryobarcode, barcode_sample
+    //         FROM nhmrc_sample_entry
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT barcode_dna2 AS cryobarcode, barcode_sample
+    //         FROM nhmrc_sample_entry
+    //         WHERE flag = 0 
+    //         UNION ALL
+    //         SELECT barcode_dna_bag AS cryobarcode, barcode_sample
+    //         FROM obj2b_metagenomics
+    //         WHERE flag = 0) x
+    //         WHERE x.cryobarcode = "'.$id.'"
+    //         ');        
+    //     $response = $q->result_array();
+    //     return $response;
+    //   }      
 }
 
 /* End of file Tbl_delivery_model.php */

@@ -288,6 +288,13 @@ class REP_nhmrc_model extends CI_Model
         a.png_control AS reception_png_control, 
         a.barcode_tinytag AS reception_barcode_tinytag,
         a.comments AS reception_comments,
+        k.barcode_bottle AS sampleentry_barcode_bottle,
+        k.date_conduct AS sampleentry_date_conduct,
+        k.vol_aliquot AS sampleentry_vol_aliquot,
+        k.barcode_box AS sampleentry_barcode_box,
+        k.position_tube AS sampleentry_position_tube,
+        concat("F",l.freezer,"-","S",l.shelf,"-","R",l.rack,"-","DRW",l.rack_level) AS sampleentry_location,
+        k.comments AS sampleentry_comments,
         b.date_conduct AS idexx_in_date_conduct,
         b.time_incubation AS idexx_in_time_incubation,
         b.barcode_colilert AS idexx_in_barcode_colilert1,
@@ -343,6 +350,8 @@ class REP_nhmrc_model extends CI_Model
         LEFT JOIN ref_location_80 h ON d.id_location_80=h.id_location_80 AND h.lab = "'.$this->session->userdata('lab').'"
         LEFT JOIN ref_location_80 i ON f.id_location_80_1=i.id_location_80 AND i.lab = "'.$this->session->userdata('lab').'"
         LEFT JOIN ref_location_80 j ON f.id_location_80_2=j.id_location_80 AND j.lab = "'.$this->session->userdata('lab').'"
+        LEFT JOIN nhmrc_sample_entry k ON a.barcode_sample = k.barcode_sample
+        LEFT JOIN ref_location_80 l ON k.id_location_80=l.id_location_80 AND l.lab = "'.$this->session->userdata('lab').'"
         WHERE a.id_type2b = "'.$rep.'"
         AND (a.date_arrival >= "'.$date1.'"
             AND a.date_arrival <= "'.$date2.'")
