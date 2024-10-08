@@ -464,7 +464,7 @@ class REP_nhmrc extends CI_Controller
             $sheet->setCellValue('AD1',"idexx_out_ecoli_mpn");
             $sheet->setCellValue('AE1',"idexx_out_coliforms_largewells");
             $sheet->setCellValue('AF1',"idexx_out_coliforms_smallwells");
-            $sheet->setCellValue('AG',"idexx_out_coliforms_mpn");
+            $sheet->setCellValue('AG1',"idexx_out_coliforms_mpn");
             $sheet->setCellValue('AH1',"idexx_out_comments");
             $sheet->setCellValue('AI1',"metagenomics_date_conduct");
             $sheet->setCellValue('AJ1',"metagenomics_barcode_falcon1");
