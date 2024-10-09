@@ -27,6 +27,7 @@
                         <a class="btn btn-success btn-sm" id="nhmrc_moisture_24" href="nhmrc_moisture_24/excel"><i class="fa fa-file-excel-o"></i><br />Mois (24)</a>
                         <a class="btn btn-success btn-sm" id="nhmrc_moisture_48" href="nhmrc_moisture_48/excel"><i class="fa fa-file-excel-o"></i><br />Mois (48)</a>
                         <a class="btn btn-success btn-sm" id="nhmrc_moisture_72" href="nhmrc_moisture_72/excel"><i class="fa fa-file-excel-o"></i><br />Mois (72)</a>
+                        <a class="btn btn-success btn-sm" id="nhmrc_sample_entry" href="nhmrc_sample_entry/excel"><i class="fa fa-file-excel-o"></i><br />Sample entry (HR)</a>
                     </div>
 
                     <!-- <button id="triggerAllButtons" class="btn btn-primary">Export All</button> -->
