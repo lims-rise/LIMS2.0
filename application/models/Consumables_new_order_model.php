@@ -149,7 +149,10 @@
                 $this->datatables->add_column('action', '', 'id_order');
             }
             else if (($lvl == 2) | ($lvl == 3)){
-                $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'id_order');
+                $this->datatables->add_column('action', 
+                    '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button> ' .
+                    anchor(site_url('consumables_order_detail/readConsumablesOrderDetail/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 
+                    'id_order');
             }
             // else {
             //     // $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-primary btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'barcode_sample');
