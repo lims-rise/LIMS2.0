@@ -125,40 +125,40 @@
                         <div class="form-group">
                             <label for="aedes_aegypt" class="col-sm-4 control-label">Aedes aegypti (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="aedes_aegypt_male" name="aedes_aegypt_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="aedes_aegypt_male" name="aedes_aegypt_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="aedes_aegypt_female" name="aedes_aegypt_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="aedes_aegypt_female" name="aedes_aegypt_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="aedes_albopictus" class="col-sm-4 control-label">Aedes albopictus (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="aedes_albopictus_male" name="aedes_albopictus_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="aedes_albopictus_male" name="aedes_albopictus_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="aedes_albopictus_female" name="aedes_albopictus_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="aedes_albopictus_female" name="aedes_albopictus_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="aedes_polynesiensis" class="col-sm-4 control-label">Aedes polynesiensis (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="aedes_polynesiensis_male" name="aedes_polynesiensis_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="aedes_polynesiensis_male" name="aedes_polynesiensis_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="aedes_polynesiensis_female" name="aedes_polynesiensis_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="aedes_polynesiensis_female" name="aedes_polynesiensis_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="aedes_other" class="col-sm-4 control-label">Aedes other (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="aedes_other_male" name="aedes_other_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="aedes_other_male" name="aedes_other_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="aedes_other_female" name="aedes_other_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="aedes_other_female" name="aedes_other_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
@@ -166,101 +166,101 @@
                             <!-- <label for="culex" class="col-sm-4 control-label">Culex quinquefasciatus (M/F)</label> -->
                             <label for="culex" class="col-sm-4 control-label">Culex quinquefasci (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="culex_male" name="culex_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="culex_male" name="culex_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="culex_female" name="culex_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="culex_female" name="culex_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="culex_sitiens" class="col-sm-4 control-label">Culex sitiens (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="culex_sitiens_male" name="culex_sitiens_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="culex_sitiens_male" name="culex_sitiens_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="culex_sitiens_female" name="culex_sitiens_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="culex_sitiens_female" name="culex_sitiens_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="culexann" class="col-sm-4 control-label">Culex annulirostris (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="culexann_male" name="culexann_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="culexann_male" name="culexann_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="culexann_female" name="culexann_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="culexann_female" name="culexann_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="culex_other" class="col-sm-4 control-label">Culex other (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="culex_other_male" name="culex_other_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="culex_other_male" name="culex_other_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="culex_other_female" name="culex_other_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="culex_other_female" name="culex_other_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="anopheles" class="col-sm-4 control-label">Anopheles (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="anopheles_male" name="anopheles_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="anopheles_male" name="anopheles_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="anopheles_female" name="anopheles_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="anopheles_female" name="anopheles_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="uranotaenia" class="col-sm-4 control-label">Uranotaenia (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="uranotaenia_male" name="uranotaenia_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="uranotaenia_male" name="uranotaenia_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="uranotaenia_female" name="uranotaenia_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="uranotaenia_female" name="uranotaenia_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="mansonia" class="col-sm-4 control-label">Mansonia (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="mansonia_male" name="mansonia_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="mansonia_male" name="mansonia_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="mansonia_female" name="mansonia_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="mansonia_female" name="mansonia_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="other" class="col-sm-4 control-label">Other (M/F)</label>
                             <div class="col-sm-4">
-                                <input id="other_male" name="other_male" type="number" min=0 max=999 class="form-control" placeholder="#Male">
+                                <input id="other_male" name="other_male" type="number" min=0 max=9999 class="form-control" placeholder="#Male">
                             </div>
                             <div class="col-sm-4">
-                                <input id="other_female" name="other_female" type="number" min=0 max=999 class="form-control" placeholder="#Female">
+                                <input id="other_female" name="other_female" type="number" min=0 max=9999 class="form-control" placeholder="#Female">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="culex_larvae" class="col-sm-4 control-label">Culex larvae</label>
                             <div class="col-sm-8">
-                                <input id="culex_larvae" name="culex_larvae" type="number" min=0 max=999 class="form-control" placeholder="#Culex larvae">
+                                <input id="culex_larvae" name="culex_larvae" type="number" min=0 max=9999 class="form-control" placeholder="#Culex larvae">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="aedes_larvae" class="col-sm-4 control-label">Aedes larvae</label>
                             <div class="col-sm-8">
-                                <input id="aedes_larvae" name="aedes_larvae" type="number" min=0 max=999 class="form-control" placeholder="#Aedes larvae">
+                                <input id="aedes_larvae" name="aedes_larvae" type="number" min=0 max=9999 class="form-control" placeholder="#Aedes larvae">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="unidentify" class="col-sm-4 control-label">Unidentify / Damage</label>
                             <div class="col-sm-8">
-                                <input id="unidentify" name="unidentify" type="number" min=0 max=999 class="form-control" placeholder="#Unidentify / Damage">
+                                <input id="unidentify" name="unidentify" type="number" min=0 max=9999 class="form-control" placeholder="#Unidentify / Damage">
                             </div>
                         </div>
 
