@@ -132,7 +132,7 @@
                         <div class="form-group">
                             <label for="weights" class="col-sm-4 control-label">Weights (mg)</label>
                             <div class="col-sm-8">
-                                <input id="weights" name="weights" type="number" step="0.01" class="form-control" placeholder="Weights (mg)" required>
+                                <input id="weights" name="weights" type="number" step="1" class="form-control" placeholder="Weights (mg)" required>
                             </div>
                         </div>
 
