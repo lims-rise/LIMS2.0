@@ -40,6 +40,7 @@ class Ref_objective extends CI_Controller
             'objective' => $this->input->post('objective',TRUE),
             'uuid' => $this->uuid->v4(),
             'flag' => '0',
+            'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
             'date_created' => $dt->format('Y-m-d H:i:s'),
             );
@@ -53,6 +54,7 @@ class Ref_objective extends CI_Controller
             'objective' => $this->input->post('objective',TRUE),
             'uuid' => $this->uuid->v4(),
             'flag' => '0',
+            'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
