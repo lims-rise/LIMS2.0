@@ -78,8 +78,10 @@ class Ref_consumables_model extends CI_Model
       function getStock()
       {
           $response = array();
+          $labId = $this->session->userdata('lab');
           $this->db->select('*');
           $this->db->where('flag', '0');
+          $this->db->where('lab', $labId);
           $q = $this->db->get('consumables_stock');
           $response = $q->result_array();
           return $response;
@@ -88,8 +90,10 @@ class Ref_consumables_model extends CI_Model
       function getObjective()
       {
           $response = array();
+          $labId = $this->session->userdata('lab');
           $this->db->select('id_objective, objective');
           $this->db->where('flag', '0');
+          $this->db->where('lab', $labId);
           $q = $this->db->get('ref_objective');
           $response = $q->result_array();
           return $response;
