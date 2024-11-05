@@ -17,11 +17,9 @@ class Ref_objective_model extends CI_Model
 
     // datatables
     function json() {
-        $labId = $this->session->userdata('lab');
         $this->datatables->select('id_objective, objective');
         $this->datatables->from($this->table);
         $this->datatables->where('flag', '0');
-        $this->datatables->where('lab', $labId);
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'id_objective');
