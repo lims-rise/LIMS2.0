@@ -131,13 +131,12 @@
 
         function getObjective()
         {
-            $response = array();
+            $labId = $this->session->userdata('lab');
             $this->db->select('id_objective, objective');
             $this->db->where('flag', '0');
             $q = $this->db->get('ref_objective');
             $response = $q->result_array();
             return $response;
-            //test
         }
 
         // function getProductById($productId)
