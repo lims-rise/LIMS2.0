@@ -131,7 +131,6 @@
 
         function getObjective()
         {
-            $labId = $this->session->userdata('lab');
             $this->db->select('id_objective, objective');
             $this->db->where('flag', '0');
             $q = $this->db->get('ref_objective');
