@@ -264,13 +264,13 @@
         $('#barcode_sample').on("change", function() {
             data1 = $('#barcode_sample').val();
             ckbar = data1.substring(3,5);
-            ckarray = ["N1", "N2", "S0", "G0", "Y0"];
+            ckarray = ["N1", "N2", "S0", "G0", "Y0", "W0", "G1"];
             ckbar = ckbar.toUpperCase();
             // console.log("ckbar:", ckbar);
             // ckarray = [10, 11, 12];
             ck = $.inArray(ckbar, ckarray);
             if (ck == -1) {
-                tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! <strong></br> ex.(NP-N1-000001, NP-N2-000001,	NP-S0-000069, NP-G0-000001, NP-Y0-000001) </strong> </span>');
+                tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! <strong></br> ex.(NP-N1-000001, NP-N2-000001,	NP-S0-000069, NP-G0-000001, NP-Y0-000001, NP-W0-000001, NP-G1-000001) </strong> </span>');
                 $('.val1tip').tooltipster('content', tip);
                 $('.val1tip').tooltipster('show');
                 $('#barcode_sample').val('');     
