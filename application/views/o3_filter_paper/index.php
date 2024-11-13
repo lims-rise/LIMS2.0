@@ -95,7 +95,7 @@
                             <div class="col-sm-8">
                                 <div class="input-group clockpicker">
                                 <input id="time_process" name="time_process" class="form-control" placeholder="Time Process" value="<?php 
-                                $datetime = new DateTime( "now", new DateTimeZone( "Asia/Makassar" ) );
+                                $datetime = new DateTime();
                                 echo $datetime->format( 'H:i' );
                                 ?>">
                                 <span class="input-group-addon">

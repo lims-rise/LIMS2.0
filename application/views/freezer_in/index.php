@@ -74,7 +74,7 @@
                             <div class="col-sm-8">
                                 <div class="input-group clockpicker">
                                     <input id="time_in" name="time_in" class="form-control" placeholder="Time IN to freezer" value="<?php 
-                                    $datetime = new DateTime( "now", new DateTimeZone( "Asia/Makassar" ) );
+                                    $datetime = new DateTime();
                                     echo $datetime->format( 'H:i' );
                                     ?>">
                                     <span class="input-group-addon">
