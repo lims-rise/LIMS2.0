@@ -388,6 +388,7 @@
                 {
                     "data" : "restriction",
                     "orderable": false,
+                    "searchable": false,
                     "className" : "text-center"
                 },
                 {
