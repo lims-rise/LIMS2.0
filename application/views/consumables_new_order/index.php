@@ -31,7 +31,7 @@
                             <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th>ID Order</th>
                                         <th>Product Name</th>
                                         <th>Order Qty</th>
                                         <th>Unit Order</th>
@@ -539,13 +539,13 @@
                 }
             ],
             // order: [[1, 'desc']],
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                var index = page * length + (iDisplayIndex + 1);
-                $('td:eq(0)', row).html(index); // Menetapkan nomor urut ke kolom pertama
-            },
+            // rowCallback: function(row, data, iDisplayIndex) {
+            //     var info = this.fnPagingInfo();
+            //     var page = info.iPage;
+            //     var length = info.iLength;
+            //     var index = page * length + (iDisplayIndex + 1);
+            //     $('td:eq(0)', row).html(index); // Menetapkan nomor urut ke kolom pertama
+            // },
             drawCallback: function(settings) {
                 let api = this.api();
                 let pageInfo = api.page.info();
