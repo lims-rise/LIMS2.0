@@ -6,6 +6,15 @@
                     <div class="box-header">
                         <h3 class="box-title">Lab Consumables - In Stock</h3>
                     </div>
+                    <form role="form"  id="formKegHidden" method="post" class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <input class="form-control " id="id_stock" type="hidden"  value="<?php echo $id_stock ?>"  disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                         <div class="box-body">
                             <div style="padding-bottom: 10px;">
                                 <?php
@@ -22,7 +31,7 @@
                             <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th>ID In Stock</th>
                                         <th>Product Name</th>
                                         <th>Quantity</th>
                                         <th>Unit</th>
@@ -65,9 +74,9 @@
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
 
                         <div class="form-group" id="idx">
-                            <label for="id_stock" class="col-sm-4 control-label">ID Stock Used</label>
+                            <label for="idx_stock" class="col-sm-4 control-label">ID In Stock</label>
                             <div class="col-sm-8">
-                                <input id="id_stock" name="id_stock" placeholder="Id stock Used" type="text" class="form-control">
+                                <input id="idx_stock" name="idx_stock" placeholder="Id stock Used" type="text" class="form-control">
                             </div>
                         </div>
 
@@ -360,6 +369,7 @@
 
     var table;
     var rowNum = 1;
+    let id_stock = $('#id_stock').val();
     $(document).ready(function() {
 
         // $('.productSelect').change(function() {
@@ -494,13 +504,13 @@
                 }
             ],
             // order: [[0, 'desc']],
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                var index = page * length + (iDisplayIndex + 1);
-                $('td:eq(0)', row).html(index); // Menetapkan nomor urut ke kolom pertama
-            },
+            // rowCallback: function(row, data, iDisplayIndex) {
+            //     var info = this.fnPagingInfo();
+            //     var page = info.iPage;
+            //     var length = info.iLength;
+            //     var index = page * length + (iDisplayIndex + 1);
+            //     $('td:eq(0)', row).html(index); // Menetapkan nomor urut ke kolom pertama
+            // },
             drawCallback: function(settings) {
                 let api = this.api();
                 let pageInfo = api.page.info();
@@ -541,7 +551,9 @@
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - Insert In Stock <span id="my-another-cool-loader"></span>');
-            $('#idx').hide();
+            $('#idx_stock').val(id_stock);
+            $('#idx_stock').attr('readonly', true);
+            // $('#idx').hide();
             $('#product_name').val('');
             // $('#id').val('');
             $('#quantity').val('');
@@ -563,8 +575,10 @@
             console.log(data);
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Consumables - Update In Stock<span id="my-another-cool-loader"></span>');
-            $('#id_stock').attr('readonly', true);
-            $('#idx').hide();
+            $('#idx_stock').attr('readonly', true);
+            $('#idx_stock').val(data.id_stock);
+            // $('#id_stock').attr('readonly', true);
+            // $('#idx').hide();
             $('#id_stock').val(data.id_stock);
             	
             // Set the value of the dropdown based on the testing_type

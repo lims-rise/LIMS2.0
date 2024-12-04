@@ -6,6 +6,15 @@
                     <div class="box-header">
                         <h3 class="box-title">Lab Consumables - Stock Take</h3>
                     </div>
+                    <form role="form"  id="formKegHidden" method="post" class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <input class="form-control " id="id_instock" type="hidden"  value="<?php echo $id_instock ?>"  disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                         <div class="box-body">
                             <div style="padding-bottom: 10px;">
                                 <?php
@@ -22,17 +31,17 @@
                             <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th>ID stock take</th>
                                         <th>Objective</th>
-                                        <th>Product Name</th>
+                                        <th>Product name</th>
                                         <th>Number of closed containers</th>
                                         <th>Unit of measure counted in the lab</th>
-                                        <th>Quantity Measured per Unit</th>
-                                        <th>Unit Of Measure</th>
+                                        <th>Quantity measured per unit</th>
+                                        <th>Unit of measure</th>
                                         <th>Number of loose items </th>
-                                        <th>Total Quantity</th>
-                                        <th>Collection Date</th>
-                                        <th>Collection Time</th>
+                                        <th>Total quantity</th>
+                                        <th>Collection date</th>
+                                        <th>Collection time</th>
                                         <th>Comments</th>
                                         <!-- <th>Indonesia Comments</th> -->
                                         <!-- <th>Melbourne Comments</th> -->
@@ -69,9 +78,9 @@
                         <input id="id_stock1" name="id_stock1" type="hidden" class="form-control input-sm">
 
                         <div class="form-group" id="idx">
-                            <label for="id_instock" class="col-sm-4 control-label">ID In Stock</label>
+                            <label for="idx_instock" class="col-sm-4 control-label">ID Stock Take</label>
                             <div class="col-sm-8">
-                                <input id="id_instock" name="id_instock" placeholder="Id In stock" type="text" class="form-control">
+                                <input id="idx_instock" name="idx_instock" placeholder="Id Stock Take" type="text" class="form-control">
                             </div>
                         </div>
 
@@ -496,6 +505,7 @@
 
     var table;
     var rowNum = 1;
+    let id_instock = $('#id_instock').val();
     $(document).ready(function() {
 
         $('.stockSelect').chosen({
@@ -751,13 +761,13 @@
                 }
             ],
             // order: [[1, 'desc']],
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                var index = page * length + (iDisplayIndex + 1);
-                $('td:eq(0)', row).html(index); // Menetapkan nomor urut ke kolom pertama
-            },
+            // rowCallback: function(row, data, iDisplayIndex) {
+            //     var info = this.fnPagingInfo();
+            //     var page = info.iPage;
+            //     var length = info.iLength;
+            //     var index = page * length + (iDisplayIndex + 1);
+            //     $('td:eq(0)', row).html(index); // Menetapkan nomor urut ke kolom pertama
+            // },
             drawCallback: function(settings) {
                 let api = this.api();
                 let pageInfo = api.page.info();
@@ -811,9 +821,11 @@
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - Insert Stock Take <span id="my-another-cool-loader"></span>');
-            $('#idx').hide();
+            $('#idx_instock').val(id_instock);
+            $('#idx_instock').attr('readonly', true);
+            // $('#idx').hide();
             // $('#id').val('');
-            $('#id_stock').val('');
+            // $('#id_stock').val('');
             $('#id_objective').val('');
             // $('#id_objective').prop('readonly', true);
             // $('#id_stock').prop('readonly', true);
@@ -843,9 +855,11 @@
             console.log(data);
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Consumables - Update Stock Take <span id="my-another-cool-loader"></span>');
-            $('#id_instock').attr('readonly', true);
-            $('#idx').hide();
-            $('#id_instock').val(data.id_instock);
+            $('#idx_instock').attr('readonly', true);
+            $('#idx_instock').val(data.id_instock);
+            // $('#id_instock').attr('readonly', true);
+            // $('#idx').hide();
+            // $('#id_instock').val(data.id_instock);
             	
        // Reset all checkboxes before setting them
     $('.idObjectiveSelect').prop('checked', false).prop('disabled', true);

@@ -6,7 +6,15 @@
                     <div class="box-header">
                         <h3 class="box-title">Lab Consumables - Order</h3>
                     </div>
-
+                    <form role="form"  id="formKegHidden" method="post" class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <input class="form-control " id="id_order" type="hidden"  value="<?php echo $id_order ?>"  disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                         <div class="box-body">
                             <div style="padding-bottom: 10px;">
                                 <?php
@@ -67,9 +75,9 @@
                         <input id="id_order" name="id_order" type="hidden" class="form-control input-sm">
 
                         <div class="form-group" id="idx">
-                            <label for="id_neworder" class="col-sm-4 control-label">ID New Order</label>
+                            <label for="idx_order" class="col-sm-4 control-label">ID Order</label>
                             <div class="col-sm-8">
-                                <input id="id_neworder" name="id_neworder" placeholder="Id New Order" type="text" class="form-control">
+                                <input id="idx_order" name="idx_order" placeholder="Id Order" type="text" class="form-control">
                             </div>
                         </div>
 
@@ -354,6 +362,7 @@
 
     var table;
     var rowNum = 1;
+    let id_order = $('#id_order').val();
     $(document).ready(function() {
         $('.stockSelect').chosen({
             placeholder_text_single: "-- Select testing type --",
@@ -585,7 +594,9 @@
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - New Order <span id="my-another-cool-loader"></span>');
-            $('#idx').hide();
+            $('#idx_order').val(id_order);
+            $('#idx_order').attr('readonly', true);
+            // $('#idx').hide();
             // $('#product_id').val('');
             $('#id_stock').val('');
             $('#quantity_ordering').val('');
@@ -612,10 +623,11 @@
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Consumables - Update New Order <span id="my-another-cool-loader"></span>');
             // $('#id_neworder').attr('readonly', true);
             // $('#id_neworder').val(data.id_neworder);
-            $('#idx').hide();
-            $('#id_order').val(data.id_order);
-            $('#id_order').attr('readonly', true);
-            	
+            // $('#idx').hide();
+            // $('#id_order').val(data.id_order);
+            // $('#id_order').attr('readonly', true);
+            $('#idx_order').attr('readonly', true);
+            $('#idx_order').val(data.id_order);
             // Set the value of the dropdown based on the testing_type
             $('#id_stock option').each(function() {
                 if ($(this).text() === data.product_name) {

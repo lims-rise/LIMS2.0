@@ -41,7 +41,8 @@ class Consumables_stock_used extends CI_Controller
         // $data['product'] = $this->Consumables_stock_used_model->getProduct();
         // $this->template->load('template', 'consumables_stock_used/index', $data);
         // $this->Consumables_stock_used_model->checkStockLevelsAndSendNotification();
-        $this->template->load('template', 'consumables_stock_used/index');
+        $data['id_stock'] = $this->Consumables_stock_used_model->generate_id_stock();
+        $this->template->load('template', 'consumables_stock_used/index', $data);
     }
 
     // public function getProductDetails()
@@ -82,7 +83,7 @@ class Consumables_stock_used extends CI_Controller
     public function saveConsumablesStockUsed()
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = strtoupper($this->input->post('id_stock',TRUE));
+        $id = strtoupper($this->input->post('idx_stock',TRUE));
         $dt = new DateTime();
 
         if ($mode == "insert") {

@@ -22,6 +22,7 @@ class Ref_consumables extends CI_Controller
     {
         $data['stockName'] = $this->Ref_consumables_model->getStock();
         $data['objectives'] = $this->Ref_consumables_model->getObjective();
+        $data['id_consumables'] = $this->Ref_consumables_model->generate_id_consumables();
         $this->template->load('template','ref_consumables/index', $data);
     } 
     
@@ -33,7 +34,7 @@ class Ref_consumables extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('id_consumables',TRUE);
+        $id = $this->input->post('idx_consumanbles',TRUE);
         $id_stock = $this->input->post('id_stock',TRUE);
         $id_objective = $this->input->post('id_objective',TRUE);
         $dt = new DateTime();

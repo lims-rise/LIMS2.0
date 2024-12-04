@@ -37,6 +37,7 @@ class Consumables_in_stock extends CI_Controller {
         $data['inStock'] = $this->Consumables_in_stock_model->getAllConsumablesInStock();
         $data['stockName'] = $this->Consumables_in_stock_model->getStock();
         $data['objectives'] = $this->Consumables_in_stock_model->getObjective();
+        $data['id_instock'] = $this->Consumables_in_stock_model->generate_id_instock();
         $this->template->load('template','consumables_in_stock/index', $data);
     } 
 
@@ -155,7 +156,7 @@ class Consumables_in_stock extends CI_Controller {
     public function saveConsumablesInStock()
     {
         $mode = $this->input->post('mode', TRUE);
-        $id = strtoupper($this->input->post('id_instock', TRUE));
+        $id = strtoupper($this->input->post('idx_instock', TRUE));
         // Mendapatkan array id_objective
         $id_objectives = $this->input->post('id_objective', TRUE);
         $id_objectives1 = $this->input->post('id_objective1', TRUE);

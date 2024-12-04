@@ -6,6 +6,15 @@
                     <div class="box-header">
                         <h3 class="box-title">Lab Consumables - Order Detail</h3>
                     </div>
+                    <form role="form"  id="formKegHidden" method="post" class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <input class="form-control " id="id_orderdetail" type="hidden"  value="<?php echo $id_orderdetail ?>"  disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <form role="form" id="formKeg" method="post" class="form-horizontal">
                         <div class="box-body">
                             <div class="row">
@@ -151,9 +160,9 @@
                                 </div>
                         </div>
                         <div class="form-group" id="idx">
-                            <label for="id_orderdetail" class="col-sm-4 control-label">ID Order Detail</label>
+                            <label for="idx_orderdetail" class="col-sm-4 control-label">ID Order Detail</label>
                             <div class="col-sm-8">
-                                <input id="id_orderdetail" name="id_orderdetail" placeholder="Id Order Detail" type="text" class="form-control">
+                                <input id="idx_orderdetail" name="idx_orderdetail" placeholder="Id Order Detail" type="text" class="form-control">
                             </div>
                         </div>
 
@@ -326,6 +335,7 @@
     let table;
     let rowNum = 1;
     let idName = $('#id_name').val();
+    let id_orderdetail = $('#id_orderdetail').val();
     $(document).ready(function() {
 
         // Function to update the button status
@@ -520,7 +530,9 @@
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - New Received <span id="my-another-cool-loader"></span>');
             $('#hiddenField').hide();
-            $('#idx').hide();
+            $('#idx_orderdetail').val(id_orderdetail);
+            $('#idx_orderdetail').attr('readonly', true);
+            // $('#idx').hide();
             $('#idx_order').val(id_order); // Assuming sample_id is defined somewhere
             // $('#order_number').val('');
             // $('#ordered').val('');
@@ -550,9 +562,11 @@
             console.log(data);
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Consumables - Update Received <span id="my-another-cool-loader"></span>');
-            $('#id_orderdetail').attr('readonly', true);
-            $('#idx').hide();
-            $('#id_orderdetail').val(data.id_orderdetail);
+            // $('#id_orderdetail').attr('readonly', true);
+            // $('#idx').hide();
+            // $('#id_orderdetail').val(data.id_orderdetail);
+            $('#idx_orderdetail').attr('readonly', true);
+            $('#idx_orderdetail').val(data.id_orderdetail);
             	
             // Set the value of the dropdown based on the testing_type
 				// $('#id_neworder2 option').each(function() {

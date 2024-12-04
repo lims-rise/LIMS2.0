@@ -35,7 +35,7 @@ class Consumables_report_model extends CI_Model
         $this->datatables->from('consumables_in_stock AS cis');
         $this->datatables->join('ref_objective AS ro', 'cis.id_objective = ro.id_objective', 'left');
         $this->datatables->join('consumables_stock AS cs', 'cis.id_stock = cs.id_stock', 'left');
-        
+
         // Uncomment this line if you need to filter by lab
         $this->datatables->where('cis.lab', $this->session->userdata('lab'));
         

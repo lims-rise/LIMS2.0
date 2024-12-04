@@ -54,9 +54,60 @@ class Ref_consumables_model extends CI_Model
         return $this->db->get($this->table)->row();
     }
 
+        // Fungsi untuk mendapatkan id_stock terbaru berdasarkan lab yang aktif
+        public function get_latest_id_consumables() {
+            // Ambil lab dari session
+            $lab = $this->session->userdata('lab');
+            
+            // Tentukan prefix berdasarkan lab
+            $prefix = ($lab == 1) ? 'ID-CONSUMABLES-' : 'FJ-CONSUMABLES-';  // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
+
+            // Pilih id_stock terakhir berdasarkan lab
+            $this->db->select('id_consumables');
+            $this->db->like('id_consumables', $prefix); // Gunakan LIKE untuk mencocokkan id_stock dengan prefix yang sesuai
+            $this->db->order_by('id_consumables', 'DESC');
+            $this->db->limit(1);
+            $query = $this->db->get('ref_consumables');
+
+            // Cek jika ada id_stock sebelumnya
+            if ($query->num_rows() > 0) {
+                return $query->row()->id_consumables;
+            } else {
+                return null;
+            }
+        }
+
+        // Fungsi untuk menghasilkan id_stock berikutnya berdasarkan lab yang aktif
+        public function generate_id_consumables() {
+            // Ambil lab dari session untuk menentukan prefix
+            $lab = $this->session->userdata('lab');
+            
+            // Tentukan prefix berdasarkan lab
+            $prefix = ($lab == 1) ? 'ID-CONSUMABLES-' : 'FJ-CONSUMABLES-'; // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
+
+            // Ambil id_stock terakhir yang sudah ada berdasarkan lab dan prefix
+            $latest_id = $this->get_latest_id_consumables();
+
+            if ($latest_id) {
+                // Jika id_stock sebelumnya ada dan prefix sesuai, ambil nomor urut berikutnya
+                if (strpos($latest_id, $prefix) === 0) {
+                    $number = intval(substr($latest_id, strlen($prefix))) + 1;
+                } else {
+                    $number = 1;  // Jika prefix tidak sesuai, mulai dari nomor 1
+                }
+            } else {
+                $number = 1;  // Jika belum ada id_stock, mulai dari nomor 1
+            }
+
+            // Format id_stock dengan prefix dan nomor urut
+            $new_id = sprintf('%s%05d', $prefix, $number);
+            return $new_id;
+        }
+
     // insert data
     function insert($data)
     {
+        $data['id_consumables'] = $this->generate_id_consumables();
         $this->db->insert($this->table, $data);
     }
     

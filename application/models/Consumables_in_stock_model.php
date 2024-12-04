@@ -34,7 +34,13 @@
             $this->datatables->join('consumables_stock', 'consumables_in_stock.id_stock = consumables_stock.id_stock', 'left');
             $this->datatables->join('ref_objective', 'consumables_in_stock.id_objective = ref_objective.id_objective', 'left');
             $this->datatables->where('consumables_in_stock.flag', '0');
-            $this->datatables->where('consumables_in_stock.lab', $this->session->userdata('lab'));
+            // $this->datatables->where('consumables_in_stock.lab', $this->session->userdata('lab'));
+            $lab = $this->session->userdata('lab');
+            if ($lab) {
+                $this->datatables->where('consumables_in_stock.lab', $lab);
+                // $this->datatables->where('consumables_stock.lab', $lab);
+            }
+            // $this->datatables->where('consumables_stock.lab', $this->session->userdata('lab'));
             $this->datatables->add_column('quantity_with_unit', '$1 $2', 'total_quantity,unit_of_measure');
 
             $lvl = $this->session->userdata('id_user_level');
@@ -157,8 +163,60 @@
         //     $this->db->insert('consumables_in_stock', $data);
         // }
 
+        // Fungsi untuk mendapatkan id_stock terbaru berdasarkan lab yang aktif
+        public function get_latest_id_instock() {
+            // Ambil lab dari session
+            $lab = $this->session->userdata('lab');
+            
+            // Tentukan prefix berdasarkan lab
+            $prefix = ($lab == 1) ? 'ID-STOCKTAKE-' : 'FJ-STOCKTAKE-';  // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
+
+            // Pilih id_stock terakhir berdasarkan lab
+            $this->db->select('id_instock');
+            $this->db->like('id_instock', $prefix); // Gunakan LIKE untuk mencocokkan id_stock dengan prefix yang sesuai
+            $this->db->order_by('id_instock', 'DESC');
+            $this->db->limit(1);
+            $query = $this->db->get('consumables_in_stock');
+
+            // Cek jika ada id_stock sebelumnya
+            if ($query->num_rows() > 0) {
+                return $query->row()->id_instock;
+            } else {
+                return null;
+            }
+        }
+
+        // Fungsi untuk menghasilkan id_stock berikutnya berdasarkan lab yang aktif
+        public function generate_id_instock() {
+            // Ambil lab dari session untuk menentukan prefix
+            $lab = $this->session->userdata('lab');
+            
+            // Tentukan prefix berdasarkan lab
+            $prefix = ($lab == 1) ? 'ID-STOCKTAKE-' : 'FJ-STOCKTAKE-'; // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
+
+            // Ambil id_stock terakhir yang sudah ada berdasarkan lab dan prefix
+            $latest_id = $this->get_latest_id_instock();
+
+            if ($latest_id) {
+                // Jika id_stock sebelumnya ada dan prefix sesuai, ambil nomor urut berikutnya
+                if (strpos($latest_id, $prefix) === 0) {
+                    $number = intval(substr($latest_id, strlen($prefix))) + 1;
+                } else {
+                    $number = 1;  // Jika prefix tidak sesuai, mulai dari nomor 1
+                }
+            } else {
+                $number = 1;  // Jika belum ada id_stock, mulai dari nomor 1
+            }
+
+            // Format id_stock dengan prefix dan nomor urut
+            $new_id = sprintf('%s%05d', $prefix, $number);
+            return $new_id;
+        }
+
+
         function insertConsumablesInStock($data)
         {
+            $data['id_instock'] = $this->generate_id_instock();
             // insert into rhe consumables_in_stock table
             $this->db->trans_start();  // Starting Transaction
             $this->db->insert('consumables_in_stock', $data);

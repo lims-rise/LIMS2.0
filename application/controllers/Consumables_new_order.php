@@ -39,6 +39,7 @@
             $data['stockName'] = $this->Consumables_new_order_model->getStock();
             // var_dump($data);
             // die();
+            $data['id_order'] = $this->Consumables_new_order_model->generate_id_order();
             $this->template->load('template', 'consumables_new_order/index', $data);
         }
 
@@ -72,7 +73,7 @@
         public function saveConsumablesOrder()
         {
             $mode = $this->input->post('mode',TRUE);
-            $id = strtoupper($this->input->post('id_order',TRUE));
+            $id = strtoupper($this->input->post('idx_order',TRUE));
             $dt = new DateTime();
             $c = $this->input->post('id_stock', TRUE);
 

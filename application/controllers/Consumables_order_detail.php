@@ -49,7 +49,7 @@
         public function saveConsumablesOrderDetail() 
         {
             $mode = $this->input->post('mode',TRUE);
-            $id = strtoupper($this->input->post('id_orderdetail',TRUE));
+            $id = strtoupper($this->input->post('idx_orderdetail',TRUE));
             $id_order = $this->input->post('idx_order',TRUE);
             $dt = new DateTime();
             // var_dump($id);
@@ -104,7 +104,8 @@
                     'date_created' => $dt->format('Y-m-d H:i:s'),
                 );
 
- 
+            //  var_dump($data);
+            //     die();
                 $this->Consumables_order_detail_model->updateConsumablesOrderDetail($id, $data);
                 $this->session->set_flashdata('message', 'Update Record Success');  
             }
@@ -176,6 +177,7 @@
                     );
                     // var_dump($data);
                     // die();
+                    $data['id_orderdetail'] = $this->Consumables_order_detail_model->generate_id_orderdetail();
                     $this->template->load('template','consumables_order_detail/index', $data);
             }
             else {

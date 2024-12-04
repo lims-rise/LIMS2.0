@@ -6,6 +6,15 @@
                     <div class="box-header">
                         <h3 class="box-title">Master Data - Consumables</h3>
                     </div>
+                    <form role="form"  id="formKegHidden" method="post" class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    <input class="form-control " id="id_consumables" type="hidden"  value="<?php echo $id_consumables ?>"  disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
                             <?php
@@ -18,7 +27,7 @@
                             <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>ID Consumables</th>
                                         <th>Product Name</th>
                                         <th>Objective</th>
                                         <th>Action</th>
@@ -50,7 +59,14 @@
                 <form id="formSample"  action= <?php echo site_url('ref_consumables/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-                        <input id="id_consumanbles" name="id_consumables" type="hidden" class="form-control input-sm">
+                        <!-- <input id="id_consumanbles" name="id_consumables" type="hidden" class="form-control input-sm"> -->
+
+                        <div class="form-group" id="idx">
+                            <label for="idx_consumables" class="col-sm-4 control-label">ID Consumables</label>
+                            <div class="col-sm-8">
+                                <input id="idx_consumables" name="idx_consumables" placeholder="Id Consumables" type="text" class="form-control">
+                            </div>
+                        </div>
 
                         <div class="form-group">
 							<label for="id_stock" class="col-sm-4 control-label">Product Name</label>
@@ -123,7 +139,8 @@
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
 <script type="text/javascript">
 
-    var table
+    var table;
+    let id_consumables = $('#id_consumables').val();
     $(document).ready(function() {
 
         $('.stockSelect').chosen({
@@ -220,7 +237,9 @@
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Master Data - New consumables<span id="my-another-cool-loader"></span>');
-            $('#id_consumables').val('');
+            $('#idx_consumables').val(id_consumables);
+            $('#idx_consumables').attr('readonly', true);
+            // $('#id_consumables').val('');
             $('#id_stock').val('');
             $('#id_objective').val('');
             $('#compose-modal').modal('show');
@@ -233,7 +252,9 @@
             console.log(data);
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Master Data - Update consumables<span id="my-another-cool-loader"></span>');
-            $('#id_consumables').val(data.id_consumables);
+            $('#idx_consumables').attr('readonly', true);
+            $('#idx_consumables').val(data.id_consumables);
+            // $('#id_consumables').val(data.id_consumables);
 
             // Set the value of the dropdown based on the testing_type
             $('#id_stock option').each(function() {
