@@ -99,7 +99,7 @@
                             <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th>ID Order Detail</th>
                                         <!-- <th>Order Name</th> -->
                                         <!-- <th>Order Number</th> -->
                                         <!-- <th>Ordered</th> -->
@@ -508,18 +508,18 @@
             //         $('#addtombol').show();
             //     }
             // }
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                var index = page * length + (iDisplayIndex + 1);
-                $('td:eq(0)', row).html(index); // Menetapkan nomor urut ke kolom pertama
-                // if (info.iTotal > 0) {
-                //     $('#addtombol').hide();
-                // } else {
-                //     $('#addtombol').show();
-                // }
-            }
+            // rowCallback: function(row, data, iDisplayIndex) {
+            //     var info = this.fnPagingInfo();
+            //     var page = info.iPage;
+            //     var length = info.iLength;
+            //     var index = page * length + (iDisplayIndex + 1);
+            //     $('td:eq(0)', row).html(index); // Menetapkan nomor urut ke kolom pertama
+            //     if (info.iTotal > 0) {
+            //         $('#addtombol').hide();
+            //     } else {
+            //         $('#addtombol').show();
+            //     }
+            // }
         });
 
     

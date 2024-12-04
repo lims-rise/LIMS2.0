@@ -110,7 +110,7 @@
             $lab = $this->session->userdata('lab');
             
             // Tentukan prefix berdasarkan lab
-            $prefix = ($lab == 1) ? 'ID-ORDER-DTL-' : 'FJ-ORDER-DTL-';  // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
+            $prefix = ($lab == 1) ? 'N-OD-' : 'F-OD-';  // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
 
             // Pilih id_stock terakhir berdasarkan lab
             $this->db->select('id_orderdetail');
@@ -133,7 +133,7 @@
             $lab = $this->session->userdata('lab');
             
             // Tentukan prefix berdasarkan lab
-            $prefix = ($lab == 1) ? 'ID-ORDER-DTL-' : 'FJ-ORDER-DTL-'; // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
+            $prefix = ($lab == 1) ? 'N-OD-' : 'F-OD-'; // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
 
             // Ambil id_stock terakhir yang sudah ada berdasarkan lab dan prefix
             $latest_id = $this->get_latest_id_orderdetail();

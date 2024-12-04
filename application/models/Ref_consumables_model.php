@@ -60,7 +60,7 @@ class Ref_consumables_model extends CI_Model
             $lab = $this->session->userdata('lab');
             
             // Tentukan prefix berdasarkan lab
-            $prefix = ($lab == 1) ? 'ID-CONSUMABLES-' : 'FJ-CONSUMABLES-';  // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
+            $prefix = ($lab == 1) ? 'N-C-' : 'F-C-';  // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
 
             // Pilih id_stock terakhir berdasarkan lab
             $this->db->select('id_consumables');
@@ -83,7 +83,7 @@ class Ref_consumables_model extends CI_Model
             $lab = $this->session->userdata('lab');
             
             // Tentukan prefix berdasarkan lab
-            $prefix = ($lab == 1) ? 'ID-CONSUMABLES-' : 'FJ-CONSUMABLES-'; // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
+            $prefix = ($lab == 1) ? 'N-C-' : 'F-C-'; // ID-STOCK untuk Indonesia, FJ-STOCK untuk Fiji
 
             // Ambil id_stock terakhir yang sudah ada berdasarkan lab dan prefix
             $latest_id = $this->get_latest_id_consumables();
