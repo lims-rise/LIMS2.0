@@ -60,6 +60,7 @@ class DNA_extraction extends CI_Controller
             'barcode_metagenomics' => strtoupper($this->input->post('barcode_metagenomics',TRUE)),
             'id_location' => $this->input->post('id_loc',TRUE),
             'meta_box' => strtoupper($this->input->post('meta_box',TRUE)),
+            'qc_status' => $this->input->post('qc_status',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -84,6 +85,7 @@ class DNA_extraction extends CI_Controller
             'barcode_metagenomics' => strtoupper($this->input->post('barcode_metagenomics',TRUE)),
             'id_location' => $this->input->post('id_loc',TRUE),
             'meta_box' => strtoupper($this->input->post('meta_box',TRUE)),
+            'qc_status' => $this->input->post('qc_status',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -204,7 +206,8 @@ class DNA_extraction extends CI_Controller
         $sheet->setCellValue('J1', "Barcode_metagenomics");
         $sheet->setCellValue('K1', "Location");
         $sheet->setCellValue('L1', "Meta_box");
-        $sheet->setCellValue('M1', "Comments");
+        $sheet->setCellValue('M1', "QC_Status");
+        $sheet->setCellValue('N1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -225,7 +228,8 @@ class DNA_extraction extends CI_Controller
           $sheet->setCellValue('J'.$numrow, $data->barcode_metagenomics);
           $sheet->setCellValue('K'.$numrow, $data->Location);
           $sheet->setCellValue('L'.$numrow, $data->meta_box);
-          $sheet->setCellValue('M'.$numrow, trim($data->comments));
+          $sheet->setCellValue('M'.$numrow, $data->qc_status);
+          $sheet->setCellValue('N'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

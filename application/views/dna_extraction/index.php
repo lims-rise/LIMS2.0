@@ -208,6 +208,16 @@
                             <!-- </div>
                         </div> -->
 
+                        <div class="form-group">
+                            <label for="qc_status" class="col-sm-4 control-label">QC Status</label>
+                            <div class="col-sm-8">
+                            <select id='qc_status' name="qc_status" class="form-control">
+                                <option>-- Select QC Status --</option>
+                                <option value='Pass'>Pass</option>
+                                <option value='Fail'>Fail</option>
+                            </select>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                                 <label for="comments" class="col-sm-4 control-label">Comments</label>
@@ -695,6 +705,7 @@
             $('#id_rack').val('');
             $('#id_draw').val('');
             $('#id_loc').attr('readonly', true);
+            $('#qc_status').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
         });
@@ -727,6 +738,7 @@
             $('#id_rack').val(data.rack);
             $('#id_draw').val(data.rack_level);
             $('#id_loc').attr('readonly', true);
+            $('#qc_status').val(data.qc_status);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });  
