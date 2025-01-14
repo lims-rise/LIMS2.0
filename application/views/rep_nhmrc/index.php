@@ -51,6 +51,8 @@
                                         <option value='23' >Food</option>
                                         <option value='24' >Hand Print</option>
                                         <option value='25' >Toys</option>
+                                        <option value='26' >Swab Indoor</option>
+                                        <option value='27' >Drinking Water</option>
                                         ";
                                     ?>
                                 </select>

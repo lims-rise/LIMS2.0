@@ -270,15 +270,15 @@ class REP_nhmrc extends CI_Controller
             }
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
         $datenow=date("Ymd");
-        if ($rep == 18) {
-            $boottype = 'Porch_Bootsocks_';
-        }
-        else if ($rep == 19) {
-            $boottype = 'Indoor_Bootsocks_';
-        }
-        else if ($rep == 20) {
-            $boottype = 'Outdoor_Bootsocks_';
-        }
+            if ($rep == 18) {
+                $boottype = 'Porch_Bootsocks_';
+            }
+            else if ($rep == 19) {
+                $boottype = 'Indoor_Bootsocks_';
+            }
+            else if ($rep == 20) {
+                $boottype = 'Outdoor_Bootsocks_';
+            }
         $fileName = 'NHMRC_'.$boottype.'_report_'.$datenow.'.csv';        
         }
         else if ($rep == 21) {
@@ -969,12 +969,282 @@ class REP_nhmrc extends CI_Controller
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
         $datenow=date("Ymd");
         $fileName = 'NHMRC_Toys_'.$datenow.'.csv';            
-        }                
+        }  
+
+        else if ($rep == 27) {
+            $sheet->setCellValue('A1',"barcode_sample");
+            $sheet->setCellValue('B1',"sampletype");
+            $sheet->setCellValue('C1',"reception_date_arrival");
+            $sheet->setCellValue('D1',"reception_time_arrival");
+            $sheet->setCellValue('E1',"reception_png_control");
+            $sheet->setCellValue('F1',"reception_barcode_tinytag");
+            $sheet->setCellValue('G1',"reception_comments");
+            $sheet->setCellValue('H1',"sampleentry_barcode_bottle");
+            $sheet->setCellValue('I1',"sampleentry_date_conduct");
+            $sheet->setCellValue('J1',"sampleentry_vol_aliquot");
+            $sheet->setCellValue('K1',"sampleentry_barcode_box");
+            $sheet->setCellValue('L1',"sampleentry_position_tube");
+            $sheet->setCellValue('M1',"sampleentry_location");
+            $sheet->setCellValue('N1',"sampleentry_comments");
+            $sheet->setCellValue('O1',"idexx_in_date_conduct");
+            $sheet->setCellValue('P1',"idexx_in_time_incubation");
+            $sheet->setCellValue('Q1',"idexx_in_barcode_colilert1");
+            $sheet->setCellValue('R1',"idexx_in_volume1");
+            $sheet->setCellValue('S1',"idexx_in_dilution1");
+            $sheet->setCellValue('T1',"idexx_in_comments1");
+            $sheet->setCellValue('U1',"idexx_in_barcode_colilert2");
+            $sheet->setCellValue('V1',"idexx_in_volume2");
+            $sheet->setCellValue('W1',"idexx_in_dilution2");
+            $sheet->setCellValue('X1',"idexx_in_comments2");
+            $sheet->setCellValue('Y1',"idexx_out_date_conduct");
+            $sheet->setCellValue('Z1',"idexx_out_timeout_incubation");
+            $sheet->setCellValue('AA1',"idexx_out_time_minutes");
+            $sheet->setCellValue('AB1',"idexx_out_ecoli_largewells");
+            $sheet->setCellValue('AC1',"idexx_out_ecoli_smallwells");
+            $sheet->setCellValue('AD1',"idexx_out_ecoli_mpn");
+            $sheet->setCellValue('AE1',"idexx_out_coliforms_largewells");
+            $sheet->setCellValue('AF1',"idexx_out_coliforms_smallwells");
+            $sheet->setCellValue('AG1',"idexx_out_coliforms_mpn");
+            $sheet->setCellValue('AH1',"idexx_out_comments");
+            $sheet->setCellValue('AI1',"metagenomics_date_conduct");
+            $sheet->setCellValue('AJ1',"metagenomics_barcode_falcon1");
+            $sheet->setCellValue('AK1',"metagenomics_barcode_falcon2");
+            $sheet->setCellValue('AL1',"metagenomics_volume_filtered");
+            $sheet->setCellValue('AM1',"metagenomics_time_started");
+            $sheet->setCellValue('AN1',"metagenomics_time_finished");
+            $sheet->setCellValue('AO1',"metagenomics_time_minutes");
+            $sheet->setCellValue('AP1',"metagenomics_barcode_dna_bag");
+            $sheet->setCellValue('AQ1',"metagenomics_barcode_storage");
+            $sheet->setCellValue('AR1',"metagenomics_location");
+            $sheet->setCellValue('AS1',"metagenomics_comments");
+            $sheet->setCellValue('AT1',"mac1_barcode_macconkey");
+            $sheet->setCellValue('AU1',"mac1_date_process");
+            $sheet->setCellValue('AV1',"mac1_time_process");
+            $sheet->setCellValue('AW1',"mac1_volume");
+            $sheet->setCellValue('AX1',"mac1_comments");
+            $sheet->setCellValue('AY1',"mac2_date_process");
+            $sheet->setCellValue('AZ1',"mac2_time_process");
+            $sheet->setCellValue('BA1',"mac2_bar_macsweep1");
+            $sheet->setCellValue('BB1',"mac2_cryobox1");
+            $sheet->setCellValue('BC1',"macsweep1_location");
+            $sheet->setCellValue('BD1',"mac2_bar_macsweep2");
+            $sheet->setCellValue('BE1',"mac2_cryobox2");
+            $sheet->setCellValue('BF1',"macsweep2_location");
+            $sheet->setCellValue('BG1',"mac2_comments");                       
+    
+            $rdeliver = $this->REP_nhmrc_model->get_handrince($date1, $date2, $rep);
+        
+            $numrow = 2; 
+            foreach($rdeliver as $data){ 
+                $sheet->setCellValue('A'.$numrow, $this->cleanEnter($data->barcode_sample));
+                $sheet->setCellValue('B'.$numrow, $this->cleanEnter($data->sampletype));
+                $sheet->setCellValue('C'.$numrow, $this->cleanEnter($data->reception_date_arrival));
+                $sheet->setCellValue('D'.$numrow, $this->cleanEnter($data->reception_time_arrival));
+                $sheet->setCellValue('E'.$numrow, $this->cleanEnter($data->reception_png_control));
+                $sheet->setCellValue('F'.$numrow, $this->cleanEnter($data->reception_barcode_tinytag));
+                $sheet->setCellValue('G'.$numrow, $this->cleanEnter($data->reception_comments));
+                $sheet->setCellValue('H'.$numrow, $this->cleanEnter($data->sampleentry_barcode_bottle));
+                $sheet->setCellValue('I'.$numrow, $this->cleanEnter($data->sampleentry_date_conduct));
+                $sheet->setCellValue('J'.$numrow, $this->cleanEnter($data->sampleentry_vol_aliquot));
+                $sheet->setCellValue('K'.$numrow, $this->cleanEnter($data->sampleentry_barcode_box));
+                $sheet->setCellValue('L'.$numrow, $this->cleanEnter($data->sampleentry_position_tube));
+                $sheet->setCellValue('M'.$numrow, $this->cleanEnter($data->sampleentry_location));
+                $sheet->setCellValue('N'.$numrow, $this->cleanEnter($data->sampleentry_comments));
+                $sheet->setCellValue('O'.$numrow, $this->cleanEnter($data->idexx_in_date_conduct));
+                $sheet->setCellValue('P'.$numrow, $this->cleanEnter($data->idexx_in_time_incubation));
+                $sheet->setCellValue('Q'.$numrow, $this->cleanEnter($data->idexx_in_barcode_colilert1));
+                $sheet->setCellValue('R'.$numrow, $this->cleanEnter($data->idexx_in_volume1));
+                $sheet->setCellValue('S'.$numrow, $this->cleanEnter($data->idexx_in_dilution1));
+                $sheet->setCellValue('T'.$numrow, $this->cleanEnter($data->idexx_in_comments1));
+                $sheet->setCellValue('U'.$numrow, $this->cleanEnter($data->idexx_in_barcode_colilert2));
+                $sheet->setCellValue('V'.$numrow, $this->cleanEnter($data->idexx_in_volume2));
+                $sheet->setCellValue('W'.$numrow, $this->cleanEnter($data->idexx_in_dilution2));
+                $sheet->setCellValue('X'.$numrow, $this->cleanEnter($data->idexx_in_comments2));
+                $sheet->setCellValue('Y'.$numrow, $this->cleanEnter($data->idexx_out_date_conduct));
+                $sheet->setCellValue('Z'.$numrow, $this->cleanEnter($data->idexx_out_timeout_incubation));
+                $sheet->setCellValue('AA'.$numrow, $this->cleanEnter($data->idexx_out_time_minutes));
+                $sheet->setCellValue('AB'.$numrow, $this->cleanEnter($data->idexx_out_ecoli_largewells));
+                $sheet->setCellValue('AC'.$numrow, $this->cleanEnter($data->idexx_out_ecoli_smallwells));
+                $sheet->setCellValue('AD'.$numrow, $this->cleanEnter($data->idexx_out_ecoli_mpn));
+                $sheet->setCellValue('AE'.$numrow, $this->cleanEnter($data->idexx_out_coliforms_largewells));
+                $sheet->setCellValue('AF'.$numrow, $this->cleanEnter($data->idexx_out_coliforms_smallwells));
+                $sheet->setCellValue('AG'.$numrow, $this->cleanEnter($data->idexx_out_coliforms_mpn));
+                $sheet->setCellValue('AH'.$numrow, $this->cleanEnter($data->idexx_out_comments));
+                $sheet->setCellValue('AI'.$numrow, $this->cleanEnter($data->metagenomics_date_conduct));
+                $sheet->setCellValue('AJ'.$numrow, $this->cleanEnter($data->metagenomics_barcode_falcon1));
+                $sheet->setCellValue('AK'.$numrow, $this->cleanEnter($data->metagenomics_barcode_falcon2));
+                $sheet->setCellValue('AL'.$numrow, $this->cleanEnter($data->metagenomics_volume_filtered));
+                $sheet->setCellValue('AM'.$numrow, $this->cleanEnter($data->metagenomics_time_started));
+                $sheet->setCellValue('AN'.$numrow, $this->cleanEnter($data->metagenomics_time_finished));
+                $sheet->setCellValue('AO'.$numrow, $this->cleanEnter($data->metagenomics_time_minutes));
+                $sheet->setCellValue('AP'.$numrow, $this->cleanEnter($data->metagenomics_barcode_dna_bag));
+                $sheet->setCellValue('AQ'.$numrow, $this->cleanEnter($data->metagenomics_barcode_storage));
+                $sheet->setCellValue('AR'.$numrow, $this->cleanEnter($data->metagenomics_location));
+                $sheet->setCellValue('AS'.$numrow, $this->cleanEnter($data->metagenomics_comments));
+                $sheet->setCellValue('AT'.$numrow, $this->cleanEnter($data->mac1_barcode_macconkey));
+                $sheet->setCellValue('AU'.$numrow, $this->cleanEnter($data->mac1_date_process));
+                $sheet->setCellValue('AV'.$numrow, $this->cleanEnter($data->mac1_time_process));
+                $sheet->setCellValue('AW'.$numrow, $this->cleanEnter($data->mac1_volume));
+                $sheet->setCellValue('AX'.$numrow, $this->cleanEnter($data->mac1_comments));
+                $sheet->setCellValue('AY'.$numrow, $this->cleanEnter($data->mac2_date_process));
+                $sheet->setCellValue('AZ'.$numrow, $this->cleanEnter($data->mac2_time_process));
+                $sheet->setCellValue('BA'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep1));
+                $sheet->setCellValue('BB'.$numrow, $this->cleanEnter($data->mac2_cryobox1));
+                $sheet->setCellValue('BC'.$numrow, $this->cleanEnter($data->macsweep1_location));
+                $sheet->setCellValue('BD'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep2));
+                $sheet->setCellValue('BE'.$numrow, $this->cleanEnter($data->mac2_cryobox2));
+                $sheet->setCellValue('BF'.$numrow, $this->cleanEnter($data->macsweep2_location));
+                $sheet->setCellValue('BG'.$numrow, $this->cleanEnter($data->mac2_comments));                            
+                
+                //   $no++; // Tambah 1 setiap kali looping
+              $numrow++; // Tambah 1 setiap kali looping
+            }
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+        $datenow=date("Ymd");
+        $fileName = 'NHMRC_Drinking_Water_report_'.$datenow.'.csv';            
+        }                    
+
+        else if ($rep == 26) {
+            $sheet->setCellValue('A1',"barcode_sample");
+            $sheet->setCellValue('B1',"sampletype");
+            $sheet->setCellValue('C1',"reception_date_arrival");
+            $sheet->setCellValue('D1',"reception_time_arrival");
+            $sheet->setCellValue('E1',"reception_png_control");
+            $sheet->setCellValue('F1',"reception_barcode_tinytag");
+            $sheet->setCellValue('G1',"reception_comments");
+            $sheet->setCellValue('H1',"stomacher_date_conduct");
+            $sheet->setCellValue('I1',"stomacher_barcode_bootsocks_Micro");
+            $sheet->setCellValue('J1',"stomacher_elution_number_Micro1");
+            $sheet->setCellValue('K1',"stomacher_elution_Micro1");
+            $sheet->setCellValue('L1',"stomacher_barcode_falcon_Micro1");
+            $sheet->setCellValue('M1',"stomacher_volume_Micro1");
+            $sheet->setCellValue('N1',"stomacher_elution_number_Micro2");
+            $sheet->setCellValue('O1',"stomacher_elution_Micro2");
+            $sheet->setCellValue('P1',"stomacher_barcode_falcon_Micro2");
+            $sheet->setCellValue('Q1',"stomacher_volume_Micro2");
+            $sheet->setCellValue('R1',"stom_idexx_in_barcode_colilert");
+            $sheet->setCellValue('S1',"stom_idexx_in_barcode_falcon1");
+            $sheet->setCellValue('T1',"stom_idexx_in_volume_falcon1");
+            $sheet->setCellValue('U1',"stom_idexx_in_barcode_falcon2");
+            $sheet->setCellValue('V1',"stom_idexx_in_volume_falcon2");
+            $sheet->setCellValue('W1',"stom_idexx_in_dilution");
+            $sheet->setCellValue('X1',"stom_idexx_in_time_incu_start");
+            $sheet->setCellValue('Y1',"stom_idexx_in_comments");
+            $sheet->setCellValue('Z1',"idexx_out_date_conduct");
+            $sheet->setCellValue('AA1',"idexx_out_timeout_incubation");
+            $sheet->setCellValue('AB1',"idexx_out_time_minutes");
+            $sheet->setCellValue('AC1',"idexx_out_ecoli_largewells");
+            $sheet->setCellValue('AD1',"idexx_out_ecoli_smallwells");
+            $sheet->setCellValue('AE1',"idexx_out_ecoli_mpn");
+            $sheet->setCellValue('AF1',"idexx_out_coliforms_largewells");
+            $sheet->setCellValue('AG1',"idexx_out_coliforms_smallwells");
+            $sheet->setCellValue('AH1',"idexx_out_coliforms_mpn");
+            $sheet->setCellValue('AI1',"idexx_out_comments");
+            $sheet->setCellValue('AJ1',"metagenomics_date_conduct");
+            $sheet->setCellValue('AK1',"metagenomics_barcode_falcon1");
+            $sheet->setCellValue('AL1',"metagenomics_barcode_falcon2");
+            $sheet->setCellValue('AM1',"metagenomics_volume_filtered");
+            $sheet->setCellValue('AN1',"metagenomics_time_started");
+            $sheet->setCellValue('AO1',"metagenomics_time_finished");
+            $sheet->setCellValue('AP1',"metagenomics_time_minutes");
+            $sheet->setCellValue('AQ1',"metagenomics_barcode_dna_bag");
+            $sheet->setCellValue('AR1',"metagenomics_barcode_storage");
+            $sheet->setCellValue('AS1',"metagenomics_location");
+            $sheet->setCellValue('AT1',"metagenomics_comments");
+            $sheet->setCellValue('AU1',"mac1_barcode_macconkey");
+            $sheet->setCellValue('AV1',"mac1_date_process");
+            $sheet->setCellValue('AW1',"mac1_time_process");
+            $sheet->setCellValue('AX1',"mac1_volume");
+            $sheet->setCellValue('AY1',"mac1_comments");
+            $sheet->setCellValue('AZ1',"mac2_date_process");
+            $sheet->setCellValue('BA1',"mac2_time_process");
+            $sheet->setCellValue('BB1',"mac2_bar_macsweep1");
+            $sheet->setCellValue('BC1',"mac2_cryobox1");
+            $sheet->setCellValue('BD1',"macsweep1_location");
+            $sheet->setCellValue('BE1',"mac2_bar_macsweep2");
+            $sheet->setCellValue('BF1',"mac2_cryobox2");
+            $sheet->setCellValue('BG1',"macsweep2_location");
+            $sheet->setCellValue('BH1',"mac2_comments");            
+
+            $rdeliver = $this->REP_nhmrc_model->get_swab($date1, $date2, $rep);
+        
+            $numrow = 2; 
+            foreach($rdeliver as $data){ 
+                $sheet->setCellValue('A'.$numrow, $this->cleanEnter($data->barcode_sample));
+                $sheet->setCellValue('B'.$numrow, $this->cleanEnter($data->sampletype));
+                $sheet->setCellValue('C'.$numrow, $this->cleanEnter($data->reception_date_arrival));
+                $sheet->setCellValue('D'.$numrow, $this->cleanEnter($data->reception_time_arrival));
+                $sheet->setCellValue('E'.$numrow, $this->cleanEnter($data->reception_png_control));
+                $sheet->setCellValue('F'.$numrow, $this->cleanEnter($data->reception_barcode_tinytag));
+                $sheet->setCellValue('G'.$numrow, $this->cleanEnter($data->reception_comments));
+                $sheet->setCellValue('H'.$numrow, $this->cleanEnter($data->stomacher_date_conduct));
+                $sheet->setCellValue('I'.$numrow, $this->cleanEnter($data->stomacher_barcode_bootsocks_Micro));
+                $sheet->setCellValue('J'.$numrow, $this->cleanEnter($data->stomacher_elution_number_Micro1));
+                $sheet->setCellValue('K'.$numrow, $this->cleanEnter($data->stomacher_elution_Micro1));
+                $sheet->setCellValue('L'.$numrow, $this->cleanEnter($data->stomacher_barcode_falcon_Micro1));
+                $sheet->setCellValue('M'.$numrow, $this->cleanEnter($data->stomacher_volume_Micro1));
+                $sheet->setCellValue('N'.$numrow, $this->cleanEnter($data->stomacher_elution_number_Micro2));
+                $sheet->setCellValue('O'.$numrow, $this->cleanEnter($data->stomacher_elution_Micro2));
+                $sheet->setCellValue('P'.$numrow, $this->cleanEnter($data->stomacher_barcode_falcon_Micro2));
+                $sheet->setCellValue('Q'.$numrow, $this->cleanEnter($data->stomacher_volume_Micro2));
+                $sheet->setCellValue('R'.$numrow, $this->cleanEnter($data->stom_idexx_in_barcode_colilert));
+                $sheet->setCellValue('S'.$numrow, $this->cleanEnter($data->stom_idexx_in_barcode_falcon1));
+                $sheet->setCellValue('T'.$numrow, $this->cleanEnter($data->stom_idexx_in_volume_falcon1));
+                $sheet->setCellValue('U'.$numrow, $this->cleanEnter($data->stom_idexx_in_barcode_falcon2));
+                $sheet->setCellValue('V'.$numrow, $this->cleanEnter($data->stom_idexx_in_volume_falcon2));
+                $sheet->setCellValue('W'.$numrow, $this->cleanEnter($data->stom_idexx_in_dilution));
+                $sheet->setCellValue('X'.$numrow, $this->cleanEnter($data->stom_idexx_in_time_incu_start));
+                $sheet->setCellValue('Y'.$numrow, $this->cleanEnter($data->stom_idexx_in_comments));
+                $sheet->setCellValue('Z'.$numrow, $this->cleanEnter($data->idexx_out_date_conduct));
+                $sheet->setCellValue('AA'.$numrow, $this->cleanEnter($data->idexx_out_timeout_incubation));
+                $sheet->setCellValue('AB'.$numrow, $this->cleanEnter($data->idexx_out_time_minutes));
+                $sheet->setCellValue('AC'.$numrow, $this->cleanEnter($data->idexx_out_ecoli_largewells));
+                $sheet->setCellValue('AD'.$numrow, $this->cleanEnter($data->idexx_out_ecoli_smallwells));
+                $sheet->setCellValue('AE'.$numrow, $this->cleanEnter($data->idexx_out_ecoli_mpn));
+                $sheet->setCellValue('AF'.$numrow, $this->cleanEnter($data->idexx_out_coliforms_largewells));
+                $sheet->setCellValue('AG'.$numrow, $this->cleanEnter($data->idexx_out_coliforms_smallwells));
+                $sheet->setCellValue('AH'.$numrow, $this->cleanEnter($data->idexx_out_coliforms_mpn));
+                $sheet->setCellValue('AI'.$numrow, $this->cleanEnter($data->idexx_out_comments));
+                $sheet->setCellValue('AJ'.$numrow, $this->cleanEnter($data->metagenomics_date_conduct));
+                $sheet->setCellValue('AK'.$numrow, $this->cleanEnter($data->metagenomics_barcode_falcon1));
+                $sheet->setCellValue('AL'.$numrow, $this->cleanEnter($data->metagenomics_barcode_falcon2));
+                $sheet->setCellValue('AM'.$numrow, $this->cleanEnter($data->metagenomics_volume_filtered));
+                $sheet->setCellValue('AN'.$numrow, $this->cleanEnter($data->metagenomics_time_started));
+                $sheet->setCellValue('AO'.$numrow, $this->cleanEnter($data->metagenomics_time_finished));
+                $sheet->setCellValue('AP'.$numrow, $this->cleanEnter($data->metagenomics_time_minutes));
+                $sheet->setCellValue('AQ'.$numrow, $this->cleanEnter($data->metagenomics_barcode_dna_bag));
+                $sheet->setCellValue('AR'.$numrow, $this->cleanEnter($data->metagenomics_barcode_storage));
+                $sheet->setCellValue('AS'.$numrow, $this->cleanEnter($data->metagenomics_location));
+                $sheet->setCellValue('AT'.$numrow, $this->cleanEnter($data->metagenomics_comments));
+                $sheet->setCellValue('AU'.$numrow, $this->cleanEnter($data->mac1_barcode_macconkey));
+                $sheet->setCellValue('AV'.$numrow, $this->cleanEnter($data->mac1_date_process));
+                $sheet->setCellValue('AW'.$numrow, $this->cleanEnter($data->mac1_time_process));
+                $sheet->setCellValue('AX'.$numrow, $this->cleanEnter($data->mac1_volume));
+                $sheet->setCellValue('AY'.$numrow, $this->cleanEnter($data->mac1_comments));
+                $sheet->setCellValue('AZ'.$numrow, $this->cleanEnter($data->mac2_date_process));
+                $sheet->setCellValue('BA'.$numrow, $this->cleanEnter($data->mac2_time_process));
+                $sheet->setCellValue('BB'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep1));
+                $sheet->setCellValue('BC'.$numrow, $this->cleanEnter($data->mac2_cryobox1));
+                $sheet->setCellValue('BD'.$numrow, $this->cleanEnter($data->macsweep1_location));
+                $sheet->setCellValue('BE'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep2));
+                $sheet->setCellValue('BF'.$numrow, $this->cleanEnter($data->mac2_cryobox2));
+                $sheet->setCellValue('BG'.$numrow, $this->cleanEnter($data->macsweep2_location));
+                $sheet->setCellValue('BH'.$numrow, $this->cleanEnter($data->mac2_comments));                
+                
+                //   $no++; // Tambah 1 setiap kali looping
+              $numrow++; // Tambah 1 setiap kali looping
+            }
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+        $datenow=date("Ymd");
+        $fileName = 'NHMRC_Swab_Indoor_report_'.$datenow.'.csv';            
+        }        
+
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya
     header('Cache-Control: max-age=0');
     $writer->save('php://output');           
     }
+
 
 }
 

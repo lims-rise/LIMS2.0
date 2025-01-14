@@ -624,7 +624,105 @@ class REP_nhmrc_model extends CI_Model
         ');        
         $response = $q->result();
         return $response;
-    }                    
+    }
+    
+    function get_swab($date1, $date2, $rep)
+    {
+        $q = $this->db->query('
+
+        SELECT 
+        a.barcode_sample, q.sampletype, 
+        a.date_arrival AS reception_date_arrival, 
+        a.time_arrival AS reception_time_arrival,  
+        a.png_control AS reception_png_control, 
+        a.barcode_tinytag AS reception_barcode_tinytag,
+        a.comments AS reception_comments,
+        g.date_weighed AS bs_before_date_weighed_micro,
+        g.barcode_bootsocks AS bs_before_barcode_bootsocks_micro,
+        g.bootsock_weight_dry AS bs_before_bootsock_weight_dry_micro,
+        g.comments AS bs_before_comment_micro,
+        h.date_weighed AS bs_after_date_weighed_micro, 
+        h.barcode_bootsocks AS bs_after_barcode_bootsocks_micro, 
+        h.bootsock_weight_wet AS bs_after_bootsock_weight_wet_micro,
+        h.comments AS bs_after_comment_micro,
+        b.date_conduct AS stomacher_date_conduct,
+        b.barcode_bootsock AS stomacher_barcode_bootsocks_Micro,
+        b.elution_no AS stomacher_elution_number_Micro1,
+        b.elution AS stomacher_elution_Micro1,
+        b.barcode_falcon AS stomacher_barcode_falcon_Micro1,
+        b.volume_stomacher AS stomacher_volume_Micro1,
+        c.elution_no AS stomacher_elution_number_Micro2,
+        c.elution AS stomacher_elution_Micro2,
+        c.barcode_falcon AS stomacher_barcode_falcon_Micro2,
+        c.volume_stomacher AS stomacher_volume_Micro2,
+        f.barcode_colilert AS stom_idexx_in_barcode_colilert,
+        f.barcode_falcon1 AS stom_idexx_in_barcode_falcon1,
+        f.volume_falcon1 AS stom_idexx_in_volume_falcon1,
+        f.barcode_falcon2 AS stom_idexx_in_barcode_falcon2,
+        f.volume_falcon2 AS stom_idexx_in_volume_falcon2,
+        f.dilution AS stom_idexx_in_dilution,
+        f.time_incubation AS stom_idexx_in_time_incu_start,
+        f.comments AS stom_idexx_in_comments,
+        j.date_conduct AS idexx_out_date_conduct,
+        j.timeout_incubation AS idexx_out_timeout_incubation,
+        j.time_minutes AS idexx_out_time_minutes,
+        j.ecoli_largewells AS idexx_out_ecoli_largewells,
+        j.ecoli_smallwells AS idexx_out_ecoli_smallwells,
+        j.ecoli_mpn AS idexx_out_ecoli_mpn,
+        j.coliforms_largewells AS idexx_out_coliforms_largewells,
+        j.coliforms_smallwells AS idexx_out_coliforms_smallwells,
+        j.coliforms_mpn AS idexx_out_coliforms_mpn,
+        j.comments AS idexx_out_comments,
+        i.date_conduct AS metagenomics_date_conduct,
+        i.barcode_sample AS metagenomics_barcode_falcon1,
+        i.barcode_falcon2 AS metagenomics_barcode_falcon2,
+        i.volume_filtered AS metagenomics_volume_filtered,
+        i.time_started AS metagenomics_time_started,
+        i.time_finished AS metagenomics_time_finished,
+        i.time_minutes AS metagenomics_time_minutes,
+        i.barcode_dna_bag AS metagenomics_barcode_dna_bag,
+        i.barcode_storage AS metagenomics_barcode_storage,
+        concat("F",t.freezer,"-","S",t.shelf,"-","R",t.rack,"-","DRW",t.rack_level) AS metagenomics_location,
+        i.comments AS metagenomics_comments,
+        o.bar_macconkey AS mac1_barcode_macconkey,
+        o.date_process AS mac1_date_process,
+        o.time_process AS mac1_time_process,
+        o.volume AS mac1_volume,
+        o.comments AS mac1_comments,
+        p.date_process AS mac2_date_process,
+        p.time_process AS mac2_time_process,
+        p.bar_macsweep1 AS mac2_bar_macsweep1,
+        p.cryobox1 AS mac2_cryobox1,
+        concat("F",u.freezer,"-","S",u.shelf,"-","R",u.rack,"-","DRW",u.rack_level) AS macsweep1_location,
+        p.bar_macsweep2 AS mac2_bar_macsweep2,
+        p.cryobox2 AS mac2_cryobox2,
+        concat("F",v.freezer,"-","S",v.shelf,"-","R",v.rack,"-","DRW",v.rack_level) AS macsweep2_location,
+        p.comments AS mac2_comments
+
+        FROM nhmrc_receipt a
+        LEFT JOIN nhmrc_bs_stomacher b ON a.barcode_sample=b.barcode_sample AND b.elution_no="Micro1"
+        LEFT JOIN nhmrc_bs_stomacher c ON a.barcode_sample=c.barcode_sample AND c.elution_no="Micro2"
+        LEFT JOIN nhmrc_subbs_idexx f ON b.barcode_bootsock=f.barcode_sample 
+        LEFT JOIN nhmrc_bootsocks_before g ON b.barcode_bootsock=g.barcode_bootsocks AND b.elution_no="Micro1"
+        LEFT JOIN nhmrc_bootsocks_after h ON b.barcode_bootsock=h.barcode_bootsocks AND b.elution_no="Micro1"
+        LEFT JOIN nhmrc_metagenomics i ON f.barcode_falcon1=i.barcode_sample
+        LEFT JOIN nhmrc_idexx2 j ON f.barcode_colilert=j.barcode_colilert
+        LEFT JOIN nhmrc_mac1 o ON f.barcode_falcon1=o.barcode_sample
+        LEFT JOIN nhmrc_mac2 p ON o.bar_macconkey=p.bar_macconkey
+        LEFT JOIN ref_sampletype q ON a.id_type2b = q.id_sampletype
+        LEFT JOIN ref_location_80 t ON i.id_location_80=t.id_location_80 AND t.lab = "'.$this->session->userdata('lab').'"
+        LEFT JOIN ref_location_80 u ON p.id_location_80_1=u.id_location_80 AND u.lab = "'.$this->session->userdata('lab').'"
+        LEFT JOIN ref_location_80 v ON p.id_location_80_2=v.id_location_80 AND v.lab = "'.$this->session->userdata('lab').'"
+        WHERE a.id_type2b = "'.$rep.'"
+        AND (a.date_arrival >= "'.$date1.'"
+            AND a.date_arrival <= "'.$date2.'")
+        AND a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0 
+        ORDER BY a.date_arrival DESC, a.time_arrival ASC
+        ');        
+        $response = $q->result();
+        return $response;
+    }        
 }
 
 /* End of file Tbl_customer_model.php */
