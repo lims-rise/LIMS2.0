@@ -637,14 +637,6 @@ class REP_nhmrc_model extends CI_Model
         a.png_control AS reception_png_control, 
         a.barcode_tinytag AS reception_barcode_tinytag,
         a.comments AS reception_comments,
-        g.date_weighed AS bs_before_date_weighed_micro,
-        g.barcode_bootsocks AS bs_before_barcode_bootsocks_micro,
-        g.bootsock_weight_dry AS bs_before_bootsock_weight_dry_micro,
-        g.comments AS bs_before_comment_micro,
-        h.date_weighed AS bs_after_date_weighed_micro, 
-        h.barcode_bootsocks AS bs_after_barcode_bootsocks_micro, 
-        h.bootsock_weight_wet AS bs_after_bootsock_weight_wet_micro,
-        h.comments AS bs_after_comment_micro,
         b.date_conduct AS stomacher_date_conduct,
         b.barcode_bootsock AS stomacher_barcode_bootsocks_Micro,
         b.elution_no AS stomacher_elution_number_Micro1,
@@ -703,11 +695,9 @@ class REP_nhmrc_model extends CI_Model
         LEFT JOIN nhmrc_bs_stomacher b ON a.barcode_sample=b.barcode_sample AND b.elution_no="Micro1"
         LEFT JOIN nhmrc_bs_stomacher c ON a.barcode_sample=c.barcode_sample AND c.elution_no="Micro2"
         LEFT JOIN nhmrc_subbs_idexx f ON b.barcode_bootsock=f.barcode_sample 
-        LEFT JOIN nhmrc_bootsocks_before g ON b.barcode_bootsock=g.barcode_bootsocks AND b.elution_no="Micro1"
-        LEFT JOIN nhmrc_bootsocks_after h ON b.barcode_bootsock=h.barcode_bootsocks AND b.elution_no="Micro1"
-        LEFT JOIN nhmrc_metagenomics i ON f.barcode_falcon1=i.barcode_sample
+        LEFT JOIN nhmrc_metagenomics i ON a.barcode_sample=i.barcode_sample
         LEFT JOIN nhmrc_idexx2 j ON f.barcode_colilert=j.barcode_colilert
-        LEFT JOIN nhmrc_mac1 o ON f.barcode_falcon1=o.barcode_sample
+        LEFT JOIN nhmrc_mac1 o ON a.barcode_sample=o.barcode_sample
         LEFT JOIN nhmrc_mac2 p ON o.bar_macconkey=p.bar_macconkey
         LEFT JOIN ref_sampletype q ON a.id_type2b = q.id_sampletype
         LEFT JOIN ref_location_80 t ON i.id_location_80=t.id_location_80 AND t.lab = "'.$this->session->userdata('lab').'"
