@@ -131,7 +131,7 @@ class REP_o2b_model extends CI_Model
         l.cryobox2 AS mac2_cryobox2,
         l.comments AS mac2_comments    
         FROM obj2b_receipt a
-        LEFT JOIN obj2b_chemistry b ON a.barcode_sample=b.barcode_sample AND b.flag = 0 AND b.lab = "'.$this->session->userdata('lab').'" 
+        JOIN obj2b_chemistry b ON a.barcode_sample=b.barcode_sample AND b.flag = 0 AND b.lab = "'.$this->session->userdata('lab').'" 
         LEFT JOIN obj2b_endetec1 c ON a.barcode_sample=c.barcode_sample
         LEFT JOIN obj2b_endetec2 d ON c.barcode_endetec=d.barcode_endetec
         LEFT JOIN obj2b_idexx1 e ON a.barcode_sample=e.barcode_sample
