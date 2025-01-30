@@ -205,6 +205,10 @@ class REP_o2b_model extends CI_Model
         f.dry_weight48 AS mois48_dry_weight48,
         f.difference AS mois48_difference,
         f.comments AS mois48_comments,
+        y.date_moisture AS mois72_date_moisture,
+        y.barcode_foil AS mois72_barcode_foil,
+        y.dry_weight72 AS mois72_dry_weight72,
+        y.comments AS mois72_comments,
         g.date_conduct AS stomacher_date_conduct,
         g.barcode_bootsock AS stomacher_barcode_bootsocks1,
         g.elution_no AS stomacher_elution_number_Micro1,
@@ -305,6 +309,7 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_moisture1 r ON s.barcode_falcon=r.barcode_sample AND s.elution_no="Moisture1"
         LEFT JOIN obj2b_moisture2 e ON (r.barcode_foil=e.barcode_foil OR d.barcode_foil=e.barcode_foil)
         LEFT JOIN obj2b_moisture3 f ON (r.barcode_foil=f.barcode_foil OR d.barcode_foil=f.barcode_foil)
+        LEFT JOIN obj2b_moisture4 y ON (r.barcode_foil=x.barcode_foil OR d.barcode_foil=x.barcode_foil)
         LEFT JOIN obj2b_bootsocks_before b ON b.barcode_bootsocks=g.barcode_bootsock AND g.elution_no="Micro1"
         LEFT JOIN obj2b_bootsocks_after c ON c.barcode_bootsocks=g.barcode_bootsock AND g.elution_no="Micro1"
         LEFT JOIN obj2b_bootsocks_before u ON u.barcode_bootsocks=s.barcode_bootsock AND s.elution_no="Moisture1"
@@ -363,6 +368,10 @@ class REP_o2b_model extends CI_Model
         e.dry_weight48 AS mois48_dry_weight48,
         e.difference AS mois48_difference,
         e.comments AS mois48_comments,
+        s.date_moisture AS mois72_date_moisture,
+        s.barcode_foil AS mois72_barcode_foil,
+        s.dry_weight72 AS mois72_dry_weight72,
+        s.comments AS mois72_comments,
         f.barcode_endetec AS sedi_endet_barcode_endetec,
         f.volume_falcon AS sedi_endet_volume_falcon,
         f.dilution AS sedi_endet_dilution,
@@ -435,6 +444,7 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_moisture1 c ON a.barcode_sample=c.barcode_sample
         LEFT JOIN obj2b_moisture2 d ON c.barcode_foil=d.barcode_foil
         LEFT JOIN obj2b_moisture3 e ON c.barcode_foil=e.barcode_foil
+        LEFT JOIN obj2b_moisture4 s ON c.barcode_foil=s.barcode_foil
         LEFT JOIN obj2b_subsd_endetec f ON b.barcode_sample=f.barcode_sample
         LEFT JOIN obj2b_endetec3 g ON f.barcode_endetec=g.barcode_endetec
         LEFT JOIN obj2b_subsd_idexx h ON b.barcode_sample=h.barcode_sample
