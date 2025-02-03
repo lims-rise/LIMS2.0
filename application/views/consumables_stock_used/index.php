@@ -34,6 +34,7 @@
                                         <th>ID In Stock</th>
                                         <th>Product Name</th>
                                         <th>Quantity</th>
+                                        <th>Total Quantity Used</th>
                                         <th>Unit</th>
                                         <th>Quantity Per Unit</th>
                                         <th>Unit of Measure</th>
@@ -111,6 +112,14 @@
                             <label for="quantity" class="col-sm-4 control-label">Quantity</label>
                             <div class="col-sm-8">
                                 <input id="quantity" name="quantity" type="number" class="form-control" placeholder="Quantity" required>
+                                <div class="val1tip"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity_take" class="col-sm-4 control-label">Quantity Used</label>
+                            <div class="col-sm-8">
+                                <input id="quantity_take" name="quantity_take" type="number" class="form-control" placeholder="Quantity Used" value="0">
                                 <div class="val1tip"></div>
                             </div>
                         </div>
@@ -372,6 +381,14 @@
     let id_stock = $('#id_stock').val();
     $(document).ready(function() {
 
+        // Set default value to 0 if the field is empty
+        $('#quantity_take').on('blur', function() {
+            if ($(this).val() === '') {
+                $(this).val('0');
+            }
+        });
+
+
         // $('.productSelect').change(function() {
         //     var productId = $(this).val(); // get ID by selected
        
@@ -487,6 +504,7 @@
                 {"data": "id_stock"},
                 {"data": "product_name"},
                 {"data": "quantity"},
+                {"data": "quantity_take"},
                 {"data": "unit"},
                 {"data": "quantity_per_unit"},
                 {"data": "unit_of_measure"},
@@ -553,8 +571,11 @@
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Consumables - Insert In Stock <span id="my-another-cool-loader"></span>');
             $('#idx_stock').val(id_stock);
             $('#idx_stock').attr('readonly', true);
+            $('#quantity_take').attr('readonly', true);
+            $('#quantity_take').val('');
             // $('#idx').hide();
             $('#product_name').val('');
+            $('#product_name').attr('readonly', false);
             // $('#id').val('');
             $('#quantity').val('');
             // $('#unit_of_measure').attr('readonly', true);
@@ -588,7 +609,10 @@
 				// 	}
 				// });
             $('#product_name').val(data.product_name);
+            $('#product_name').attr('readonly', true);
             $('#quantity').val(data.quantity);
+            $('#quantity_take').val(data.quantity_take);
+            $('#quantity_take').attr('readonly', true);
             $('#unit').val(data.unit);
             $('#quantity_per_unit').val(data.quantity_per_unit);
             $('#unit_of_measure').val(data.unit_of_measure);
