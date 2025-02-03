@@ -55,6 +55,7 @@ class Consumables_report extends CI_Controller
             $query = 'SELECT 
                 ro.objective, 
                 cs.product_name, 
+                cis.quantity_take,
                 cis.closed_container, 
                 cis.unit_measure_lab, 
                 cis.quantity_per_unit, 
@@ -77,7 +78,8 @@ class Consumables_report extends CI_Controller
         }  else {
             $query = 'SELECT 
                 ro.objective, 
-                cs.product_name, 
+                cs.product_name,
+                cis.quantity_take,
                 cis.closed_container, 
                 cis.unit_measure_lab, 
                 cis.quantity_per_unit, 
@@ -111,7 +113,7 @@ class Consumables_report extends CI_Controller
             array(
                 'Stock Take Report',
                 $query,
-                array('objective', 'product_name', 'closed_container', 'unit_measure_lab', 'quantity_per_unit', 'loose_items', 'total_quantity', 'unit_of_measure', 'expired_date', 'comments', 'date_collected', 'flag'), // Columns for Sheet1
+                array('objective', 'product_name', 'quantity_take','closed_container', 'unit_measure_lab', 'quantity_per_unit', 'loose_items', 'total_quantity', 'unit_of_measure', 'expired_date', 'comments', 'date_collected', 'flag'), // Columns for Sheet1
             ),            
             // Add more sheets as needed
         );

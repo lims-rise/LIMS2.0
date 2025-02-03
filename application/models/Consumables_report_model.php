@@ -20,6 +20,7 @@ class Consumables_report_model extends CI_Model
         $this->datatables->select('    
             ro.objective, 
             cs.product_name, 
+            cs.quantity_take,
             cis.closed_container, 
             cis.unit_measure_lab, 
             cis.quantity_per_unit, 

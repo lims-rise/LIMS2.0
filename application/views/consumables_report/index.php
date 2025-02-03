@@ -94,6 +94,7 @@
                                                         <tr>
                                                             <th>Objective</th>
                                                             <th>Product Name</th>
+                                                            <th>Quantity Used</th>
                                                             <th>Closed Container</th>
                                                             <th>Unit Measure Lab</th>
                                                             <th>Quantity Per Unit</th>
@@ -276,6 +277,7 @@ const formattedDate = `${year}-${month}-${day}`;
                 // },
                 {"data": "objective"},
                 {"data": "product_name"},
+                {"data": "quantity_take"},
                 {"data": "closed_container"},
                 {"data": "unit_measure_lab"},
                 {"data": "quantity_per_unit"},
