@@ -123,6 +123,7 @@
                 consumables_order.vendor,
                 consumables_order.date_ordered, 
                 consumables_order.time_ordered,
+                consumables_order.note,
                 COALESCE(SUM(consumables_order_detail.amount_received), 0) AS received,
                 (consumables_order.quantity_ordering - COALESCE(SUM(consumables_order_detail.amount_received), 0)) AS remaining_quantity,
                 IF(COALESCE(SUM(consumables_order_detail.amount_received), 0) = consumables_order.quantity_ordering, "Completed", "Uncompleted") AS status,

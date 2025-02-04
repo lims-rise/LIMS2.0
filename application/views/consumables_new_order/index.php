@@ -44,6 +44,7 @@
                                         <th>Remaining Qty</th>
                                         <th>Qty Received</th>
                                         <th>Order Status</th>
+                                        <th>Note</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -222,6 +223,14 @@
 								</div>
 							</div>
 						</div>
+
+                        <div class="form-group">
+                            <label for="note" class="col-sm-4 control-label">Note</label>
+                            <div class="col-sm-8">
+                                <textarea id="note" name="note" class="form-control" placeholder="Note"> </textarea>
+                                <div class="val1tip"></div>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="modal-footer clearfix">
@@ -532,6 +541,7 @@
                 {"data": "remaining_quantity"},
                 {"data": "received"},
                 {"data": "status"},
+                {"data": "note"},
                 {
                     "data": "action",
                     "orderable": false,
@@ -612,6 +622,7 @@
             $('#unit_of_measure1').val('');
             $('#unit_of_measure1').attr('readonly', true);
             $('#vendor').val('');
+            $('#note').val('');
             $('#compose-modal').modal('show');
         });
 
@@ -651,6 +662,7 @@
             $('#unit_of_measure1').val(data.unit_of_measure);
             $('#unit_of_measure').attr('readonly', true);
             $('#vendor').val(data.vendor);
+            $('#note').val(data.note);
             $('#date_ordered').val(data.date_ordered).trigger('change');
             $('#time_ordered').val(data.time_ordered).trigger('change');
             $('#compose-modal').modal('show');

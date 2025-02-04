@@ -26,7 +26,7 @@
         function jsonGetInStock() 
         {
             $this->datatables->select('consumables_in_stock.id_instock, consumables_in_stock.id_stock, ref_objective.id_objective, ref_objective.objective, consumables_stock.product_name, consumables_in_stock.closed_container,
-            consumables_in_stock.unit_measure_lab, consumables_in_stock.quantity_per_unit, consumables_in_stock.loose_items,
+            consumables_in_stock.unit_measure_lab, consumables_in_stock.quantity_per_unit, consumables_in_stock.loose_items, consumables_in_stock.quantity_take,
             consumables_in_stock.total_quantity, consumables_in_stock.unit_of_measure, consumables_in_stock.expired_date,
             consumables_in_stock.comments, consumables_in_stock.date_collected, consumables_in_stock.time_collected,  
             consumables_in_stock.date_created, consumables_in_stock.date_updated, GREATEST(consumables_in_stock.date_created, consumables_in_stock.date_updated) AS latest_date');
@@ -104,9 +104,19 @@
             return $response;
         }
 
+        function getStockQuantity()
+        {
+            $response = array();
+            $this->db->select('quantity');
+            $this->db->where('flag', '0');
+            $q = $this->db->get('consumables_stock');
+            $response = $q->result_array();
+            return $response;
+        }
+
         function getStockById($idStock)
         {
-            $this->db->select('unit, unit_of_measure, quantity_per_unit');
+            $this->db->select('unit, unit_of_measure, quantity_per_unit, quantity');
             $this->db->where('id_stock', $idStock);
             $q = $this->db->get('consumables_stock');
             return $q->row_array();
@@ -223,16 +233,44 @@
             $id_instock = $this->db->insert_id();
 
             // update product quantity
-            $id_stock = $data['id_stock'];
-            $closed_container_subs = $data['closed_container'];
+            // $id_stock = $data['id_stock'];
+            // $closed_container_subs = $data['closed_container'];
 
-            $this->db->set('quantity', 'quantity - ' . (int)$closed_container_subs, FALSE);
-            $this->db->where('id_stock', $id_stock);
-            $this->db->update('consumables_stock');
+            // $this->db->set('quantity', 'quantity - ' . (int)$closed_container_subs, FALSE);
+            // $this->db->where('id_stock', $id_stock);
+            // $this->db->update('consumables_stock');
             $this->db->trans_complete();  // Completing transaction
 
             return $this->db->trans_status(); // Return true if the transaction succeeded
         }
+
+        function replaceConsumablesStockQuantity($id_stock, $total_closed_container)
+        {
+            // Mengganti quantity pada tabel consumables_stock
+            $this->db->set('quantity', (int)$total_closed_container);
+            $this->db->where('id_stock', $id_stock);
+            return $this->db->update('consumables_stock');
+        }
+
+        function insertConsumablesQuantityTake($id_stock, $quantity_take)
+        {
+            // Ambil nilai quantity_take yang sudah ada di tabel consumables_stock
+            $this->db->select('quantity_take');
+            $this->db->where('id_stock', $id_stock);
+            $existing_quantity_take = $this->db->get('consumables_stock')->row()->quantity_take;
+        
+            // Tambahkan nilai quantity_take baru ke nilai yang sudah ada
+            $new_quantity_take = $existing_quantity_take + (int)$quantity_take;
+        
+            // Update tabel consumables_stock dengan jumlah baru
+            $this->db->set('quantity_take', $new_quantity_take);
+            $this->db->where('id_stock', $id_stock);
+            return $this->db->update('consumables_stock');
+        }
+        
+        
+        
+
 
         /**
          * Updates consumables in stock based on the provided ID and data.
@@ -356,21 +394,66 @@
         }
 
 
-        function checkStockLevelsAndSendNotification()
+        // function checkStockLevelsAndSendNotification()
+        // {
+        //     log_message('debug', 'Started checking stock levels.');
+        //     $this->load->library('email');  
+    
+        //     // Get all products
+        //     $this->db->select('id_stock, quantity, minimum_stock');
+        //     $query = $this->db->get('consumables_stock');
+        //     $stockData = $query->result_array();
+    
+        //     foreach ($stockData as $data) {
+        //         $id_stock = $data['id_stock'];
+        //         $quantity = $data['quantity'];
+        //         $minimumStock = $data['minimum_stock'];
+    
+        //         // Check if quantity is approaching minimum stock
+        //         if ($quantity <= $minimumStock + 10) {
+        //             // Get product details
+        //             $this->db->select('product_name');
+        //             $this->db->where('id_stock', $id_stock);
+        //             $productQuery = $this->db->get('consumables_stock');
+        //             $product = $productQuery->row_array();
+    
+        //             // Prepare email
+        //             $this->email->from('uhqdev@gmail.com', 'LIMS2.0 - Alerts');
+        //             $this->email->to('ulhaqitcom@gmail.com');
+        //             $this->email->subject('Stock Info: ' . $product['product_name']);
+        //             $this->email->message('The stock for product ' . $product['product_name'] . ' is approaching the minimum level. Current quantity: ' . $quantity . ', Minimum stock: ' . $minimumStock . '.' . "\n" . 'Please update the stock levels as soon as possible.');
+    
+        //             // Send email
+        //             if ($this->email->send()) {
+        //                 log_message('debug', 'Email sent successfully for product ' . $product['product_name']);
+        //             } else {
+        //                 log_message('error', 'Error sending email for product ' . $product['product_name'] . ': ' . $this->email->print_debugger());
+        //             }
+        //         }
+        //     }
+        //     log_message('debug', 'Finished checking stock levels.');
+        // }
+
+        function checkStockLevelsAndSendNotification($created_stock_ids = [])
         {
             log_message('debug', 'Started checking stock levels.');
             $this->load->library('email');  
-    
-            // Get all products
+
+            // Jika ada id_stock yang diberikan, maka filter berdasarkan id_stock
+            if (!empty($created_stock_ids)) {
+                $this->db->where_in('id_stock', $created_stock_ids);
+            }
+
+            // Get all products (hanya yang baru saja diinsert atau diupdate)
             $this->db->select('id_stock, quantity, minimum_stock');
             $query = $this->db->get('consumables_stock');
             $stockData = $query->result_array();
-    
+
             foreach ($stockData as $data) {
                 $id_stock = $data['id_stock'];
                 $quantity = $data['quantity'];
                 $minimumStock = $data['minimum_stock'];
-    
+
                 // Check if quantity is approaching minimum stock
                 if ($quantity <= $minimumStock + 10) {
                     // Get product details
@@ -378,13 +461,13 @@
                     $this->db->where('id_stock', $id_stock);
                     $productQuery = $this->db->get('consumables_stock');
                     $product = $productQuery->row_array();
-    
+
                     // Prepare email
                     $this->email->from('uhqdev@gmail.com', 'LIMS2.0 - Alerts');
-                    $this->email->to('ulhaq.ulhaq@monash.edu');
+                    $this->email->to('ulhaqitcom@gmail.com');
                     $this->email->subject('Stock Info: ' . $product['product_name']);
                     $this->email->message('The stock for product ' . $product['product_name'] . ' is approaching the minimum level. Current quantity: ' . $quantity . ', Minimum stock: ' . $minimumStock . '.' . "\n" . 'Please update the stock levels as soon as possible.');
-    
+
                     // Send email
                     if ($this->email->send()) {
                         log_message('debug', 'Email sent successfully for product ' . $product['product_name']);

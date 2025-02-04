@@ -38,6 +38,7 @@ class Consumables_in_stock extends CI_Controller {
         $data['stockName'] = $this->Consumables_in_stock_model->getStock();
         $data['objectives'] = $this->Consumables_in_stock_model->getObjective();
         $data['id_instock'] = $this->Consumables_in_stock_model->generate_id_instock();
+        $data['quantity'] = $this->Consumables_in_stock_model->getStockQuantity();
         $this->template->load('template','consumables_in_stock/index', $data);
     } 
 
@@ -75,81 +76,183 @@ class Consumables_in_stock extends CI_Controller {
      *
      * @return void
      */
+
     // public function saveConsumablesInStock()
     // {
-    //     $mode = $this->input->post('mode',TRUE);
-    //     $id = strtoupper($this->input->post('id_instock',TRUE));
+    //     $mode = $this->input->post('mode', TRUE);
+    //     $id = strtoupper($this->input->post('idx_instock', TRUE));
+    //     // Mendapatkan array id_objective
+    //     $id_objectives = $this->input->post('id_objective', TRUE);
+    //     $id_objectives1 = $this->input->post('id_objective1', TRUE);
+    //     $total_closed_container = $this->input->post('total_closed_containers', TRUE);
+    //     var_dump($total_closed_container);
+    //     die();
     //     $dt = new DateTime();
 
+    //     // Ambil data umum
+    //     $common_data = array(
+    //         'id_stock' => $this->input->post('id_stock', TRUE),
+    //         'closed_container' => $this->input->post('closed_container', TRUE),
+    //         'unit_measure_lab' => $this->input->post('unit_measure_lab', TRUE),
+    //         'quantity_per_unit' => $this->input->post('quantity_per_unit', TRUE),
+    //         'loose_items' => $this->input->post('loose_items', TRUE),
+    //         'total_quantity' => $this->input->post('total_quantity', TRUE),
+    //         'unit_of_measure' => $this->input->post('unit_of_measure', TRUE),
+    //         'expired_date' => $this->input->post('expired_date', TRUE),
+    //         'comments' => $this->input->post('comments', TRUE),
+    //         'date_collected' => $this->input->post('date_collected', TRUE),
+    //         'time_collected' => $this->input->post('time_collected', TRUE),
+    //         'flag' => '0',
+    //         'lab' => $this->session->userdata('lab'),
+    //         'uuid' => $this->uuid->v4(),
+    //         'user_created' => $this->session->userdata('id_users'),
+    //         'date_created' => $dt->format('Y-m-d H:i:s'),
+    //     );
+
+    //     $common_data1 = array(
+    //         'id_stock' => $this->input->post('id_stock1', TRUE),
+    //         'closed_container' => $this->input->post('closed_container', TRUE),
+    //         'unit_measure_lab' => $this->input->post('unit_measure_lab', TRUE),
+    //         'quantity_per_unit' => $this->input->post('quantity_per_unit', TRUE),
+    //         'loose_items' => $this->input->post('loose_items', TRUE),
+    //         'total_quantity' => $this->input->post('total_quantity', TRUE),
+    //         'unit_of_measure' => $this->input->post('unit_of_measure', TRUE),
+    //         'expired_date' => $this->input->post('expired_date', TRUE),
+    //         'comments' => $this->input->post('comments', TRUE),
+    //         'date_collected' => $this->input->post('date_collected', TRUE),
+    //         'time_collected' => $this->input->post('time_collected', TRUE),
+    //         'flag' => '0',
+    //         'lab' => $this->session->userdata('lab'),
+    //         'uuid' => $this->uuid->v4(),
+    //         'user_updated' => $this->session->userdata('id_users'),
+    //         'date_updated' => $dt->format('Y-m-d H:i:s'),
+    //     );
+
     //     if ($mode == "insert") {
-
-    //         $data = array(
-    //              // 'product_id' => $this->input->post('id',TRUE),
-    //             'id_stock' => $this->input->post('id_stock',TRUE),
-    //             'id_objective' => $this->input->post('id_objective',TRUE),
-    //             'closed_container' => $this->input->post('closed_container',TRUE),
-    //             'unit_measure_lab' => $this->input->post('unit_measure_lab',TRUE),
-    //             'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
-    //             'loose_items' => $this->input->post('loose_items', TRUE),
-    //             'total_quantity' => $this->input->post('total_quantity',TRUE),
-    //             'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
-    //             'expired_date' => $this->input->post('expired_date',TRUE),
-    //             'comments' => $this->input->post('comments',TRUE),
-    //             // 'indonesia_comments' => $this->input->post('indonesia_comments',TRUE),
-    //             // 'melbourne_comments' => $this->input->post('melbourne_comments',TRUE),
-    //             'date_collected' => $this->input->post('date_collected',TRUE),
-    //             'time_collected' => $this->input->post('time_collected',TRUE),
-    //             'flag' => '0',
-    //             'lab' => $this->session->userdata('lab'),
-    //             'uuid' => $this->uuid->v4(),
-    //             'user_created' => $this->session->userdata('id_users'),
-    //             'date_created' => $dt->format('Y-m-d H:i:s'),
-    //         );
-
-    //         var_dump($data);
-    //         die();
-    
-    //         $result = $this->Consumables_in_stock_model->insertConsumablesInStock($data);
-    //         if ($result) {
-    //             $this->session->set_flashdata('message', 'Stock added successfully.');
-    //         } else {
-    //             $this->session->set_flashdata('message', 'Failed to add stock.');
+    //         // Loop untuk setiap objective saat insert
+    //         foreach ($id_objectives as $id_objective) {
+    //             $data = array_merge($common_data, array('id_objective' => $id_objective));
+    //             $result = $this->Consumables_in_stock_model->insertConsumablesInStock($data);
+    //             if (!$result) {
+    //                 $this->session->set_flashdata('message', 'Failed to add stock for objective ID: ' . $id_objective);
+    //                 redirect(site_url("consumables_in_stock"));
+    //                 return;
+    //             }
     //         }
+    //         $this->session->set_flashdata('message', 'Stock added successfully for all objectives.');
     //     } else if ($mode == "edit") {
-    //         $data = array(
-    //             // 'product_id' => $this->input->post('id',TRUE),
-    //             'id_stock' => $this->input->post('id_stock',TRUE),
-    //             'id_objective' => $this->input->post('id_objective',TRUE),
-    //             'closed_container' => $this->input->post('closed_container',TRUE),
-    //             'unit_measure_lab' => $this->input->post('unit_measure_lab',TRUE),
-    //             'quantity_per_unit' => $this->input->post('quantity_per_unit',TRUE),
-    //             'loose_items' => $this->input->post('loose_items', TRUE),
-    //             'total_quantity' => $this->input->post('total_quantity',TRUE),
-    //             'unit_of_measure' => $this->input->post('unit_of_measure',TRUE),
-    //             'expired_date' => $this->input->post('expired_date',TRUE),
-    //             'comments' => $this->input->post('comments',TRUE),
-    //             // 'indonesia_comments' => $this->input->post('indonesia_comments',TRUE),
-    //             // 'melbourne_comments' => $this->input->post('melbourne_comments',TRUE),
-    //             'date_collected' => $this->input->post('date_collected',TRUE),
-    //             'time_collected' => $this->input->post('time_collected',TRUE),
-    //             'flag' => '0',
-    //             'lab' => $this->session->userdata('lab'),
-    //             'uuid' => $this->uuid->v4(),
-    //             'user_updated' => $this->session->userdata('id_users'),
-    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
-    //         );
-
-    //         // var_dump($data);
-    //         // die();
-    //         $result = $this->Consumables_in_stock_model->updatetConsumablesInStock($id, $data);
-    //         if ($result) {
-    //             $this->session->set_flashdata('message', 'Stock updated successfully.');
-    //         } else {
-    //             $this->session->set_flashdata('message', 'Failed to update stock.');
-    //         } 
+    //         // Loop untuk setiap objective saat edit
+    //         foreach ($id_objectives1 as $id_objective1) {
+    //             $data = array_merge($common_data1, array('id_objective' => $id_objective1));
+    //             // var_dump($data);
+    //             // exit;
+    //             $result = $this->Consumables_in_stock_model->updatetConsumablesInStock($id, $data);
+    //             if (!$result) {
+    //                 $this->session->set_flashdata('message', 'Failed to update stock for objective ID: ' . $id_objective1);
+    //                 redirect(site_url("consumables_in_stock"));
+    //                 return;
+    //             }
+    //         }
+    //         $this->session->set_flashdata('message', 'Stock updated successfully for all objectives.');
     //     }
-    //      // Check stock levels and send notification after saving data
-    //     $this->Consumables_in_stock_model->checkStockLevelsAndSendNotification();
+
+    //     // Check stock levels and send notification after saving data
+    //     // $this->Consumables_in_stock_model->checkStockLevelsAndSendNotification();
+    //     redirect(site_url("consumables_in_stock"));
+    // }
+
+    // public function saveConsumablesInStock()
+    // {
+    //     $mode = $this->input->post('mode', TRUE);
+    //     $id = strtoupper($this->input->post('idx_instock', TRUE));
+    //     // Mendapatkan array id_objective
+    //     $id_objectives = $this->input->post('id_objective', TRUE);
+    //     $id_objectives1 = $this->input->post('id_objective1', TRUE);
+    //     $total_closed_container = $this->input->post('total_closed_containers', TRUE); // Ambil data total closed container
+    //     $dt = new DateTime();
+    
+    //     // Ambil data umum
+    //     $common_data = array(
+    //         'id_stock' => $this->input->post('id_stock', TRUE),
+    //         'closed_container' => $this->input->post('closed_container', TRUE),
+    //         'unit_measure_lab' => $this->input->post('unit_measure_lab', TRUE),
+    //         'quantity_per_unit' => $this->input->post('quantity_per_unit', TRUE),
+    //         'loose_items' => $this->input->post('loose_items', TRUE),
+    //         'total_quantity' => $this->input->post('total_quantity', TRUE),
+    //         'unit_of_measure' => $this->input->post('unit_of_measure', TRUE),
+    //         'expired_date' => $this->input->post('expired_date', TRUE),
+    //         'comments' => $this->input->post('comments', TRUE),
+    //         'date_collected' => $this->input->post('date_collected', TRUE),
+    //         'time_collected' => $this->input->post('time_collected', TRUE),
+    //         'flag' => '0',
+    //         'lab' => $this->session->userdata('lab'),
+    //         'uuid' => $this->uuid->v4(),
+    //         'user_created' => $this->session->userdata('id_users'),
+    //         'date_created' => $dt->format('Y-m-d H:i:s'),
+    //     );
+    
+    //     $common_data1 = array(
+    //         'id_stock' => $this->input->post('id_stock1', TRUE),
+    //         'closed_container' => $this->input->post('closed_container', TRUE),
+    //         'unit_measure_lab' => $this->input->post('unit_measure_lab', TRUE),
+    //         'quantity_per_unit' => $this->input->post('quantity_per_unit', TRUE),
+    //         'loose_items' => $this->input->post('loose_items', TRUE),
+    //         'total_quantity' => $this->input->post('total_quantity', TRUE),
+    //         'unit_of_measure' => $this->input->post('unit_of_measure', TRUE),
+    //         'expired_date' => $this->input->post('expired_date', TRUE),
+    //         'comments' => $this->input->post('comments', TRUE),
+    //         'date_collected' => $this->input->post('date_collected', TRUE),
+    //         'time_collected' => $this->input->post('time_collected', TRUE),
+    //         'flag' => '0',
+    //         'lab' => $this->session->userdata('lab'),
+    //         'uuid' => $this->uuid->v4(),
+    //         'user_updated' => $this->session->userdata('id_users'),
+    //         'date_updated' => $dt->format('Y-m-d H:i:s'),
+    //     );
+    
+    //     if ($mode == "insert") {
+    //         // Loop untuk setiap objective saat insert
+    //         foreach ($id_objectives as $id_objective) {
+    //             $data = array_merge($common_data, array('id_objective' => $id_objective));
+    //             $result = $this->Consumables_in_stock_model->insertConsumablesInStock($data);
+    
+    //             // Pastikan total_closed_container menggantikan quantity untuk setiap id_stock
+    //             if ($result) {
+    //                 // Update quantity di consumables_stock (replace quantity) untuk setiap id_stock
+    //                 $this->Consumables_in_stock_model->replaceConsumablesStockQuantity($data['id_stock'], $total_closed_container);
+    //             }
+    
+    //             if (!$result) {
+    //                 $this->session->set_flashdata('message', 'Failed to add stock for objective ID: ' . $id_objective);
+    //                 redirect(site_url("consumables_in_stock"));
+    //                 return;
+    //             }
+    //         }
+    //         $this->session->set_flashdata('message', 'Stock added successfully for all objectives.');
+    //     } else if ($mode == "edit") {
+    //         // Loop untuk setiap objective saat edit
+    //         foreach ($id_objectives1 as $id_objective1) {
+    //             $data = array_merge($common_data1, array('id_objective' => $id_objective1));
+    //             $result = $this->Consumables_in_stock_model->updatetConsumablesInStock($id, $data);
+    
+    //             // Pastikan total_closed_container menggantikan quantity untuk setiap id_stock
+    //             if ($result) {
+    //                 // Update quantity di consumables_stock (replace quantity) untuk setiap id_stock
+    //                 $this->Consumables_in_stock_model->replaceConsumablesStockQuantity($data['id_stock'], $total_closed_container);
+    //             }
+    
+    //             if (!$result) {
+    //                 $this->session->set_flashdata('message', 'Failed to update stock for objective ID: ' . $id_objective1);
+    //                 redirect(site_url("consumables_in_stock"));
+    //                 return;
+    //             }
+    //         }
+    //         $this->session->set_flashdata('message', 'Stock updated successfully for all objectives.');
+    //     }
+    
+    //     // Check stock levels and send notification after saving data
+    //     // $this->Consumables_in_stock_model->checkStockLevelsAndSendNotification();
+    //     // Redirect ke halaman yang sesuai setelah selesai
     //     redirect(site_url("consumables_in_stock"));
     // }
 
@@ -160,13 +263,16 @@ class Consumables_in_stock extends CI_Controller {
         // Mendapatkan array id_objective
         $id_objectives = $this->input->post('id_objective', TRUE);
         $id_objectives1 = $this->input->post('id_objective1', TRUE);
+        $total_closed_container = $this->input->post('total_closed_containers', TRUE); // Ambil data total closed container
+        $quantity_take = $this->input->post('quantity_take', TRUE);
         $dt = new DateTime();
-
+        
         // Ambil data umum
         $common_data = array(
             'id_stock' => $this->input->post('id_stock', TRUE),
             'closed_container' => $this->input->post('closed_container', TRUE),
             'unit_measure_lab' => $this->input->post('unit_measure_lab', TRUE),
+            'quantity_take' => $this->input->post('quantity_take', TRUE),
             'quantity_per_unit' => $this->input->post('quantity_per_unit', TRUE),
             'loose_items' => $this->input->post('loose_items', TRUE),
             'total_quantity' => $this->input->post('total_quantity', TRUE),
@@ -181,11 +287,12 @@ class Consumables_in_stock extends CI_Controller {
             'user_created' => $this->session->userdata('id_users'),
             'date_created' => $dt->format('Y-m-d H:i:s'),
         );
-
+        
         $common_data1 = array(
             'id_stock' => $this->input->post('id_stock1', TRUE),
             'closed_container' => $this->input->post('closed_container', TRUE),
             'unit_measure_lab' => $this->input->post('unit_measure_lab', TRUE),
+            'quantity_take' => $this->input->post('quantity_take', TRUE),
             'quantity_per_unit' => $this->input->post('quantity_per_unit', TRUE),
             'loose_items' => $this->input->post('loose_items', TRUE),
             'total_quantity' => $this->input->post('total_quantity', TRUE),
@@ -200,26 +307,52 @@ class Consumables_in_stock extends CI_Controller {
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
         );
+        
+        $created_stock_ids = [];  // Array untuk menampung ID stok yang baru dibuat
 
         if ($mode == "insert") {
+            // $data = array_merge($common_data, array('id_objective' => $id_objective));
             // Loop untuk setiap objective saat insert
             foreach ($id_objectives as $id_objective) {
                 $data = array_merge($common_data, array('id_objective' => $id_objective));
                 $result = $this->Consumables_in_stock_model->insertConsumablesInStock($data);
+                // Pastikan total_closed_container menggantikan quantity untuk setiap id_stock
+                if ($result) {
+                    // Tambahkan id_stock yang baru dibuat ke array
+                    $created_stock_ids[] = $data['id_stock'];
+                    
+                    // Update quantity di consumables_stock (replace quantity) untuk setiap id_stock
+                    $this->Consumables_in_stock_model->replaceConsumablesStockQuantity($data['id_stock'], $total_closed_container);
+                    $this->Consumables_in_stock_model->insertConsumablesQuantityTake($data['id_stock'], $quantity_take);
+                 
+                }
+
                 if (!$result) {
                     $this->session->set_flashdata('message', 'Failed to add stock for objective ID: ' . $id_objective);
                     redirect(site_url("consumables_in_stock"));
                     return;
                 }
             }
+            // Setelah loop selesai,
+            // Update quantity_take hanya sekali untuk setiap id_stock
+            // $this->Consumables_in_stock_model->insertConsumablesQuantityTake($data['id_stock'], $quantity_take);
+        
             $this->session->set_flashdata('message', 'Stock added successfully for all objectives.');
         } else if ($mode == "edit") {
             // Loop untuk setiap objective saat edit
             foreach ($id_objectives1 as $id_objective1) {
                 $data = array_merge($common_data1, array('id_objective' => $id_objective1));
-                // var_dump($data);
-                // exit;
                 $result = $this->Consumables_in_stock_model->updatetConsumablesInStock($id, $data);
+
+                // Pastikan total_closed_container menggantikan quantity untuk setiap id_stock
+                if ($result) {
+                    // Tambahkan id_stock yang baru diupdate ke array
+                    $created_stock_ids[] = $data['id_stock'];
+                    
+                    // Update quantity di consumables_stock (replace quantity) untuk setiap id_stock
+                    $this->Consumables_in_stock_model->replaceConsumablesStockQuantity($data['id_stock'], $total_closed_container);
+                }
+
                 if (!$result) {
                     $this->session->set_flashdata('message', 'Failed to update stock for objective ID: ' . $id_objective1);
                     redirect(site_url("consumables_in_stock"));
@@ -229,10 +362,16 @@ class Consumables_in_stock extends CI_Controller {
             $this->session->set_flashdata('message', 'Stock updated successfully for all objectives.');
         }
 
-        // Check stock levels and send notification after saving data
-        $this->Consumables_in_stock_model->checkStockLevelsAndSendNotification();
+        // Setelah selesai menambah/merubah stok, periksa stok yang baru saja dibuat atau diupdate
+        if (!empty($created_stock_ids)) {
+            $this->Consumables_in_stock_model->checkStockLevelsAndSendNotification($created_stock_ids); // Pass id_stock yang baru dibuat/diupdate
+        }
+
+        // Redirect ke halaman yang sesuai setelah selesai
         redirect(site_url("consumables_in_stock"));
     }
+
+    
 
 
     /**
