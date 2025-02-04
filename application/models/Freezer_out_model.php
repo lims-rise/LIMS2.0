@@ -63,6 +63,26 @@ class Freezer_out_model extends CI_Model
       return $this->db->get('freezer_out')->result();
     }
 
+    function get_usedup()
+    {
+      $this->db->select('freezer_out.id, freezer_out.date_out, ref_person.initial, ref_sample.sample, 
+            ref_vessel.vessel, freezer_out.barcode_sample, ref_destination.destination, 
+            ref_shipping.shipping_method, freezer_out.tracking_number, freezer_out.comments, 
+            freezer_out.id_person, freezer_out.id_sample, freezer_out.id_vessel, 
+            freezer_out.id_destination, freezer_out.id_shipping');
+      // $this->db->from('freezer_out');
+      $this->db->join('ref_person', 'freezer_out.id_person=ref_person.id_person', 'left');
+      $this->db->join('ref_sample', 'freezer_out.id_sample=ref_sample.id_sample', 'left');
+      $this->db->join('ref_vessel', 'freezer_out.id_vessel=ref_vessel.id_vessel', 'left');
+      $this->db->join('ref_destination', 'freezer_out.id_destination=ref_destination.id_destination', 'left');
+      $this->db->join('ref_shipping', 'freezer_out.id_shipping=ref_shipping.id_shipping', 'left');
+      $this->db->where('freezer_out.lab', $this->session->userdata('lab'));
+      $this->db->where('freezer_out.flag', '0');
+      $this->db->where('ref_destination.id_destination <> 4');
+      $this->db->order_by('freezer_out.date_out, freezer_out.id', 'ASC');
+      return $this->db->get('freezer_out')->result();
+    }
+
     function get_by_id($id)
     {
         $this->db->where($this->id, $id);
