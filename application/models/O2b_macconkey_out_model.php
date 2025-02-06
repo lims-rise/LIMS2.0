@@ -51,7 +51,7 @@ class O2b_macconkey_out_model extends CI_Model
         from obj2b_mac2 a 
         left join ref_person b on a.id_person = b.id_person
         left join ref_location_80 c ON a.id_location_80_1 = c.id_location_80 AND c.lab = "'.$this->session->userdata('lab').'"
-        left join ref_location_80 d ON a.id_location_80_2 = d.id_location_80 AND d.lab = '.$this->session->userdata('lab').'"
+        left join ref_location_80 d ON a.id_location_80_2 = d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'"
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
