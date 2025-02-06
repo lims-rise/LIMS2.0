@@ -43,10 +43,15 @@ class O2b_macconkey_out_model extends CI_Model
     function get_all()
     {
         $q = $this->db->query('
-        SELECT a.bar_macconkey, a.date_process, a.time_process, b.initial, a.bar_macsweep1, 
-        a.cryobox1, a.bar_macsweep2, a.cryobox2, a.comments
+        SELECT a.bar_macconkey, a.date_process, a.time_process, b.initial, a.bar_macsweep1, a.cryobox1, 
+        concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS location1, 
+        a.bar_macsweep2, a.cryobox2, 
+        concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS location2, 
+        a.comments
         from obj2b_mac2 a 
         left join ref_person b on a.id_person = b.id_person
+        left join ref_location_80 c ON a.id_location_80_1 = c.id_location_80 AND c.lab = "'.$this->session->userdata('lab').'"
+        left join ref_location_80 d ON a.id_location_80_2 = d.id_location_80 AND d.lab = '.$this->session->userdata('lab').'"
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
