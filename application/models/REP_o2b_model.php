@@ -145,8 +145,8 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN ref_location_80 j ON g.id_location_80=j.id_location_80 AND j.lab = "'.$this->session->userdata('lab').'" 
         LEFT JOIN obj2b_mac1 k ON k.barcode_sample=a.barcode_sample
         LEFT JOIN obj2b_mac2 l ON l.bar_macconkey=k.bar_macconkey
-        LEFT JOIN ref_location_80 n ON i.id_location_80_1=n.id_location_80 AND n.lab = "'.$this->session->userdata('lab').'" 
-        LEFT JOIN ref_location_80 o ON i.id_location_80_2=o.id_location_80 AND o.lab = "'.$this->session->userdata('lab').'" 
+        LEFT JOIN ref_location_80 n ON l.id_location_80_1=n.id_location_80 AND n.lab = "'.$this->session->userdata('lab').'" 
+        LEFT JOIN ref_location_80 o ON l.id_location_80_2=o.id_location_80 AND o.lab = "'.$this->session->userdata('lab').'" 
         WHERE a.id_type2b = 6 AND '.
         (($rep == '6x') ? '(left(a.barcode_sample, 2) = "N0" OR left(a.barcode_sample, 2) = "F0")' : '(left(a.barcode_sample, 2) <> "N0" AND left(a.barcode_sample, 2) <> "F0")')
         .'AND (a.date_arrival >= "'.$date1.'"
