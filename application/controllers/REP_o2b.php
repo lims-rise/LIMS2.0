@@ -149,9 +149,11 @@ class REP_o2b extends CI_Controller
             $sheet->setCellValue('CD1', "mac2_time_process");
             $sheet->setCellValue('CE1', "mac2_bar_macsweep1");
             $sheet->setCellValue('CF1', "mac2_cryobox1");
-            $sheet->setCellValue('CG1', "mac2_bar_macsweep2");
-            $sheet->setCellValue('CH1', "mac2_cryobox2");
-            $sheet->setCellValue('CI1', "mac2_comments");
+            $sheet->setCellValue('CG1', "mac2_location1");
+            $sheet->setCellValue('CH1', "mac2_bar_macsweep2");
+            $sheet->setCellValue('CI1', "mac2_cryobox2");
+            $sheet->setCellValue('CJ1', "mac2_location2");
+            $sheet->setCellValue('CK1', "mac2_comments");
 
             $rdeliver = $this->REP_o2b_model->get_water($date1, $date2, $rep);
         
@@ -241,9 +243,11 @@ class REP_o2b extends CI_Controller
                 $sheet->setCellValue('CD'.$numrow, $this->cleanEnter($data->mac2_time_process));
                 $sheet->setCellValue('CE'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep1));
                 $sheet->setCellValue('CF'.$numrow, $this->cleanEnter($data->mac2_cryobox1));
-                $sheet->setCellValue('CG'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep2));
-                $sheet->setCellValue('CH'.$numrow, $this->cleanEnter($data->mac2_cryobox2));
-                $sheet->setCellValue('CI'.$numrow, $this->cleanEnter($data->mac2_comments));
+                $sheet->setCellValue('CG'.$numrow, $this->cleanEnter($data->mac2_location1));
+                $sheet->setCellValue('CH'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep2));
+                $sheet->setCellValue('CI'.$numrow, $this->cleanEnter($data->mac2_cryobox2));
+                $sheet->setCellValue('CJ'.$numrow, $this->cleanEnter($data->mac2_location2));
+                $sheet->setCellValue('CK'.$numrow, $this->cleanEnter($data->mac2_comments));
                 //   $no++; // Tambah 1 setiap kali looping
               $numrow++; // Tambah 1 setiap kali looping
             }
@@ -395,9 +399,11 @@ class REP_o2b extends CI_Controller
             $sheet->setCellValue('EF1', "mac2_time_process");
             $sheet->setCellValue('EG1', "mac2_bar_macsweep1");
             $sheet->setCellValue('EH1', "mac2_cryobox1");
-            $sheet->setCellValue('EI1', "mac2_bar_macsweep2");
-            $sheet->setCellValue('EJ1', "mac2_cryobox2");
-            $sheet->setCellValue('EK1', "mac2_comments");
+            $sheet->setCellValue('EI1', "mac2_location1");
+            $sheet->setCellValue('EJ1', "mac2_bar_macsweep2");
+            $sheet->setCellValue('EK1', "mac2_cryobox2");
+            $sheet->setCellValue('EL1', "mac2_location2");
+            $sheet->setCellValue('EM1', "mac2_comments");
 
             $rdeliver = $this->REP_o2b_model->get_bootsock($date1, $date2, $rep);
         
@@ -541,9 +547,11 @@ class REP_o2b extends CI_Controller
                 $sheet->setCellValue('EF'.$numrow, $this->cleanEnter($data->mac2_time_process));
                 $sheet->setCellValue('EG'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep1));
                 $sheet->setCellValue('EH'.$numrow, $this->cleanEnter($data->mac2_cryobox1));
-                $sheet->setCellValue('EI'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep2));
-                $sheet->setCellValue('EJ'.$numrow, $this->cleanEnter($data->mac2_cryobox2));
-                $sheet->setCellValue('EK'.$numrow, $this->cleanEnter($data->mac2_comments));
+                $sheet->setCellValue('EI'.$numrow, $this->cleanEnter($data->mac2_location1));
+                $sheet->setCellValue('EJ'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep2));
+                $sheet->setCellValue('EK'.$numrow, $this->cleanEnter($data->mac2_cryobox2));
+                $sheet->setCellValue('EL'.$numrow, $this->cleanEnter($data->mac2_location2));
+                $sheet->setCellValue('EM'.$numrow, $this->cleanEnter($data->mac2_comments));
                 //   $no++; // Tambah 1 setiap kali looping
               $numrow++; // Tambah 1 setiap kali looping
             }
@@ -646,9 +654,11 @@ class REP_o2b extends CI_Controller
             $sheet->setCellValue('CN1', "mac2_time_process");
             $sheet->setCellValue('CO1', "mac2_bar_macsweep1");
             $sheet->setCellValue('CP1', "mac2_cryobox1");
-            $sheet->setCellValue('CQ1', "mac2_bar_macsweep2");
-            $sheet->setCellValue('CR1', "mac2_cryobox2");
-            $sheet->setCellValue('CS1', "mac2_comments");
+            $sheet->setCellValue('CQ1', "mac2_location1");
+            $sheet->setCellValue('CR1', "mac2_bar_macsweep2");
+            $sheet->setCellValue('CS1', "mac2_cryobox2");
+            $sheet->setCellValue('CT1', "mac2_location2");
+            $sheet->setCellValue('CU1', "mac2_comments");
 
             $rdeliver = $this->REP_o2b_model->get_sediment($date1, $date2, $rep);
         
@@ -748,9 +758,11 @@ class REP_o2b extends CI_Controller
                 $sheet->setCellValue('CN'.$numrow, $this->cleanEnter($data->mac2_time_process));
                 $sheet->setCellValue('CO'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep1));
                 $sheet->setCellValue('CP'.$numrow, $this->cleanEnter($data->mac2_cryobox1));
-                $sheet->setCellValue('CQ'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep2));
-                $sheet->setCellValue('CR'.$numrow, $this->cleanEnter($data->mac2_cryobox2));
-                $sheet->setCellValue('CS'.$numrow, $this->cleanEnter($data->mac2_comments)); 
+                $sheet->setCellValue('CQ'.$numrow, $this->cleanEnter($data->mac2_location1));
+                $sheet->setCellValue('CR'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep2));
+                $sheet->setCellValue('CS'.$numrow, $this->cleanEnter($data->mac2_cryobox2));
+                $sheet->setCellValue('CT'.$numrow, $this->cleanEnter($data->mac2_location2));
+                $sheet->setCellValue('CU'.$numrow, $this->cleanEnter($data->mac2_comments)); 
                 
                 //   $no++; // Tambah 1 setiap kali looping
               $numrow++; // Tambah 1 setiap kali looping
