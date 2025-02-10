@@ -270,6 +270,17 @@ class REP_o2b_model extends CI_Model
         i.volume_ecoli AS endet_out_b_volume_ecoli,
         i.total_coliforms AS endet_out_b_total_coliforms,
         i.comments AS endet_out_b_comments,
+        kk.date_conduct AS old_idexx_out_date_conduct,
+        kk.barcode_colilert AS old_idexx_out_barcode_colilert,
+        kk.timeout_incubation AS old_idexx_out_timeout_incubation,
+        kk.time_minutes AS old_idexx_out_time_minutes,
+        kk.ecoli_largewells AS old_idexx_out_ecoli_largewells,
+        kk.ecoli_smallwells AS old_idexx_out_ecoli_smallwells,
+        kk.ecoli_mpn AS old_idexx_out_ecoli_mpn,
+        kk.coliforms_largewells AS old_idexx_out_coliforms_largewells,
+        kk.coliforms_smallwells AS old_idexx_out_coliforms_smallwells,
+        kk.coliforms_mpn AS old_idexx_out_coliforms_mpn,
+        kk.comments AS old_idexx_out_comments,
         k.date_conduct AS idexx_out_date_conduct,
         k.barcode_colilert AS idexx_out_barcode_colilert,
         k.timeout_incubation AS idexx_out_timeout_incubation,
@@ -280,7 +291,7 @@ class REP_o2b_model extends CI_Model
         k.coliforms_largewells AS idexx_out_coliforms_largewells,
         k.coliforms_smallwells AS idexx_out_coliforms_smallwells,
         k.coliforms_mpn AS idexx_out_coliforms_mpn,
-        k.comments AS idexx_out_comments,
+        k.comments AS idexx_out_comments,        
         l.date_conduct AS metagenomics_date_conduct,
         l.barcode_sample AS metagenomics_barcode_falcon1,
         l.barcode_falcon2 AS metagenomics_barcode_falcon2,
@@ -326,6 +337,7 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_subbs_idexx x ON g.barcode_bootsock=x.barcode_sample
         LEFT JOIN obj2b_endetec3 i ON w.barcode_endetec=i.barcode_endetec
         LEFT JOIN obj2b_idexx2 k ON x.barcode_colilert=k.barcode_colilert
+        LEFT JOIN obj2b_idexx2 kk ON j.barcode_colilert=kk.barcode_colilert
         LEFT JOIN obj2b_metagenomics l ON (l.barcode_sample=g.barcode_falcon OR l.barcode_sample=g.barcode_sample) AND g.elution_no="Micro1"
         LEFT JOIN obj2b_mac1 p ON p.barcode_sample=g.barcode_falcon AND g.elution_no="Micro1"
         LEFT JOIN obj2b_mac2 q ON q.bar_macconkey=p.bar_macconkey
