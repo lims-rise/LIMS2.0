@@ -814,6 +814,20 @@ class REP_o2b extends CI_Controller
             $sheet->setCellValue('Q1', "metagenomics_position_tube2");
             $sheet->setCellValue('R1', "metagenomics_location2");
             $sheet->setCellValue('S1', "metagenomics_comments");
+            $sheet->setCellValue('T1', "mac1_barcode_macconkey");
+            $sheet->setCellValue('U1', "mac1_date_process");
+            $sheet->setCellValue('V1', "mac1_time_process");
+            $sheet->setCellValue('W1', "mac1_volume");
+            $sheet->setCellValue('X1', "mac1_comments");
+            $sheet->setCellValue('Y1', "mac2_date_process");
+            $sheet->setCellValue('Z1', "mac2_time_process");
+            $sheet->setCellValue('AA1', "mac2_bar_macsweep1");
+            $sheet->setCellValue('AB1', "mac2_cryobox1");
+            $sheet->setCellValue('AC1', "mac2_location1");
+            $sheet->setCellValue('AD1', "mac2_bar_macsweep2");
+            $sheet->setCellValue('AE1', "mac2_cryobox2");
+            $sheet->setCellValue('AF1', "mac2_location2");
+            $sheet->setCellValue('AG1', "mac2_comments");
             
             $rdeliver = $this->REP_o2b_model->get_feces($date1, $date2, $rep);
         
@@ -838,6 +852,20 @@ class REP_o2b extends CI_Controller
                 $sheet->setCellValue('Q'.$numrow, $this->cleanEnter($data->metagenomics_position_tube2));
                 $sheet->setCellValue('R'.$numrow, $this->cleanEnter($data->metagenomics_location2));
                 $sheet->setCellValue('S'.$numrow, $this->cleanEnter($data->metagenomics_comments));
+                $sheet->setCellValue('T'.$numrow, $this->cleanEnter($data->mac1_barcode_macconkey));
+                $sheet->setCellValue('U'.$numrow, $this->cleanEnter($data->mac1_date_process));
+                $sheet->setCellValue('V'.$numrow, $this->cleanEnter($data->mac1_time_process));
+                $sheet->setCellValue('W'.$numrow, $this->cleanEnter($data->mac1_volume));
+                $sheet->setCellValue('X'.$numrow, $this->cleanEnter($data->mac1_comments));
+                $sheet->setCellValue('Y'.$numrow, $this->cleanEnter($data->mac2_date_process));
+                $sheet->setCellValue('Z'.$numrow, $this->cleanEnter($data->mac2_time_process));
+                $sheet->setCellValue('AA'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep1));
+                $sheet->setCellValue('AB'.$numrow, $this->cleanEnter($data->mac2_cryobox1));
+                $sheet->setCellValue('AC'.$numrow, $this->cleanEnter($data->mac2_location1));
+                $sheet->setCellValue('AD'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep2));
+                $sheet->setCellValue('AE'.$numrow, $this->cleanEnter($data->mac2_cryobox2));
+                $sheet->setCellValue('AF'.$numrow, $this->cleanEnter($data->mac2_location2));
+                $sheet->setCellValue('AG'.$numrow, $this->cleanEnter($data->mac2_comments)); 
                                 
                 //   $no++; // Tambah 1 setiap kali looping
               $numrow++; // Tambah 1 setiap kali looping
