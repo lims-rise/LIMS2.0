@@ -186,8 +186,13 @@ class NHMRC_macconkey_in_model extends CI_Model
             LEFT JOIN ref_sampletype b ON a.id_type2b=b.id_sampletype
             LEFT JOIN nhmrc_bs_stomacher c ON a.barcode_sample = c.barcode_sample
             WHERE a.flag = 0
+		UNION ALL
+		SELECT barcode_falcon1 AS "barcode_sample", "Food" AS "sampletype", null
+		FROM nhmrc_subsd_idexx
+		WHERE flag = 0
         ) x
-        WHERE x.barcode_falcon = "'.$id.'"
+        WHERE x.barcode_sample = "'.$id.'" 
+        OR x.barcode_falcon = "'.$id.'" 
         ');        
 
         $response = $q->result_array();
