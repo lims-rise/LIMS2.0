@@ -137,7 +137,10 @@
                             <div class="col-sm-8">
                             <select id='elution' name="elution" class="form-control">
                                 <option>-- Select answer --</option>
+                                <option value="10">10</option>
                                 <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
                                 <option value="Other">Other</option>
                             </select>
                             </div>
