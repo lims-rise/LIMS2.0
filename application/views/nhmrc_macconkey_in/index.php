@@ -531,7 +531,7 @@
             $('#barcode_sample').attr('readonly', true);
             $('#barcode_sample').val(data.barcode_sample);
             $('#sample_type').attr('readonly', true);
-            $('#barcode_falcon').val(data.barcode_falcon);
+            $('#barcode_falcon').val(data.barcode_falcon2);
             $('#date_process').val(data.date_process);
             $('#time_process').val(data.time_process);
             $('#id_person').val(data.id_person); //.trigger('change');
