@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
-                    <div class="box-header"> <h3 class="box-title">NHMRC - Stomacher (Bootsocks/Toys) </h3> </div>        
+                    <div class="box-header"> <h3 class="box-title">NHMRC - Stomacher (Bootsocks/Toys/Swab) </h3> </div>        
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
 <?php
@@ -24,7 +24,7 @@
                                     <th>Barcode Sample</th>
                                     <th>Date Conducted</th>
                                     <th>Elution Number</th>
-                                    <th>Barcode Bootsocks/Toys</th>
+                                    <th>Barcode Bootsocks/Toys/Swab</th>
                                     <th>Elution</th>
                                     <th>Barcode Falcon Tube</th>
                                     <th>Volume recovered after stomacher (mL) </th>
@@ -125,9 +125,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="barcode_bootsock" class="col-sm-4 control-label">Barcode bootsocks/toys</label>
+                            <label for="barcode_bootsock" class="col-sm-4 control-label">Barcode bootsocks/toys/swab</label>
                             <div class="col-sm-8">
-                                <input id="barcode_bootsock" name="barcode_bootsock" type="text" class="form-control" placeholder="Barcode bootsocks/toys" required>
+                                <input id="barcode_bootsock" name="barcode_bootsock" type="text" class="form-control" placeholder="Barcode bootsocks/toys/swab" required>
                                 <div class="val2tip"></div>
                             </div>
                         </div>
@@ -287,12 +287,12 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #dd4b39; color: white;">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                    <h4 class="modal-title"><i class="fa fa-trash"></i> NHMRC - Stomacher (Bootsocks/Toys) | Delete <span id="my-another-cool-loader"></span></h4>
+                    <h4 class="modal-title"><i class="fa fa-trash"></i> NHMRC - Stomacher (Bootsocks/Toys/Swab) | Delete <span id="my-another-cool-loader"></span></h4>
                 </div>
                 <div class="modal-body">
                     <div id="confirmation-content">
                         <div class="modal-body">
-                            <p class="text-center" style="font-size: 15px;">Are you sure you want to delete blood centrifuge <span id="id" style="font-weight: bold;"></span> ?</p>
+                            <p class="text-center" style="font-size: 15px;">Are you sure you want to delete this data <span id="id" style="font-weight: bold;"></span> ?</p>
                         </div>
                     </div>
                 </div>
