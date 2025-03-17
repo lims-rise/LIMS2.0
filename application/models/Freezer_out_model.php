@@ -247,7 +247,7 @@ class Freezer_out_model extends CI_Model
       function validate1($id){
         $this->db->where('barcode_sample', $id);
         // $this->db->where('lab', $this->session->userdata('lab'));
-        $q = $this->db->get($this->table);
+        $q = $this->db->get('freezer_in');
         $response = $q->result_array();
         return $response;
         // return $this->db->get('ref_location_80')->row();
