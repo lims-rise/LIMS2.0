@@ -370,7 +370,7 @@
                 dataType: "json",
                 success: function(data) {
                     // var barcode = '';
-                    if (data.length > 0) {
+                    if (data.length <= 0) {
                         tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode Vessel <strong> ' + data1 +'</strong> is not found in the Freezer IN module !</span>');
                         $('.val1tip').tooltipster('content', tip);
                         $('.val1tip').tooltipster('show');
