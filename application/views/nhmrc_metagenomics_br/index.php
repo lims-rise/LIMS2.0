@@ -5,7 +5,7 @@
                 <div class="box box-black box-solid">
     
                     <div class="box-header">
-                        <h3 class="box-title">NHMRC - Metagenomics (Bootsocks & Hand Rinse)</h3>
+                        <h3 class="box-title">NHMRC - Metagenomics (Bootsocks/Hand Rinse/Drinking Water)</h3>
                     </div>
         
         <div class="box-body">
