@@ -363,6 +363,82 @@ class REP_nhmrc_model extends CI_Model
         return $response;
     }        
 
+    function get_drinkwater($date1, $date2, $rep)
+    {
+        $q = $this->db->query('
+        SELECT 
+        a.barcode_sample, g.sampletype, 
+        a.date_arrival AS reception_date_arrival, 
+        a.time_arrival AS reception_time_arrival,  
+        a.png_control AS reception_png_control, 
+        a.barcode_tinytag AS reception_barcode_tinytag,
+        a.comments AS reception_comments,
+        b.date_conduct AS idexx_in_date_conduct,
+        b.time_incubation AS idexx_in_time_incubation,
+        b.barcode_colilert AS idexx_in_barcode_colilert1,
+        b.volume AS idexx_in_volume1,
+        b.dilution AS idexx_in_dilution1,
+        b.comments AS idexx_in_comments1,
+        b.barcode_colilert2 AS idexx_in_barcode_colilert2,
+        b.volume2 AS idexx_in_volume2,
+        b.dilution2 AS idexx_in_dilution2,
+        b.comments2 AS idexx_in_comments2,
+        c.date_conduct AS idexx_out_date_conduct,
+        c.timeout_incubation AS idexx_out_timeout_incubation,
+        c.time_minutes AS idexx_out_time_minutes,
+        c.ecoli_largewells AS idexx_out_ecoli_largewells,
+        c.ecoli_smallwells AS idexx_out_ecoli_smallwells,
+        c.ecoli_mpn AS idexx_out_ecoli_mpn,
+        c.coliforms_largewells AS idexx_out_coliforms_largewells,
+        c.coliforms_smallwells AS idexx_out_coliforms_smallwells,
+        c.coliforms_mpn AS idexx_out_coliforms_mpn,
+        c.comments AS idexx_out_comments,
+        d.date_conduct AS metagenomics_date_conduct,
+        d.barcode_sample AS metagenomics_barcode_falcon1,
+        d.barcode_falcon2 AS metagenomics_barcode_falcon2,
+        d.volume_filtered AS metagenomics_volume_filtered,
+        d.time_started AS metagenomics_time_started,
+        d.time_finished AS metagenomics_time_finished,
+        d.time_minutes AS metagenomics_time_minutes,
+        d.barcode_dna_bag AS metagenomics_barcode_dna_bag,
+        d.barcode_storage AS metagenomics_barcode_storage,
+        concat("F",h.freezer,"-","S",h.shelf,"-","R",h.rack,"-","DRW",h.rack_level) AS metagenomics_location,
+        d.comments AS metagenomics_comments,
+        e.bar_macconkey AS mac1_barcode_macconkey,
+        e.date_process AS mac1_date_process,
+        e.time_process AS mac1_time_process,
+        e.volume AS mac1_volume,
+        e.comments AS mac1_comments,
+        f.date_process AS mac2_date_process,
+        f.time_process AS mac2_time_process,
+        f.bar_macsweep1 AS mac2_bar_macsweep1,
+        f.cryobox1 AS mac2_cryobox1,
+        concat("F",i.freezer,"-","S",i.shelf,"-","R",i.rack,"-","DRW",i.rack_level) AS macsweep1_location,
+        f.bar_macsweep2 AS mac2_bar_macsweep2,
+        f.cryobox2 AS mac2_cryobox2,
+        concat("F",j.freezer,"-","S",j.shelf,"-","R",j.rack,"-","DRW",j.rack_level) AS macsweep2_location,
+        f.comments AS mac2_comments
+        FROM nhmrc_receipt a
+        LEFT JOIN nhmrc_idexx1 b ON a.barcode_sample=b.barcode_sample
+        LEFT JOIN nhmrc_idexx2 c ON b.barcode_colilert=c.barcode_colilert
+        LEFT JOIN nhmrc_metagenomics d ON a.barcode_sample=d.barcode_sample
+        LEFT JOIN nhmrc_mac1 e ON a.barcode_sample=e.barcode_sample
+        LEFT JOIN nhmrc_mac2 f ON e.bar_macconkey=f.bar_macconkey
+        LEFT JOIN ref_sampletype g ON a.id_type2b = g.id_sampletype
+        LEFT JOIN ref_location_80 h ON d.id_location_80=h.id_location_80 AND h.lab = "'.$this->session->userdata('lab').'"
+        LEFT JOIN ref_location_80 i ON f.id_location_80_1=i.id_location_80 AND i.lab = "'.$this->session->userdata('lab').'"
+        LEFT JOIN ref_location_80 j ON f.id_location_80_2=j.id_location_80 AND j.lab = "'.$this->session->userdata('lab').'"
+        WHERE a.id_type2b = "'.$rep.'"
+        AND (a.date_arrival >= "'.$date1.'"
+            AND a.date_arrival <= "'.$date2.'")
+        AND a.lab = "'.$this->session->userdata('lab').'" 
+        AND a.flag = 0 
+        ORDER BY a.date_arrival DESC, a.time_arrival ASC
+        ');        
+        $response = $q->result();
+        return $response;
+    }        
+
     function get_food($date1, $date2, $rep)
     {
         $q = $this->db->query('

@@ -1025,7 +1025,7 @@ class REP_nhmrc extends CI_Controller
             $sheet->setCellValue('AY1',"macsweep2_location");
             $sheet->setCellValue('AZ1',"mac2_comments");                  
     
-            $rdeliver = $this->REP_nhmrc_model->get_handrince($date1, $date2, $rep);
+            $rdeliver = $this->REP_nhmrc_model->get_drinkwater($date1, $date2, $rep);
         
             $numrow = 2; 
             foreach($rdeliver as $data){ 
