@@ -219,6 +219,82 @@ class Freezer_out extends CI_Controller
         // $writer->save('php://output');
            
     }
+
+    public function excel_usedup()
+    {
+        // $date1=$this->input->get('date1');
+        // $date2=$this->input->get('date2');
+
+        $spreadsheet = new Spreadsheet();    
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', "ID"); 
+        $sheet->setCellValue('B1', "Date_out"); 
+        $sheet->setCellValue('C1', "Lab_tech");
+        $sheet->setCellValue('D1', "Sample_type");
+        $sheet->setCellValue('E1', "Vessel_type");
+        $sheet->setCellValue('F1', "Barcode_vessel");
+        $sheet->setCellValue('G1', "Destination");
+        $sheet->setCellValue('H1', "Shipping_method");
+        $sheet->setCellValue('I1', "Tracking_number");
+        $sheet->setCellValue('J1', "Comments");
+        // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
+
+        // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
+        $rdeliver = $this->Freezer_out_model->get_usedup();
+    
+        // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
+        $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
+        foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
+          $sheet->setCellValue('A'.$numrow, $data->id);
+          $sheet->setCellValue('B'.$numrow, $data->date_out);
+          $sheet->setCellValue('C'.$numrow, $data->initial);
+          $sheet->setCellValue('D'.$numrow, $data->sample);
+          $sheet->setCellValue('E'.$numrow, $data->vessel);
+          $sheet->setCellValue('F'.$numrow, $data->barcode_sample);
+          $sheet->setCellValue('G'.$numrow, $data->destination);
+          $sheet->setCellValue('H'.$numrow, $data->shipping_method);
+          $sheet->setCellValue('I'.$numrow, $data->tracking_number);
+          $sheet->setCellValue('J'.$numrow, trim($data->comments));
+        //   $no++; // Tambah 1 setiap kali looping
+          $numrow++; // Tambah 1 setiap kali looping
+        }
+    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+    $datenow=date("Ymd");
+    $fileName = 'Freezer_Sample_UsedUP_'.$datenow.'.csv';
+
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya
+    header('Cache-Control: max-age=0');
+
+    // $this->output->set_header('Content-Type: application/vnd.ms-excel');
+    // $this->output->set_header("Content-type: application/csv");
+    // $this->output->set_header('Cache-Control: max-age=0');
+    $writer->save('php://output');
+    //     $writer->save($fileName); 
+    // //redirect(HTTP_UPLOAD_PATH.$fileName); 
+    // $filepath = file_get_contents($fileName);
+    // force_download($fileName, $filepath);
+
+        // // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
+        // $sheet->getDefaultRowDimension()->setRowHeight(-1);
+    
+        // // Set orientasi kertas jadi LANDSCAPE
+        // $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+    
+        // // Set judul file excel nya
+        // $sheet->setTitle("Delivery Reports");
+    
+        // // Proses file excel
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // header('Content-Disposition: attachment; filename="Delivery_Reports.xlsx"'); // Set nama file excel nya
+        // header('Cache-Control: max-age=0');
+    
+        // // $writer = new Xlsx($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+        // // $fileName = $fileName.'.csv';
+        // $writer->save('php://output');
+           
+    }    
 }
 
 /* End of file Freezer_out.php */

@@ -43,9 +43,16 @@ class NHMRC_macconkey_out_model extends CI_Model
     {
         $q = $this->db->query('
         SELECT a.bar_macconkey, a.date_process, a.time_process, b.initial, a.bar_macsweep1, 
-        a.cryobox1, a.bar_macsweep2, a.cryobox2, a.comments
+        a.cryobox1, 
+        concat("F",fr1.freezer,"-","S",fr1.shelf,"-","R",fr1.rack,"-","DRW",fr1.rack_level) AS mac2_location1,        
+        a.bar_macsweep2, a.cryobox2, 
+        concat("F",fr2.freezer,"-","S",fr2.shelf,"-","R",fr2.rack,"-","DRW",fr2.rack_level) AS mac2_location2,        
+        a.comments
         from nhmrc_mac2 a 
         left join ref_person b on a.id_person = b.id_person
+        LEFT JOIN ref_location_80 fr1 ON a.id_location_80_1=fr1.id_location_80 AND fr1.lab = "'.$this->session->userdata('lab').'" 
+        LEFT JOIN ref_location_80 fr2 ON a.id_location_80_2=fr2.id_location_80 AND fr2.lab = "'.$this->session->userdata('lab').'" 
+
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');

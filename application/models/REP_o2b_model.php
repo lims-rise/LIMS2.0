@@ -127,8 +127,10 @@ class REP_o2b_model extends CI_Model
         l.time_process AS mac2_time_process,
         l.bar_macsweep1 AS mac2_bar_macsweep1,
         l.cryobox1 AS mac2_cryobox1,
+        concat("F",n.freezer,"-","S",n.shelf,"-","R",n.rack,"-","DRW",n.rack_level) AS mac2_location1,
         l.bar_macsweep2 AS mac2_bar_macsweep2,
         l.cryobox2 AS mac2_cryobox2,
+        concat("F",o.freezer,"-","S",o.shelf,"-","R",o.rack,"-","DRW",o.rack_level) AS mac2_location2,
         l.comments AS mac2_comments    
         FROM obj2b_receipt a
         LEFT JOIN obj2b_chemistry b ON a.barcode_sample=b.barcode_sample AND b.flag = 0 AND b.lab = "'.$this->session->userdata('lab').'" 
@@ -143,6 +145,8 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN ref_location_80 j ON g.id_location_80=j.id_location_80 AND j.lab = "'.$this->session->userdata('lab').'" 
         LEFT JOIN obj2b_mac1 k ON k.barcode_sample=a.barcode_sample
         LEFT JOIN obj2b_mac2 l ON l.bar_macconkey=k.bar_macconkey
+        LEFT JOIN ref_location_80 n ON l.id_location_80_1=n.id_location_80 AND n.lab = "'.$this->session->userdata('lab').'" 
+        LEFT JOIN ref_location_80 o ON l.id_location_80_2=o.id_location_80 AND o.lab = "'.$this->session->userdata('lab').'" 
         WHERE a.id_type2b = 6 AND '.
         (($rep == '6x') ? '(left(a.barcode_sample, 2) = "N0" OR left(a.barcode_sample, 2) = "F0")' : '(left(a.barcode_sample, 2) <> "N0" AND left(a.barcode_sample, 2) <> "F0")')
         .'AND (a.date_arrival >= "'.$date1.'"
@@ -266,6 +270,17 @@ class REP_o2b_model extends CI_Model
         i.volume_ecoli AS endet_out_b_volume_ecoli,
         i.total_coliforms AS endet_out_b_total_coliforms,
         i.comments AS endet_out_b_comments,
+        kk.date_conduct AS old_idexx_out_date_conduct,
+        kk.barcode_colilert AS old_idexx_out_barcode_colilert,
+        kk.timeout_incubation AS old_idexx_out_timeout_incubation,
+        kk.time_minutes AS old_idexx_out_time_minutes,
+        kk.ecoli_largewells AS old_idexx_out_ecoli_largewells,
+        kk.ecoli_smallwells AS old_idexx_out_ecoli_smallwells,
+        kk.ecoli_mpn AS old_idexx_out_ecoli_mpn,
+        kk.coliforms_largewells AS old_idexx_out_coliforms_largewells,
+        kk.coliforms_smallwells AS old_idexx_out_coliforms_smallwells,
+        kk.coliforms_mpn AS old_idexx_out_coliforms_mpn,
+        kk.comments AS old_idexx_out_comments,
         k.date_conduct AS idexx_out_date_conduct,
         k.barcode_colilert AS idexx_out_barcode_colilert,
         k.timeout_incubation AS idexx_out_timeout_incubation,
@@ -276,7 +291,7 @@ class REP_o2b_model extends CI_Model
         k.coliforms_largewells AS idexx_out_coliforms_largewells,
         k.coliforms_smallwells AS idexx_out_coliforms_smallwells,
         k.coliforms_mpn AS idexx_out_coliforms_mpn,
-        k.comments AS idexx_out_comments,
+        k.comments AS idexx_out_comments,        
         l.date_conduct AS metagenomics_date_conduct,
         l.barcode_sample AS metagenomics_barcode_falcon1,
         l.barcode_falcon2 AS metagenomics_barcode_falcon2,
@@ -297,8 +312,10 @@ class REP_o2b_model extends CI_Model
         q.time_process AS mac2_time_process,
         q.bar_macsweep1 AS mac2_bar_macsweep1,
         q.cryobox1 AS mac2_cryobox1,
+        concat("F",fr1.freezer,"-","S",fr1.shelf,"-","R",fr1.rack,"-","DRW",fr1.rack_level) AS mac2_location1,
         q.bar_macsweep2 AS mac2_bar_macsweep2,
         q.cryobox2 AS mac2_cryobox2,
+        concat("F",fr2.freezer,"-","S",fr2.shelf,"-","R",fr2.rack,"-","DRW",fr2.rack_level) AS mac2_location2,
         q.comments AS mac2_comments
         FROM obj2b_receipt a
         LEFT JOIN obj2b_bs_stomacher g ON a.barcode_sample=g.barcode_sample AND g.elution_no="Micro1"
@@ -320,11 +337,14 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_subbs_idexx x ON g.barcode_bootsock=x.barcode_sample
         LEFT JOIN obj2b_endetec3 i ON w.barcode_endetec=i.barcode_endetec
         LEFT JOIN obj2b_idexx2 k ON x.barcode_colilert=k.barcode_colilert
+        LEFT JOIN obj2b_idexx2 kk ON j.barcode_colilert=kk.barcode_colilert
         LEFT JOIN obj2b_metagenomics l ON (l.barcode_sample=g.barcode_falcon OR l.barcode_sample=g.barcode_sample) AND g.elution_no="Micro1"
         LEFT JOIN obj2b_mac1 p ON p.barcode_sample=g.barcode_falcon AND g.elution_no="Micro1"
         LEFT JOIN obj2b_mac2 q ON q.bar_macconkey=p.bar_macconkey
         LEFT JOIN ref_sampletype m ON a.id_type2b=m.id_sampletype
         LEFT JOIN ref_location_80 n ON l.id_location_80=n.id_location_80 AND n.lab = "'.$this->session->userdata('lab').'" 
+        LEFT JOIN ref_location_80 fr1 ON q.id_location_80_1=fr1.id_location_80 AND fr1.lab = "'.$this->session->userdata('lab').'" 
+        LEFT JOIN ref_location_80 fr2 ON q.id_location_80_2=fr2.id_location_80 AND fr2.lab = "'.$this->session->userdata('lab').'" 
         WHERE a.id_type2b = "'.$rep.'"
         AND (a.date_arrival >= "'.$date1.'"
             AND a.date_arrival <= "'.$date2.'")
@@ -436,8 +456,10 @@ class REP_o2b_model extends CI_Model
         p.time_process AS mac2_time_process,
         p.bar_macsweep1 AS mac2_bar_macsweep1,
         p.cryobox1 AS mac2_cryobox1,
+        concat("F",fr1.freezer,"-","S",fr1.shelf,"-","R",fr1.rack,"-","DRW",fr1.rack_level) AS mac2_location1,
         p.bar_macsweep2 AS mac2_bar_macsweep2,
         p.cryobox2 AS mac2_cryobox2,
+        concat("F",fr2.freezer,"-","S",fr2.shelf,"-","R",fr2.rack,"-","DRW",fr2.rack_level) AS mac2_location2,
         p.comments AS mac2_comments
         FROM obj2b_receipt a
         LEFT JOIN obj2b_sediment_prep b ON a.barcode_sample=b.barcode_sample
@@ -457,6 +479,9 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN ref_location_80 m ON j.id_location_802=m.id_location_80 AND m.lab = "'.$this->session->userdata('lab').'" 
         LEFT JOIN obj2b_mac1 o ON b.barcode_tube=o.barcode_sample
         LEFT JOIN obj2b_mac2 p ON p.bar_macconkey=o.bar_macconkey
+        LEFT JOIN ref_location_80 fr1 ON p.id_location_80_1=fr1.id_location_80 AND fr1.lab = "'.$this->session->userdata('lab').'" 
+        LEFT JOIN ref_location_80 fr2 ON p.id_location_80_2=fr2.id_location_80 AND fr2.lab = "'.$this->session->userdata('lab').'" 
+
         WHERE a.id_type2b = "'.$rep.'"
         AND (a.date_arrival >= "'.$date1.'"
             AND a.date_arrival <= "'.$date2.'")
@@ -491,12 +516,31 @@ class REP_o2b_model extends CI_Model
         j.barcode_storage2 AS metagenomics_barcode_storage2,
         j.position_tube2 AS metagenomics_position_tube2,
         concat("F",m.freezer,"-","S",m.shelf,"-","R",m.rack,"-","DRW",m.rack_level) AS metagenomics_location2,
-        j.comments AS metagenomics_comments
+        j.comments AS metagenomics_comments,
+        o.bar_macconkey AS mac1_barcode_macconkey,
+        o.date_process AS mac1_date_process,
+        o.time_process AS mac1_time_process,
+        o.volume AS mac1_volume,
+        o.comments AS mac1_comments,
+        p.date_process AS mac2_date_process,
+        p.time_process AS mac2_time_process,
+        p.bar_macsweep1 AS mac2_bar_macsweep1,
+        p.cryobox1 AS mac2_cryobox1,
+        concat("F",fr1.freezer,"-","S",fr1.shelf,"-","R",fr1.rack,"-","DRW",fr1.rack_level) AS mac2_location1,
+        p.bar_macsweep2 AS mac2_bar_macsweep2,
+        p.cryobox2 AS mac2_cryobox2,
+        concat("F",fr2.freezer,"-","S",fr2.shelf,"-","R",fr2.rack,"-","DRW",fr2.rack_level) AS mac2_location2,
+        p.comments AS mac2_comments
         FROM obj2b_receipt a
         LEFT JOIN obj2b_meta_sediment j ON a.barcode_sample=j.barcode_sample
+        LEFT JOIN obj2b_mac1 o ON j.barcode_sample=o.barcode_sample
+        LEFT JOIN obj2b_mac2 p ON p.bar_macconkey=o.bar_macconkey
         LEFT JOIN ref_sampletype k ON a.id_type2b=k.id_sampletype
         LEFT JOIN ref_location_80 l ON j.id_location_801=l.id_location_80 AND l.lab = "'.$this->session->userdata('lab').'" 
         LEFT JOIN ref_location_80 m ON j.id_location_802=m.id_location_80 AND m.lab = "'.$this->session->userdata('lab').'" 
+        LEFT JOIN ref_location_80 fr1 ON p.id_location_80_1=fr1.id_location_80 AND fr1.lab = "'.$this->session->userdata('lab').'" 
+        LEFT JOIN ref_location_80 fr2 ON p.id_location_80_2=fr2.id_location_80 AND fr2.lab = "'.$this->session->userdata('lab').'" 
+
         WHERE a.id_type2b = "'.$rep.'"
         AND (a.date_arrival >= "'.$date1.'"
             AND a.date_arrival <= "'.$date2.'")

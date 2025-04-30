@@ -416,7 +416,7 @@
             // $('#time_arrival').val('');
             // $('#id_person').val('');
             $('#id_type2b').val('');
-            $('#png_control').val('');
+            $('#png_control').val('No');
             $('#barcode_tinytag').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');

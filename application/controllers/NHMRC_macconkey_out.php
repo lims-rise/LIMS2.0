@@ -165,9 +165,11 @@ class NHMRC_macconkey_out extends CI_Controller
         $sheet->setCellValue('D1', "Lab_tech");
         $sheet->setCellValue('E1', "Barcode_mac_sweep1");
         $sheet->setCellValue('F1', "Cryobox1");
-        $sheet->setCellValue('G1', "Barcode_mac_sweep2");
-        $sheet->setCellValue('H1', "Cryobox2");
-        $sheet->setCellValue('I1', "Comments");
+        $sheet->setCellValue('G1', "Mac_sweep_Location1");
+        $sheet->setCellValue('H1', "Barcode_mac_sweep2");
+        $sheet->setCellValue('I1', "Cryobox2");
+        $sheet->setCellValue('J1', "Mac_sweep_Location2");
+        $sheet->setCellValue('K1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -182,9 +184,11 @@ class NHMRC_macconkey_out extends CI_Controller
           $sheet->setCellValue('D'.$numrow, $data->initial);
           $sheet->setCellValue('E'.$numrow, $data->bar_macsweep1);
           $sheet->setCellValue('F'.$numrow, $data->cryobox1);
-          $sheet->setCellValue('G'.$numrow, $data->bar_macsweep2);
-          $sheet->setCellValue('H'.$numrow, $data->cryobox2);
-          $sheet->setCellValue('I'.$numrow, trim($data->comments));
+          $sheet->setCellValue('G'.$numrow, $data->mac2_location1);
+          $sheet->setCellValue('H'.$numrow, $data->bar_macsweep2);
+          $sheet->setCellValue('I'.$numrow, $data->cryobox2);
+          $sheet->setCellValue('J'.$numrow, $data->mac2_location2);
+          $sheet->setCellValue('K'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

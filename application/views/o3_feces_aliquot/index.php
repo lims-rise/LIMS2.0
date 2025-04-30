@@ -78,7 +78,7 @@
                         <div class="form-group">
                             <label for="date_process" class="col-sm-4 control-label">Date Process</label>
                             <div class="col-sm-8">
-                                <input id="date_process" name="date_process" type="date" class="form-control" placeholder="Date Process" value="<?php echo date("Y-m-d"); ?>">
+                                <input id="date_process" name="date_process" type="date" class="form-control" placeholder="Date Process" value="<?php echo date("Y-m-d"); ?>" required>
                             </div>
                         </div>
 
@@ -711,6 +711,7 @@
                 // $('td:eq(0)', row).html(index);
             }
         });
+        let today = new Date().toISOString().split('T')[0]; 
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
@@ -718,7 +719,7 @@
             $('#barcode_sample').attr('readonly', false);
             $('#ab_other').attr('readonly', true);
             $('#barcode_sample').val('');
-            // $('#date_process').val('');
+            $('#date_process').val(today);
             $('#id_person').val('').trigger('change');
             $('#cons_stool').val('');
             $('#color_stool').val('');

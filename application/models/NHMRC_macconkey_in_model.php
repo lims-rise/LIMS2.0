@@ -158,25 +158,43 @@ class NHMRC_macconkey_in_model extends CI_Model
         // $this->db->where('barcode_sample', $id);
         // $this->db->where('lab', $this->session->userdata('lab'));
         // $q = $this->db->get($this->table);
+        // $q = $this->db->query('
+        // SELECT sampletype FROM
+        // (
+        // SELECT a.barcode_sample AS "barcode_sample", b.sampletype AS "sampletype" 
+        //   FROM nhmrc_receipt a
+        //   LEFT JOIN ref_sampletype b ON a.id_type2b=b.id_sampletype
+        //   WHERE a.id_type2b not IN (7,9)
+        //   AND a.flag = 0
+        // UNION ALL
+        // SELECT barcode_tube AS "barcode_sample", "Sediment" AS "sampletype" 
+        // FROM nhmrc_sediment_prep
+        // WHERE flag = 0
+        // UNION ALL
+        // SELECT barcode_falcon AS "barcode_sample", "Bootsocks" AS "sampletype" 
+        // FROM nhmrc_bs_stomacher
+        // WHERE flag = 0
+        // ) x
+        // WHERE barcode_sample = "'.$id.'"
+        // ');        
+
         $q = $this->db->query('
         SELECT sampletype FROM
         (
-        SELECT a.barcode_sample AS "barcode_sample", b.sampletype AS "sampletype" 
-          FROM nhmrc_receipt a
-          LEFT JOIN ref_sampletype b ON a.id_type2b=b.id_sampletype
-          WHERE a.id_type2b not IN (7,9)
-          AND a.flag = 0
-        UNION ALL
-        SELECT barcode_tube AS "barcode_sample", "Sediment" AS "sampletype" 
-        FROM nhmrc_sediment_prep
-        WHERE flag = 0
-        UNION ALL
-        SELECT barcode_falcon AS "barcode_sample", "Bootsocks" AS "sampletype" 
-        FROM nhmrc_bs_stomacher
-        WHERE flag = 0
+        SELECT a.barcode_sample AS "barcode_sample", b.sampletype AS "sampletype", c.barcode_falcon
+            FROM nhmrc_receipt a
+            LEFT JOIN ref_sampletype b ON a.id_type2b=b.id_sampletype
+            LEFT JOIN nhmrc_bs_stomacher c ON a.barcode_sample = c.barcode_sample
+            WHERE a.flag = 0
+		UNION ALL
+		SELECT barcode_falcon1 AS "barcode_sample", "Food" AS "sampletype", null
+		FROM nhmrc_subsd_idexx
+		WHERE flag = 0
         ) x
-        WHERE barcode_sample = "'.$id.'"
+        WHERE x.barcode_sample = "'.$id.'" 
+        OR x.barcode_falcon = "'.$id.'" 
         ');        
+
         $response = $q->result_array();
         return $response;
         // return $this->db->get('ref_location_80')->row();

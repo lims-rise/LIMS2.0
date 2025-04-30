@@ -123,7 +123,7 @@ class NHMRC_bootsocks_stomacher_model extends CI_Model
         LEFT JOIN nhmrc_bs_stomacher t ON a.barcode_sample=t.barcode_sample AND t.elution_no="Moisture2"
         LEFT JOIN nhmrc_subbs_idexx j ON g.barcode_bootsock=j.barcode_sample
 		LEFT JOIN ref_sampletype b ON a.id_type2b = b.id_sampletype
-        WHERE a.id_type2b IN (18,19,20,21,25)
+        WHERE a.id_type2b IN (18,19,20,21,25,26)
         AND a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
