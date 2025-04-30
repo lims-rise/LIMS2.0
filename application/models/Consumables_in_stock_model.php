@@ -434,50 +434,158 @@
         //     log_message('debug', 'Finished checking stock levels.');
         // }
 
+        // function checkStockLevelsAndSendNotification($created_stock_ids = [])
+        // {
+        //     log_message('debug', 'Started checking stock levels.');
+        //     $this->load->library('email');  
+
+        //     // Jika ada id_stock yang diberikan, maka filter berdasarkan id_stock
+        //     if (!empty($created_stock_ids)) {
+        //         $this->db->where_in('id_stock', $created_stock_ids);
+        //     }
+
+        //     // Get all products (hanya yang baru saja diinsert atau diupdate)
+        //     $this->db->select('id_stock, quantity, minimum_stock');
+        //     $query = $this->db->get('consumables_stock');
+        //     $stockData = $query->result_array();
+
+        //     foreach ($stockData as $data) {
+        //         $id_stock = $data['id_stock'];
+        //         $quantity = $data['quantity'];
+        //         $minimumStock = $data['minimum_stock'];
+
+        //         // Check if quantity is approaching minimum stock
+        //         if ($quantity <= $minimumStock + 10) {
+        //             // Get product details
+        //             $this->db->select('product_name');
+        //             $this->db->where('id_stock', $id_stock);
+        //             $productQuery = $this->db->get('consumables_stock');
+        //             $product = $productQuery->row_array();
+
+        //             // Prepare email
+        //             $this->email->from('uhqdev@gmail.com', 'LIMS2.0 - Alerts');
+        //             $this->email->to('ulhaqitcom@gmail.com');
+        //             $this->email->subject('Stock Info: ' . $product['product_name']);
+        //             $this->email->message('The stock for product ' . $product['product_name'] . ' is approaching the minimum level. Current quantity: ' . $quantity . ', Minimum stock: ' . $minimumStock . '.' . "\n" . 'Please update the stock levels as soon as possible.');
+
+        //             // Send email
+        //             if ($this->email->send()) {
+        //                 log_message('debug', 'Email sent successfully for product ' . $product['product_name']);
+        //             } else {
+        //                 log_message('error', 'Error sending email for product ' . $product['product_name'] . ': ' . $this->email->print_debugger());
+        //             }
+        //         }
+        //     }
+        //     log_message('debug', 'Finished checking stock levels.');
+        // }
+
+        // function checkStockLevelsAndSendNotification($created_stock_ids = [])
+        // {
+        //     log_message('debug', 'Started checking stock levels.');
+        //     $this->load->library('email');
+
+        //     // Jika ada id_stock yang diberikan, maka filter berdasarkan id_stock
+        //     if (!empty($created_stock_ids)) {
+        //         $this->db->where_in('id_stock', $created_stock_ids);
+        //     }
+
+        //     // Get all products (hanya yang baru saja diinsert atau diupdate)
+        //     $this->db->select('id_stock, quantity, minimum_stock');
+        //     $query = $this->db->get('consumables_stock');
+        //     $stockData = $query->result_array();
+
+        //     // Ambil semua email user dari tbl_user
+        //     $this->db->select('email');
+        //     $userQuery = $this->db->get('tbl_user');
+        //     $userEmails = array_column($userQuery->result_array(), 'email');
+
+        //     foreach ($stockData as $data) {
+        //         $id_stock = $data['id_stock'];
+        //         $quantity = $data['quantity'];
+        //         $minimumStock = $data['minimum_stock'];
+
+        //         // Cek apakah stok mendekati batas minimum
+        //         if ($quantity <= $minimumStock + 10) {
+        //             // Ambil nama produk
+        //             $this->db->select('product_name');
+        //             $this->db->where('id_stock', $id_stock);
+        //             $productQuery = $this->db->get('consumables_stock');
+        //             $product = $productQuery->row_array();
+
+        //             $subject = 'Stock Info: ' . $product['product_name'];
+        //             $message = 'The stock for product ' . $product['product_name'] . ' is approaching the minimum level. Current quantity: ' . $quantity . ', Minimum stock: ' . $minimumStock . '.' . "\n\n" . 'Please update the stock levels as soon as possible.';
+
+        //             // Kirim email ke semua user
+        //             foreach ($userEmails as $email) {
+        //                 $this->email->clear(); // Penting: reset konfigurasi email setiap kali
+        //                 $this->email->from('uhqdev@gmail.com', 'LIMS2.0 - Alerts');
+        //                 $this->email->to($email);
+        //                 $this->email->subject($subject);
+        //                 $this->email->message($message);
+
+        //                 if ($this->email->send()) {
+        //                     log_message('debug', 'Email sent successfully to ' . $email . ' for product ' . $product['product_name']);
+        //                 } else {
+        //                     log_message('error', 'Error sending email to ' . $email . ' for product ' . $product['product_name'] . ': ' . $this->email->print_debugger());
+        //                 }
+        //             }
+        //         }
+        //     }
+
+        //     log_message('debug', 'Finished checking stock levels.');
+        // }
+
         function checkStockLevelsAndSendNotification($created_stock_ids = [])
         {
             log_message('debug', 'Started checking stock levels.');
-            $this->load->library('email');  
+            $this->load->library('email');
 
-            // Jika ada id_stock yang diberikan, maka filter berdasarkan id_stock
+            // Ambil data stok yang relevan
             if (!empty($created_stock_ids)) {
                 $this->db->where_in('id_stock', $created_stock_ids);
             }
-
-            // Get all products (hanya yang baru saja diinsert atau diupdate)
-            $this->db->select('id_stock, quantity, minimum_stock');
+            $this->db->select('id_stock, quantity, minimum_stock, product_name');
             $query = $this->db->get('consumables_stock');
             $stockData = $query->result_array();
 
-            foreach ($stockData as $data) {
-                $id_stock = $data['id_stock'];
-                $quantity = $data['quantity'];
-                $minimumStock = $data['minimum_stock'];
+            // Filter stok yang mendekati minimum
+            $stockToNotify = array_filter($stockData, function ($stock) {
+                return $stock['quantity'] <= $stock['minimum_stock'] + 10;
+            });
 
-                // Check if quantity is approaching minimum stock
-                if ($quantity <= $minimumStock + 10) {
-                    // Get product details
-                    $this->db->select('product_name');
-                    $this->db->where('id_stock', $id_stock);
-                    $productQuery = $this->db->get('consumables_stock');
-                    $product = $productQuery->row_array();
+            if (empty($stockToNotify)) {
+                log_message('debug', 'No stock approaching minimum level. No emails sent.');
+                return;
+            }
 
-                    // Prepare email
+            // Ambil semua email user dari tbl_user
+            $this->db->select('email');
+            $userQuery = $this->db->get('tbl_user');
+            $userEmails = array_column($userQuery->result_array(), 'email');
+
+            foreach ($stockToNotify as $stock) {
+                $subject = 'Stock Info: ' . $stock['product_name'];
+                $message = 'The stock for product ' . $stock['product_name'] . ' is approaching the minimum level. Current quantity: ' . $stock['quantity'] . ', Minimum stock: ' . $stock['minimum_stock'] . '.' . "\n\n" . 'Please update the stock levels as soon as possible.';
+
+                foreach ($userEmails as $email) {
+                    $this->email->clear();
                     $this->email->from('uhqdev@gmail.com', 'LIMS2.0 - Alerts');
-                    $this->email->to('ulhaqitcom@gmail.com');
-                    $this->email->subject('Stock Info: ' . $product['product_name']);
-                    $this->email->message('The stock for product ' . $product['product_name'] . ' is approaching the minimum level. Current quantity: ' . $quantity . ', Minimum stock: ' . $minimumStock . '.' . "\n" . 'Please update the stock levels as soon as possible.');
+                    $this->email->to($email);
+                    $this->email->subject($subject);
+                    $this->email->message($message);
 
-                    // Send email
                     if ($this->email->send()) {
-                        log_message('debug', 'Email sent successfully for product ' . $product['product_name']);
+                        log_message('debug', 'Email sent successfully to ' . $email . ' for product ' . $stock['product_name']);
                     } else {
-                        log_message('error', 'Error sending email for product ' . $product['product_name'] . ': ' . $this->email->print_debugger());
+                        log_message('error', 'Error sending email to ' . $email . ' for product ' . $stock['product_name'] . ': ' . $this->email->print_debugger());
                     }
                 }
             }
+
             log_message('debug', 'Finished checking stock levels.');
         }
+
+
 
         function get_all() {
             $this->db->select('ro.objective, cs.product_name, cis.closed_container, cis.unit_measure_lab, cis.quantity_per_unit, 
