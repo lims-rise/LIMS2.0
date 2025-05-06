@@ -523,7 +523,7 @@
             $('#tracking_number').val(data.tracking_number);
 
             // $('#barcode_dna').val(data.barcode_dna);
-            // $('#date_out').val(data.date_out);
+            $('#date_out').val(data.date_out);
             // $('#id_person').val(data.id_person).trigger('change');
             // $('#stype').attr('readonly', true);
             // loadSType(data.barcode_dna);
