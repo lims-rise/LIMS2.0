@@ -27,7 +27,7 @@
         {
             $this->datatables->select('consumables_in_stock.id_instock, consumables_in_stock.id_stock, ref_objective.id_objective, ref_objective.objective, consumables_stock.product_name, consumables_in_stock.closed_container,
             consumables_in_stock.unit_measure_lab, consumables_in_stock.quantity_per_unit, consumables_in_stock.loose_items, consumables_in_stock.quantity_take,
-            consumables_in_stock.total_quantity, consumables_in_stock.unit_of_measure, consumables_in_stock.expired_date,
+            consumables_in_stock.total_quantity, consumables_in_stock.unit_of_measure, consumables_in_stock.expired_date, consumables_in_stock.total_closed_container,
             consumables_in_stock.comments, consumables_in_stock.date_collected, consumables_in_stock.time_collected,  
             consumables_in_stock.date_created, consumables_in_stock.date_updated, GREATEST(consumables_in_stock.date_created, consumables_in_stock.date_updated) AS latest_date');
             $this->datatables->from('consumables_in_stock');
@@ -270,6 +270,14 @@
             $this->db->set('quantity_take', $new_quantity_take);
             $this->db->where('id_stock', $id_stock);
             return $this->db->update('consumables_stock');
+        }
+        
+        public function getCurrentTotalClosedContainer($id_stock) {
+            $this->db->select('total_closed_container');
+            $this->db->from('consumables_in_stock');
+            $this->db->where('id_stock', $id_stock);
+            $query = $this->db->get();
+            return $query->row()->total_closed_container; // Pastikan mengembalikan nilai yang benar
         }
         
         
