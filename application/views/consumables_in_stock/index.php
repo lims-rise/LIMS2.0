@@ -694,11 +694,14 @@
             console.log(data);
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Consumables - Update Stock Take <span id="my-another-cool-loader"></span>');
+
             $('#idx_instock').attr('readonly', true);
             $('#idx_instock').val(data.id_instock);
+
+
             	
-       // Reset all checkboxes before setting them
-    $('.idObjectiveSelect').prop('checked', false).prop('disabled', true);
+            // Reset all checkboxes before setting them
+            $('.idObjectiveSelect').prop('checked', false).prop('disabled', true);
 
             // Pastikan data.id_objective valid dan adalah array
             if (Array.isArray(data.id_objective)) {
@@ -722,23 +725,56 @@
 
 
             // Tunggu hingga AJAX selesai dan dropdown diisi
+            // let interval = setInterval(function() {
+            //     // Cek apakah lebih dari satu opsi tersedia (default + data baru)
+            //     if ($('#id_stock').find('option').length > 1) {
+            //         // Set nilai dropdown produk berdasarkan id_stock
+            //         $('#id_stock').val(data.id_stock).prop('disabled', true); // Set the value of product dropdown
+            //         $('#id_stock').trigger('chosen:updated'); // Update Chosen
+            //         $('#id_stock1').val(data.id_stock); // Set the value of product dropdown
+            //         $('#id_stock1').trigger('chosen:updated'); // Update Chosen
+            //         clearInterval(interval); // Hentikan interval
+            //     }
+            // }, 100); // Cek setiap 100ms hingga dropdown terisi
+
             let interval = setInterval(function() {
-                // Cek apakah lebih dari satu opsi tersedia (default + data baru)
                 if ($('#id_stock').find('option').length > 1) {
-                    // Set nilai dropdown produk berdasarkan id_stock
-                    $('#id_stock').val(data.id_stock).prop('disabled', true); // Set the value of product dropdown
-                    $('#id_stock').trigger('chosen:updated'); // Update Chosen
-                    $('#id_stock1').val(data.id_stock); // Set the value of product dropdown
-                    $('#id_stock1').trigger('chosen:updated'); // Update Chosen
-                    clearInterval(interval); // Hentikan interval
+                    $('#id_stock').val(data.id_stock).prop('disabled', true);
+                    $('#id_stock').trigger('chosen:updated');
+                    $('#id_stock1').val(data.id_stock);
+                    $('#id_stock1').trigger('chosen:updated');
+                    clearInterval(interval);
+
+                    // Setelah dropdown selesai diisi dan dipilih, panggil AJAX
+                    let idStock = $('#id_stock1').val();
+                    if (idStock) {
+                        $.ajax({
+                            url: '<?php echo site_url('Consumables_in_stock/getStockDetails'); ?>',
+                            type: 'POST',
+                            data: { idStock: idStock },
+                            dataType: 'json',
+                            success: function(response) {
+                                console.log(response);
+                                $('#quantity').val(response.quantity || '');
+                                $('#quantity').attr('readonly', true);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.error('AJAX error:', textStatus, errorThrown);
+                                $('#quantity').val('');
+                            }
+                        });
+                    } else {
+                        $('#quantity').val('');
+                    }
                 }
-            }, 100); // Cek setiap 100ms hingga dropdown terisi
+            }, 100);
+
 
             $('#id_objective').attr('readonly', true).attr('onmousedown', 'return false;');
             $('#closed_container').val(data.closed_container);
-            $('#closed_container').attr('readonly', false);
-            $('#total_closed_container').val(data.total_closed_container);
-            $('#total_closed_container').attr('readonly', false);
+            $('#closed_container').attr('readonly', true);
+            $('#total_closed_containers').val(data.total_closed_container);
+            $('#total_closed_containers').attr('readonly', true);
             $('#unit_measure_lab').val(data.unit_measure_lab);
             $('#unit_measure_lab').attr('readonly', true);
             $('#quantity_per_unit').val(data.quantity_per_unit);
@@ -746,6 +782,8 @@
             $('#loose_items').val(data.loose_items);
             $('#total_quantity').val(data.total_quantity);
             $('#total_quantity').attr('readonly', true);
+            $('#quantity_take').val(data.quantity_take);
+            $('#quantity_take').attr('readonly', true);
             $('#unit_of_measure').val(data.unit_of_measure);
             $('#unit_of_measure').attr('readonly', true);
             $('#unit_of_measure1').val(data.unit_of_measure);

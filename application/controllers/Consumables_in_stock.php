@@ -264,6 +264,8 @@ class Consumables_in_stock extends CI_Controller {
         $id_objectives = $this->input->post('id_objective', TRUE);
         $id_objectives1 = $this->input->post('id_objective1', TRUE);
         $total_closed_container = $this->input->post('total_closed_containers', TRUE); // Ambil data total closed container
+        // var_dump($total_closed_container);
+        // die();
         $quantity_take = $this->input->post('quantity_take', TRUE);
         $dt = new DateTime();
         
@@ -281,6 +283,7 @@ class Consumables_in_stock extends CI_Controller {
             'comments' => $this->input->post('comments', TRUE),
             'date_collected' => $this->input->post('date_collected', TRUE),
             'time_collected' => $this->input->post('time_collected', TRUE),
+            'total_closed_container' => $this->input->post('total_closed_containers', TRUE),
             'flag' => '0',
             'lab' => $this->session->userdata('lab'),
             'uuid' => $this->uuid->v4(),
@@ -301,6 +304,7 @@ class Consumables_in_stock extends CI_Controller {
             'comments' => $this->input->post('comments', TRUE),
             'date_collected' => $this->input->post('date_collected', TRUE),
             'time_collected' => $this->input->post('time_collected', TRUE),
+            'total_closed_container' => $this->input->post('total_closed_containers', TRUE),
             'flag' => '0',
             'lab' => $this->session->userdata('lab'),
             'uuid' => $this->uuid->v4(),
@@ -350,7 +354,7 @@ class Consumables_in_stock extends CI_Controller {
                     $created_stock_ids[] = $data['id_stock'];
                     
                     // Update quantity di consumables_stock (replace quantity) untuk setiap id_stock
-                    $this->Consumables_in_stock_model->replaceConsumablesStockQuantity($data['id_stock'], $total_closed_container);
+                    // $this->Consumables_in_stock_model->replaceConsumablesStockQuantity($data['id_stock'], $total_closed_container);
                 }
 
                 if (!$result) {
