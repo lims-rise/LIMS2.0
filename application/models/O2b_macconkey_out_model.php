@@ -106,12 +106,18 @@ class O2b_macconkey_out_model extends CI_Model
         $this->db->insert($this->table, $data);
     }
     
+    function insert_freezer($data)
+    {
+        $this->db->insert('freezer_in', $data);
+    }    
+
     // update data
     function update($id, $data)
     {
         $this->db->where($this->id, $id);
         $this->db->update($this->table, $data);
     }
+
 
     // delete data
     // function delete($id_user, $data)

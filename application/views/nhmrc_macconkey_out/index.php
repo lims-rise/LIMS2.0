@@ -24,16 +24,16 @@
             <thead>
                 <tr>
                     <!-- <th width="30px">No</th> -->
-		    <th>Barcode macconkey</th>
-		    <th>Date process</th>
-		    <th>Time process</th>
-		    <th>Lab tech</th>
-		    <th>Macconkey sweep-1</th>
-		    <th>Cryobox-1</th>
-		    <th>Macconkey sweep-2</th>
-		    <th>Cryobox-2</th>
-		    <th>Comments</th>
-		    <th width="150px">Action</th>
+                <th>Barcode macconkey</th>
+                <th>Date process</th>
+                <th>Time process</th>
+                <th>Lab tech</th>
+                <th>Macconkey sweep-1</th>
+                <th>Cryobox-1</th>
+                <th>Macconkey sweep-2</th>
+                <th>Cryobox-2</th>
+                <th>Comments</th>
+                <th width="150px">Action</th>
                 </tr>
             </thead>
 	    

@@ -107,6 +107,11 @@ class NHMRC_metagenomics_br_model extends CI_Model
         $this->db->insert($this->table, $data);
     }
     
+    function insert_freezer($data)
+    {
+        $this->db->insert('freezer_in', $data);
+    }    
+        
     // update data
     function update($id, $data)
     {

@@ -49,8 +49,8 @@ class O3_filter_paper extends CI_Controller
         if ($mode=="insert"){
             $data = array(
                 'date_in' => $this->input->post('date_process',TRUE),
-                'time_in' => $this->input->post('time_process',TRUE),
-                'id_person' => $this->input->post('id_person',TRUE),
+                'time_in' => $dt->format('H:i:s'),
+                'id_person' => '999',
                 'id_vessel' => '1',
                 'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
                 'id_location_80' => $freezerloc->id_location_80,
@@ -65,9 +65,9 @@ class O3_filter_paper extends CI_Controller
                 );
     
             $this->O3_filter_paper_model->insert_freezer($data);
-            $this->session->set_flashdata('message', 'Create Record Success');          
-            $freezid = $this->O3_filter_paper_model->getFreezerIN($id);
+            $this->session->set_flashdata('message', 'Create Record Success');      
 
+            //$freezid = $this->O3_filter_paper_model->getFreezerIN($id);
             $data = array(
                 'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
                 'date_process' => $this->input->post('date_process',TRUE),
@@ -90,8 +90,8 @@ class O3_filter_paper extends CI_Controller
         else if ($mode=="edit"){
             $data = array(
                 'date_in' => $this->input->post('date_process',TRUE),
-                'time_in' => $this->input->post('time_process',TRUE),
-                'id_person' => $this->input->post('id_person',TRUE),
+                'time_in' => $dt->format('H:i:s'),
+                'id_person' => '999',
                 'id_vessel' => '1',
                 'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
                 'id_location_80' => $freezerloc->id_location_80,
