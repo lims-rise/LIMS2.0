@@ -306,7 +306,7 @@
 </style>
 <!-- Chosen CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -398,26 +398,143 @@
         });
 
 
-        $('.stockSelect').change(function() {
+        // $('.stockSelect').change(function() {
+        //     let idStock = $(this).val();
+        //     if (idStock) {
+        //         $.ajax({
+        //             url: '<?php echo site_url('Consumables_in_stock/getStockDetails'); ?>',
+        //             type: 'POST',
+        //             data: { idStock: idStock }, 
+        //             dataType: 'json',
+        //             success: function(response) {
+             
+        //                 console.log(response);
+        //                 $('#unit_measure_lab').val(response.unit || '');
+        //                 $('#unit_of_measure').val(response.unit_of_measure || '');
+        //                 $('#unit_of_measure1').val(response.unit_of_measure || '');
+        //                 $('#quantity_per_unit').val(response.quantity_per_unit || '');
+        //                 $('#quantity').val(response.quantity || '');
+        //                 calculateTotalQuantity(); 
+        //             },
+        //             error: function(jqXHR, textStatus, errorThrown) {
+        //                 // Menangani error jika terjadi kesalahan dalam request
+        //                 console.error('AJAX error:', textStatus, errorThrown);
+        //                 $('#unit_measure_lab').val('');
+        //                 $('#unit_of_measure').val('');
+        //                 $('#unit_of_measure1').val('');
+        //                 $('#quantity_per_unit').val('');
+        //                 $('#quantity').val('');
+        //             }
+        //         });
+        //     } else {
+        //         $('#unit_measure_lab').val('');
+        //         $('#unit_of_measure').val('');
+        //         $('#unit_of_measure1').val('');
+        //         $('#quantity_per_unit').val('');
+        //         $('#quantity').val('');
+        //     }
+        // });
+        // $('.stockSelect').change(function () {
+        //     let idStock = $(this).val();
+        //     let idObjectives = [];
+
+        //     $('.idObjectiveSelect:checked').each(function () {
+        //         idObjectives.push($(this).val());
+        //     });
+
+        //     if (idStock) {
+        //         $.ajax({
+        //             url: '<?php echo site_url('Consumables_in_stock/getStockDetails'); ?>',
+        //             type: 'POST',
+        //             data: {
+        //                 idStock: idStock,
+        //                 idObjectives: idObjectives // kirim data ke server
+        //             },
+        //             dataType: 'json',
+        //             success: function (response) {
+        //                 console.log(response);
+
+        //                 $('#unit_measure_lab').val(response.unit || '');
+        //                 $('#unit_of_measure').val(response.unit_of_measure || '');
+        //                 $('#unit_of_measure1').val(response.unit_of_measure || '');
+        //                 $('#quantity_per_unit').val(response.quantity_per_unit || '');
+        //                 $('#quantity').val(response.quantity || '');
+
+        //                 // Cek objective yang tidak sesuai
+        //                 // if (response.invalid_objectives && response.invalid_objectives.length > 0) {
+        //                 //     let invalidNames = response.invalid_objective_names.join(', ');
+        //                 //     alert('⚠️ Objective berikut tidak terdaftar untuk produk ini:\n' + invalidNames + '\nSilakan cek kembali atau daftarkan di modul lain.');
+        //                 // }
+        //                 if (response.invalid_objectives && response.invalid_objectives.length > 0) {
+        //                     let invalidNames = response.invalid_objective_names.join(', ');
+                            
+        //                     Swal.fire({
+        //                         icon: 'warning',
+        //                         title: 'Objective Mismatch',
+        //                         html: 'This product is not registered for the following objectives:<br><strong>' + invalidNames + '</strong>.<br>Please review or register them through a consumables module.',
+        //                         confirmButtonText: 'OK'
+        //                     });
+
+        //                 }
+
+
+        //                 calculateTotalQuantity();
+        //             },
+        //             error: function (jqXHR, textStatus, errorThrown) {
+        //                 console.error('AJAX error:', textStatus, errorThrown);
+        //             }
+        //         });
+        //     }
+        // });
+        $('.stockSelect').change(function () {
             let idStock = $(this).val();
+            let selectedProductName = $('#id_stock option:selected').text();
             if (idStock) {
                 $.ajax({
                     url: '<?php echo site_url('Consumables_in_stock/getStockDetails'); ?>',
                     type: 'POST',
-                    data: { idStock: idStock }, 
+                    data: { idStock: idStock, idObjectives: getSelectedObjectives() }, 
                     dataType: 'json',
-                    success: function(response) {
-             
-                        console.log(response);
+                    success: function (response) {
                         $('#unit_measure_lab').val(response.unit || '');
                         $('#unit_of_measure').val(response.unit_of_measure || '');
                         $('#unit_of_measure1').val(response.unit_of_measure || '');
                         $('#quantity_per_unit').val(response.quantity_per_unit || '');
                         $('#quantity').val(response.quantity || '');
-                        calculateTotalQuantity(); 
+                        calculateTotalQuantity();
+
+                        // Handle invalid objectives
+                        let invalidObj = response.invalid_objectives;
+
+                        // Normalize: convert to array if it's an object
+                        if (invalidObj && typeof invalidObj === 'object' && !Array.isArray(invalidObj)) {
+                            invalidObj = Object.values(invalidObj);
+                        }
+
+                        if (invalidObj && invalidObj.length > 0) {
+                            const invalidNames = response.invalid_objective_names.join(', ');
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Objective Mismatch',
+                                html: 'The Objective <strong>"' + invalidNames + '"</strong> is not registered for the following product:<br><strong>' + selectedProductName + '</strong>.<br>Please review or register them through a consumables module.',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Reset product name dropdown
+                                    $('#id_stock').val('').trigger('change');
+
+                                    // Optional: Kosongkan juga field info produk lain
+                                    $('#id_stock').trigger('chosen:updated');
+                                    $('#unit_measure_lab').val('');
+                                    $('#unit_of_measure').val('');
+                                    $('#unit_of_measure1').val('');
+                                    $('#quantity_per_unit').val('');
+                                    $('#quantity').val('');
+                                }
+                            });
+                        }
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Menangani error jika terjadi kesalahan dalam request
+                    error: function (jqXHR, textStatus, errorThrown) {
                         console.error('AJAX error:', textStatus, errorThrown);
                         $('#unit_measure_lab').val('');
                         $('#unit_of_measure').val('');
@@ -434,6 +551,15 @@
                 $('#quantity').val('');
             }
         });
+
+        function getSelectedObjectives() {
+            let selected = [];
+            $('.idObjectiveSelect:checked').each(function () {
+                selected.push($(this).val());
+            });
+            return selected;
+        }
+
 
         
         $('.clockpicker').clockpicker({
