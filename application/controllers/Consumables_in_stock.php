@@ -42,12 +42,37 @@ class Consumables_in_stock extends CI_Controller {
         $this->template->load('template','consumables_in_stock/index', $data);
     } 
 
+    // public function getStockDetails()
+    // {
+    //     $idStock = $this->input->post('idStock');
+    //     $stock = $this->Consumables_in_stock_model->getStockById($idStock);
+    //     echo json_encode($stock);
+    // }
+
     public function getStockDetails()
     {
         $idStock = $this->input->post('idStock');
+        $idObjectives = $this->input->post('idObjectives');
+
         $stock = $this->Consumables_in_stock_model->getStockById($idStock);
+
+        // Cek objective mana yang tidak cocok
+        $invalidObjectives = [];
+        $invalidObjectiveNames = [];
+
+        if (!empty($idObjectives)) {
+            $invalidObjectives = $this->Consumables_in_stock_model->getInvalidObjectives($idStock, $idObjectives);
+            if (!empty($invalidObjectives)) {
+                $invalidObjectiveNames = $this->Consumables_in_stock_model->getObjectiveNamesByIds($invalidObjectives);
+            }
+        }
+
+        $stock['invalid_objectives'] = $invalidObjectives;
+        $stock['invalid_objective_names'] = $invalidObjectiveNames;
+
         echo json_encode($stock);
     }
+
 
     public function getStockByObjective()
     {
