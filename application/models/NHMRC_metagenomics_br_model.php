@@ -51,7 +51,7 @@ class NHMRC_metagenomics_br_model extends CI_Model
         SELECT a.barcode_sample, a.barcode_falcon2, a.date_conduct, a.volume_filtered, a.time_started, a.time_finished, a.time_minutes, a.barcode_dna_bag,
         a.barcode_storage, concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS Location, a.comments
         from nhmrc_metagenomics a 
-        left join ref_location_80 b on a.id_location_80 = b.id_location_80      
+        left join ref_location_80 b on a.id_location_80 = b.id_location_80 AND b.lab = "'.$this->session->userdata('lab').'" 
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
@@ -107,6 +107,11 @@ class NHMRC_metagenomics_br_model extends CI_Model
         $this->db->insert($this->table, $data);
     }
     
+    function insert_freezer($data)
+    {
+        $this->db->insert('freezer_in', $data);
+    }    
+        
     // update data
     function update($id, $data)
     {

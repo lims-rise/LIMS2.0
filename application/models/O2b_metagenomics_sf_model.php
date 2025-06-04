@@ -70,7 +70,20 @@ class O2b_metagenomics_sf_model extends CI_Model
         return $this->db->get($this->table)->row();
     }
 
-
+      function getFreezLoc($f,$s,$r,$rl){
+        $this->db->select('id_location_80');
+        $this->db->where('freezer', $f);
+        $this->db->where('shelf', $s);
+        $this->db->where('rack', $r);
+        $this->db->where('rack_level', $rl);
+        $this->db->where('lab', $this->session->userdata('lab'));
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // return $this->db->get('ref_location_80');
+        // $response = $q->result_array();
+        // return $response;
+        return $this->db->get('ref_location_80')->row();
+      }
 
     // function get_by_id_detail($id)
     // {
@@ -110,6 +123,11 @@ class O2b_metagenomics_sf_model extends CI_Model
     {
         $this->db->insert($this->table, $data);
     }
+    
+    function insert_freezer($data)
+    {
+        $this->db->insert('freezer_in', $data);
+    }    
     
     // update data
     function update($id, $data)

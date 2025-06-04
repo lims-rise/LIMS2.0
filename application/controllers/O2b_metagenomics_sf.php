@@ -64,6 +64,43 @@ class O2b_metagenomics_sf extends CI_Controller
  
             $this->O2b_metagenomics_sf_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');    
+
+            $data = array(
+                'date_in' => $this->input->post('date_conduct',TRUE),
+                'time_in' => $dt->format('H:i:s'),
+                'id_person' => '999',
+                'id_vessel' => '1',
+                'barcode_sample' => strtoupper($this->input->post('barcode_dna1',TRUE)),
+                'id_location_80' => $this->input->post('id_location_801',TRUE),
+                'comments' => $this->input->post('comments',TRUE),
+                'out' => '0',
+                'need_cryobox' => '1',
+                'cryobox' => strtoupper($this->input->post('barcode_storage1',TRUE)),
+                'uuid' => $this->uuid->v4(),
+                'lab' => $this->session->userdata('lab'),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+            $this->O2b_metagenomics_sf_model->insert_freezer($data);            
+
+            $data = array(
+                'date_in' => $this->input->post('date_conduct',TRUE),
+                'time_in' => $dt->format('H:i:s'),
+                'id_person' => '999',
+                'id_vessel' => '1',
+                'barcode_sample' => strtoupper($this->input->post('barcode_dna2',TRUE)),
+                'id_location_80' => $this->input->post('id_location_802',TRUE),
+                'comments' => $this->input->post('comments',TRUE),
+                'out' => '0',
+                'need_cryobox' => '1',
+                'cryobox' => strtoupper($this->input->post('barcode_storage2',TRUE)),
+                'uuid' => $this->uuid->v4(),
+                'lab' => $this->session->userdata('lab'),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+            $this->O2b_metagenomics_sf_model->insert_freezer($data);     
+
         }
         else if ($mode=="edit"){
             $data = array(
@@ -87,7 +124,43 @@ class O2b_metagenomics_sf extends CI_Controller
             );
 
             $this->O2b_metagenomics_sf_model->update($id, $data);
-            $this->session->set_flashdata('message', 'Create Record Success');    
+            $this->session->set_flashdata('message', 'Create Record Success');   
+            
+            $data = array(
+                'date_in' => $this->input->post('date_conduct',TRUE),
+                'time_in' => $dt->format('H:i:s'),
+                'id_person' => $this->input->post('id_person',TRUE),
+                'id_vessel' => '1',
+                'barcode_sample' => strtoupper($this->input->post('barcode_dna1',TRUE)),
+                'id_location_80' => $this->input->post('id_location_801',TRUE),
+                'comments' => $this->input->post('comments',TRUE),
+                'out' => '0',
+                'need_cryobox' => '1',
+                'cryobox' => strtoupper($this->input->post('barcode_storage1',TRUE)),
+                'uuid' => $this->uuid->v4(),
+                'lab' => $this->session->userdata('lab'),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+            $this->O2b_metagenomics_sf_model->insert_freezer($data);            
+
+            $data = array(
+                'date_in' => $this->input->post('date_conduct',TRUE),
+                'time_in' => $dt->format('H:i:s'),
+                'id_person' => $this->input->post('id_person',TRUE),
+                'id_vessel' => '1',
+                'barcode_sample' => strtoupper($this->input->post('barcode_dna2',TRUE)),
+                'id_location_80' => $this->input->post('id_location_802',TRUE),
+                'comments' => $this->input->post('comments',TRUE),
+                'out' => '0',
+                'need_cryobox' => '1',
+                'cryobox' => strtoupper($this->input->post('barcode_storage2',TRUE)),
+                'uuid' => $this->uuid->v4(),
+                'lab' => $this->session->userdata('lab'),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+            $this->O2b_metagenomics_sf_model->insert_freezer($data);              
         }
 
         redirect(site_url("O2b_metagenomics_sf"));
