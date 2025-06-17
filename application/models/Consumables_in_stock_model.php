@@ -609,6 +609,33 @@
             $query = $this->db->get();
             return $query->result();
         }
+
+        // Ambil id_objective yang tidak terhubung ke id_stock
+        function getInvalidObjectives($id_stock, $id_objectives)
+        {
+            $this->db->select('id_objective');
+            $this->db->from('ref_consumables');
+            $this->db->where('id_stock', $id_stock);
+            $this->db->where_in('id_objective', $id_objectives);
+            $valid = $this->db->get()->result_array();
+
+            $validIds = array_column($valid, 'id_objective');
+            return array_diff($id_objectives, $validIds);
+        }
+
+        // Ambil nama objective berdasarkan ID
+        function getObjectiveNamesByIds($ids)
+        {
+            if (empty($ids)) return [];
+
+            $this->db->select('objective');
+            $this->db->from('ref_objective'); // ganti nama tabel jika berbeda
+            $this->db->where_in('id_objective', $ids);
+            $q = $this->db->get()->result_array();
+
+            return array_column($q, 'objective');
+        }
+
         
     }
 
