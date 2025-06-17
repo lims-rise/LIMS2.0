@@ -88,7 +88,7 @@ class O2b_sample_prep_model extends CI_Model
         FROM obj2b_sediment_prep a
         LEFT JOIN obj2b_subsd_endetec b ON a.barcode_sample=b.barcode_sample
         LEFT JOIN obj2b_subsd_idexx c ON a.barcode_sample=c.barcode_sample
-        AND a.lab = "'.$this->session->userdata('lab').'" 
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
         $response = $q->result();
