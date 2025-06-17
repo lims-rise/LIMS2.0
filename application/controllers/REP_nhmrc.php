@@ -439,7 +439,7 @@ class REP_nhmrc extends CI_Controller
             $sheet->setCellValue('E1',"reception_png_control");
             $sheet->setCellValue('F1',"reception_barcode_tinytag");
             $sheet->setCellValue('G1',"reception_comments");
-            $sheet->setCellValue('H1',"sampleentry_barcode_bottle");
+            $sheet->setCellValue('H1',"sampleentry_barcode_tube");
             $sheet->setCellValue('I1',"sampleentry_date_conduct");
             $sheet->setCellValue('J1',"sampleentry_vol_aliquot");
             $sheet->setCellValue('K1',"sampleentry_barcode_box");
@@ -503,7 +503,7 @@ class REP_nhmrc extends CI_Controller
                 $sheet->setCellValue('E'.$numrow, $this->cleanEnter($data->reception_png_control));
                 $sheet->setCellValue('F'.$numrow, $this->cleanEnter($data->reception_barcode_tinytag));
                 $sheet->setCellValue('G'.$numrow, $this->cleanEnter($data->reception_comments));
-                $sheet->setCellValue('H'.$numrow, $this->cleanEnter($data->sampleentry_barcode_bottle));
+                $sheet->setCellValue('H'.$numrow, $this->cleanEnter($data->sampleentry_barcode_tube));
                 $sheet->setCellValue('I'.$numrow, $this->cleanEnter($data->sampleentry_date_conduct));
                 $sheet->setCellValue('J'.$numrow, $this->cleanEnter($data->sampleentry_vol_aliquot));
                 $sheet->setCellValue('K'.$numrow, $this->cleanEnter($data->sampleentry_barcode_box));

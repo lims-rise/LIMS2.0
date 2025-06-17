@@ -25,7 +25,7 @@
                 <tr>
                     <!-- <th width="30px">No</th> -->
                     <th>Barcode sample</th>
-                    <th>Barcode Bottle</th>
+                    <th>Barcode tube</th>
                     <th>Date conducted</th>
                     <th>Barcode Box</th>
                     <th>Position tube</th>
@@ -70,9 +70,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="barcode_bottle" class="col-sm-4 control-label">Barcode bottle</label>
+                            <label for="barcode_tube" class="col-sm-4 control-label">Barcode tube</label>
                             <div class="col-sm-8">
-                                <input id="barcode_bottle" name="barcode_bottle" type="text" class="form-control" placeholder="Barcode bottle" required>
+                                <input id="barcode_tube" name="barcode_tube" type="text" class="form-control" placeholder="Barcode tube" required>
                                 <div class="val2tip"></div>
                             </div>
                         </div>
@@ -317,7 +317,7 @@
         // $('#barcode_sample').val('');     
         });
 
-        $('#barcode_bottle').click(function() {
+        $('#barcode_tube').click(function() {
             $('.val1tip, .val2tip, .val3tip').tooltipster('hide');   
         // $('#barcode_sample').val('');     
         });
@@ -447,8 +447,8 @@
             // }, 5000);
         });
 
-        // $('#barcode_bottle').on("change", function() {
-        //     data1 = $('#barcode_bottle').val();
+        // $('#barcode_tube').on("change", function() {
+        //     data1 = $('#barcode_tube').val();
         //     $.ajax({
         //         type: "GET",
         //         url: "NHMRC_sample_entry/valid_bs2?id1="+data1,
@@ -460,15 +460,15 @@
         //                 tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode DNA <strong> ' + data1 +'</strong> is already in the system !</span>');
         //                 $('.val2tip').tooltipster('content', tip);
         //                 $('.val2tip').tooltipster('show');
-        //                 $('#barcode_bottle').focus();
-        //                 $('#barcode_bottle').val('');     
-        //                 $('#barcode_bottle').css({'background-color' : '#FFE6E7'});
+        //                 $('#barcode_tube').focus();
+        //                 $('#barcode_tube').val('');     
+        //                 $('#barcode_tube').css({'background-color' : '#FFE6E7'});
         //                 setTimeout(function(){
-        //                     $('#barcode_bottle').css({'background-color' : '#FFFFFF'});
+        //                     $('#barcode_tube').css({'background-color' : '#FFFFFF'});
         //                     setTimeout(function(){
-        //                         $('#barcode_bottle').css({'background-color' : '#FFE6E7'});
+        //                         $('#barcode_tube').css({'background-color' : '#FFE6E7'});
         //                         setTimeout(function(){
-        //                             $('#barcode_bottle').css({'background-color' : '#FFFFFF'});
+        //                             $('#barcode_tube').css({'background-color' : '#FFFFFF'});
         //                         }, 300);                            
         //                     }, 300);
         //                 }, 300);
@@ -537,7 +537,7 @@
                 //     "orderable": false
                 // },
                 {"data": "barcode_sample"},
-                {"data": "barcode_bottle"},
+                {"data": "barcode_tube"},
                 {"data": "date_conduct"},
                 {"data": "barcode_box"},
                 {"data": "position_tube"},
@@ -567,7 +567,7 @@
             $('#barcode_sample').attr('readonly', false);
             $('#barcode_sample').val('');
             $("#date_conduct").datepicker("setDate",'now');
-            $('#barcode_bottle').val('');
+            $('#barcode_tube').val('');
             $('#vol_aliquot').val('');
             $('#barcode_box').val('');
             $('#position_tube').val('');
@@ -590,7 +590,7 @@
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> NHMRC - Update Sample Entry (Hand Rinse)<span id="my-another-cool-loader"></span>');
             $('#barcode_sample').attr('readonly', true);
             $('#barcode_sample').val(data.barcode_sample);
-            $('#barcode_bottle').val(data.barcode_bottle);
+            $('#barcode_tube').val(data.barcode_tube);
             $('#date_conduct').val(data.date_conduct);
             $('#vol_aliquot').val(data.vol_aliquot);
             $('#barcode_box').val(data.barcode_box);

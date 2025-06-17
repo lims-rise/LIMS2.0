@@ -44,7 +44,7 @@ class NHMRC_sample_entry extends CI_Controller
         if ($mode=="insert"){
             $data = array(
             'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'barcode_bottle' => strtoupper($this->input->post('barcode_bottle',TRUE)),
+            'barcode_tube' => strtoupper($this->input->post('barcode_tube',TRUE)),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'vol_aliquot' => $this->input->post('vol_aliquot',TRUE),
             'barcode_box' => strtoupper($this->input->post('barcode_box',TRUE)),
@@ -63,7 +63,7 @@ class NHMRC_sample_entry extends CI_Controller
         else if ($mode=="edit"){
             $data = array(
             'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'barcode_bottle' => strtoupper($this->input->post('barcode_bottle',TRUE)),
+            'barcode_tube' => strtoupper($this->input->post('barcode_tube',TRUE)),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'vol_aliquot' => $this->input->post('vol_aliquot',TRUE),
             'barcode_box' => strtoupper($this->input->post('barcode_box',TRUE)),
@@ -163,7 +163,7 @@ class NHMRC_sample_entry extends CI_Controller
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', "Barcode_sample");
-        $sheet->setCellValue('B1', "Barcode_bottle");
+        $sheet->setCellValue('B1', "Barcode_tube");
         $sheet->setCellValue('C1', "Date_conduct");
         $sheet->setCellValue('D1', "Volume_aliquot");
         $sheet->setCellValue('E1', "Barcode_box");
@@ -179,7 +179,7 @@ class NHMRC_sample_entry extends CI_Controller
         $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
             $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
-            $sheet->setCellValue('B'.$numrow, $data->barcode_bottle);
+            $sheet->setCellValue('B'.$numrow, $data->barcode_tube);
             $sheet->setCellValue('C'.$numrow, $data->date_conduct);
             $sheet->setCellValue('D'.$numrow, $data->vol_aliquot);
             $sheet->setCellValue('E'.$numrow, $data->barcode_box);

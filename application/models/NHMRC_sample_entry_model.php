@@ -19,7 +19,7 @@ class NHMRC_sample_entry_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('a.barcode_sample, a.barcode_bottle, a.date_conduct, 
+        $this->datatables->select('a.barcode_sample, a.barcode_tube, a.date_conduct, 
         a.vol_aliquot, a.barcode_box, a.position_tube,
         concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS location,
         a.comments, a.id_location_80, a.lab, a.flag
@@ -45,7 +45,7 @@ class NHMRC_sample_entry_model extends CI_Model
     function get_all()
     {
         $q = $this->db->query('
-        SELECT a.barcode_sample, a.barcode_bottle, a.date_conduct, a.vol_aliquot, a.barcode_box, a.position_tube,
+        SELECT a.barcode_sample, a.barcode_tube, a.date_conduct, a.vol_aliquot, a.barcode_box, a.position_tube,
         concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS location,
         a.comments
         from nhmrc_sample_entry a 

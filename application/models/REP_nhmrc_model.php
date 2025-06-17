@@ -288,7 +288,7 @@ class REP_nhmrc_model extends CI_Model
         a.png_control AS reception_png_control, 
         a.barcode_tinytag AS reception_barcode_tinytag,
         a.comments AS reception_comments,
-        k.barcode_bottle AS sampleentry_barcode_bottle,
+        k.barcode_tube AS sampleentry_barcode_tube,
         k.date_conduct AS sampleentry_date_conduct,
         k.vol_aliquot AS sampleentry_vol_aliquot,
         k.barcode_box AS sampleentry_barcode_box,
