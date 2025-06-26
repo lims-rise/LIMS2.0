@@ -753,6 +753,7 @@ class REP_nhmrc_model extends CI_Model
         concat("F",t.freezer,"-","S",t.shelf,"-","R",t.rack,"-","DRW",t.rack_level) AS metagenomics_location,
         i.comments AS metagenomics_comments,
         o.bar_macconkey AS mac1_barcode_macconkey,
+        o.barcode_falcon2 AS mac1_barcode_falcon2,
         o.date_process AS mac1_date_process,
         o.time_process AS mac1_time_process,
         o.volume AS mac1_volume,

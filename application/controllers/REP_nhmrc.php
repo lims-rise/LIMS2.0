@@ -1138,19 +1138,20 @@ class REP_nhmrc extends CI_Controller
             $sheet->setCellValue('AS1',"metagenomics_location");
             $sheet->setCellValue('AT1',"metagenomics_comments");
             $sheet->setCellValue('AU1',"mac1_barcode_macconkey");
-            $sheet->setCellValue('AV1',"mac1_date_process");
-            $sheet->setCellValue('AW1',"mac1_time_process");
-            $sheet->setCellValue('AX1',"mac1_volume");
-            $sheet->setCellValue('AY1',"mac1_comments");
-            $sheet->setCellValue('AZ1',"mac2_date_process");
-            $sheet->setCellValue('BA1',"mac2_time_process");
-            $sheet->setCellValue('BB1',"mac2_bar_macsweep1");
-            $sheet->setCellValue('BC1',"mac2_cryobox1");
-            $sheet->setCellValue('BD1',"macsweep1_location");
-            $sheet->setCellValue('BE1',"mac2_bar_macsweep2");
-            $sheet->setCellValue('BF1',"mac2_cryobox2");
-            $sheet->setCellValue('BG1',"macsweep2_location");
-            $sheet->setCellValue('BH1',"mac2_comments");            
+            $sheet->setCellValue('AV1',"mac1_barcode_falcon2");
+            $sheet->setCellValue('AW1',"mac1_date_process");
+            $sheet->setCellValue('AX1',"mac1_time_process");
+            $sheet->setCellValue('AY1',"mac1_volume");
+            $sheet->setCellValue('AZ1',"mac1_comments");
+            $sheet->setCellValue('BA1',"mac2_date_process");
+            $sheet->setCellValue('BB1',"mac2_time_process");
+            $sheet->setCellValue('BC1',"mac2_bar_macsweep1");
+            $sheet->setCellValue('BD1',"mac2_cryobox1");
+            $sheet->setCellValue('BE1',"macsweep1_location");
+            $sheet->setCellValue('BF1',"mac2_bar_macsweep2");
+            $sheet->setCellValue('BG1',"mac2_cryobox2");
+            $sheet->setCellValue('BH1',"macsweep2_location");
+            $sheet->setCellValue('BI1',"mac2_comments");            
 
             $rdeliver = $this->REP_nhmrc_model->get_swab($date1, $date2, $rep);
         
@@ -1203,19 +1204,20 @@ class REP_nhmrc extends CI_Controller
                 $sheet->setCellValue('AS'.$numrow, $this->cleanEnter($data->metagenomics_location));
                 $sheet->setCellValue('AT'.$numrow, $this->cleanEnter($data->metagenomics_comments));
                 $sheet->setCellValue('AU'.$numrow, $this->cleanEnter($data->mac1_barcode_macconkey));
-                $sheet->setCellValue('AV'.$numrow, $this->cleanEnter($data->mac1_date_process));
-                $sheet->setCellValue('AW'.$numrow, $this->cleanEnter($data->mac1_time_process));
-                $sheet->setCellValue('AX'.$numrow, $this->cleanEnter($data->mac1_volume));
-                $sheet->setCellValue('AY'.$numrow, $this->cleanEnter($data->mac1_comments));
-                $sheet->setCellValue('AZ'.$numrow, $this->cleanEnter($data->mac2_date_process));
-                $sheet->setCellValue('BA'.$numrow, $this->cleanEnter($data->mac2_time_process));
-                $sheet->setCellValue('BB'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep1));
-                $sheet->setCellValue('BC'.$numrow, $this->cleanEnter($data->mac2_cryobox1));
-                $sheet->setCellValue('BD'.$numrow, $this->cleanEnter($data->macsweep1_location));
-                $sheet->setCellValue('BE'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep2));
-                $sheet->setCellValue('BF'.$numrow, $this->cleanEnter($data->mac2_cryobox2));
-                $sheet->setCellValue('BG'.$numrow, $this->cleanEnter($data->macsweep2_location));
-                $sheet->setCellValue('BH'.$numrow, $this->cleanEnter($data->mac2_comments));                
+                $sheet->setCellValue('AV'.$numrow, $this->cleanEnter($data->mac1_barcode_falcon2));
+                $sheet->setCellValue('AW'.$numrow, $this->cleanEnter($data->mac1_date_process));
+                $sheet->setCellValue('AX'.$numrow, $this->cleanEnter($data->mac1_time_process));
+                $sheet->setCellValue('AY'.$numrow, $this->cleanEnter($data->mac1_volume));
+                $sheet->setCellValue('AZ'.$numrow, $this->cleanEnter($data->mac1_comments));
+                $sheet->setCellValue('BA'.$numrow, $this->cleanEnter($data->mac2_date_process));
+                $sheet->setCellValue('BB'.$numrow, $this->cleanEnter($data->mac2_time_process));
+                $sheet->setCellValue('BC'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep1));
+                $sheet->setCellValue('BD'.$numrow, $this->cleanEnter($data->mac2_cryobox1));
+                $sheet->setCellValue('BE'.$numrow, $this->cleanEnter($data->macsweep1_location));
+                $sheet->setCellValue('BF'.$numrow, $this->cleanEnter($data->mac2_bar_macsweep2));
+                $sheet->setCellValue('BG'.$numrow, $this->cleanEnter($data->mac2_cryobox2));
+                $sheet->setCellValue('BH'.$numrow, $this->cleanEnter($data->macsweep2_location));
+                $sheet->setCellValue('BI'.$numrow, $this->cleanEnter($data->mac2_comments));                
                 
                 //   $no++; // Tambah 1 setiap kali looping
               $numrow++; // Tambah 1 setiap kali looping
