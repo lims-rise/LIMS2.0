@@ -337,7 +337,7 @@ class DNA_extraction_model extends CI_Model
 									AND a.lab = "'.$this->session->userdata('lab').'"
         UNION ALL
 									SELECT a.barcode_dna_bag barcode, a.barcode_storage vessel, CONCAT("O2B ", c.sampletype) type,
-									a.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+									IFNULL(b.barcode_sample, d.barcode_sample) AS barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
 									FROM obj2b_metagenomics a
 									LEFT JOIN obj2b_receipt b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN (SELECT a.barcode_falcon, b.barcode_sample, b.id_type2b FROM obj2b_bs_stomacher a 
