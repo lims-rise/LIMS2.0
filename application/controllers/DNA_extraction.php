@@ -266,20 +266,22 @@ class DNA_extraction extends CI_Controller
 
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', "Barcode_sample"); 
-        $sheet->setCellValue('B1', "Date_extraction"); 
-        $sheet->setCellValue('C1', "Lab_tech");
-        $sheet->setCellValue('D1', "Kit_lot");
-        $sheet->setCellValue('E1', "Sample_type");
-        $sheet->setCellValue('F1', "Barcode_DNA");
-        $sheet->setCellValue('G1', "Weights");
-        $sheet->setCellValue('H1', "Tube_number");
-        $sheet->setCellValue('I1', "Cryobox");
-        $sheet->setCellValue('J1', "Barcode_metagenomics");
-        $sheet->setCellValue('K1', "Location");
-        $sheet->setCellValue('L1', "Meta_box");
-        $sheet->setCellValue('M1', "QC_Status");
-        $sheet->setCellValue('N1', "Comments");
+        $sheet->setCellValue('A1', "Barcode_DNA");
+        $sheet->setCellValue('B1', "Source_Barcode_sample"); 
+        $sheet->setCellValue('C1', "Date_extraction"); 
+        $sheet->setCellValue('D1', "Lab_tech");
+        $sheet->setCellValue('E1', "Kit_lot");
+        $sheet->setCellValue('F1', "Sample_type");
+        $sheet->setCellValue('G1', "Parent_Barcode_Sample");
+        $sheet->setCellValue('H1', "Parent_Sample_Type");
+        $sheet->setCellValue('I1', "Weights");
+        $sheet->setCellValue('J1', "Tube_number");
+        $sheet->setCellValue('K1', "Cryobox");
+        $sheet->setCellValue('L1', "Barcode_metagenomics");
+        $sheet->setCellValue('M1', "Location");
+        $sheet->setCellValue('N1', "Meta_box");
+        $sheet->setCellValue('O1', "QC_Status");
+        $sheet->setCellValue('P1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -288,20 +290,22 @@ class DNA_extraction extends CI_Controller
         // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
         $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
-          $sheet->setCellValue('A'.$numrow, $data->barcode_sample);
-          $sheet->setCellValue('B'.$numrow, $data->date_extraction);
-          $sheet->setCellValue('C'.$numrow, $data->initial);
-          $sheet->setCellValue('D'.$numrow, $data->kit_lot);
-          $sheet->setCellValue('E'.$numrow, $data->type);
-          $sheet->setCellValue('F'.$numrow, $data->barcode_dna);
-          $sheet->setCellValue('G'.$numrow, $data->weights);
-          $sheet->setCellValue('H'.$numrow, $data->tube_number);
-          $sheet->setCellValue('I'.$numrow, $data->cryobox);
-          $sheet->setCellValue('J'.$numrow, $data->barcode_metagenomics);
-          $sheet->setCellValue('K'.$numrow, $data->Location);
-          $sheet->setCellValue('L'.$numrow, $data->meta_box);
-          $sheet->setCellValue('M'.$numrow, $data->qc_status);
-          $sheet->setCellValue('N'.$numrow, trim($data->comments));
+          $sheet->setCellValue('A'.$numrow, $data->barcode_dna);
+          $sheet->setCellValue('B'.$numrow, $data->source_barcode_sample);
+          $sheet->setCellValue('C'.$numrow, $data->date_extraction);
+          $sheet->setCellValue('D'.$numrow, $data->initial);
+          $sheet->setCellValue('E'.$numrow, $data->kit_lot);
+          $sheet->setCellValue('F'.$numrow, $data->sampletype);
+          $sheet->setCellValue('G'.$numrow, $data->parent_barcode_sample);
+          $sheet->setCellValue('H'.$numrow, $data->parent_sample_type);
+          $sheet->setCellValue('I'.$numrow, $data->weights);
+          $sheet->setCellValue('J'.$numrow, $data->tube_number);
+          $sheet->setCellValue('K'.$numrow, $data->cryobox);
+          $sheet->setCellValue('L'.$numrow, $data->barcode_metagenomics);
+          $sheet->setCellValue('M'.$numrow, $data->Location);
+          $sheet->setCellValue('N'.$numrow, $data->meta_box);
+          $sheet->setCellValue('O'.$numrow, $data->qc_status);
+          $sheet->setCellValue('P'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }
