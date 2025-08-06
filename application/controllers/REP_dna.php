@@ -87,9 +87,10 @@ class REP_dna extends CI_Controller
         $sheets = array(
             array(
                 'DNA_Extraction',
-                'SELECT a.barcode_dna, a.barcode_sample AS "source_barcode_sample", a.date_extraction, b.initial, a.kit_lot, a.sampletype, c.Barcode_sample AS "parent_barcode_sample", c.sampletype AS "parent_sample_type", a.weights, a.tube_number, a.cryobox, 
-                a.barcode_metagenomics, 
-                concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS Location, a.meta_box, a.qc_status, a.comments
+                'SELECT a.barcode_dna AS "Barcode_DNA", a.barcode_sample AS "Source_Barcode_sample", a.date_extraction AS "Date_extraction", b.initial AS "Lab_tech", 
+                a.kit_lot AS "Kit_lot", a.sampletype AS "Sample_type", c.Barcode_sample AS "Parent_Barcode_Sample", c.sampletype AS "Parent_Sample_Type", a.weights AS "Weights", 
+                a.tube_number AS "Tube_number", a.cryobox AS "Cryobox", a.barcode_metagenomics AS "Barcode_metagenomics", 
+                concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS "Location", a.meta_box AS "Meta_box", a.qc_status AS "QC_Status", a.comments AS "Comments"
                 FROM dna_extraction a
                 LEFT JOIN ref_person b ON a.id_person = b.id_person
                 LEFT JOIN (SELECT barcode_p1a barcode, cryobox1 vessel, "O3 Blood-EDTA" type, 
