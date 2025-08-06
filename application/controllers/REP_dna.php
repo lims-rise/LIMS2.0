@@ -389,7 +389,9 @@ class REP_dna extends CI_Controller
                                             AND a.lab = "'.$this->session->userdata('lab').'"
                                             ) c ON a.barcode_sample=c.barcode									
                 LEFT JOIN ref_location_80 d on a.id_location=d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'"
-                        WHERE a.lab = "'.$this->session->userdata('lab').'"
+                WHERE a.lab = "'.$this->session->userdata('lab').'"
+                AND (a.date_extraction >= "'.$date1.'"
+                AND a.date_extraction <= "'.$date2.'")
                 AND a.flag = 0 
                 ORDER BY a.date_extraction, a.barcode_dna ASC
                 ',
