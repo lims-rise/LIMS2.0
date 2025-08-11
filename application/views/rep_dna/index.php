@@ -59,8 +59,6 @@
                                             <div class="box-body table-responsive">
                                             <div style="padding-bottom: 10px;">
                                                 <button class='btn btn-success btn-sm' id='export'> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Method 1 </button>
-                                                <button class='btn btn-info btn-sm' id='export-alt'> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Method 2 </button>
-                                                <button class='btn btn-warning btn-sm' id='export-direct'> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Method 3 </button>
                                                 <?php //echo anchor(site_url('REP_dna/index2'), '<i class="fa fa-wpforms" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm"'); ?>
                                                 <?php //echo anchor(site_url('REP_dna/excel/'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?>
                                                 <?php //echo anchor(site_url('kelolamenu/word'), '<i class="fa fa-file-word-o" aria-hidden="true"></i> Export Ms Word', 'class="btn btn-primary btn-sm"'); ?>
