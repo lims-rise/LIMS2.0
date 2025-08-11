@@ -389,7 +389,15 @@ class REP_dna extends CI_Controller
                                             LEFT JOIN ref_sampledna b ON a.id_sample = b.id_sample
                                             AND a.lab = "'.$this->session->userdata('lab').'"
                                             ) c ON a.barcode_sample=c.barcode									
-                LEFT JOIN ref_location_80 d on a.id_location=d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'"
+                LEFT JOIN (
+                            SELECT a.id, a.date_in, a.time_in, a.barcode_sample, a.lab, a.id_location_80
+                            FROM freezer_in a
+                            JOIN (
+                            SELECT id, barcode_sample, MIN(CONCAT(date_in, time_in)) max_recent FROM freezer_in
+                            GROUP BY barcode_sample
+                            ) b ON a.barcode_sample=b.barcode_sample AND CONCAT(a.date_in, a.time_in) = b.max_recent
+                ) g ON a.barcode_dna=g.barcode_sample AND g.lab = "'.$this->session->userdata('lab').'"
+                LEFT JOIN ref_location_80 d on g.id_location_80=d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'"                             									
                 WHERE a.lab = "'.$this->session->userdata('lab').'"
                 AND (a.date_extraction >= "'.$date1.'"
                 AND a.date_extraction <= "'.$date2.'")
