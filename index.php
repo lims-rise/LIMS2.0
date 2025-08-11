@@ -91,6 +91,15 @@ switch (ENVIRONMENT)
 
 /*
  *---------------------------------------------------------------
+ * COMPOSER AUTOLOAD
+ *---------------------------------------------------------------
+ *
+ * Include Composer autoloader for third-party packages like PhpSpreadsheet
+ */
+require_once __DIR__ . '/vendor/autoload.php';
+
+/*
+ *---------------------------------------------------------------
  * SYSTEM DIRECTORY NAME
  *---------------------------------------------------------------
  *
