@@ -65,6 +65,7 @@
                 <form id="formSample"  action= <?php echo site_url('O2b_metagenomics_wb/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
+                        <input id="id_freezer" name="id_freezer" type="hidden" class="form-control input-sm">
                         <div class="form-group">
                             <label for="barcode_sample" class="col-sm-4 control-label">Barcode (W0/S1)</label>
                             <div class="col-sm-8">
@@ -578,6 +579,7 @@
             $('#barcode_dna_bag').val('');
             $('#barcode_storage').val('');
             $('#id_location').val('');
+            $('#id_freezer').val('');
             $('#id_freez').val('');
             $('#id_shelf').val('');
             $('#id_rack').val('');
@@ -605,6 +607,7 @@
             $('#barcode_dna_bag').val(data.barcode_dna_bag);
             $('#barcode_storage').val(data.barcode_storage);
             load_freez(data.id_location_80);
+            $('#id_freezer').val(data.id_freezer);
             // $('#id_location_80').val(data.id_location_80);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');

@@ -63,7 +63,8 @@
                 <form id="formSample"  action= <?php echo site_url('dna_extraction/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-
+                        <input id="id_freezer1" name="id_freezer1" type="hidden" class="form-control input-sm">
+                        <input id="id_freezer2" name="id_freezer2" type="hidden" class="form-control input-sm">
                         <div class="form-group">
                             <label for="date_extraction" class="col-sm-4 control-label">Date Extraction</label>
                             <div class="col-sm-8">
@@ -705,6 +706,8 @@
             $('#id_rack').val('');
             $('#id_draw').val('');
             $('#id_loc').attr('readonly', true);
+            $('#id_freezer1').val('');
+            $('#id_freezer2').val('');
             $('#qc_status').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
@@ -733,6 +736,8 @@
             $('#barcode_metagenomics').val(data.barcode_metagenomics);
             $('#meta_box').val(data.meta_box);
             $('#id_loc').val(data.id_location);
+            $('#id_freezer1').val(data.id_freezer1);
+            $('#id_freezer2').val(data.id_freezer2);
             $('#id_freez').val(data.freezer);
             $('#id_shelf').val(data.shelf);
             $('#id_rack').val(data.rack);

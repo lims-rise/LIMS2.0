@@ -43,37 +43,29 @@ class O2b_macconkey_out extends CI_Controller
     {
         $mode = $this->input->post('mode',TRUE);
         $id = strtoupper($this->input->post('bar_macconkey',TRUE));
+        $id_f1 = strtoupper($this->input->post('id_freezer1',TRUE));
+        $id_f2 = strtoupper($this->input->post('id_freezer2',TRUE));
+        $f1 = strtoupper($this->input->post('id_freez1',TRUE));
+        $s1 = strtoupper($this->input->post('id_shelf1',TRUE));
+        $r1 = strtoupper($this->input->post('id_rack1',TRUE));
+        $d1 = strtoupper($this->input->post('id_draw1',TRUE));
+        $f2 = strtoupper($this->input->post('id_freez2',TRUE));
+        $s2 = strtoupper($this->input->post('id_shelf2',TRUE));
+        $r2 = strtoupper($this->input->post('id_rack2',TRUE));
+        $d2 = strtoupper($this->input->post('id_draw2',TRUE));
+        $id_loc1 = $this->O2b_macconkey_out_model->get_freez($f1,$s1,$r1,$d1);
+        $id_loc2 = $this->O2b_macconkey_out_model->get_freez($f2,$s2,$r2,$d2);
+
         $dt = new DateTime();
 
         if ($mode=="insert"){
-            $data = array(
-            'bar_macconkey' => strtoupper($this->input->post('bar_macconkey',TRUE)),
-            'date_process' => $this->input->post('date_process',TRUE),
-            'time_process' => $this->input->post('time_process',TRUE),
-            'id_person' => $this->input->post('id_person',TRUE),
-            'bar_macsweep1' => strtoupper($this->input->post('bar_macsweep1',TRUE)),
-            'cryobox1' => strtoupper($this->input->post('cryobox1',TRUE)),
-            'id_location_80_1' => $this->input->post('id_loc1',TRUE),
-            'bar_macsweep2' => strtoupper($this->input->post('bar_macsweep2',TRUE)),
-            'cryobox2' => strtoupper($this->input->post('cryobox2',TRUE)),
-            'id_location_80_2' => $this->input->post('id_loc2',TRUE),
-            'comments' => trim($this->input->post('comments',TRUE)),
-            'uuid' => $this->uuid->v4(),
-            'lab' => $this->session->userdata('lab'),
-            'user_created' => $this->session->userdata('id_users'),
-            'date_created' => $dt->format('Y-m-d H:i:s'),
-            );
- 
-            $this->O2b_macconkey_out_model->insert($data);
-            $this->session->set_flashdata('message', 'Create Record Success');    
-
             $data = array(
                 'date_in' => $this->input->post('date_process',TRUE),
                 'time_in' => $dt->format('H:i:s'),
                 'id_person' => '999',
                 'id_vessel' => '1',
                 'barcode_sample' => strtoupper($this->input->post('bar_macsweep1',TRUE)),
-                'id_location_80' => $this->input->post('id_loc1',TRUE),
+                'id_location_80' => $id_loc1,
                 'comments' => $this->input->post('comments',TRUE),
                 'out' => '0',
                 'need_cryobox' => '1',
@@ -84,6 +76,7 @@ class O2b_macconkey_out extends CI_Controller
                 'date_created' => $dt->format('Y-m-d H:i:s'),
                 );
             $this->O2b_macconkey_out_model->insert_freezer($data);               
+            $id_freezer1 = $this->O2b_macconkey_out_model->get_id_freezer($this->input->post('bar_macsweep1',TRUE));
 
             $data = array(
                 'date_in' => $this->input->post('date_process',TRUE),
@@ -91,7 +84,7 @@ class O2b_macconkey_out extends CI_Controller
                 'id_person' => '999',
                 'id_vessel' => '1',
                 'barcode_sample' => strtoupper($this->input->post('bar_macsweep2',TRUE)),
-                'id_location_80' => $this->input->post('id_loc2',TRUE),
+                'id_location_80' => $id_loc2,
                 'comments' => $this->input->post('comments',TRUE),
                 'out' => '0',
                 'need_cryobox' => '1',
@@ -101,7 +94,31 @@ class O2b_macconkey_out extends CI_Controller
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
                 );
-            $this->O2b_macconkey_out_model->insert_freezer($data);                 
+            $this->O2b_macconkey_out_model->insert_freezer($data);          
+            $id_freezer2 = $this->O2b_macconkey_out_model->get_id_freezer($this->input->post('bar_macsweep2',TRUE));
+
+            $data = array(
+            'bar_macconkey' => strtoupper($this->input->post('bar_macconkey',TRUE)),
+            'date_process' => $this->input->post('date_process',TRUE),
+            'time_process' => $this->input->post('time_process',TRUE),
+            'id_person' => $this->input->post('id_person',TRUE),
+            'bar_macsweep1' => strtoupper($this->input->post('bar_macsweep1',TRUE)),
+            'cryobox1' => strtoupper($this->input->post('cryobox1',TRUE)),
+            'id_location_80_1' => $id_loc1,
+            'id_freezer1' => $id_freezer1,
+            'bar_macsweep2' => strtoupper($this->input->post('bar_macsweep2',TRUE)),
+            'cryobox2' => strtoupper($this->input->post('cryobox2',TRUE)),
+            'id_location_80_2' => $id_loc2,
+            'id_freezer2' => $id_freezer2,
+            'comments' => trim($this->input->post('comments',TRUE)),
+            'uuid' => $this->uuid->v4(),
+            'lab' => $this->session->userdata('lab'),
+            'user_created' => $this->session->userdata('id_users'),
+            'date_created' => $dt->format('Y-m-d H:i:s'),
+            );
+ 
+            $this->O2b_macconkey_out_model->insert($data);
+            $this->session->set_flashdata('message', 'Create Record Success');           
         }
         else if ($mode=="edit"){
             $data = array(
@@ -111,10 +128,10 @@ class O2b_macconkey_out extends CI_Controller
             'id_person' => $this->input->post('id_person',TRUE),
             'bar_macsweep1' => strtoupper($this->input->post('bar_macsweep1',TRUE)),
             'cryobox1' => strtoupper($this->input->post('cryobox1',TRUE)),
-            'id_location_80_1' => $this->input->post('id_loc1',TRUE),
+            'id_location_80_1' => $id_loc1,
             'bar_macsweep2' => strtoupper($this->input->post('bar_macsweep2',TRUE)),
             'cryobox2' => strtoupper($this->input->post('cryobox2',TRUE)),
-            'id_location_80_2' => $this->input->post('id_loc2',TRUE),
+            'id_location_80_2' => $id_loc2,
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -126,40 +143,26 @@ class O2b_macconkey_out extends CI_Controller
             $this->session->set_flashdata('message', 'Create Record Success');    
 
             $data = array(
-                'date_in' => $this->input->post('date_process',TRUE),
-                'time_in' => $dt->format('H:i:s'),
-                'id_person' => '999',
-                'id_vessel' => '1',
                 'barcode_sample' => strtoupper($this->input->post('bar_macsweep1',TRUE)),
-                'id_location_80' => $this->input->post('id_loc1',TRUE),
+                'id_location_80' => $id_loc1,
                 'comments' => $this->input->post('comments',TRUE),
-                'out' => '0',
                 'need_cryobox' => '1',
                 'cryobox' => strtoupper($this->input->post('cryobox1',TRUE)),
-                'uuid' => $this->uuid->v4(),
-                'lab' => $this->session->userdata('lab'),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
                 );
-            $this->O2b_macconkey_out_model->insert_freezer($data);               
+            $this->O2b_macconkey_out_model->update_freezer($id_f1, $data);       
 
             $data = array(
-                'date_in' => $this->input->post('date_process',TRUE),
-                'time_in' => $dt->format('H:i:s'),
-                'id_person' => '999',
-                'id_vessel' => '1',
                 'barcode_sample' => strtoupper($this->input->post('bar_macsweep2',TRUE)),
-                'id_location_80' => $this->input->post('id_loc2',TRUE),
+                'id_location_80' => $id_loc2,
                 'comments' => $this->input->post('comments',TRUE),
-                'out' => '0',
                 'need_cryobox' => '1',
                 'cryobox' => strtoupper($this->input->post('cryobox2',TRUE)),
-                'uuid' => $this->uuid->v4(),
-                'lab' => $this->session->userdata('lab'),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
                 );
-            $this->O2b_macconkey_out_model->insert_freezer($data);                  
+            $this->O2b_macconkey_out_model->update_freezer($id_f2, $data);                 
         }
 
         redirect(site_url("O2b_macconkey_out"));

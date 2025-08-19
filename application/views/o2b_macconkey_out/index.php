@@ -74,6 +74,8 @@
                 <form id="formSample"  action= <?php echo site_url('O2b_macconkey_out/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
+                        <input id="id_freezer1" name="id_freezer1" type="hidden" class="form-control input-sm">
+                        <input id="id_freezer2" name="id_freezer2" type="hidden" class="form-control input-sm">
                         <div class="form-group">
                             <label for="bar_macconkey" class="col-sm-4 control-label">Barcode macconkey</label>
                             <div class="col-sm-8">
@@ -610,11 +612,13 @@
             $('#cryobox1').val('');
             $('#bar_macsweep2').val('');
             $('#cryobox2').val('');
+            $('#id_freezer1').val('');
             $('#id_location1').val('');
             $('#id_freez1').val('');
             $('#id_shelf1').val('');
             $('#id_rack1').val('');
             $('#id_draw1').val('');            
+            $('#id_freezer2').val('');
             $('#id_location2').val('');
             $('#id_freez2').val('');
             $('#id_shelf2').val('');
@@ -642,8 +646,10 @@
             $('#id_person').val(data.id_person).trigger('change');
             $('#bar_macsweep1').val(data.bar_macsweep1);
             $('#cryobox1').val(data.cryobox1);
+            $('#id_freezer1').val(data.id_freezer1);
             $('#bar_macsweep2').val(data.bar_macsweep2);
             $('#cryobox2').val(data.cryobox2);
+            $('#id_freezer2').val(data.id_freezer2);
             $('#comments').val(data.comments);
             load_freez(data.id_location_80_1);
             load_freez2(data.id_location_80_2);

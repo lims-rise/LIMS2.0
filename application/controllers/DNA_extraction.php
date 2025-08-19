@@ -38,6 +38,14 @@ class DNA_extraction extends CI_Controller
     {
         $mode = $this->input->post('mode',TRUE);
         $id = strtoupper($this->input->post('barcode_dna',TRUE));
+        $id_f1 = strtoupper($this->input->post('id_freezer1',TRUE));
+        $id_f2 = strtoupper($this->input->post('id_freezer2',TRUE));
+        $f1 = strtoupper($this->input->post('id_freez',TRUE));
+        $s1 = strtoupper($this->input->post('id_shelf',TRUE));
+        $r1 = strtoupper($this->input->post('id_rack',TRUE));
+        $d1 = strtoupper($this->input->post('id_draw',TRUE));
+        $id_loc = $this->DNA_extraction_model->get_freez($f1,$s1,$r1,$d1);
+
         // $id_f = $this->input->post('id_freez',TRUE);
         // $id_s = $this->input->post('id_shelf',TRUE);
         // $id_r = $this->input->post('id_rack',TRUE);
@@ -48,36 +56,12 @@ class DNA_extraction extends CI_Controller
 
         if ($mode=="insert"){
             $data = array(
-            'barcode_dna' => strtoupper($this->input->post('barcode_dna',TRUE)),
-            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'date_extraction' => $this->input->post('date_extraction',TRUE),
-            'id_person' => $this->input->post('id_person',TRUE),
-            'kit_lot' => $this->input->post('kit_lot',TRUE),
-            'sampletype' => $this->input->post('type',TRUE),
-            'weights' => $this->input->post('weights',TRUE),
-            'tube_number' => $this->input->post('tube_number',TRUE),
-            'cryobox' => strtoupper($this->input->post('cryobox',TRUE)),
-            'barcode_metagenomics' => strtoupper($this->input->post('barcode_metagenomics',TRUE)),
-            'id_location' => $this->input->post('id_loc',TRUE),
-            'meta_box' => strtoupper($this->input->post('meta_box',TRUE)),
-            'qc_status' => $this->input->post('qc_status',TRUE),
-            'comments' => trim($this->input->post('comments',TRUE)),
-            'uuid' => $this->uuid->v4(),
-            'lab' => $this->session->userdata('lab'),
-            'user_created' => $this->session->userdata('id_users'),
-            'date_created' => $dt->format('Y-m-d H:i:s'),
-            );
- 
-            $this->DNA_extraction_model->insert($data);
-            $this->session->set_flashdata('message', 'Create Record Success');    
-
-            $data = array(
                 'date_in' => $this->input->post('date_extraction',TRUE),
                 'time_in' => $dt->format('H:i:s'),
                 'id_person' => '999',
                 'id_vessel' => '1',
                 'barcode_sample' => strtoupper($this->input->post('barcode_dna',TRUE)),
-                'id_location_80' => $this->input->post('id_loc',TRUE),
+                'id_location_80' => $id_loc,
                 'comments' => $this->input->post('comments',TRUE),
                 'out' => '0',
                 'need_cryobox' => '1',
@@ -88,6 +72,7 @@ class DNA_extraction extends CI_Controller
                 'date_created' => $dt->format('Y-m-d H:i:s'),
                 );
             $this->DNA_extraction_model->insert_freezer($data);       
+            $id_freezer1 = $this->DNA_extraction_model->get_id_freezer($this->input->post('barcode_dna',TRUE));
             
             $data = array(
                 'date_in' => $this->input->post('date_extraction',TRUE),
@@ -105,7 +90,35 @@ class DNA_extraction extends CI_Controller
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
                 );
-            $this->DNA_extraction_model->insert_freezer($data);                
+            $this->DNA_extraction_model->insert_freezer($data);      
+            $id_freezer2 = $this->DNA_extraction_model->get_id_freezer($this->input->post('barcode_metagenomics',TRUE));
+
+            $data = array(
+            'barcode_dna' => strtoupper($this->input->post('barcode_dna',TRUE)),
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
+            'date_extraction' => $this->input->post('date_extraction',TRUE),
+            'id_person' => $this->input->post('id_person',TRUE),
+            'kit_lot' => $this->input->post('kit_lot',TRUE),
+            'sampletype' => $this->input->post('type',TRUE),
+            'weights' => $this->input->post('weights',TRUE),
+            'tube_number' => $this->input->post('tube_number',TRUE),
+            'cryobox' => strtoupper($this->input->post('cryobox',TRUE)),
+            'barcode_metagenomics' => strtoupper($this->input->post('barcode_metagenomics',TRUE)),
+            'id_location' => $id_loc,
+            'id_freezer1' => $id_freezer1,
+            'id_freezer2' => $id_freezer2,
+            'meta_box' => strtoupper($this->input->post('meta_box',TRUE)),
+            'qc_status' => $this->input->post('qc_status',TRUE),
+            'comments' => trim($this->input->post('comments',TRUE)),
+            'uuid' => $this->uuid->v4(),
+            'lab' => $this->session->userdata('lab'),
+            'user_created' => $this->session->userdata('id_users'),
+            'date_created' => $dt->format('Y-m-d H:i:s'),
+            );
+ 
+            $this->DNA_extraction_model->insert($data);
+            $this->session->set_flashdata('message', 'Create Record Success');    
+          
         }
         else if ($mode=="edit"){
             $data = array(
@@ -119,7 +132,7 @@ class DNA_extraction extends CI_Controller
             'tube_number' => $this->input->post('tube_number',TRUE),
             'cryobox' => strtoupper($this->input->post('cryobox',TRUE)),
             'barcode_metagenomics' => strtoupper($this->input->post('barcode_metagenomics',TRUE)),
-            'id_location' => $this->input->post('id_loc',TRUE),
+            'id_location' => $id_loc,
             'meta_box' => strtoupper($this->input->post('meta_box',TRUE)),
             'qc_status' => $this->input->post('qc_status',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
@@ -135,38 +148,27 @@ class DNA_extraction extends CI_Controller
             $data = array(
                 'date_in' => $this->input->post('date_extraction',TRUE),
                 'time_in' => $dt->format('H:i:s'),
-                'id_person' => '999',
-                'id_vessel' => '1',
-                'barcode_sample' => strtoupper($this->input->post('barcode_dna',TRUE)),
-                'id_location_80' => $this->input->post('id_loc',TRUE),
+                'id_location_80' => $id_loc,
                 'comments' => $this->input->post('comments',TRUE),
-                'out' => '0',
                 'need_cryobox' => '1',
                 'cryobox' => strtoupper($this->input->post('cryobox',TRUE)),
-                'uuid' => $this->uuid->v4(),
-                'lab' => $this->session->userdata('lab'),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
                 );
-            $this->DNA_extraction_model->insert_freezer($data);       
-            
+            $this->DNA_extraction_model->update_freezer($id_f1, $data);               
+
             $data = array(
                 'date_in' => $this->input->post('date_extraction',TRUE),
                 'time_in' => $dt->format('H:i:s'),
-                'id_person' => '999',
-                'id_vessel' => '1',
                 'barcode_sample' => strtoupper($this->input->post('barcode_metagenomics',TRUE)),
                 'id_location_80' => '1000',
                 'comments' => $this->input->post('comments',TRUE),
-                'out' => '0',
                 'need_cryobox' => '1',
                 'cryobox' => strtoupper($this->input->post('meta_box',TRUE)),
-                'uuid' => $this->uuid->v4(),
-                'lab' => $this->session->userdata('lab'),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
                 );
-            $this->DNA_extraction_model->insert_freezer($data);                 
+            $this->DNA_extraction_model->update_freezer($id_f2, $data);               
         }
 
         redirect(site_url("dna_extraction"));

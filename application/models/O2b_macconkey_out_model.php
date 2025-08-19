@@ -19,7 +19,7 @@ class O2b_macconkey_out_model extends CI_Model
     function json() {
         $this->datatables->select('obj2b_mac2.bar_macconkey, obj2b_mac2.date_process, obj2b_mac2.time_process, 
         ref_person.initial, obj2b_mac2.bar_macsweep1, obj2b_mac2.cryobox1, obj2b_mac2.id_location_80_1, 
-        obj2b_mac2.bar_macsweep2, obj2b_mac2.cryobox2, obj2b_mac2.id_location_80_2, obj2b_mac2.comments, 
+        obj2b_mac2.bar_macsweep2, obj2b_mac2.cryobox2, obj2b_mac2.id_location_80_2, obj2b_mac2.id_freezer1, obj2b_mac2.id_freezer2, obj2b_mac2.comments, 
         obj2b_mac2.id_person, obj2b_mac2.lab, obj2b_mac2.flag');
         $this->datatables->from('obj2b_mac2');
         $this->datatables->join('ref_person', 'obj2b_mac2.id_person = ref_person.id_person', 'left');
@@ -50,8 +50,10 @@ class O2b_macconkey_out_model extends CI_Model
         a.comments
         from obj2b_mac2 a 
         left join ref_person b on a.id_person = b.id_person
-        left join ref_location_80 c ON a.id_location_80_1 = c.id_location_80 AND c.lab = "'.$this->session->userdata('lab').'"
-        left join ref_location_80 d ON a.id_location_80_2 = d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'"
+        left join freezer_in g on a.id_freezer1 = g.id and g.lab = "'.$this->session->userdata('lab').'"
+        left join ref_location_80 c on g.id_location_80 = c.id_location_80 and c.lab = "'.$this->session->userdata('lab').'"
+        left join freezer_in h on a.id_freezer2 = h.id and h.lab = "'.$this->session->userdata('lab').'"
+        left join ref_location_80 d on h.id_location_80 = d.id_location_80 and d.lab = "'.$this->session->userdata('lab').'"
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
@@ -111,6 +113,12 @@ class O2b_macconkey_out_model extends CI_Model
         $this->db->insert('freezer_in', $data);
     }    
 
+    function update_freezer($id_f, $data)
+    {
+        $this->db->where('id', $id_f);
+        $this->db->update('freezer_in', $data);
+    }  
+
     // update data
     function update($id, $data)
     {
@@ -159,10 +167,20 @@ class O2b_macconkey_out_model extends CI_Model
         AND lab = "'.$this->session->userdata('lab').'" 
         AND flag = 0 
         ');        
-        $response = $q->result_array();
-        return $response;
+        return $q->row()->id_location_80;
+        // $response = $q->result_array();
+        // return $response;
         // return $this->db->get('ref_location_80')->row();
       }          
+
+      function get_id_freezer($id_freezer){
+        $q = $this->db->query('
+            SELECT MAX(id) AS id_freezer FROM freezer_in
+            WHERE barcode_sample = "'.$id_freezer.'"
+            GROUP BY barcode_sample
+        ');        
+        return $q->row()->id_freezer;
+      }  
 
     function getLabtech(){
         $response = array();
@@ -187,17 +205,15 @@ class O2b_macconkey_out_model extends CI_Model
             }
         else if($type == 2) {
             $q = $this->db->query('
-            SELECT * FROM obj2b_mac2
-            WHERE bar_macsweep1 = "'.$id.'"
-            AND flag = 0
+            SELECT bar_s2 FROM v_all_s2
+            WHERE bar_s2 = "'.$id.'"  
             ');        
                 // $this->db->where('bar_macsweep1', $id);
         }
         else if($type == 3) {
             $q = $this->db->query('
-            SELECT * FROM obj2b_mac2
-            WHERE bar_macsweep2 = "'.$id.'"
-            AND flag = 0
+            SELECT bar_s2 FROM v_all_s2
+            WHERE bar_s2 = "'.$id.'"  
             ');        
             // $this->db->where('bar_macsweep2', $id);
         }

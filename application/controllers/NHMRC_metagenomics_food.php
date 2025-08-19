@@ -39,32 +39,11 @@ class NHMRC_metagenomics_food extends CI_Controller
     {
         $mode = $this->input->post('mode',TRUE);
         $id = strtoupper($this->input->post('barcode_sample',TRUE));
+        $id_f1 = strtoupper($this->input->post('id_freezer1',TRUE));
+        $id_f2 = strtoupper($this->input->post('id_freezer2',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
-            $data = array(
-            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'date_conduct' => $this->input->post('date_conduct',TRUE),
-            'barcode_dna1' => strtoupper($this->input->post('barcode_dna1',TRUE)),
-            'weight_sub1' => $this->input->post('weight_sub1',TRUE),
-            'barcode_storage1' => strtoupper($this->input->post('barcode_storage1',TRUE)),
-            'position_tube1' => $this->input->post('position_tube1',TRUE),
-            'id_location_801' => $this->input->post('id_location_801',TRUE),
-            'barcode_dna2' => strtoupper($this->input->post('barcode_dna2',TRUE)),
-            'weight_sub2' => $this->input->post('weight_sub2',TRUE),
-            'barcode_storage2' => strtoupper($this->input->post('barcode_storage2',TRUE)),
-            'position_tube2' => $this->input->post('position_tube2',TRUE),
-            'id_location_802' => $this->input->post('id_location_802',TRUE),
-            'comments' => trim($this->input->post('comments',TRUE)),
-            'uuid' => $this->uuid->v4(),
-            'lab' => $this->session->userdata('lab'),
-            'user_created' => $this->session->userdata('id_users'),
-            'date_created' => $dt->format('Y-m-d H:i:s'),
-            );
- 
-            $this->NHMRC_metagenomics_food_model->insert($data);
-            $this->session->set_flashdata('message', 'Create Record Success');    
-
             $data = array(
                 'date_in' => $this->input->post('date_conduct',TRUE),
                 'time_in' => $dt->format('H:i:s'),
@@ -82,6 +61,7 @@ class NHMRC_metagenomics_food extends CI_Controller
                 'date_created' => $dt->format('Y-m-d H:i:s'),
                 );
             $this->NHMRC_metagenomics_food_model->insert_freezer($data);            
+            $id_freezer1 = $this->NHMRC_metagenomics_food_model->get_id_freezer($this->input->post('barcode_dna1',TRUE));
 
             $data = array(
                 'date_in' => $this->input->post('date_conduct',TRUE),
@@ -99,7 +79,34 @@ class NHMRC_metagenomics_food extends CI_Controller
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
                 );
-            $this->NHMRC_metagenomics_food_model->insert_freezer($data);                 
+            $this->NHMRC_metagenomics_food_model->insert_freezer($data);            
+            $id_freezer2 = $this->NHMRC_metagenomics_food_model->get_id_freezer($this->input->post('barcode_dna2',TRUE));
+
+            $data = array(
+            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
+            'date_conduct' => $this->input->post('date_conduct',TRUE),
+            'barcode_dna1' => strtoupper($this->input->post('barcode_dna1',TRUE)),
+            'weight_sub1' => $this->input->post('weight_sub1',TRUE),
+            'barcode_storage1' => strtoupper($this->input->post('barcode_storage1',TRUE)),
+            'position_tube1' => $this->input->post('position_tube1',TRUE),
+            'id_location_801' => $this->input->post('id_location_801',TRUE),
+            'id_freezer1' => $id_freezer1,
+            'barcode_dna2' => strtoupper($this->input->post('barcode_dna2',TRUE)),
+            'weight_sub2' => $this->input->post('weight_sub2',TRUE),
+            'barcode_storage2' => strtoupper($this->input->post('barcode_storage2',TRUE)),
+            'position_tube2' => $this->input->post('position_tube2',TRUE),
+            'id_location_802' => $this->input->post('id_location_802',TRUE),
+            'id_freezer2' => $id_freezer2,
+            'comments' => trim($this->input->post('comments',TRUE)),
+            'uuid' => $this->uuid->v4(),
+            'lab' => $this->session->userdata('lab'),
+            'user_created' => $this->session->userdata('id_users'),
+            'date_created' => $dt->format('Y-m-d H:i:s'),
+            );
+ 
+            $this->NHMRC_metagenomics_food_model->insert($data);
+            $this->session->set_flashdata('message', 'Create Record Success');    
+
         }
         else if ($mode=="edit"){
             $data = array(
@@ -126,40 +133,26 @@ class NHMRC_metagenomics_food extends CI_Controller
             $this->session->set_flashdata('message', 'Create Record Success'); 
             
             $data = array(
-                'date_in' => $this->input->post('date_conduct',TRUE),
-                'time_in' => $dt->format('H:i:s'),
-                'id_person' => '999',
-                'id_vessel' => '1',
                 'barcode_sample' => strtoupper($this->input->post('barcode_dna1',TRUE)),
                 'id_location_80' => $this->input->post('id_location_801',TRUE),
                 'comments' => $this->input->post('comments',TRUE),
-                'out' => '0',
                 'need_cryobox' => '1',
                 'cryobox' => strtoupper($this->input->post('barcode_storage1',TRUE)),
-                'uuid' => $this->uuid->v4(),
-                'lab' => $this->session->userdata('lab'),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
                 );
-            $this->NHMRC_metagenomics_food_model->insert_freezer($data);            
+            $this->NHMRC_metagenomics_food_model->update_freezer($id_f1, $data);       
 
             $data = array(
-                'date_in' => $this->input->post('date_conduct',TRUE),
-                'time_in' => $dt->format('H:i:s'),
-                'id_person' => '999',
-                'id_vessel' => '1',
                 'barcode_sample' => strtoupper($this->input->post('barcode_dna2',TRUE)),
                 'id_location_80' => $this->input->post('id_location_802',TRUE),
                 'comments' => $this->input->post('comments',TRUE),
-                'out' => '0',
                 'need_cryobox' => '1',
                 'cryobox' => strtoupper($this->input->post('barcode_storage2',TRUE)),
-                'uuid' => $this->uuid->v4(),
-                'lab' => $this->session->userdata('lab'),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
                 );
-            $this->NHMRC_metagenomics_food_model->insert_freezer($data);                      
+            $this->NHMRC_metagenomics_food_model->update_freezer($id_f2, $data);                      
         }
 
         redirect(site_url("NHMRC_metagenomics_food"));
@@ -216,7 +209,7 @@ class NHMRC_metagenomics_food extends CI_Controller
     public function valid_bs2() 
     {
         $id = $this->input->get('id1');
-        $data = $this->NHMRC_metagenomics_food_model->validate2($id);
+        $data = $this->NHMRC_metagenomics_food_model->validatedna($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }

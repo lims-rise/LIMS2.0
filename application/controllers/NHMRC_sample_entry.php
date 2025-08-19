@@ -39,9 +39,34 @@ class NHMRC_sample_entry extends CI_Controller
     {
         $mode = $this->input->post('mode',TRUE);
         $id = strtoupper($this->input->post('barcode_sample',TRUE));
+        $id_f = strtoupper($this->input->post('id_freezer',TRUE));
+        $f1 = strtoupper($this->input->post('id_freez',TRUE));
+        $s1 = strtoupper($this->input->post('id_shelf1',TRUE));
+        $r1 = strtoupper($this->input->post('id_rack1',TRUE));
+        $d1 = strtoupper($this->input->post('id_draw1',TRUE));
+        $id_loc1 = $this->NHMRC_sample_entry_model->get_freez($f1,$s1,$r1,$d1);
         $dt = new DateTime();
 
         if ($mode=="insert"){
+            $data = array(
+                'date_in' => $this->input->post('date_conduct',TRUE),
+                'time_in' => $dt->format('H:i:s'),
+                'id_person' => '999',
+                'id_vessel' => '1',
+                'barcode_sample' => strtoupper($this->input->post('barcode_tube',TRUE)),
+                'id_location_80' => $id_loc1,
+                'comments' => $this->input->post('comments',TRUE),
+                'out' => '0',
+                'need_cryobox' => '1',
+                'cryobox' => strtoupper($this->input->post('barcode_box',TRUE)),
+                'uuid' => $this->uuid->v4(),
+                'lab' => $this->session->userdata('lab'),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+            $this->NHMRC_sample_entry_model->insert_freezer($data);                 
+            $id_freezer = $this->NHMRC_sample_entry_model->get_id_freezer($this->input->post('barcode_tube',TRUE));
+
             $data = array(
             'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'barcode_tube' => strtoupper($this->input->post('barcode_tube',TRUE)),
@@ -49,7 +74,8 @@ class NHMRC_sample_entry extends CI_Controller
             'vol_aliquot' => $this->input->post('vol_aliquot',TRUE),
             'barcode_box' => strtoupper($this->input->post('barcode_box',TRUE)),
             'position_tube' => $this->input->post('position_tube',TRUE),
-            'id_location_80' => $this->input->post('id_location_80',TRUE),
+            'id_location_80' => $id_loc1,
+            'id_freezer' => $id_freezer,
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -68,7 +94,7 @@ class NHMRC_sample_entry extends CI_Controller
             'vol_aliquot' => $this->input->post('vol_aliquot',TRUE),
             'barcode_box' => strtoupper($this->input->post('barcode_box',TRUE)),
             'position_tube' => $this->input->post('position_tube',TRUE),
-            'id_location_80' => $this->input->post('id_location_80',TRUE),
+            'id_location_80' => $id_loc1,
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -78,6 +104,17 @@ class NHMRC_sample_entry extends CI_Controller
 
             $this->NHMRC_sample_entry_model->update($id, $data);
             $this->session->set_flashdata('message', 'Create Record Success');    
+
+            $data = array(
+                'barcode_sample' => strtoupper($this->input->post('barcode_tube',TRUE)),
+                'id_location_80' => $id_loc1,
+                'comments' => $this->input->post('comments',TRUE),
+                'need_cryobox' => '1',
+                'cryobox' => strtoupper($this->input->post('barcode_box',TRUE)),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
+                );
+            $this->NHMRC_sample_entry_model->update_freezer($id_f, $data);               
         }
 
         redirect(site_url("NHMRC_sample_entry"));
@@ -131,13 +168,13 @@ class NHMRC_sample_entry extends CI_Controller
     }
 
 
-    // public function valid_bs2() 
-    // {
-    //     $id = $this->input->get('id1');
-    //     $data = $this->NHMRC_sample_entry_model->validate2($id);
-    //     header('Content-Type: application/json');
-    //     echo json_encode($data);
-    // }
+    public function valid_dna() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->NHMRC_sample_entry_model->validatedna($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
 
 
     // public function _rules() 

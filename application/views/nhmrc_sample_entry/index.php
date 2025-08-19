@@ -5,7 +5,7 @@
                 <div class="box box-black box-solid">
     
                     <div class="box-header">
-                        <h3 class="box-title">NHMRC - Sample Entry (Hand Rinse)</h3>
+                        <h3 class="box-title">NHMRC - Sample Entry (Hand Rinse) ssdfsdf</h3>
                     </div>
         
         <div class="box-body">
@@ -61,6 +61,7 @@
                 <form id="formSample"  action= <?php echo site_url('NHMRC_sample_entry/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
+                        <input id="id_freezer" name="id_freezer" type="hidden" class="form-control input-sm">
                         <div class="form-group">
                             <label for="barcode_sample" class="col-sm-4 control-label">Barcode sample</label>
                             <div class="col-sm-8">
@@ -447,35 +448,35 @@
             // }, 5000);
         });
 
-        // $('#barcode_tube').on("change", function() {
-        //     data1 = $('#barcode_tube').val();
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "NHMRC_sample_entry/valid_bs2?id1="+data1,
-        //         // data:data1,
-        //         dataType: "json",
-        //         success: function(data) {
-        //             // var barcode = '';
-        //             if (data.length > 0) {
-        //                 tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode DNA <strong> ' + data1 +'</strong> is already in the system !</span>');
-        //                 $('.val2tip').tooltipster('content', tip);
-        //                 $('.val2tip').tooltipster('show');
-        //                 $('#barcode_tube').focus();
-        //                 $('#barcode_tube').val('');     
-        //                 $('#barcode_tube').css({'background-color' : '#FFE6E7'});
-        //                 setTimeout(function(){
-        //                     $('#barcode_tube').css({'background-color' : '#FFFFFF'});
-        //                     setTimeout(function(){
-        //                         $('#barcode_tube').css({'background-color' : '#FFE6E7'});
-        //                         setTimeout(function(){
-        //                             $('#barcode_tube').css({'background-color' : '#FFFFFF'});
-        //                         }, 300);                            
-        //                     }, 300);
-        //                 }, 300);
-        //             }
-        //         }
-        //     });
-        // });
+        $('#barcode_tube').on("change", function() {
+            data1 = $('#barcode_tube').val();
+            $.ajax({
+                type: "GET",
+                url: "NHMRC_sample_entry/valid_dna?id1="+data1,
+                // data:data1,
+                dataType: "json",
+                success: function(data) {
+                    // var barcode = '';
+                    if (data.length > 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode DNA Tube <strong> ' + data1 +'</strong> is already in the system !</span>');
+                        $('.val2tip').tooltipster('content', tip);
+                        $('.val2tip').tooltipster('show');
+                        $('#barcode_tube').focus();
+                        $('#barcode_tube').val('');     
+                        $('#barcode_tube').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_tube').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_tube').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_tube').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
 
 
 
@@ -572,6 +573,7 @@
             $('#barcode_box').val('');
             $('#position_tube').val('');
             $('#id_location_80').val('');
+            $('#id_freezer').val('');
             $('#id_freez').val('');
             $('#id_shelf1').val('');
             $('#id_rack1').val('');
@@ -596,6 +598,7 @@
             $('#barcode_box').val(data.barcode_box);
             $('#position_tube').val(data.position_tube);
             $('#id_location_80').val(data.id_location_80);
+            $('#id_freezer').val(data.id_freezer);
             load_freez1(data.id_location_80);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');

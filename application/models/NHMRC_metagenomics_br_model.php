@@ -24,10 +24,11 @@ class NHMRC_metagenomics_br_model extends CI_Model
         date_format(nhmrc_metagenomics.time_finished,"%H:%i") AS time_finished,
             nhmrc_metagenomics.time_minutes, nhmrc_metagenomics.barcode_dna_bag, nhmrc_metagenomics.barcode_storage,
         concat("F",ref_location_80.freezer,"-","S",ref_location_80.shelf,"-","R",ref_location_80.rack,"-","DRW",ref_location_80.rack_level) AS location,
-        nhmrc_metagenomics.comments, nhmrc_metagenomics.id_location_80, nhmrc_metagenomics.lab, nhmrc_metagenomics.flag
+        nhmrc_metagenomics.comments, nhmrc_metagenomics.id_location_80, nhmrc_metagenomics.id_freezer, nhmrc_metagenomics.lab, nhmrc_metagenomics.flag
         ');
         $this->datatables->from('nhmrc_metagenomics');
-        $this->datatables->join('ref_location_80', 'nhmrc_metagenomics.id_location_80 = ref_location_80.id_location_80 AND ref_location_80.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('freezer_in', 'nhmrc_metagenomics.id_freezer = freezer_in.id AND freezer_in.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('ref_location_80', 'freezer_in.id_location_80 = ref_location_80.id_location_80 AND ref_location_80.lab = '.$this->session->userdata('lab') , 'left');
         $this->datatables->where('nhmrc_metagenomics.lab', $this->session->userdata('lab'));
         $this->datatables->where('nhmrc_metagenomics.flag', '0');
 
@@ -49,9 +50,10 @@ class NHMRC_metagenomics_br_model extends CI_Model
     {
         $q = $this->db->query('
         SELECT a.barcode_sample, a.barcode_falcon2, a.date_conduct, a.volume_filtered, a.time_started, a.time_finished, a.time_minutes, a.barcode_dna_bag,
-        a.barcode_storage, concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS Location, a.comments
+        a.barcode_storage, concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS Location, a.id_freezer, a.comments
         from nhmrc_metagenomics a 
-        left join ref_location_80 b on a.id_location_80 = b.id_location_80 AND b.lab = "'.$this->session->userdata('lab').'" 
+        left join freezer_in c on a.id_freezer = c.id and c.lab = "'.$this->session->userdata('lab').'"
+        left join ref_location_80 b on c.id_location_80 = b.id_location_80 and b.lab = "'.$this->session->userdata('lab').'"
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
@@ -112,6 +114,12 @@ class NHMRC_metagenomics_br_model extends CI_Model
         $this->db->insert('freezer_in', $data);
     }    
         
+    function update_freezer($id_f, $data)
+    {
+        $this->db->where('id', $id_f);
+        $this->db->update('freezer_in', $data);
+    }  
+
     // update data
     function update($id, $data)
     {
@@ -196,6 +204,15 @@ class NHMRC_metagenomics_br_model extends CI_Model
         // return $this->db->get('ref_location_80')->row();
       }            
 
+      function get_id_freezer($id_freezer){
+        $q = $this->db->query('
+            SELECT MAX(id) AS id_freezer FROM freezer_in
+            WHERE barcode_sample = "'.$id_freezer.'"
+            GROUP BY barcode_sample
+        ');        
+        return $q->row()->id_freezer;
+      }        
+
       function validate1($id){
         // $this->db->where('barcode_sample', $id);
         // $this->db->where('lab', $this->session->userdata('lab'));
@@ -240,19 +257,8 @@ class NHMRC_metagenomics_br_model extends CI_Model
 
       function validatedna($id){
         $q = $this->db->query('
-        SELECT cryobarcode, barcode_sample FROM (
-        SELECT barcode_dna1 AS cryobarcode, barcode_sample
-        FROM nhmrc_meta_sediment
-        WHERE flag = 0 
-        UNION ALL
-        SELECT barcode_dna2 AS cryobarcode, barcode_sample
-        FROM nhmrc_meta_sediment
-        WHERE flag = 0 
-        UNION ALL
-        SELECT barcode_dna_bag AS cryobarcode, barcode_sample
-        FROM nhmrc_metagenomics
-        WHERE flag = 0) x
-        WHERE x.cryobarcode = "'.$id.'"       
+        SELECT bar_s2 FROM v_all_s2
+        WHERE bar_s2 = "'.$id.'"        
         ');        
         $response = $q->result_array();
         return $response;

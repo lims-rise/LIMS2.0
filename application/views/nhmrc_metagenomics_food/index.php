@@ -63,6 +63,8 @@
                 <form id="formSample"  action= <?php echo site_url('nhmrc_metagenomics_food/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
+                        <input id="id_freezer1" name="id_freezer1" type="hidden" class="form-control input-sm">
+                        <input id="id_freezer2" name="id_freezer2" type="hidden" class="form-control input-sm">
                         <div class="form-group">
                             <label for="barcode_sample" class="col-sm-4 control-label">Barcode sample</label>
                             <div class="col-sm-8">
@@ -764,6 +766,7 @@
             $('#barcode_storage1').val('');
             $('#position_tube1').val('');
             $('#id_location_801').val('');
+            $('#id_freezer1').val('');
             $('#id_freez1').val('');
             $('#id_shelf1').val('');
             $('#id_rack1').val('');
@@ -773,6 +776,7 @@
             $('#barcode_storage2').val('');
             $('#position_tube2').val('');
             $('#id_location_802').val('');
+            $('#id_freezer2').val('');
             $('#id_freez2').val('');
             $('#id_shelf2').val('');
             $('#id_rack2').val('');
@@ -797,12 +801,14 @@
             $('#barcode_storage1').val(data.barcode_storage1);
             $('#position_tube1').val(data.position_tube1);
             $('#id_location_801').val(data.id_location_801);
+            $('#id_freezer1').val(data.id_freezer1);
             load_freez1(data.id_location_801);
             $('#barcode_dna2').val(data.barcode_dna2);
             $('#weight_sub2').val(data.weight_sub2);
             $('#barcode_storage2').val(data.barcode_storage2);
             $('#position_tube2').val(data.position_tube2);
             $('#id_location_802').val(data.id_location_802);
+            $('#id_freezer2').val(data.id_freezer2);
             load_freez2(data.id_location_802);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');

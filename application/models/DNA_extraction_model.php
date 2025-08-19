@@ -17,22 +17,25 @@ class DNA_extraction_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('barcode_sample, date_extraction, initial, kit_lot, type, weights, barcode_dna, tube_number, cryobox, 
-        barcode_metagenomics, id_location, meta_box, qc_status, comments, id_person, lab, flag, freezer, shelf, rack, rack_level');
-        $this->datatables->from('v_dna_extr2');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('flag', '0');
+        $this->datatables->select('a.barcode_sample, a.date_extraction, d.initial, a.kit_lot, a.sampletype as `type`, a.weights, a.barcode_dna, a.tube_number, a.cryobox, 
+            a.barcode_metagenomics, a.id_location, a.meta_box, a.qc_status, a.comments, a.id_freezer1, a.id_freezer2, a.id_person, a.lab, a.flag, b.freezer, b.shelf, b.rack, b.rack_level');
+        $this->datatables->from('dna_extraction a');
+        $this->datatables->join('freezer_in c', 'a.id_freezer1 = c.id AND c.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('ref_location_80 b', 'c.id_location_80 = b.id_location_80 AND b.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('ref_person d', 'a.id_person = d.id_person', 'left');
+        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->where('a.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
-            $this->datatables->add_column('action', '', 'a.barcode_sample');
+            $this->datatables->add_column('action', '', 'a.barcode_dna');
         }
         else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'a.barcode_sample');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'a.barcode_dna');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>'." 
-                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'barcode_sample');
+                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'a.barcode_dna');
         }
         return $this->datatables->generate();
     }
@@ -588,6 +591,12 @@ class DNA_extraction_model extends CI_Model
         $this->db->insert('freezer_in', $data);
     }    
     
+    function update_freezer($id_f, $data)
+    {
+        $this->db->where('id', $id_f);
+        $this->db->update('freezer_in', $data);
+    }    
+
     // update data
     function update($id, $data)
     {
@@ -635,6 +644,35 @@ class DNA_extraction_model extends CI_Model
     
         return $response;
       }
+
+    function get_freez($freez, $shelf, $rack, $draw){
+        // $this->db->where('barcode_sample', $id);
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        // $q = $this->db->get($this->table);
+        $q = $this->db->query('
+        SELECT id_location_80 FROM ref_location_80
+        WHERE freezer = "'.$freez.'"
+        AND shelf = "'.$shelf.'"
+        AND rack = "'.$rack.'"
+        AND rack_level = "'.$draw.'"
+        AND lab = "'.$this->session->userdata('lab').'" 
+        AND flag = 0 
+        ');        
+        return $q->row()->id_location_80;
+        // $response = $q->result_array();
+        // return $response;
+        // return $this->db->get('ref_location_80')->row();
+      }            
+
+
+      function get_id_freezer($id_freezer){
+        $q = $this->db->query('
+            SELECT MAX(id) AS id_freezer FROM freezer_in
+            WHERE barcode_sample = "'.$id_freezer.'"
+            GROUP BY barcode_sample
+        ');        
+        return $q->row()->id_freezer;
+      }  
 
       function getFreezer1(){
         $response = array();
@@ -708,6 +746,15 @@ class DNA_extraction_model extends CI_Model
       }
 
       function validatedna($id){
+        $q = $this->db->query('
+        SELECT bar_s2 FROM v_all_s2
+        WHERE bar_s2 = "'.$id.'"       
+        ');        
+        $response = $q->result_array();
+        return $response;
+      }      
+
+      function validatednaxxx($id){
         $this->db->where('barcode_dna', $id);
         // $this->db->where('lab', $this->session->userdata('lab'));
         $q = $this->db->get($this->table);

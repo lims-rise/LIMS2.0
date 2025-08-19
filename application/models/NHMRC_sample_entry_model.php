@@ -22,10 +22,11 @@ class NHMRC_sample_entry_model extends CI_Model
         $this->datatables->select('a.barcode_sample, a.barcode_tube, a.date_conduct, 
         a.vol_aliquot, a.barcode_box, a.position_tube,
         concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS location,
-        a.comments, a.id_location_80, a.lab, a.flag
+        a.comments, a.id_location_80, a.id_freezer, a.lab, a.flag
         ');
         $this->datatables->from('nhmrc_sample_entry a');
-        $this->datatables->join('ref_location_80 b', 'a.id_location_80 = b.id_location_80 AND b.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('freezer_in c', 'a.id_freezer = c.id AND c.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('ref_location_80 b', 'c.id_location_80 = b.id_location_80 AND b.lab = '.$this->session->userdata('lab') , 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
         $this->datatables->where('a.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
@@ -49,7 +50,8 @@ class NHMRC_sample_entry_model extends CI_Model
         concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS location,
         a.comments
         from nhmrc_sample_entry a 
-        left join ref_location_80 b on a.id_location_80 = b.id_location_80 AND b.lab = "'.$this->session->userdata('lab').'" 
+        left join freezer_in c on a.id_freezer = c.id and c.lab = "'.$this->session->userdata('lab').'"
+        left join ref_location_80 b on c.id_location_80 = b.id_location_80 and b.lab = "'.$this->session->userdata('lab').'"
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
@@ -104,6 +106,17 @@ class NHMRC_sample_entry_model extends CI_Model
     {
         $this->db->insert($this->table, $data);
     }
+
+    function insert_freezer($data)
+    {
+        $this->db->insert('freezer_in', $data);
+    }    
+
+    function update_freezer($id_f, $data)
+    {
+        $this->db->where('id', $id_f);
+        $this->db->update('freezer_in', $data);
+    }    
     
     // update data
     function update($id, $data)
@@ -184,10 +197,20 @@ class NHMRC_sample_entry_model extends CI_Model
         AND lab = "'.$this->session->userdata('lab').'" 
         AND flag = 0 
         ');        
-        $response = $q->result_array();
-        return $response;
+        return $q->row()->id_location_80;
+        // $response = $q->result_array();
+        // return $response;
         // return $this->db->get('ref_location_80')->row();
       }            
+
+      function get_id_freezer($id_freezer){
+        $q = $this->db->query('
+            SELECT MAX(id) AS id_freezer FROM freezer_in
+            WHERE barcode_sample = "'.$id_freezer.'"
+            GROUP BY barcode_sample
+        ');        
+        return $q->row()->id_freezer;
+      }  
 
       function validate1($id){
         // $this->db->where('barcode_sample', $id);
@@ -206,6 +229,15 @@ class NHMRC_sample_entry_model extends CI_Model
         return $response;
         // return $this->db->get('ref_location_80')->row();
       }
+
+      function validatedna($id){
+        $q = $this->db->query('
+        SELECT bar_s2 FROM v_all_s2
+        WHERE bar_s2 = "'.$id.'"       
+        ');        
+        $response = $q->result_array();
+        return $response;
+      }      
 
     //   function validate2($id){
     //     $q = $this->db->query('

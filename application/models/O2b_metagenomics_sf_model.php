@@ -24,11 +24,13 @@ class O2b_metagenomics_sf_model extends CI_Model
         concat("F",b.freezer,"-","S",b.shelf,"-","R",b.rack,"-","DRW",b.rack_level) AS location1, 
         a.barcode_dna2, a.weight_sub2, a.barcode_storage2, a.position_tube2, 
         concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS location2,
-        a.comments, a.id_location_801, a.id_location_802, a.lab, a.flag
+        a.comments, a.id_location_801, a.id_location_802, a.id_freezer1, a.id_freezer2, a.lab, a.flag
         ');
         $this->datatables->from('obj2b_meta_sediment a');
-        $this->datatables->join('ref_location_80 b', 'a.id_location_801 = b.id_location_80 AND b.lab = '.$this->session->userdata('lab') , 'left');
-        $this->datatables->join('ref_location_80 c', 'a.id_location_802 = c.id_location_80 AND c.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('freezer_in g', 'a.id_freezer1 = g.id AND g.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('ref_location_80 b', 'g.id_location_80 = b.id_location_80 AND b.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('freezer_in h', 'a.id_freezer2 = h.id AND h.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('ref_location_80 c', 'h.id_location_80 = c.id_location_80 AND b.lab = '.$this->session->userdata('lab') , 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
         $this->datatables->where('a.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
@@ -54,8 +56,10 @@ class O2b_metagenomics_sf_model extends CI_Model
         concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS Location_tube2,
         a.comments
         from obj2b_meta_sediment a 
-        left join ref_location_80 b on a.id_location_801 = b.id_location_80 AND b.lab = "'.$this->session->userdata('lab').'" 
-        left join ref_location_80 c on a.id_location_802 = c.id_location_80 AND c.lab = "'.$this->session->userdata('lab').'"     
+        left join freezer_in g on a.id_freezer1 = g.id and g.lab = "'.$this->session->userdata('lab').'"
+        left join ref_location_80 b on g.id_location_80 = b.id_location_80 and b.lab = "'.$this->session->userdata('lab').'"
+        left join freezer_in h on a.id_freezer2 = h.id and h.lab = "'.$this->session->userdata('lab').'"
+        left join ref_location_80 c on h.id_location_80 = c.id_location_80 and c.lab = "'.$this->session->userdata('lab').'"
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ');
@@ -128,7 +132,13 @@ class O2b_metagenomics_sf_model extends CI_Model
     {
         $this->db->insert('freezer_in', $data);
     }    
-    
+
+    function update_freezer($id_f, $data)
+    {
+        $this->db->where('id', $id_f);
+        $this->db->update('freezer_in', $data);
+    }  
+
     // update data
     function update($id, $data)
     {
@@ -213,6 +223,16 @@ class O2b_metagenomics_sf_model extends CI_Model
         // return $this->db->get('ref_location_80')->row();
       }            
 
+      function get_id_freezer($id_freezer){
+        $q = $this->db->query('
+            SELECT MAX(id) AS id_freezer FROM freezer_in
+            WHERE barcode_sample = "'.$id_freezer.'"
+            GROUP BY barcode_sample
+        ');        
+        return $q->row()->id_freezer;
+      }  
+
+      
       function validate1($id){
         // $this->db->where('barcode_sample', $id);
         // $this->db->where('lab', $this->session->userdata('lab'));
@@ -230,6 +250,16 @@ class O2b_metagenomics_sf_model extends CI_Model
         return $response;
         // return $this->db->get('ref_location_80')->row();
       }
+
+
+      function validatedna($id){
+        $q = $this->db->query('
+        SELECT bar_s2 FROM v_all_s2
+        WHERE bar_s2 = "'.$id.'"       
+        ');        
+        $response = $q->result_array();
+        return $response;
+      }    
 
       function validate2($id){
         $q = $this->db->query('
