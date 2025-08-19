@@ -58,7 +58,7 @@
                                             <div class="box-header"></div>
                                             <div class="box-body table-responsive">
                                             <div style="padding-bottom: 10px;">
-                                                <button class='btn btn-success btn-sm' id='export'> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export To Excel </button>
+                                                <button class='btn btn-success btn-sm' id='export'> <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Method 1 </button>
                                                 <?php //echo anchor(site_url('REP_dna/index2'), '<i class="fa fa-wpforms" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm"'); ?>
                                                 <?php //echo anchor(site_url('REP_dna/excel/'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?>
                                                 <?php //echo anchor(site_url('kelolamenu/word'), '<i class="fa fa-file-word-o" aria-hidden="true"></i> Export Ms Word', 'class="btn btn-primary btn-sm"'); ?>
@@ -154,6 +154,30 @@ const formattedDate = `${year}-${month}-${day}`;
                 date2=formattedDate;
             }
             document.location.href="REP_dna/excel?date1="+date1+"&date2="+date2;
+        });
+
+        $("#export-alt").on('click', function() {
+            var date1 = $('#date_rep1').val();
+            var date2 = $('#date_rep2').val();
+            if (date1 == '') {
+                date1 = '2018-01-01';    
+            }
+            if (date2 == '') {
+                date2=formattedDate;
+            }
+            document.location.href="REP_dna/excel_alternative?date1="+date1+"&date2="+date2;
+        });
+
+        $("#export-direct").on('click', function() {
+            var date1 = $('#date_rep1').val();
+            var date2 = $('#date_rep2').val();
+            if (date1 == '') {
+                date1 = '2018-01-01';    
+            }
+            if (date2 == '') {
+                date2=formattedDate;
+            }
+            document.location.href="REP_dna/excel_direct?date1="+date1+"&date2="+date2;
         });
 
     $('#refresh-rep ').click(function() {
