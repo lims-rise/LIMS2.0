@@ -17,10 +17,10 @@ class DNA_extraction_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('a.barcode_sample, a.date_extraction, d.initial, a.kit_lot, a.sampletype as `type`, a.weights, a.barcode_dna, a.tube_number, a.cryobox, 
+        $this->datatables->select('a.barcode_sample, a.date_extraction, d.initial, a.kit_lot, a.sampletype as type, a.weights, a.barcode_dna, a.tube_number, a.cryobox, 
             a.barcode_metagenomics, a.id_location, a.meta_box, a.qc_status, a.comments, a.id_freezer1, a.id_freezer2, a.id_person, a.lab, a.flag, b.freezer, b.shelf, b.rack, b.rack_level');
         $this->datatables->from('dna_extraction a');
-        $this->datatables->join('freezer_in c', 'a.id_freezer1 = c.id AND c.lab = '.$this->session->userdata('lab') , 'left');
+        $this->datatables->join('freezer_in c', 'a.id_freezer1 = c.id AND c.lab = "'.$this->session->userdata('lab').'"' , 'left');
         $this->datatables->join('ref_location_80 b', 'c.id_location_80 = b.id_location_80 AND b.lab = '.$this->session->userdata('lab') , 'left');
         $this->datatables->join('ref_person d', 'a.id_person = d.id_person', 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
@@ -30,7 +30,7 @@ class DNA_extraction_model extends CI_Model
         if ($lvl == 7){
             $this->datatables->add_column('action', '', 'a.barcode_dna');
         }
-        else if (($lvl == 2) | ($lvl == 3)){
+        else if (($lvl == 2) || ($lvl == 3)){
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'a.barcode_dna');
         }
         else {
