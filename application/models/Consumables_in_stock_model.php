@@ -556,45 +556,93 @@
             if (!empty($created_stock_ids)) {
                 $this->db->where_in('id_stock', $created_stock_ids);
             }
-            $this->db->select('id_stock, quantity, minimum_stock, product_name');
+            $this->db->select('id_stock, quantity, quantity_per_unit, minimum_stock, product_name');
             $query = $this->db->get('consumables_stock');
             $stockData = $query->result_array();
 
-            // Filter stok yang mendekati minimum
+            // Filter stok berdasarkan logika baru: A - B <= 0
             $stockToNotify = array_filter($stockData, function ($stock) {
-                return $stock['quantity'] <= $stock['minimum_stock'] + 10;
+                // Variabel A: total unit dalam satuan terkecil
+                $variableA = $stock['quantity'] * $stock['quantity_per_unit'];
+                
+                // Variabel B: minimum stock dalam satuan terkecil  
+                $variableB = $stock['minimum_stock'] * $stock['quantity_per_unit'];
+                
+                // Variabel C: selisih antara stok aktual dan minimum
+                $variableC = $variableA - $variableB;
+                
+                // Log untuk debugging
+                log_message('debug', 'Product: ' . $stock['product_name'] . 
+                    ' | A (actual): ' . $variableA . 
+                    ' | B (minimum): ' . $variableB . 
+                    ' | C (difference): ' . $variableC);
+                
+                // Kirim notifikasi jika C <= 0 (stok mencapai atau di bawah minimum)
+                return $variableC <= 0;
             });
 
             if (empty($stockToNotify)) {
-                log_message('debug', 'No stock approaching minimum level. No emails sent.');
+                log_message('debug', 'No stock at or below minimum level. No emails sent.');
                 return;
             }
 
-            // Ambil semua email user dari tbl_user
+            // Ambil semua email user dari tbl_user sekali saja
             $this->db->select('email');
             $userQuery = $this->db->get('tbl_user');
             $userEmails = array_column($userQuery->result_array(), 'email');
 
-            foreach ($stockToNotify as $stock) {
-                $subject = 'Stock Info: ' . $stock['product_name'];
-                $message = 'The stock for product ' . $stock['product_name'] . ' is approaching the minimum level. Current quantity: ' . $stock['quantity'] . ', Minimum stock: ' . $stock['minimum_stock'] . '.' . "\n\n" . 'Please update the stock levels as soon as possible.';
+            if (empty($userEmails)) {
+                log_message('debug', 'No user emails found. No notifications sent.');
+                return;
+            }
 
+            // Buat satu email dengan semua produk yang perlu diperingatkan
+            $productDetails = '';
+            foreach ($stockToNotify as $index => $stock) {
+                // Hitung ulang untuk pesan email
+                $variableA = $stock['quantity'] * $stock['quantity_per_unit'];
+                $variableB = $stock['minimum_stock'] * $stock['quantity_per_unit'];
+                $variableC = $variableA - $variableB;
+                
+                $productDetails .= ($index + 1) . '. Product: ' . $stock['product_name'] . "\n" .
+                                  '   - Current Quantity: ' . $stock['quantity'] . ' containers' . "\n" .
+                                  '   - Quantity per Unit: ' . $stock['quantity_per_unit'] . "\n" .
+                                  '   - Total Units Available: ' . $variableA . ' units' . "\n" .
+                                  '   - Minimum Stock Required: ' . $stock['minimum_stock'] . ' containers (' . $variableB . ' units)' . "\n" .
+                                  '   - Stock Deficit: ' . abs($variableC) . ' units' . "\n\n";
+            }
+
+            $subject = 'Stock Alert: ' . count($stockToNotify) . ' Product(s) Below Minimum Level';
+            $message = 'URGENT: The following products have reached or fallen below the minimum stock level:' . "\n\n" .
+                      $productDetails .
+                      'Action Required: Please restock these items immediately to avoid supply disruption.' . "\n\n" .
+                      'This is an automated notification from LIMS2.0 Stock Management System.';
+
+            // Kirim email ke semua user sekaligus menggunakan BCC untuk efisiensi
+            $this->email->clear();
+            $this->email->from('uhqdev@gmail.com', 'LIMS2.0 - Stock Alert System');
+            $this->email->to('uhqdev@gmail.com'); // Primary recipient
+            $this->email->bcc($userEmails); // All users as BCC
+            $this->email->subject($subject);
+            $this->email->message($message);
+
+            if ($this->email->send()) {
+                log_message('debug', 'Stock alert email sent successfully to ' . count($userEmails) . ' users for ' . count($stockToNotify) . ' products');
+            } else {
+                log_message('error', 'Error sending stock alert email: ' . $this->email->print_debugger());
+                // Fallback: kirim individual jika BCC gagal
                 foreach ($userEmails as $email) {
                     $this->email->clear();
-                    $this->email->from('uhqdev@gmail.com', 'LIMS2.0 - Alerts');
+                    $this->email->from('uhqdev@gmail.com', 'LIMS2.0 - Stock Alert System');
                     $this->email->to($email);
                     $this->email->subject($subject);
                     $this->email->message($message);
-
-                    if ($this->email->send()) {
-                        log_message('debug', 'Email sent successfully to ' . $email . ' for product ' . $stock['product_name']);
-                    } else {
-                        log_message('error', 'Error sending email to ' . $email . ' for product ' . $stock['product_name'] . ': ' . $this->email->print_debugger());
-                    }
+                    $this->email->send();
                 }
             }
 
-            log_message('debug', 'Finished checking stock levels.');
+            log_message('debug', 'Finished checking stock levels. Sent alerts for ' . count($stockToNotify) . ' products.');
+            return true;
         }
 
 

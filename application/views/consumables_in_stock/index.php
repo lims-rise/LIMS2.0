@@ -213,6 +213,30 @@
     </div>
     <!-- END MODAL -->
 
+    <!-- MODAL LOADING FOR EMAIL NOTIFICATION -->
+    <div class="modal fade" id="loading-modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div style="padding: 20px;">
+                        <i class="fa fa-spinner fa-spin fa-3x text-primary"></i>
+                        <h4 style="margin-top: 20px; color: #337ab7;">Processing...</h4>
+                        <p style="margin-top: 10px; color: #666;">
+                            System is sending stock notifications to email addresses.<br>
+                            Please wait a moment...
+                        </p>
+                        <div class="progress" style="margin-top: 15px;">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%">
+                                <span class="sr-only">Processing...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL LOADING -->
+
     <!-- MODAL CONFIRMATION DELETE -->
     <div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -298,6 +322,31 @@
     .error-message:before {
         content: '\26A0 '; /* Add a warning icon before the message */
         font-size: 16px;
+    }
+
+    /* Custom styles for loading modal */
+    #loading-modal .modal-content {
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    #loading-modal .fa-spinner {
+        color: #337ab7;
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    #loading-modal .progress {
+        height: 8px;
+    }
+    
+    #loading-modal .progress-bar {
+        background-color: #337ab7;
+    }
         margin-right: 5px; /* Space between the icon and text */
     }
 
@@ -608,13 +657,40 @@
             // $('#barcode_sample').val('');     
         });
 
-        $('#compose-modal').on('hide.bs.modal', function () {
-            // Bersihkan form
+        // Variable to track if form is being submitted
+        let isFormSubmitting = false;
+
+        $('#compose-modal').on('hide.bs.modal', function (e) {
+            // Jika form sedang disubmit, jangan lakukan cleanup
+            if (isFormSubmitting) {
+                return;
+            }
+            
+            // Bersihkan form hanya jika bukan karena submit
             $('#formSample').find('input, textarea').val('');
             $('#formSample').find('input[type=checkbox], input[type=radio]').prop('checked', false);
             // Bersihkan nilai yang dipilih dalam select
             $('#formSample select').val('').trigger('change');
             location.reload();
+        });
+
+        // Handle form submission to show loading modal
+        $('#formSample').on('submit', function(e) {
+            console.log('Form submit triggered'); // Debug log
+            
+            // Set flag to prevent modal cleanup
+            isFormSubmitting = true;
+            
+            // Show loading modal immediately (but don't hide compose modal yet)
+            setTimeout(function() {
+                $('#compose-modal').modal('hide');
+                $('#loading-modal').modal('show');
+            }, 100);
+            
+            console.log('Form submission proceeding...'); // Debug log
+            
+            // Let the form submit normally
+            return true; // Allow form submission to continue
         });
         
         var base_url = location.hostname;
