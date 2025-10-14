@@ -1,4 +1,0 @@
-AuthType Basic
-AuthName "Restricted Content"
-AuthUserFile C:\laragon\www\LIMS2.0\.htpasswd
-Require valid-user

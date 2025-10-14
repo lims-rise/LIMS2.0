@@ -283,8 +283,12 @@ class Consumables_in_stock extends CI_Controller {
 
     public function saveConsumablesInStock()
     {
+        log_message('debug', 'saveConsumablesInStock method called');
+        
         $mode = $this->input->post('mode', TRUE);
         $id = strtoupper($this->input->post('idx_instock', TRUE));
+        
+        log_message('debug', 'Form data received - Mode: ' . $mode . ', ID: ' . $id);
         // Mendapatkan array id_objective
         $id_objectives = $this->input->post('id_objective', TRUE);
         $id_objectives1 = $this->input->post('id_objective1', TRUE);
@@ -393,7 +397,14 @@ class Consumables_in_stock extends CI_Controller {
 
         // Setelah selesai menambah/merubah stok, periksa stok yang baru saja dibuat atau diupdate
         if (!empty($created_stock_ids)) {
+            log_message('debug', 'Starting email notification process for stock IDs: ' . json_encode($created_stock_ids));
+            
+            // Set flash message to indicate email processing
+            $this->session->set_flashdata('email_processing', 'Stock notifications are being sent to email addresses...');
+            
             $this->Consumables_in_stock_model->checkStockLevelsAndSendNotification($created_stock_ids); // Pass id_stock yang baru dibuat/diupdate
+            
+            log_message('debug', 'Email notification process completed');
         }
 
         // Redirect ke halaman yang sesuai setelah selesai
