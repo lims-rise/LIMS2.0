@@ -218,8 +218,331 @@ class DNA_extraction_model extends CI_Model
     //     return $response;    
     // }
 
+    // function get_all()
+    // {
+    //     $lab = $this->session->userdata('lab');
+    //     $q = $this->db->query('SELECT a.barcode_dna, a.barcode_sample AS "source_barcode_sample", a.date_extraction, b.initial, a.kit_lot, a.sampletype, c.Barcode_sample AS "parent_barcode_sample", c.sampletype AS "parent_sample_type", a.weights, a.tube_number, a.cryobox, 
+    //     a.barcode_metagenomics, 
+    //     concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS Location, a.meta_box, a.qc_status, a.comments
+    //     FROM dna_extraction a
+    //     LEFT JOIN ref_person b ON a.id_person = b.id_person
+    //     LEFT JOIN (SELECT barcode_p1a barcode, cryobox1 vessel, "O3 Blood-EDTA" type, 
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_edta_aliquots a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_p1a)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT barcode_p2a barcode, cryobox2 vessel, "O3 Blood-EDTA" type, 
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_edta_aliquots a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_p2a)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT barcode_p3a barcode, cryobox3 vessel, "O3 Blood-EDTA" type, 
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_edta_aliquots a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_p3a)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT packed_cells barcode, cryobox_pc vessel, "O3 Blood-EDTA" type, 
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_edta_aliquots a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.packed_cells)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT barcode_wb barcode, cryoboxwb vessel, "O3 Blood-EDTA" type, 
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_edta_aliquots a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_wb)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT barcode_sst1 barcode, cryobox1 vessel, "O3 Blood-SST" type, 
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_sst_aliquots a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_sst1)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT barcode_sst2 barcode, cryobox2 vessel, "O3 Blood-SST" type, 
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_sst_aliquots a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_sst2)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT a.barcode_sample barcode, a.freezer_bag vessel, "O3 Filter Paper" type,
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_bfilterpaper a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_sample)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT a.aliquot1 barcode, a.cryobox1 vessel, "O3 Feces" type,
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_faliquot a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.aliquot1)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT a.aliquot2 barcode, a.cryobox2 vessel, "O3 Feces" type,
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_faliquot a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.aliquot2)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT a.aliquot3 barcode, a.cryobox3 vessel, "O3 Feces" type,
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_faliquot a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.aliquot3)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT a.aliquot_zymo barcode, a.cryobox_zymo vessel, "O3 Feces" type,
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_faliquot a
+	// 								LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.aliquot_zymo)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT a.bar_macsweep1 barcode, a.cryobox1 vessel, "O3 Feces" type,
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_fmac2 a
+	// 								LEFT JOIN obj3_fmac1 d ON a.bar_macconkey = d.bar_macconkey
+	// 								LEFT JOIN obj3_sam_rec b ON d.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.bar_macsweep1)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT a.bar_macsweep2 barcode, a.cryobox2 vessel, "O3 Feces" type,
+	// 								b.barcode_sample, c.sampletype
+	// 								FROM obj3_fmac2 a
+	// 								LEFT JOIN obj3_fmac1 d ON a.bar_macconkey = d.bar_macconkey
+	// 								LEFT JOIN obj3_sam_rec b ON d.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.bar_macsweep2)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT a.barcode_dna_bag barcode, a.barcode_storage vessel, CONCAT("O2B ", c.sampletype) type,
+	// 								IFNULL(b.barcode_sample, d.barcode_sample) AS barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+	// 								FROM obj2b_metagenomics a
+	// 								LEFT JOIN obj2b_receipt b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN (SELECT a.barcode_falcon, b.barcode_sample, b.id_type2b FROM obj2b_bs_stomacher a 
+	// 								LEFT JOIN obj2b_receipt b ON a.barcode_sample = b.barcode_sample) d ON a.barcode_sample = d.barcode_falcon
+	// 								LEFT JOIN ref_sampletype c ON IFNULL(b.id_type2b, d.id_type2b) = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_dna_bag)) > 0
+	// 								AND a.lab = "'.$lab.'"
+    //     UNION ALL
+	// 								SELECT a.barcode_dna1 barcode, a.barcode_storage1 vessel, CONCAT("O2B ", c.sampletype) type,
+	// 								a.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+	// 								FROM obj2b_meta_sediment a
+	// 								LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_dna1)) > 0
+	// 								AND a.lab = "'.$lab.'"	
+    //     UNION ALL
+	// 								SELECT a.barcode_dna2 barcode, a.barcode_storage2 vessel, CONCAT("O2B ", c.sampletype) type,
+	// 								a.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+	// 								FROM obj2b_meta_sediment a
+	// 								LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_dna2)) > 0
+	// 								AND a.lab = "'.$lab.'"
+	// 			UNION ALL
+	// 								SELECT a.bar_macsweep1 barcode, a.cryobox1 vessel, CONCAT("O2B ", c.sampletype) type,
+	// 								b.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+	// 								FROM obj2b_mac2 a
+	// 								LEFT JOIN obj2b_mac1 d ON a.bar_macconkey=d.bar_macconkey
+	// 								LEFT JOIN (SELECT barcode_sample barcode, barcode_sample, id_type2b
+	// 										FROM obj2b_receipt
+	// 										WHERE lab = "'.$lab.'"
+	// 										UNION ALL
+	// 										SELECT a.barcode_falcon barcode, b.barcode_sample, b.id_type2b
+	// 										FROM obj2b_bs_stomacher a
+	// 										LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+	// 										WHERE a.lab = "'.$lab.'"
+	// 										UNION ALL
+	// 										SELECT a.barcode_tube barcode, b.barcode_sample, b.id_type2b
+	// 										FROM obj2b_sediment_prep a
+	// 										LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+	// 										WHERE a.lab = "'.$lab.'"
+	// 										) b ON d.barcode_sample=b.barcode
+	// 								LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.bar_macsweep1)) > 0
+	// 								AND a.lab = "'.$lab.'"
+
+	// 			UNION ALL
+	// 								SELECT a.bar_macsweep2 barcode, a.cryobox2 vessel, CONCAT("O2B ", c.sampletype) type,
+	// 								b.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+	// 								FROM obj2b_mac2 a
+	// 								LEFT JOIN obj2b_mac1 d ON a.bar_macconkey=d.bar_macconkey
+	// 								LEFT JOIN (SELECT barcode_sample barcode, barcode_sample, id_type2b
+	// 										FROM obj2b_receipt
+	// 										WHERE lab = "'.$lab.'"
+	// 										UNION ALL
+	// 										SELECT a.barcode_falcon barcode, b.barcode_sample, b.id_type2b
+	// 										FROM obj2b_bs_stomacher a
+	// 										LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+	// 										WHERE a.lab = "'.$lab.'"
+	// 										UNION ALL
+	// 										SELECT a.barcode_tube barcode, b.barcode_sample, b.id_type2b
+	// 										FROM obj2b_sediment_prep a
+	// 										LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
+	// 										WHERE a.lab = "'.$lab.'"
+	// 										) b ON d.barcode_sample=b.barcode
+	// 								LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.bar_macsweep2)) > 0
+	// 								AND a.lab = "'.$lab.'"
+	// 			UNION ALL
+	// 								SELECT a.bar_macsweep1 barcode, a.cryobox1 vessel, CONCAT("NHMRC ", c.sampletype) type,
+	// 								b.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+	// 								FROM nhmrc_mac2 a
+	// 								LEFT JOIN nhmrc_mac1 d ON a.bar_macconkey=d.bar_macconkey
+	// 								LEFT JOIN (SELECT barcode_sample barcode, barcode_sample, id_type2b
+	// 										FROM nhmrc_receipt
+	// 										WHERE lab = "'.$lab.'"
+	// 										UNION ALL
+	// 										SELECT a.barcode_falcon barcode, b.barcode_sample, b.id_type2b
+	// 										FROM nhmrc_bs_stomacher a
+	// 										LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
+	// 										WHERE a.lab = "'.$lab.'"
+	// 										UNION ALL
+ 	// 										SELECT c.barcode_falcon1 barcode, b.barcode_sample, b.id_type2b
+ 	// 										FROM nhmrc_subsd_idexx c 
+	// 										LEFT JOIN nhmrc_sample_prep a ON a.barcode_food=c.barcode_food
+ 	// 										LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
+	// 										WHERE a.lab = "'.$lab.'"
+	// 										) b ON d.barcode_sample=b.barcode
+	// 								LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.bar_macsweep1)) > 0
+	// 								AND a.lab = "'.$lab.'"
+	// 			UNION ALL
+	// 								SELECT a.bar_macsweep2 barcode, a.cryobox2 vessel, CONCAT("NHMRC ", c.sampletype) type,
+	// 								b.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+	// 								FROM nhmrc_mac2 a
+	// 								LEFT JOIN nhmrc_mac1 d ON a.bar_macconkey=d.bar_macconkey
+	// 								LEFT JOIN (SELECT barcode_sample barcode, barcode_sample, id_type2b
+	// 										FROM nhmrc_receipt
+	// 										WHERE lab = "'.$lab.'"
+	// 										UNION ALL
+	// 										SELECT a.barcode_falcon barcode, b.barcode_sample, b.id_type2b
+	// 										FROM nhmrc_bs_stomacher a
+	// 										LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
+	// 										WHERE a.lab = "'.$lab.'"
+	// 										UNION ALL
+ 	// 										SELECT c.barcode_falcon1 barcode, b.barcode_sample, b.id_type2b
+ 	// 										FROM nhmrc_subsd_idexx c 
+	// 										LEFT JOIN nhmrc_sample_prep a ON a.barcode_food=c.barcode_food
+ 	// 										LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
+	// 										WHERE a.lab = "'.$lab.'"
+	// 										) b ON d.barcode_sample=b.barcode
+	// 								LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.bar_macsweep2)) > 0
+	// 								AND a.lab = "'.$lab.'"
+	// 			UNION ALL 									
+	// 								SELECT a.barcode_dna_bag barcode, a.barcode_storage vessel, CONCAT("NHMRC ", c.sampletype) type,
+	// 								IFNULL(b.barcode_sample, d.barcode_sample) AS barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+	// 								FROM nhmrc_metagenomics a
+	// 								LEFT JOIN nhmrc_receipt b ON a.barcode_sample = b.barcode_sample
+	// 								LEFT JOIN (SELECT a.barcode_falcon, b.barcode_sample, b.id_type2b FROM nhmrc_bs_stomacher a 
+	// 								LEFT JOIN nhmrc_receipt b ON a.barcode_sample = b.barcode_sample) d ON a.barcode_sample = d.barcode_falcon
+	// 								LEFT JOIN ref_sampletype c ON IFNULL(b.id_type2b, d.id_type2b) = c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_dna_bag)) > 0
+	// 								AND a.lab = "'.$lab.'"
+	// 			UNION ALL 
+	// 								SELECT a.barcode_dna1 barcode, a.barcode_storage1 vessel, CONCAT("NHMRC ", c.sampletype) type,
+	// 								a.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+	// 								FROM nhmrc_meta_food a
+	// 								LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_dna1)) > 0			
+	// 								AND a.lab = "'.$lab.'"		
+	// 			UNION ALL 
+	// 								SELECT a.barcode_dna2 barcode, a.barcode_storage1 vessel, CONCAT("NHMRC ", c.sampletype) type,
+	// 								a.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+	// 								FROM nhmrc_meta_food a
+	// 								LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
+	// 								WHERE LENGTH(TRIM(a.barcode_dna2)) > 0					
+	// 								AND a.lab = "'.$lab.'"
+	// 			UNION ALL
+	// 								SELECT DISTINCT a.barcode_sample barcode, B.cryobox vessel, CONCAT("O2B ", c.sampletype) type,
+	// 								a.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
+	// 								FROM obj2b_receipt a
+	// 								LEFT JOIN freezer_in b ON a.barcode_sample=b.barcode_sample
+	// 								LEFT JOIN ref_sampletype c ON a.id_type2b=c.id_sampletype
+	// 								WHERE LEFT(a.barcode_sample, 5) = "N-S2-"
+	// 								AND LENGTH(TRIM(a.barcode_sample)) > 0		
+	// 								AND a.lab = "'.$lab.'"		
+	// 			UNION ALL
+	// 								SELECT a.barcode_vessel barcode, null vessel, null type, a.barcode_sample, 
+	// 								b.sample AS sample_type
+	// 								FROM dna_control a
+	// 								LEFT JOIN ref_sampledna b ON a.id_sample = b.id_sample
+	// 								AND a.lab = "'.$lab.'"
+	// 			UNION ALL
+	// 								SELECT a.barcode_vessel2 barcode, null vessel, null type, a.barcode_sample, 
+	// 								b.sample AS sample_type
+	// 								FROM dna_control a
+	// 								LEFT JOIN ref_sampledna b ON a.id_sample = b.id_sample
+	// 								AND a.lab = "'.$lab.'"
+	// 			UNION ALL
+	// 								SELECT a.barcode_vessel3 barcode, null vessel, null type, a.barcode_sample, 
+	// 								b.sample AS sample_type
+	// 								FROM dna_control a
+	// 								LEFT JOIN ref_sampledna b ON a.id_sample = b.id_sample
+	// 								AND a.lab = "'.$lab.'"
+	// 			UNION ALL
+	// 								SELECT a.barcode_vessel4 barcode, null vessel, null type, a.barcode_sample, 
+	// 								b.sample AS sample_type
+	// 								FROM dna_control a
+	// 								LEFT JOIN ref_sampledna b ON a.id_sample = b.id_sample
+	// 								AND a.lab = "'.$lab.'"
+	// 			UNION ALL
+	// 								SELECT a.barcode_vessel5 barcode, null vessel, null type, a.barcode_sample, 
+	// 								b.sample AS sample_type
+	// 								FROM dna_control a
+	// 								LEFT JOIN ref_sampledna b ON a.id_sample = b.id_sample
+	// 								AND a.lab = "'.$lab.'"
+	// 								) c ON a.barcode_sample=c.barcode
+    //     LEFT JOIN (
+	// 				SELECT a.id, a.date_in, a.time_in, a.barcode_sample, a.lab, a.id_location_80
+	// 				FROM freezer_in a
+	// 				JOIN (
+	// 				SELECT id, barcode_sample, MIN(CONCAT(date_in, time_in)) max_recent FROM freezer_in
+	// 				GROUP BY barcode_sample
+	// 				) b ON a.barcode_sample=b.barcode_sample AND CONCAT(a.date_in, a.time_in) = b.max_recent
+    //     ) g ON a.barcode_dna=g.barcode_sample AND g.lab = "'.$lab.'"
+    //     LEFT JOIN ref_location_80 d on g.id_location_80=d.id_location_80 AND d.lab = "'.$lab.'"                             									
+	// 			WHERE a.lab = "'.$lab.'"
+    //     AND a.flag = 0 
+    //     ORDER BY a.date_extraction
+    //     ');
+    //     $response = $q->result();
+    //     return $response;    
+    // }
+
+
     function get_all()
     {
+        $lab = $this->session->userdata('lab');
         $q = $this->db->query('SELECT a.barcode_dna, a.barcode_sample AS "source_barcode_sample", a.date_extraction, b.initial, a.kit_lot, a.sampletype, c.Barcode_sample AS "parent_barcode_sample", c.sampletype AS "parent_sample_type", a.weights, a.tube_number, a.cryobox, 
         a.barcode_metagenomics, 
         concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS Location, a.meta_box, a.qc_status, a.comments
@@ -230,96 +553,84 @@ class DNA_extraction_model extends CI_Model
 									FROM obj3_edta_aliquots a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_p1a)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT barcode_p2a barcode, cryobox2 vessel, "O3 Blood-EDTA" type, 
 									b.barcode_sample, c.sampletype
 									FROM obj3_edta_aliquots a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_p2a)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT barcode_p3a barcode, cryobox3 vessel, "O3 Blood-EDTA" type, 
 									b.barcode_sample, c.sampletype
 									FROM obj3_edta_aliquots a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_p3a)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT packed_cells barcode, cryobox_pc vessel, "O3 Blood-EDTA" type, 
 									b.barcode_sample, c.sampletype
 									FROM obj3_edta_aliquots a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.packed_cells)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT barcode_wb barcode, cryoboxwb vessel, "O3 Blood-EDTA" type, 
 									b.barcode_sample, c.sampletype
 									FROM obj3_edta_aliquots a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_wb)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT barcode_sst1 barcode, cryobox1 vessel, "O3 Blood-SST" type, 
 									b.barcode_sample, c.sampletype
 									FROM obj3_sst_aliquots a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_sst1)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT barcode_sst2 barcode, cryobox2 vessel, "O3 Blood-SST" type, 
 									b.barcode_sample, c.sampletype
 									FROM obj3_sst_aliquots a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_sst2)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT a.barcode_sample barcode, a.freezer_bag vessel, "O3 Filter Paper" type,
 									b.barcode_sample, c.sampletype
 									FROM obj3_bfilterpaper a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_sample)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT a.aliquot1 barcode, a.cryobox1 vessel, "O3 Feces" type,
 									b.barcode_sample, c.sampletype
 									FROM obj3_faliquot a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.aliquot1)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT a.aliquot2 barcode, a.cryobox2 vessel, "O3 Feces" type,
 									b.barcode_sample, c.sampletype
 									FROM obj3_faliquot a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.aliquot2)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT a.aliquot3 barcode, a.cryobox3 vessel, "O3 Feces" type,
 									b.barcode_sample, c.sampletype
 									FROM obj3_faliquot a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.aliquot3)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT a.aliquot_zymo barcode, a.cryobox_zymo vessel, "O3 Feces" type,
 									b.barcode_sample, c.sampletype
 									FROM obj3_faliquot a
 									LEFT JOIN obj3_sam_rec b ON a.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.aliquot_zymo)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT a.bar_macsweep1 barcode, a.cryobox1 vessel, "O3 Feces" type,
 									b.barcode_sample, c.sampletype
@@ -327,8 +638,7 @@ class DNA_extraction_model extends CI_Model
 									LEFT JOIN obj3_fmac1 d ON a.bar_macconkey = d.bar_macconkey
 									LEFT JOIN obj3_sam_rec b ON d.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.bar_macsweep1)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT a.bar_macsweep2 barcode, a.cryobox2 vessel, "O3 Feces" type,
 									b.barcode_sample, c.sampletype
@@ -336,8 +646,7 @@ class DNA_extraction_model extends CI_Model
 									LEFT JOIN obj3_fmac1 d ON a.bar_macconkey = d.bar_macconkey
 									LEFT JOIN obj3_sam_rec b ON d.barcode_sample = b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type = c.id_sampletype
-									WHERE LENGTH(TRIM(a.bar_macsweep2)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT a.barcode_dna_bag barcode, a.barcode_storage vessel, CONCAT("O2B ", c.sampletype) type,
 									IFNULL(b.barcode_sample, d.barcode_sample) AS barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
@@ -346,24 +655,21 @@ class DNA_extraction_model extends CI_Model
 									LEFT JOIN (SELECT a.barcode_falcon, b.barcode_sample, b.id_type2b FROM obj2b_bs_stomacher a 
 									LEFT JOIN obj2b_receipt b ON a.barcode_sample = b.barcode_sample) d ON a.barcode_sample = d.barcode_falcon
 									LEFT JOIN ref_sampletype c ON IFNULL(b.id_type2b, d.id_type2b) = c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_dna_bag)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
         UNION ALL
 									SELECT a.barcode_dna1 barcode, a.barcode_storage1 vessel, CONCAT("O2B ", c.sampletype) type,
 									a.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
 									FROM obj2b_meta_sediment a
 									LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_dna1)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"	
+									WHERE a.lab = "'.$lab.'"	
         UNION ALL
 									SELECT a.barcode_dna2 barcode, a.barcode_storage2 vessel, CONCAT("O2B ", c.sampletype) type,
 									a.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
 									FROM obj2b_meta_sediment a
 									LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_dna2)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
 				UNION ALL
 									SELECT a.bar_macsweep1 barcode, a.cryobox1 vessel, CONCAT("O2B ", c.sampletype) type,
 									b.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
@@ -371,21 +677,20 @@ class DNA_extraction_model extends CI_Model
 									LEFT JOIN obj2b_mac1 d ON a.bar_macconkey=d.bar_macconkey
 									LEFT JOIN (SELECT barcode_sample barcode, barcode_sample, id_type2b
 											FROM obj2b_receipt
-											WHERE lab = "'.$this->session->userdata('lab').'"
+											WHERE lab = "'.$lab.'"
 											UNION ALL
 											SELECT a.barcode_falcon barcode, b.barcode_sample, b.id_type2b
 											FROM obj2b_bs_stomacher a
 											LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
-											WHERE a.lab = "'.$this->session->userdata('lab').'"
+											WHERE a.lab = "'.$lab.'"
 											UNION ALL
 											SELECT a.barcode_tube barcode, b.barcode_sample, b.id_type2b
 											FROM obj2b_sediment_prep a
 											LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
-											WHERE a.lab = "'.$this->session->userdata('lab').'"
+											WHERE a.lab = "'.$lab.'"
 											) b ON d.barcode_sample=b.barcode
 									LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
-									WHERE LENGTH(TRIM(a.bar_macsweep1)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
 
 				UNION ALL
 									SELECT a.bar_macsweep2 barcode, a.cryobox2 vessel, CONCAT("O2B ", c.sampletype) type,
@@ -394,21 +699,20 @@ class DNA_extraction_model extends CI_Model
 									LEFT JOIN obj2b_mac1 d ON a.bar_macconkey=d.bar_macconkey
 									LEFT JOIN (SELECT barcode_sample barcode, barcode_sample, id_type2b
 											FROM obj2b_receipt
-											WHERE lab = "'.$this->session->userdata('lab').'"
+											WHERE lab = "'.$lab.'"
 											UNION ALL
 											SELECT a.barcode_falcon barcode, b.barcode_sample, b.id_type2b
 											FROM obj2b_bs_stomacher a
 											LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
-											WHERE a.lab = "'.$this->session->userdata('lab').'"
+											WHERE a.lab = "'.$lab.'"
 											UNION ALL
 											SELECT a.barcode_tube barcode, b.barcode_sample, b.id_type2b
 											FROM obj2b_sediment_prep a
 											LEFT JOIN obj2b_receipt b ON a.barcode_sample=b.barcode_sample
-											WHERE a.lab = "'.$this->session->userdata('lab').'"
+											WHERE a.lab = "'.$lab.'"
 											) b ON d.barcode_sample=b.barcode
 									LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
-									WHERE LENGTH(TRIM(a.bar_macsweep2)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
 				UNION ALL
 									SELECT a.bar_macsweep1 barcode, a.cryobox1 vessel, CONCAT("NHMRC ", c.sampletype) type,
 									b.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
@@ -416,22 +720,21 @@ class DNA_extraction_model extends CI_Model
 									LEFT JOIN nhmrc_mac1 d ON a.bar_macconkey=d.bar_macconkey
 									LEFT JOIN (SELECT barcode_sample barcode, barcode_sample, id_type2b
 											FROM nhmrc_receipt
-											WHERE lab = "'.$this->session->userdata('lab').'"
+											WHERE lab = "'.$lab.'"
 											UNION ALL
 											SELECT a.barcode_falcon barcode, b.barcode_sample, b.id_type2b
 											FROM nhmrc_bs_stomacher a
 											LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
-											WHERE a.lab = "'.$this->session->userdata('lab').'"
+											WHERE a.lab = "'.$lab.'"
 											UNION ALL
  											SELECT c.barcode_falcon1 barcode, b.barcode_sample, b.id_type2b
  											FROM nhmrc_subsd_idexx c 
 											LEFT JOIN nhmrc_sample_prep a ON a.barcode_food=c.barcode_food
  											LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
-											WHERE a.lab = "'.$this->session->userdata('lab').'"
+											WHERE a.lab = "'.$lab.'"
 											) b ON d.barcode_sample=b.barcode
 									LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
-									WHERE LENGTH(TRIM(a.bar_macsweep1)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
 				UNION ALL
 									SELECT a.bar_macsweep2 barcode, a.cryobox2 vessel, CONCAT("NHMRC ", c.sampletype) type,
 									b.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
@@ -439,22 +742,21 @@ class DNA_extraction_model extends CI_Model
 									LEFT JOIN nhmrc_mac1 d ON a.bar_macconkey=d.bar_macconkey
 									LEFT JOIN (SELECT barcode_sample barcode, barcode_sample, id_type2b
 											FROM nhmrc_receipt
-											WHERE lab = "'.$this->session->userdata('lab').'"
+											WHERE lab = "'.$lab.'"
 											UNION ALL
 											SELECT a.barcode_falcon barcode, b.barcode_sample, b.id_type2b
 											FROM nhmrc_bs_stomacher a
 											LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
-											WHERE a.lab = "'.$this->session->userdata('lab').'"
+											WHERE a.lab = "'.$lab.'"
 											UNION ALL
  											SELECT c.barcode_falcon1 barcode, b.barcode_sample, b.id_type2b
  											FROM nhmrc_subsd_idexx c 
 											LEFT JOIN nhmrc_sample_prep a ON a.barcode_food=c.barcode_food
  											LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
-											WHERE a.lab = "'.$this->session->userdata('lab').'"
+											WHERE a.lab = "'.$lab.'"
 											) b ON d.barcode_sample=b.barcode
 									LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
-									WHERE LENGTH(TRIM(a.bar_macsweep2)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
 				UNION ALL 									
 									SELECT a.barcode_dna_bag barcode, a.barcode_storage vessel, CONCAT("NHMRC ", c.sampletype) type,
 									IFNULL(b.barcode_sample, d.barcode_sample) AS barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
@@ -463,24 +765,21 @@ class DNA_extraction_model extends CI_Model
 									LEFT JOIN (SELECT a.barcode_falcon, b.barcode_sample, b.id_type2b FROM nhmrc_bs_stomacher a 
 									LEFT JOIN nhmrc_receipt b ON a.barcode_sample = b.barcode_sample) d ON a.barcode_sample = d.barcode_falcon
 									LEFT JOIN ref_sampletype c ON IFNULL(b.id_type2b, d.id_type2b) = c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_dna_bag)) > 0
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
 				UNION ALL 
 									SELECT a.barcode_dna1 barcode, a.barcode_storage1 vessel, CONCAT("NHMRC ", c.sampletype) type,
 									a.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
 									FROM nhmrc_meta_food a
 									LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_dna1)) > 0			
-									AND a.lab = "'.$this->session->userdata('lab').'"		
+									WHERE a.lab = "'.$lab.'"		
 				UNION ALL 
 									SELECT a.barcode_dna2 barcode, a.barcode_storage1 vessel, CONCAT("NHMRC ", c.sampletype) type,
 									a.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
 									FROM nhmrc_meta_food a
 									LEFT JOIN nhmrc_receipt b ON a.barcode_sample=b.barcode_sample
 									LEFT JOIN ref_sampletype c ON b.id_type2b=c.id_sampletype
-									WHERE LENGTH(TRIM(a.barcode_dna2)) > 0					
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									WHERE a.lab = "'.$lab.'"
 				UNION ALL
 									SELECT DISTINCT a.barcode_sample barcode, B.cryobox vessel, CONCAT("O2B ", c.sampletype) type,
 									a.barcode_sample, IFNULL(c.sampletype, a.comments) AS sample_type
@@ -488,38 +787,37 @@ class DNA_extraction_model extends CI_Model
 									LEFT JOIN freezer_in b ON a.barcode_sample=b.barcode_sample
 									LEFT JOIN ref_sampletype c ON a.id_type2b=c.id_sampletype
 									WHERE LEFT(a.barcode_sample, 5) = "N-S2-"
-									AND LENGTH(TRIM(a.barcode_sample)) > 0		
-									AND a.lab = "'.$this->session->userdata('lab').'"		
+									AND a.lab = "'.$lab.'"		
 				UNION ALL
 									SELECT a.barcode_vessel barcode, null vessel, null type, a.barcode_sample, 
 									b.sample AS sample_type
 									FROM dna_control a
 									LEFT JOIN ref_sampledna b ON a.id_sample = b.id_sample
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									AND a.lab = "'.$lab.'"
 				UNION ALL
 									SELECT a.barcode_vessel2 barcode, null vessel, null type, a.barcode_sample, 
 									b.sample AS sample_type
 									FROM dna_control a
 									LEFT JOIN ref_sampledna b ON a.id_sample = b.id_sample
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									AND a.lab = "'.$lab.'"
 				UNION ALL
 									SELECT a.barcode_vessel3 barcode, null vessel, null type, a.barcode_sample, 
 									b.sample AS sample_type
 									FROM dna_control a
 									LEFT JOIN ref_sampledna b ON a.id_sample = b.id_sample
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									AND a.lab = "'.$lab.'"
 				UNION ALL
 									SELECT a.barcode_vessel4 barcode, null vessel, null type, a.barcode_sample, 
 									b.sample AS sample_type
 									FROM dna_control a
 									LEFT JOIN ref_sampledna b ON a.id_sample = b.id_sample
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									AND a.lab = "'.$lab.'"
 				UNION ALL
 									SELECT a.barcode_vessel5 barcode, null vessel, null type, a.barcode_sample, 
 									b.sample AS sample_type
 									FROM dna_control a
 									LEFT JOIN ref_sampledna b ON a.id_sample = b.id_sample
-									AND a.lab = "'.$this->session->userdata('lab').'"
+									AND a.lab = "'.$lab.'"
 									) c ON a.barcode_sample=c.barcode
         LEFT JOIN (
 					SELECT a.id, a.date_in, a.time_in, a.barcode_sample, a.lab, a.id_location_80
@@ -528,16 +826,15 @@ class DNA_extraction_model extends CI_Model
 					SELECT id, barcode_sample, MIN(CONCAT(date_in, time_in)) max_recent FROM freezer_in
 					GROUP BY barcode_sample
 					) b ON a.barcode_sample=b.barcode_sample AND CONCAT(a.date_in, a.time_in) = b.max_recent
-        ) g ON a.barcode_dna=g.barcode_sample AND g.lab = "'.$this->session->userdata('lab').'"
-        LEFT JOIN ref_location_80 d on g.id_location_80=d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'"                             									
-				WHERE a.lab = "'.$this->session->userdata('lab').'"
+        ) g ON a.barcode_dna=g.barcode_sample AND g.lab = "'.$lab.'"
+        LEFT JOIN ref_location_80 d on g.id_location_80=d.id_location_80 AND d.lab = "'.$lab.'"                             									
+				WHERE a.lab = "'.$lab.'"
         AND a.flag = 0 
         ORDER BY a.date_extraction
         ');
         $response = $q->result();
         return $response;    
-    }
-
+    }    
 
     function get_by_id($id)
     {
