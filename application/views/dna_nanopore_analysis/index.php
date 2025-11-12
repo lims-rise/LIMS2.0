@@ -26,7 +26,8 @@
 		    <th>Date analysis</th>
 		    <th>Lab tech</th>
 		    <th>Barcode ID</th>
-		    <th>Alias</th>
+		    <th>Run Number</th>
+		    <th>Comment</th>
 		    <th>Action</th>
                 </tr>
             </thead>
@@ -111,9 +112,16 @@
                         </div>
 
                         <div class="form-group">
-                                <label for="alias" class="col-sm-4 control-label">Alias</label>
+                            <label for="run_number" class="col-sm-4 control-label">Run Number</label>
+                            <div class="col-sm-8">
+                                <input id="run_number" name="run_number" type="text" class="form-control" placeholder="Run Number" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                                <label for="comment" class="col-sm-4 control-label">Comment</label>
                                 <div class="col-sm-8">
-                                    <textarea id="alias" name="alias" class="form-control" placeholder="Alias"> </textarea>
+                                    <textarea id="comment" name="comment" class="form-control" placeholder="Comment"> </textarea>
                                 </div>
                         </div>
 
@@ -424,7 +432,8 @@
                 {"data": "date_analysis"},
                 {"data": "initial"},
                 {"data": "barcode_id"},
-                {"data": "alias"},
+                {"data": "run_number"},
+                {"data": "comment"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -450,7 +459,8 @@
             $('#barcode_dna').val('');
             $('#id_person').val('');
             $('#barcode_id').val('');
-            $('#alias').val('');
+            $('#run_number').val('');
+            $('#comment').val('');
             $('#compose-modal').modal('show');
         });
 
@@ -467,7 +477,8 @@
             $('#date_analysis').val(data.date_analysis);
             $('#id_person').val(data.id_person).trigger('change');
             $('#barcode_id').val(data.barcode_id).trigger('change');
-            $('#alias').val(data.alias);
+            $('#run_number').val(data.run_number);
+            $('#comment').val(data.comment);
             $('#compose-modal').modal('show');
         });  
 

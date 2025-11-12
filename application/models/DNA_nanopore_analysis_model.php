@@ -23,7 +23,7 @@ class DNA_nanopore_analysis_model extends CI_Model
         // $this->datatables->where('lab', $this->session->userdata('lab'));
         // $this->datatables->where('flag', '0');
 
-        $this->datatables->select('a.barcode_dna, a.date_analysis, b.initial, a.barcode_id, a.alias, a.id_person, a.lab, a.flag');
+        $this->datatables->select('a.barcode_dna, a.date_analysis, b.initial, a.barcode_id, a.run_number, a.comment, a.id_person, a.lab, a.flag');
         $this->datatables->from('DNA_nanopore_analysis a');
         $this->datatables->join('ref_person b', 'a.id_person = b.id_person', 'left');
         $this->datatables->where('a.lab', $this->session->userdata('lab'));
@@ -46,7 +46,7 @@ class DNA_nanopore_analysis_model extends CI_Model
     function get_all()
     {
         $q = $this->db->query('
-        SELECT a.barcode_dna, a.date_analysis, b.initial, a.barcode_id, a.alias, a.id_person
+        SELECT a.barcode_dna, a.date_analysis, b.initial, a.barcode_id, a.run_number, a.comment, a.id_person
         FROM DNA_nanopore_analysis a
         LEFT JOIN ref_person b ON a.id_person = b.id_person 
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
