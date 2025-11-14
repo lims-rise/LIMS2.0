@@ -46,13 +46,25 @@ input[type="file"] {
         </div>
         </div>
 
-    <!-- <label for="csv_file" class="custom-file-upload">
-        <i class="fa fa-file-csv" aria-hidden="true"></i> Choose CSV
-        </label>
-        <input type="file" id="csv_file" name="csv_file" accept=".csv" required> -->
-    <!-- <input type="file" name="csv_file" accept=".csv" required> -->
-        <button class='btn btn-primary' type="submit"><i class='fa fa-upload' aria-hidden='true'></i>Upload CSV</button>
-        <!-- <button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New DNA Nanopore Analysis </button> -->
+    <!-- Button + flash message in one row -->
+    <div style="display: flex; align-items: center; gap: 15px; margin-top: 10px;">
+        <!-- Upload Button -->
+        <button class='btn btn-primary' type="submit">
+            <i class='fa fa-upload' aria-hidden='true'></i> Upload CSV
+        </button>
+
+        <!-- Flash message -->
+        <?php if ($this->session->flashdata('success')): ?>
+            <span style="color: green; font-weight: bold;">
+                <?= $this->session->flashdata('success'); ?>
+            </span>
+        <?php elseif ($this->session->flashdata('error')): ?>
+            <span style="color: red; font-weight: bold;">
+                <?= $this->session->flashdata('error'); ?>
+            </span>
+        <?php endif; ?>
+    </div>
+
     </form>
 
     <hr>
@@ -66,12 +78,7 @@ input[type="file"] {
     ?>
 </div>
 
-    <!-- Flash message -->
-    <?php if ($this->session->flashdata('success')): ?>
-        <p style="color:green;"><?= $this->session->flashdata('success'); ?></p>
-    <?php elseif ($this->session->flashdata('error')): ?>
-        <p style="color:red;"><?= $this->session->flashdata('error'); ?></p>
-    <?php endif; ?>
+
 
     <!-- DataTable -->
     <!-- <table id="resultTable" class="display"> -->
