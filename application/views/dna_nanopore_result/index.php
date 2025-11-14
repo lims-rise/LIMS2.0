@@ -38,7 +38,7 @@ input[type="file"] {
         <div class="input-group">
             <label class="input-group-btn">
             <span class="btn btn-primary">
-                <i class="fa fa-file-excel-o" aria-hidden="true"></i> Choose CSV
+                <i class="fa fa-folder-open-o" aria-hidden="true"></i> Choose CSV
                 <input type="file" name="csv_file" accept=".csv" required style="display: none;">
             </span>
             </label>
