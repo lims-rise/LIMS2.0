@@ -57,6 +57,15 @@ input[type="file"] {
 
     <hr>
 
+<div class="container mt-3">
+    <?php
+    $message = $this->session->flashdata('message');
+    if (!empty($message)) {
+        echo $message;
+    }
+    ?>
+</div>
+
     <!-- Flash message -->
     <?php if ($this->session->flashdata('success')): ?>
         <p style="color:green;"><?= $this->session->flashdata('success'); ?></p>
@@ -88,8 +97,6 @@ input[type="file"] {
             <?php endforeach; ?>
         </tbody>
     </table>
-   
-
 
 </div>
 
@@ -99,8 +106,8 @@ input[type="file"] {
 <script type="text/javascript">
     $(document).ready(function() {
         $('#resultTable').DataTable();
-    });
-
+        });
+        
 document.addEventListener('DOMContentLoaded', function () {
   const fileInput = document.querySelector('input[type="file"][name="csv_file"]');
   const textInput = document.querySelector('.form-control[readonly]');
