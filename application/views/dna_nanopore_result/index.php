@@ -42,7 +42,19 @@ input[type="file"] {
                 <input type="file" name="csv_file" accept=".csv" required style="display: none;">
             </span>
             </label>
-            <input type="text" class="form-control" readonly placeholder="No file chosen">
+
+        <input type="text" class="form-control" readonly 
+               placeholder="No file chosen"
+               style="max-width: 250px; margin-left: 1px;">
+
+        <!-- Export to CSV Button -->
+        <a href="<?= site_url('dna_nanopore_result/export_csv'); ?>" 
+           class="btn btn-success"
+           style="margin-left: 15px;">
+            <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV
+        </a>
+
+            <!-- <input type="text" class="form-control" readonly placeholder="No file chosen"> -->
         </div>
         </div>
 

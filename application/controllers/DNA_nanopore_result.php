@@ -4,6 +4,9 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class DNA_nanopore_result extends CI_Controller {
 
     public function __construct()
@@ -135,5 +138,70 @@ public function test_message()
     redirect('dna_nanopore_result/index');
 }
 
+    public function export_csv()
+    {
+        // $date1=$this->input->get('date1');
+        // $date2=$this->input->get('date2');
+
+        $spreadsheet = new Spreadsheet();    
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', "Sample"); 
+        $sheet->setCellValue('B1', "Dups"); 
+        $sheet->setCellValue('C1', "GC");
+        $sheet->setCellValue('D1', "Median_len");
+        $sheet->setCellValue('E1', "Seqs");
+        // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
+
+        // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
+        $rdeliver = $this->dna_nanopore_result_model->get_all();
+    
+        // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
+        $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
+        foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
+          $sheet->setCellValue('A'.$numrow, $data->Sample);
+          $sheet->setCellValue('B'.$numrow, $data->Dups);
+          $sheet->setCellValue('C'.$numrow, $data->GC);
+          $sheet->setCellValue('D'.$numrow, $data->Median_len);
+          $sheet->setCellValue('E'.$numrow, $data->Seqs);
+        //   $no++; // Tambah 1 setiap kali looping
+          $numrow++; // Tambah 1 setiap kali looping
+        }
+    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+    $datenow=date("Ymd");
+    $fileName = 'DNA_nanopore_result_'.$datenow.'.csv';
+
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya
+    header('Cache-Control: max-age=0');
+
+    // $this->output->set_header('Content-Type: application/vnd.ms-excel');
+    // $this->output->set_header("Content-type: application/csv");
+    // $this->output->set_header('Cache-Control: max-age=0');
+    $writer->save('php://output');
+    //     $writer->save($fileName); 
+    // //redirect(HTTP_UPLOAD_PATH.$fileName); 
+    // $filepath = file_get_contents($fileName);
+    // force_download($fileName, $filepath);
+
+        // // Set height semua kolom menjadi auto (mengikuti height isi dari kolommnya, jadi otomatis)
+        // $sheet->getDefaultRowDimension()->setRowHeight(-1);
+    
+        // // Set orientasi kertas jadi LANDSCAPE
+        // $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+    
+        // // Set judul file excel nya
+        // $sheet->setTitle("Delivery Reports");
+    
+        // // Proses file excel
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // header('Content-Disposition: attachment; filename="Delivery_Reports.xlsx"'); // Set nama file excel nya
+        // header('Cache-Control: max-age=0');
+    
+        // // $writer = new Xlsx($spreadsheet);
+        // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+        // // $fileName = $fileName.'.csv';
+        // $writer->save('php://output');
+           
+    }
 
 }
