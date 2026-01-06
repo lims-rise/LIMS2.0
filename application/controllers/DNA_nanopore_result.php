@@ -89,6 +89,7 @@ public function upload_csv()
 
         $inserted = 0;
         $duplicates = 0;
+        $comment = $this->input->post('comment',TRUE);
 
         while (($row = fgetcsv($file_data, 1000, ",")) !== FALSE) {
             if (count($row) >= 5) {
@@ -97,7 +98,8 @@ public function upload_csv()
                     'Dups'       => trim($row[1]),
                     'GC'         => trim($row[2]),
                     'Median_len' => trim($row[3]),
-                    'Seqs'       => trim($row[4])
+                    'Seqs'       => trim($row[4]),
+                    'Comment'    => trim($comment)
                 );
 
                 $result = $this->dna_nanopore_result_model->insert($data);

@@ -32,40 +32,76 @@ input[type="file"] {
         
         <div class="box-body">
         <div style="padding-bottom: 10px;">
+        
+<form method="post" enctype="multipart/form-data"
+      action="<?= site_url('dna_nanopore_result/upload_csv'); ?>">
 
-    <form method="post" enctype="multipart/form-data" action="<?= site_url('dna_nanopore_result/upload_csv'); ?>">
-        <div class="form-group">
-        <div class="input-group">
-            <label class="input-group-btn">
-            <span class="btn btn-primary">
-                <i class="fa fa-folder-open-o" aria-hidden="true"></i> Choose CSV
-                <input type="file" name="csv_file" accept=".csv" required style="display: none;">
-            </span>
-            </label>
+    <!-- ================= ROW 1 ================= -->
+    <div class="row">
+        <!-- Choose CSV (UNCHANGED) -->
+        <div class="col-sm-8">
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                            Choose CSV
+                            <input type="file" name="csv_file"
+                                   accept=".csv" required style="display:none;">
+                        </span>
+                    </label>
 
-        <input type="text" class="form-control" readonly 
-               placeholder="No file chosen"
-               style="max-width: 250px; margin-left: 1px;">
-
-        <!-- Export to CSV Button -->
-        <a href="<?= site_url('dna_nanopore_result/export_csv'); ?>" 
-           class="btn btn-success"
-           style="margin-left: 15px;">
-            <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV
-        </a>
-
-            <!-- <input type="text" class="form-control" readonly placeholder="No file chosen"> -->
+                    <input type="text" class="form-control" readonly
+                           placeholder="No file chosen"
+                           style="max-width:250px; margin-left:1px;">
+                </div>
+            </div>
         </div>
+
+        <!-- Export to CSV -->
+        <div class="col-sm-4">
+            <div class="form-group">
+                <a href="<?= site_url('dna_nanopore_result/export_csv'); ?>"
+                   class="btn btn-success"
+                   style="margin-top:2px; width:140px">
+                    <i class="fa fa-file-excel-o"></i> Export to CSV
+                </a>
+            </div>
         </div>
 
-    <!-- Button + flash message in one row -->
-    <div style="display: flex; align-items: center; gap: 15px; margin-top: 10px;">
+    </div>
+
+    <!-- ================= ROW 2 ================= -->
+    <div class="row">
+        <!-- Comment Input -->
+        <div class="col-sm-8">
+            <div class="form-group" style="display:flex; align-items:center; gap:10px;">
+                <label for="comment" style="margin-bottom:0; white-space:nowrap;">
+                    Comments
+                </label>
+                <input id="comment"
+                    name="comment"
+                    type="text"
+                    class="form-control"
+                    placeholder="Comments"
+                    required>
+            </div>
+        </div>
+
         <!-- Upload Button -->
-        <button class='btn btn-primary' type="submit">
-            <i class='fa fa-upload' aria-hidden='true'></i> Upload CSV
-        </button>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit" style="width:140px">
+                    <i class="fa fa-upload"></i> Upload CSV
+                </button>
+            </div>
+        </div>        
 
-        <!-- Flash message -->
+
+    </div>
+
+    <!-- ================= FLASH MESSAGE ================= -->
+    <div style="margin-top:10px;">
         <?php if ($this->session->flashdata('success')): ?>
             <span style="color: green; font-weight: bold;">
                 <?= $this->session->flashdata('success'); ?>
@@ -77,7 +113,8 @@ input[type="file"] {
         <?php endif; ?>
     </div>
 
-    </form>
+</form>
+
 
     <hr>
 
