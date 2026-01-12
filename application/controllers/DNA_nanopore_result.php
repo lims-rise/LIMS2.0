@@ -152,6 +152,7 @@ public function test_message()
         $sheet->setCellValue('C1', "GC");
         $sheet->setCellValue('D1', "Median_len");
         $sheet->setCellValue('E1', "Seqs");
+        $sheet->setCellValue('F1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -165,6 +166,7 @@ public function test_message()
           $sheet->setCellValue('C'.$numrow, $data->GC);
           $sheet->setCellValue('D'.$numrow, $data->Median_len);
           $sheet->setCellValue('E'.$numrow, $data->Seqs);
+          $sheet->setCellValue('F'.$numrow, $data->Comment);
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }
