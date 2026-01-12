@@ -18,7 +18,7 @@
                             <a class="btn btn-success btn-sm" id="dna_aliquotting" href="dna_aliquotting/excel"><i class="fa fa-file-excel-o"></i><br /> DNA Aliquotting</a>
                             <a class="btn btn-success btn-sm" id="dna_sample_analysis" href="dna_sample_analysis/excel"><i class="fa fa-file-excel-o"></i><br /> DNA Sample Analysis</a>
                             <a class="btn btn-success btn-sm" id="dna_nanopore_analysis" href="dna_nanopore_analysis/excel"><i class="fa fa-file-excel-o"></i><br /> DNA Nanopore Analysis</a>
-                            <a class="btn btn-success btn-sm" id="dna_nanopore_result" href="dna_nanopore_result/excel"><i class="fa fa-file-excel-o"></i><br /> DNA Nanopore Result</a>
+                            <a class="btn btn-success btn-sm" id="dna_nanopore_result" href="dna_nanopore_result/export_csv"><i class="fa fa-file-excel-o"></i><br /> DNA Nanopore Result</a>
                         <!-- </div> -->
 
 
