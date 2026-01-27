@@ -52,7 +52,7 @@ class Freezer_in_model extends CI_Model
       $q = $this->db->query('SELECT 
       a.id, a.date_in, DATE_FORMAT(a.time_in, "%H:%i") AS time_in, b.initial, c.vessel, a.barcode_sample, 
       concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS location, a.comments,
-      a.id_person, a.id_vessel, a.id_location_80, a.need_cryobox, a.cryobox, a.lab, a.flag
+      a.id_person, a.id_vessel, a.id_location_80, a.need_cryobox, a.cryobox, a.tube_position, a.lab, a.flag
       FROM freezer_in a
       LEFT JOIN ref_person b ON a.id_person=b.id_person
       LEFT JOIN ref_vessel c ON a.id_vessel=c.id_vessel

@@ -166,7 +166,8 @@ class Freezer_in extends CI_Controller
         $sheet->setCellValue('G1', "Associated_cryobox");
         $sheet->setCellValue('H1', "Barcode_cryobox");
         $sheet->setCellValue('I1', "Location");
-        $sheet->setCellValue('J1', "Comments");
+        $sheet->setCellValue('J1', "Tube_position");
+        $sheet->setCellValue('K1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -184,7 +185,8 @@ class Freezer_in extends CI_Controller
           $sheet->setCellValue('G'.$numrow, $data->need_cryobox);
           $sheet->setCellValue('H'.$numrow, $data->cryobox);
           $sheet->setCellValue('I'.$numrow, $data->location);
-          $sheet->setCellValue('J'.$numrow, trim($data->comments));
+          $sheet->setCellValue('J'.$numrow, $data->tube_position);
+          $sheet->setCellValue('K'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }
