@@ -28,6 +28,7 @@
 		    <th>Vessel</th>
 		    <th>Cryobox</th>
 		    <th>Location</th>
+		    <th>Tube Position</th>
 		    <th>Comments</th>
 		    <th>Action</th>
                 </tr>
@@ -364,6 +365,7 @@
                 {"data": "vessel"},
                 {"data": "cryobox"},
                 {"data": "location"},
+                {"data": "tube_position"},
                 {"data": "comments"},
                 {
                     "data" : "action",
