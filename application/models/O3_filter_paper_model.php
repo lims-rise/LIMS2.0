@@ -63,14 +63,14 @@ class O3_filter_paper_model extends CI_Model
               (SELECT MAX(id) id, cryobox, lab, flag
               FROM freezer_in
               GROUP BY cryobox) a
-              LEFT JOIN (SELECT id, id_location_80, lab, flag FROM freezer_in) b ON a.id = b.id
+              LEFT JOIN (SELECT id, id_location_80, lab, flag FROM freezer_in WHERE b.lab = "'.$this->session->userdata('lab').'") b ON a.id = b.id
               UNION ALL
               SELECT a.id, a.cryobox, b.id_location_80, a.lab, a.flag FROM
                 (SELECT MAX(id) id, barcode_sample AS cryobox, lab, flag
                 FROM freezer_in
                 WHERE id_vessel <> 1
                 GROUP BY barcode_sample) a
-              LEFT JOIN (SELECT id, id_location_80, lab, flag FROM freezer_in) b ON a.id = b.id
+              LEFT JOIN (SELECT id, id_location_80, lab, flag FROM freezer_in WHERE b.lab = "'.$this->session->userdata('lab').'") b ON a.id = b.id
               ) x
             LEFT JOIN ref_location_80 b ON x.id_location_80 = b.id_location_80 AND b.lab = "'.$this->session->userdata('lab').'" 
             GROUP BY x.cryobox
