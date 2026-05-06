@@ -45,6 +45,7 @@ class DNA_sample_analysis extends CI_Controller
             'analysis_type' => $this->input->post('analysis_type',TRUE),
             'run_number' => $this->input->post('run_number',TRUE),
             'barcode_array' => strtoupper($this->input->post('barcode_array',TRUE)),
+            'barcode_id' => strtoupper($this->input->post('barcode_id',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -63,6 +64,7 @@ class DNA_sample_analysis extends CI_Controller
             'analysis_type' => $this->input->post('analysis_type',TRUE),
             'run_number' => $this->input->post('run_number',TRUE),
             'barcode_array' => strtoupper($this->input->post('barcode_array',TRUE)),
+            'barcode_id' => strtoupper($this->input->post('barcode_id',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
             // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
@@ -163,7 +165,8 @@ class DNA_sample_analysis extends CI_Controller
         $sheet->setCellValue('D1', "Analysis_type");
         $sheet->setCellValue('E1', "Run_number");
         $sheet->setCellValue('F1', "Barcode_array/Flowcell");
-        $sheet->setCellValue('G1', "Comments");
+        $sheet->setCellValue('G1', "Barcode_id");
+        $sheet->setCellValue('H1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -178,7 +181,8 @@ class DNA_sample_analysis extends CI_Controller
           $sheet->setCellValue('D'.$numrow, $data->analysis_type);
           $sheet->setCellValue('E'.$numrow, $data->run_number);
           $sheet->setCellValue('F'.$numrow, $data->barcode_array);
-          $sheet->setCellValue('G'.$numrow, trim($data->comments));
+          $sheet->setCellValue('G'.$numrow, $data->barcode_id);
+          $sheet->setCellValue('H'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

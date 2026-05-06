@@ -28,6 +28,7 @@
 		    <th>Analysis type</th>
 		    <th>Run number</th>
 		    <th>Barcode array/Flowcell</th>
+		    <th>Barcode ID</th>
 		    <th>Comments</th>
 		    <th>Action</th>
                 </tr>
@@ -121,6 +122,13 @@
                             <label for="barcode_array" class="col-sm-4 control-label">Barcode array/Flowcell</label>
                             <div class="col-sm-8">
                                 <input id="barcode_array" name="barcode_array" type="text" class="form-control" placeholder="Barcode array/Flowcell" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="barcode_id" class="col-sm-4 control-label">Barcode ID</label>
+                            <div class="col-sm-8">
+                                <input id="barcode_id" name="barcode_id" type="text" class="form-control" placeholder="Barcode ID" required>
                             </div>
                         </div>
 
@@ -356,9 +364,16 @@
         //     $('.val1tip').tooltipster('hide');   
         // });
 
-        $('#analysis_type').on("click", function() {
-            data1 = $('#barcode_dna').val();
-            data2 = $('#analysis_type').val();
+        $('#analysis_type').on("change", function() {
+            let data1 = $('#barcode_dna').val();
+            let data2 = $('#analysis_type').val();
+
+            if (data2 === 'Nanopore') {
+                $('#barcode_id').prop('disabled', false);
+            } else {
+                $('#barcode_id').prop('disabled', true);
+                $('#barcode_id').val(''); // optional: clear value
+            }            
             $.ajax({
                 type: "GET",
                 url: "dna_sample_analysis/valid_asys?id1="+data1+"&id2="+data2,
@@ -424,6 +439,7 @@
                 {"data": "analysis_type"},
                 {"data": "run_number"},
                 {"data": "barcode_array"},
+                {"data": "barcode_id"},
                 {"data": "comments"},
                 {
                     "data" : "action",
@@ -453,6 +469,7 @@
             $('#run_number').val('');
             $('#run_number').attr('readonly', true);
             $('#barcode_array').val('');
+            $('#barcode_id').val('');
             // $("#date_concentration").datepicker("setDate",'now');
             $('#comments').val('');
             $('#compose-modal').modal('show');
@@ -471,11 +488,17 @@
             $('#date_analysis').val(data.date_analysis);
             $('#id_person').val(data.id_person).trigger('change');
             $('#analysis_type').val(data.analysis_type).trigger('change');
+            if (data.analysis_type === 'Nanopore') {
+                $('#barcode_id').prop('disabled', false);
+            } else {
+                $('#barcode_id').prop('disabled', true);
+            }            
             $('#run_number').attr('readonly', true);
             $('#run_number').val(data.run_number);
             // loadSType(data.barcode_dna);
             // $('#stype').val(data.sample_type).trigger('change');
             $('#barcode_array').val(data.barcode_array);
+            $('#barcode_id').val(data.barcode_id);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });  
