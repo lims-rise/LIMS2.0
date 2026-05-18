@@ -107,8 +107,8 @@
                         <div class="form-group">
                             <label for="catch_met" class="col-sm-4 control-label">Catch method</label>
                             <div class="col-sm-8">
-                            <select id='catch_met' name="catch_met" class="form-control">
-                                <option>-- Select answer --</option>
+                            <select id='catch_met' name="catch_met" class="form-control" required>
+                                <option value="" selected disabled>-- Select answer --</option>
 								<option value='Pupae'>Pupae</option>
 								<option value='BG'>BG</option>
                             </select>
@@ -487,32 +487,7 @@ $(document).ready(function() {
                 }
             ],
             order: [[0, 'desc']],
-            // columnDefs: [{
-            //     orderable: false,
-            //     className: 'select-checkbox',
-            //     targets: 0
-            // }],            
-            // select: {
-            //     style:    'os',
-            //     selector: 'td:first-child'
-            // },            
-            // columnDefs: [{
-            //     'render': function(data, type, row, meta){
-            //         var checkbox = $("<input/>",{
-            //             "type": "checkbox"
-            //         });
-            //         if(row[9] === "1") {
-            //             checkbox.attr("disabled", true);
-            //             checkbox.attr("checked", "checked");
-            //             checkbox.addClass("checkbox_checked");
-            //         }else{
-            //             checkbox.attr("disabled", true);
-            //             checkbox.addClass("checkbox_unchecked");
-            //         }
-            //         return checkbox.prop("outerHTML")
-            //     }
-            // }],            
-            // order: [[0, 'desc']],
+
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
