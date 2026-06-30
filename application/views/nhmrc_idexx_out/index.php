@@ -328,10 +328,12 @@
         }
 
         function datachart(data1, data2) {
+            var res = 'Invalid';
             $.ajax({
                 type: "GET",
                 url: "nhmrc_idexx_out/data_chart?id1="+data1+"&id2="+data2,
                 dataType: "json",
+                async: false,
                 success: function(data) {
                     if (data.length > 0) {
                         if (data[0].mpn == '<Detection') {
