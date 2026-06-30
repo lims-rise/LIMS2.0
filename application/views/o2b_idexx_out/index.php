@@ -98,7 +98,7 @@
                         <div class="form-group">
                             <label for="timeout_incubation" class="col-sm-4 control-label">Time incubation finished</label>
                             <div class="col-sm-8">
-                                <input id="timeout_incubation" name="timeout_incubation" type="text" class="form-control clockpicker" placeholder="Time incubation finished">
+                                <input id="timeout_incubation" name="timeout_incubation" type="text" class="form-control clockpicker" placeholder="Time incubation finished" required>
                             </div>
                         </div>
 
@@ -271,10 +271,12 @@
         }
 
         function datachart(data1, data2) {
+            var res = 'Invalid';
             $.ajax({
                 type: "GET",
                 url: "O2b_idexx_out/data_chart?id1="+data1+"&id2="+data2,
                 dataType: "json",
+                async: false,
                 success: function(data) {
                     if (data.length > 0) {
                         if (data[0].mpn == '<Detection') {
