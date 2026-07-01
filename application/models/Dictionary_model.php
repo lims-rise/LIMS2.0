@@ -28,7 +28,7 @@ class Dictionary_model extends CI_Model
         // comments, dictionary_id');
         // $this->datatables->from('dictionary');
 
-        $this->datatables->select('d.id, d.module, d.subheadings, d.col_name, d.var_label, d.var_type, 
+        $this->datatables->select('d.id, d.module, d.subheadings, d.col_name, d.var_label, d.var_type, d.format, 
         d.description, d.start_date, d.end_date, if((d.dictionary_id is not null),"Yes","No") AS detail,
         IF((SELECT COUNT(*) FROM dictionary_restriction WHERE d.id = dr.restriction_id) > 0, 
             CONCAT("<button class=\"btn btn-warning btn-sm btn-primary btn-block\" onclick=\"showRestriction(", d.id, ")\">

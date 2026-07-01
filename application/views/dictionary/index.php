@@ -18,12 +18,13 @@
                     <th>ID</th>
                     <th>Module</th>
                     <th>Subheadings</th>
-                    <th>Column Name</th>
+                    <!-- <th>Column Name</th> -->
                     <th>Variable Label</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Detail</th>
-                    <th>Comments</th>
+                    <th>Format</th>
+                    <th>Description</th>
                     <th>Restriction</th>
                     <th>Action</th>
                 </tr>
@@ -379,12 +380,13 @@
                 {"data": "id"},
                 {"data": "module"},
                 {"data": "subheadings"},
-                {"data": "col_name"},
+//                {"data": "col_name"},
                 {"data": "var_label"},
                 {"data": "start_date"},
                 {"data": "end_date"},
                 {"data": "dictionary_id"},
-                {"data": "comments"},
+                {"data": "format"},
+                {"data": "description"},
                 {
                     "data" : "restriction",
                     "orderable": false,
