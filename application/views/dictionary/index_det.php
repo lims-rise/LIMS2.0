@@ -13,30 +13,37 @@
         <form id="formSample" method="post" class="form-horizontal">
                 <div class="modal-body">
                 <div class="form-group">
-                    <label for="id_det" class="col-sm-4 control-label">Dictionary ID</label>
-                    <div class="col-sm-8">
-                        <input id="id_det" name="id_det" placeholder="ID" class="form-control input-sm" value=<?php echo $dictionary_id; ?> disabled>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <label for="detmodule" class="col-sm-4 control-label">Module</label>
                     <div class="col-sm-8">
-                        <input id="detmodule" name="detmodule" placeholder="Module" class="form-control input-sm" value=<?php echo $module; ?> disabled>
+                        <input id="detmodule" name="detmodule" placeholder="Module" class="form-control input-sm" value="<?php echo $module; ?>" disabled>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="detheading" class="col-sm-4 control-label">SubHeadings</label>
                     <div class="col-sm-8">
-                        <input id="detheading" name="detheading" placeholder="SubHeadings" class="form-control input-sm" value=<?php echo $subheadings; ?> disabled>
+                        <input id="detheading" name="detheading" placeholder="SubHeadings" class="form-control input-sm" value="<?php echo $subheadings; ?>" disabled>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="detvar_label" class="col-sm-4 control-label">Variable Label</label>
                     <div class="col-sm-8">
-                        <input id="detvar_label" name="detvar_label" placeholder="Variable Label" class="form-control input-sm" value=<?php echo $var_label; ?> disabled>
+                        <input id="detvar_label" name="detvar_label" placeholder="Variable Label" class="form-control input-sm" value="<?php echo $var_label; ?>" disabled>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="detvar_label" class="col-sm-4 control-label">Format</label>
+                    <div class="col-sm-8">
+                        <input id="det_format" name="det_format" placeholder="Format" class="form-control input-sm" value="<?php echo $format; ?>" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                        <label for="description" class="col-sm-4 control-label">Description</label>
+                        <div class="col-sm-8">
+                            <textarea id="description" name="description" class="form-control" placeholder="Description" disabled><?= htmlspecialchars($description) ?> </textarea>
+                        </div>
                 </div>
 
                 <section class="content">
@@ -183,44 +190,40 @@
             };
         };
 
-        // table = $("#mytable").DataTable({
-        //     oLanguage: {
-        //         sProcessing: "loading..."
-        //     },
-        //     // select: true;
-        //     processing: true,
-        //     serverSide: true,
-        //     ajax: {"url": "Dictionary/json", "type": "POST"},
-        //     columns: [
-        //         // {
-        //         //     "data": "barcode_sample",
-        //         //     "orderable": false
-        //         // },
-        //         {"data": "id"},
-        //         {"data": "module"},
-        //         {"data": "subheadings"},
-        //         {"data": "col_name"},
-        //         {"data": "var_label"},
-        //         {"data": "start_date"},
-        //         {"data": "end_date"},
-        //         {"data": "detail"},
-        //         {"data": "comments"},
-        //         {
-        //             "data" : "action",
-        //             "orderable": false,
-        //             "className" : "text-center"
-        //         }
-        //     ],
-        //     order: [[0, 'asc']],
-        //     // order: [[0, 'desc']],
-        //     rowCallback: function(row, data, iDisplayIndex) {
-        //         var info = this.fnPagingInfo();
-        //         var page = info.iPage;
-        //         var length = info.iLength;
-        //         // var index = page * length + (iDisplayIndex + 1);
-        //         // $('td:eq(0)', row).html(index);
-        //     }
-        // });
+        table = $("#mytable").DataTable({
+            oLanguage: {
+                sProcessing: "loading..."
+            },
+            // select: true;
+            processing: true,
+            serverSide: true,
+            ajax: {"url": "Dictionary/json", "type": "POST"},
+            columns: [
+                // {
+                //     "data": "barcode_sample",
+                //     "orderable": false
+                // },
+                {"data": "module"},
+                {"data": "subheadings"},
+                {"data": "var_label"},
+                {"data": "format"},
+                {"data": "description"},
+                {
+                    "data" : "action",
+                    "orderable": false,
+                    "className" : "text-center"
+                }
+            ],
+            order: [[0, 'asc']],
+            // order: [[0, 'desc']],
+            rowCallback: function(row, data, iDisplayIndex) {
+                var info = this.fnPagingInfo();
+                var page = info.iPage;
+                var length = info.iLength;
+                // var index = page * length + (iDisplayIndex + 1);
+                // $('td:eq(0)', row).html(index);
+            }
+        });
 
 
         table2 = $("#mytable2").DataTable({

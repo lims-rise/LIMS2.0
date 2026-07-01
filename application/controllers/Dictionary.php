@@ -53,10 +53,12 @@ class Dictionary extends CI_Controller
         $row = $this->Dictionary_model->get_by_id($id);
         if ($row) {
             $data = array(
-            'dictionary_id' => $row->dictionary_id,
+            'id' => $row->id,
             'module' => $row->module,
             'subheadings' => $row->subheadings,
             'var_label' => $row->var_label,
+            'format' => $row->format,
+            'description' => $row->description,
 	    );
             $this->template->load('template','Dictionary/index_det', $data);
         } else {

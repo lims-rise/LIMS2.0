@@ -47,13 +47,6 @@ class Dictionary_model extends CI_Model
             $this->datatables->add_column('action', anchor(site_url('dictionary/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"> Detail</i>', array('class' => 'btn btn-info btn-sm')), 'id');
         }
         else {
-            // $this->datatables->add_column('reception', anchor(site_url('Dictionary/delete/$1'),'<i class="fa fa-eye" aria-hidden="true"> show</i>','class="btn btn-warning btn-sm btn-primary btn-block" onclick="javasciprt: return confirm(\'Confirm deleting sample : $1 ?\')"'), 'id');
-            // $this->datatables->add_column('restriction', 
-            //     '<button class="btn btn-warning btn-sm btn-primary btn-block" onclick="showRestriction($1)">
-            //         <i class="fa fa-eye" aria-hidden="true"></i> Show
-            //     </button>', 
-            //     'id'
-            // );
             $this->datatables->add_column('action', anchor(site_url('dictionary/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"> Detail</i>', array('class' => 'btn btn-info btn-sm'))." 
                 ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id');
         }

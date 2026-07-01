@@ -191,7 +191,7 @@
                                 <div class="col-sm-9">
                                     <input id="mode_det" name="mode_det" type="hidden" class="form-control input-sm">
                                     <input id="id_dspec" name="id_dspec" type="hidden" class="form-control input-sm">
-									<input id="id_spec2" name="id_spec2" type="text" class="form-control input-sm">
+									<input id="id_spec2" name="id_spec2" type="hidden" class="form-control input-sm">
                                 </div>
                             </div>
                             <div class="form-group">
