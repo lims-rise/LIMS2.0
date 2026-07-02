@@ -18,16 +18,6 @@ class Dictionary_model extends CI_Model
 
     // datatables
     function json() {
-        // $this->datatables->select('id, module, subheadings, col_name,
-        // var_label, var_type, description, start_date,
-        // end_date, detail, comments, dictionary_id');  
-        // $this->datatables->from('v_dictionary'); 
-
-        // $this->datatables->select('id, module, subheadings, col_name, var_label, var_type, 
-        // description, start_date, end_date, if((dictionary_id is not null),"Yes","No") AS detail, 
-        // comments, dictionary_id');
-        // $this->datatables->from('dictionary');
-
         $this->datatables->select('d.id, d.module, d.subheadings, d.col_name, d.var_label, d.var_type, d.format, 
         d.description, d.start_date, d.end_date, if((d.dictionary_id is not null),"Yes","No") AS detail,
         IF((SELECT COUNT(*) FROM dictionary_restriction WHERE d.id = dr.restriction_id) > 0, 

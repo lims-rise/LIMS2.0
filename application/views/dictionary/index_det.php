@@ -12,6 +12,7 @@
 
         <form id="formSample" method="post" class="form-horizontal">
                 <div class="modal-body">
+                <input id="id_det" name="id_det" type="hidden" class="form-control input-sm" value="<?php echo $dictionary_id; ?>" disabled>
                 <div class="form-group">
                     <label for="detmodule" class="col-sm-4 control-label">Module</label>
                     <div class="col-sm-8">
@@ -63,14 +64,6 @@
                                             <th>Comments</th>
                                             <!-- <th>Action</th> -->
                                         </tr>
-                                        <!-- <tr>
-                                            <td>1</td>
-                                            <td>Value</td>
-                                            <td>Label</td>
-                                            <td>Date</td>
-                                            <td>Date</td>
-                                            <td>test test</td>
-                                        </tr> -->
                                     </thead>
                                 </table>
                             </div>
@@ -123,58 +116,6 @@
     var tabledet
     // var id_dic=$('#id').val();
     $(document).ready(function() {
-        
-        // $('.clockpicker').clockpicker({
-        // placement: 'bottom', // clock popover placement
-        // align: 'left',       // popover arrow align
-        // donetext: 'Done',     // done button text
-        // autoclose: true,    // auto close when minute is selected
-        // vibrate: true        // vibrate the device when dragging clock hand
-        // });                
-
-        // $('.val1tip').tooltipster({
-        //     animation: 'swing',
-        //     delay: 1,
-        //     theme: 'tooltipster-default',
-        //     // touchDevices: false,
-        //     // trigger: 'hover',
-        //     autoClose: true,
-        //     position: 'bottom',
-        //     // content: $('<span><i class="fa fa-exclamation-triangle"></i> <strong> This text is in bold case !</strong></span>')
-        //     // content: $('<span><img src="../assets/img/ttd.jpg" /> <strong>This text is in bold case !</strong></span>')
-        //     // content: 'Test tip'
-        // });
-
-
-        // function checkBarcode() { col-sm-8
-        // $('.modal-body').click(function() {
-        // $('#barcode_sample').click(function() {
-        //     $('.val1tip').tooltipster('hide');   
-        // // $('#barcode_sample').val('');     
-        // });
-
-        // $('.col-sm-8').click(function() {
-
-            // $('.val1tip').tooltipster('hide');   
-            // $('#barcode_sample').val('');     
-        // });
-
-        // $("#compose-modal").on('hide.bs.modal', function(){
-        //     $('.val1tip').tooltipster('hide');   
-        //     // $('#barcode_sample').val('');     
-        // });
-
-
-        // $("input").keypress(function(){
-        //     // $('#barcode_sample').val('');     
-        //     $('.val1tip').tooltipster('hide');   
-        // });
-
-        // $('#compose-modal').on('shown.bs.modal', function () {
-        //     // $('#barcode_sample').val('');     
-        //     $('#sample').focus();
-        // });        
-
         var id_det = $('#id_det').val();                
         var base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -194,15 +135,10 @@
             oLanguage: {
                 sProcessing: "loading..."
             },
-            // select: true;
             processing: true,
             serverSide: true,
             ajax: {"url": "Dictionary/json", "type": "POST"},
             columns: [
-                // {
-                //     "data": "barcode_sample",
-                //     "orderable": false
-                // },
                 {"data": "module"},
                 {"data": "subheadings"},
                 {"data": "var_label"},
@@ -215,13 +151,10 @@
                 }
             ],
             order: [[0, 'asc']],
-            // order: [[0, 'desc']],
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
                 var length = info.iLength;
-                // var index = page * length + (iDisplayIndex + 1);
-                // $('td:eq(0)', row).html(index);
             }
         });
 
@@ -237,36 +170,16 @@
             info: false,
             bFilter: false,
 
-            // select: true;
-            // processing: true,
-            // serverSide: true,
-            //     table2.ajax.url('dictionary/jsondet?id=' + data.id).load();
-            // ajax: {"url": "../../dictionary/jsondet", "type": "POST"},
             ajax: {"url": "../../dictionary/jsondet?id1=" + id_det, "type": "POST"},
 
-            // ajax: {
-            //     "url": "../dictionary/jsondet",
-            //     "type": "POST",
-            //     "data": function(d) {
-            //         d.id = $('#id_det').val()
-            //     }
-            // },
             columns: [
-                // {
-                //     "data": "barcode_sample",
-                //     "orderable": false
-                // },
                 {"data": "id"},
                 {"data": "factor_value"},
                 {"data": "factor_label"},
                 {"data": "start_date"},
                 {"data": "end_date"},
                 {"data": "comments"},
-                // {
-                //     "data" : "action",
-                //     "orderable": false,
-                //     "className" : "text-center"
-                // }
+
             ],
             order: [[0, 'asc']],
             // order: [[0, 'desc']],
@@ -274,68 +187,9 @@
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
                 var length = info.iLength;
-                // var index = page * length + (iDisplayIndex + 1);
-                // $('td:eq(0)', row).html(index);
+
             }
         });
-
-
-        // tabledet = $("#tbldetail").DataTable({
-        //     oLanguage: {
-        //         sProcessing: "loading..."
-        //     },
-        //     // select: true;
-        //     processing: true,
-        //     serverSide: true,
-        //     ajax: {"url": "Dictionary/jsondet", "type": "POST"},
-        //     // ajax: {"url": "Dictionary/jsondet?id1=" + data.id, "type": "POST"},
-        //     columns: [
-        //         {"data": "id"},
-        //         {"data": "factor_value"},
-        //         {"data": "factor_label"},
-        //         {"data": "start_date"},
-        //         {"data": "end_date"},
-        //         {"data": "comments"},
-        //         {
-        //             "data" : "action",
-        //             "orderable": false,
-        //             "className" : "text-center"
-        //         }
-        //     ],
-        //     order: [[0, 'asc']],
-        //     // order: [[0, 'desc']],
-        //     rowCallback: function(row, data, iDisplayIndex) {
-        //         var info = this.fnPagingInfo();
-        //         var page = info.iPage;
-        //         var length = info.iLength;
-        //         // var index = page * length + (iDisplayIndex + 1);
-        //         // $('td:eq(0)', row).html(index);
-        //     }
-        // });         
-
-        // $('#mytable').on('click', '.btn_edit', function(){
-        //     // $('.val1tip').tooltipster('hide');   
-        //     let tr = $(this).parent().parent();
-        //     let data = table.row(tr).data();
-        //     console.log(data);
-        //     // var data = this.parents('tr').data();
-        //     // $('#mode').val('edit');
-        //     $('#modal-title').html('<i class="fa fa-pencil-square"></i> Dictionary - Detail<span id="my-another-cool-loader"></span>');
-        //     $('#id').val(data.id);
-        //     $('#detmodule').val(data.module);
-        //     $('#detheading').val(data.subheadings);
-        //     $('#detvar_label').val(data.var_label);
-        //     // tabledet.ajax.url('dictionary/jsondet?id=' + data.id).load();
-        //     $('#compose-modal').modal('show');
-        // });  
-
-        // #tblEmployee tbody tr.even:hover {
-        //     background-color: cadetblue;
-        //     cursor: pointer;
-        // }
-        // $('#myTable').DataTable( {
-        //     select: true
-        // } );
 
         $('#mytable tbody').on('click', 'tr', function () {
             if ($(this).hasClass('active')) {
@@ -344,30 +198,6 @@
                 table.$('tr.active').removeClass('active');
                 $(this).addClass('active');
             }
-
-            // var data = table.row($(this)).data();
-            // if (data) {
-            //     table2.ajax.url('dictionary/jsondet?id=' + data.id).load();
-            // }
-        })   
-
-        // $('[data-dismiss=modal]').on('click', function(e) {
-        //     var $t = $(this),
-        //         target = $t[0].href || $t.data("target") || $t.parents('.modal') || [];
-        //     $(target)
-        //         .find("input,textarea,select")
-        //         .val('')
-        //         .end()
-        //         .find("input[type=checkbox], input[type=radio]")
-        //         .prop("checked", "")
-        //         .end();
-        // });
-        // $('.modal').on('hidden.bs.modal', function() {
-        //     $(this).find('form')[0].reset();
-        // });
-        // $('.modal').on('shown.bs.modal', function() {
-        //     lastfocus = $(this);
-        //     $('input:enabled:visible:not([readonly="readonly"])', this).get(0).select();
-        // });                                
+        })        
     });
 </script>

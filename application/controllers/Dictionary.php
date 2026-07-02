@@ -56,6 +56,7 @@ class Dictionary extends CI_Controller
             'id' => $row->id,
             'module' => $row->module,
             'subheadings' => $row->subheadings,
+            'dictionary_id' => $row->dictionary_id,
             'var_label' => $row->var_label,
             'format' => $row->format,
             'description' => $row->description,
