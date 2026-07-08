@@ -84,22 +84,6 @@
                             </div>
                         </div>
 
-                        <!-- <div class="form-group">
-                            <label for="time_incubation" class="col-sm-4 control-label">Time incubation start</label>
-                            <div class="col-sm-8">
-                                <div class="input-group clockpicker">
-                                <input id="time_incubation" name="time_incubation" class="form-control" placeholder="Time incubation start" value="
-                                <?php 
-                                // $datetime = new DateTime();
-                                // echo $datetime->format( 'H:i' );
-                                ?>">
-                                <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-time"></span>
-                                </span>
-                                </div>
-                            </div>
-                        </div> -->
-
                         <div class="form-group">
                             <label for="blank_type" class="col-sm-4 control-label">Blank type</label>
                             <div class="col-sm-8">
@@ -108,7 +92,6 @@
 								<option value='Endetec'>Endetec</option>
 								<option value='IDEXX'>IDEXX</option>
                             </select>
-                            <!-- <input id="description" name="description" type="text" class="form-control input-sm" placeholder="Item Description" required> -->
                             </div>
                         </div>
 
@@ -140,12 +123,6 @@
                                 </div>
                         </div>
 
-                        <!-- <div class="form-group">
-                            <label for="notes" class="col-sm-4 control-label">Notes</label>
-                            <div class="col-sm-8">
-                                <textarea id="notes" name="notes" class="form-control input-sm" placeholder="Notes"> </textarea>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="modal-footer clearfix">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
@@ -439,7 +416,7 @@
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> O2B - Update sample blank<span id="my-another-cool-loader"></span>');
-            $('#barcode_sample').attr('readonly', true);
+            // $('#barcode_sample').attr('readonly', true);
             $('#barcode_sample').val(data.barcode_sample);
             $('#date_conduct').val(data.date_conduct);
             $('#time_incubation').val(data.time_incubation);

@@ -34,7 +34,7 @@ class O2b_blank_in extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = strtoupper($this->input->post('barcode_sample'),TRUE);
+        $id = strtoupper($this->input->post('barcode_sample',TRUE));
         $dt = new DateTime();
 
         if ($mode=="insert"){
@@ -58,7 +58,6 @@ class O2b_blank_in extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
             'date_conduct' => $this->input->post('date_conduct',TRUE),
             'time_incubation' => $this->input->post('time_incubation',TRUE),
             'blank_type' => $this->input->post('blank_type',TRUE),
@@ -66,7 +65,6 @@ class O2b_blank_in extends CI_Controller
             'volume' => $this->input->post('volume',TRUE),
             'dilution' => $this->input->post('dilution',TRUE),
             'comments' => trim($this->input->post('comments',TRUE)),
-            // 'uuid' => $this->uuid->v4(),
             'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),

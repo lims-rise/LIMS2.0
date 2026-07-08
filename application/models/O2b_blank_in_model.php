@@ -98,6 +98,30 @@ class O2b_blank_in_model extends CI_Model
         $this->db->update($this->table, $data);
     }
 
+//     function update($id, $data)
+// {
+//     $this->db->where($this->id, $id);
+//     $result = $this->db->update($this->table, $data);
+
+//     echo "<pre>";
+//     echo "ID : ".$id."\n\n";
+//     print_r($data);
+
+//     echo "\n\n";
+//     echo $this->db->last_query();
+
+//     echo "\n\nResult : ";
+//     var_dump($result);
+
+//     echo "\nAffected Rows : ";
+//     echo $this->db->affected_rows();
+
+//     echo "\nDB Error : ";
+//     print_r($this->db->error());
+
+//     die();
+// }
+
     // delete data
     // function delete($id_user, $data)
     // {
