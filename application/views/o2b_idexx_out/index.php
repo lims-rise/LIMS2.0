@@ -280,13 +280,16 @@
                 success: function(data) {
                     if (data.length > 0) {
                         if (data[0].mpn == '<Detection') {
-                            res = "<"+ Math.round(1 / $("#dilution_in").val());
+                            // res = "<"+ Math.round(1 / $("#dilution_in").val());
+                            res = "<" + (1 / $("#dilution_in").val()).toFixed(1);
                         }
                         else if (data[0].mpn == '>Detection') {
-                            res = ">"+ Math.round(2082 / $("#dilution_in").val());
+                            // res = ">"+ Math.round(2082 / $("#dilution_in").val());
+                            res = ">" + (2082 / $("#dilution_in").val()).toFixed(1);
                         }
                         else {
-                            res = Math.round(data[0].mpn / $("#dilution_in").val());
+                            // res = Math.round(data[0].mpn / $("#dilution_in").val());
+                            res = (data[0].mpn / $("#dilution_in").val()).toFixed(1);
                         }
                     }
                     else {
