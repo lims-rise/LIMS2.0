@@ -20,7 +20,11 @@ class REP_o2b_model extends CI_Model
         $this->datatables->select('a.barcode_sample, a.date_arrival, a.time_arrival, b.sampletype, a.png_control, a.barcode_tinytag');
         $this->datatables->from('obj2b_receipt a');
         $this->datatables->join('ref_sampletype b', 'a.id_type2b = b.id_sampletype', 'left');
-        if ($rep == '6x') {
+        if ($rep == '6x2') {
+            $this->datatables->where('a.id_type2b', '6');
+            // $this->datatables->where("(LEFT(a.barcode_sample, 2) = 'N0' OR LEFT(a.barcode_sample, 2) = 'F0')");
+        }
+        else if ($rep == '6x') {
             $this->datatables->where('a.id_type2b', '6');
             $this->datatables->where("(LEFT(a.barcode_sample, 2) = 'N0' OR LEFT(a.barcode_sample, 2) = 'F0')");
         }
@@ -41,7 +45,15 @@ class REP_o2b_model extends CI_Model
 
     function get_water($date1, $date2, $rep)
     {
-        $q = $this->db->query('
+        $whereRep = '';
+        if ($rep == '6') {
+            $whereRep = ' AND (LEFT(a.barcode_sample,2) <> "N0" AND LEFT(a.barcode_sample,2) <> "F0")';
+        } elseif ($rep == '6x') {
+            $whereRep = ' AND (LEFT(a.barcode_sample,2) = "N0" OR LEFT(a.barcode_sample,2) = "F0")';
+        } elseif ($rep == '6x2') {
+            $whereRep = ' AND e.comments LIKE "%Faecal%"';
+        }
+        $sql = '
         SELECT 
         a.date_arrival AS reception_date_arrival, 
         a.time_arrival AS reception_time_arrival, 
@@ -147,16 +159,27 @@ class REP_o2b_model extends CI_Model
         LEFT JOIN obj2b_mac2 l ON l.bar_macconkey=k.bar_macconkey
         LEFT JOIN ref_location_80 n ON l.id_location_80_1=n.id_location_80 AND n.lab = "'.$this->session->userdata('lab').'" 
         LEFT JOIN ref_location_80 o ON l.id_location_80_2=o.id_location_80 AND o.lab = "'.$this->session->userdata('lab').'" 
-        WHERE a.id_type2b = 6 AND '.
-        (($rep == '6x') ? '(left(a.barcode_sample, 2) = "N0" OR left(a.barcode_sample, 2) = "F0")' : '(left(a.barcode_sample, 2) <> "N0" AND left(a.barcode_sample, 2) <> "F0")')
-        .'AND (a.date_arrival >= "'.$date1.'"
+        WHERE a.id_type2b = 6'.$whereRep
+        .' AND (a.date_arrival >= "'.$date1.'"
             AND a.date_arrival <= "'.$date2.'")
         AND a.lab = "'.$this->session->userdata('lab').'" 
         AND a.flag = 0 
         ORDER BY a.date_arrival DESC, a.time_arrival ASC 
-        ');        
+        ';        
+        // echo "<pre>";
+        // echo $sql;
+        // echo "</pre>";
+        // exit;
+
+        $q = $this->db->query($sql);
         $response = $q->result();
         return $response;
+
+        // $q = $this->db->query($sql);
+        // echo $this->db->last_query();
+        // echo "<br><br>Jumlah row: ".$q->num_rows();
+
+        // exit;        
     }    
 
     function get_bootsock($date1, $date2, $rep)

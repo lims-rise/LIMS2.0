@@ -51,6 +51,7 @@
                                         <option value='9' >Bootsocks</option>
                                         <option value='7' >Sediment</option>
                                         <option value='8' >Animal Feces</option>
+                                        <option value='6x2' >Fecal Coliform</option>
                                         ";
                                     ?>
                                 </select>

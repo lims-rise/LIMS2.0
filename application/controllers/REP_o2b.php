@@ -51,7 +51,7 @@ class REP_o2b extends CI_Controller
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
 
-        if ($rep == '6' || $rep == '6x') {
+        if ($rep == '6' || $rep == '6x' || $rep == '6x2') {
             $sheet->setCellValue('A1', "reception_date_arrival");
             $sheet->setCellValue('B1', "reception_time_arrival");
             $sheet->setCellValue('C1', "barcode_sample");
@@ -61,26 +61,26 @@ class REP_o2b extends CI_Controller
             $sheet->setCellValue('G1', "chemistry_barcode_sample");
             $sheet->setCellValue('H1', "chemistry_sampletype2bwat");
 
-        if ($this->session->userdata('lab') == 1) {
-            $sheet->setCellValue('I1', "chems_BTKL_barcode");
-            $sheet->setCellValue('J1', "chems_BTKL_deliver");
-            $sheet->setCellValue('K1', "chems_BBLK_barcode");
-            $sheet->setCellValue('L1', "chems_BBLK_deliver");
-            $sheet->setCellValue('M1', "micro_BTKL_barcode");
-            $sheet->setCellValue('N1', "micro_BTKL_deliver");
-            $sheet->setCellValue('O1', "micro_BBLK_barcode");
-            $sheet->setCellValue('P1', "micro_BBLK_deliver");
-        }
-        else {
-            $sheet->setCellValue('I1', "chems_WAF_barcode");
-            $sheet->setCellValue('J1', "chems_WAF_deliver");
-            $sheet->setCellValue('K1', "chems_Other_barcode");
-            $sheet->setCellValue('L1', "chems_Other_deliver");
-            $sheet->setCellValue('M1', "micro_WAF_barcode");
-            $sheet->setCellValue('N1', "micro_WAF_deliver");
-            $sheet->setCellValue('O1', "micro_Other_barcode");
-            $sheet->setCellValue('P1', "micro_Other_deliver");
-        }
+            if ($this->session->userdata('lab') == 1) {
+                $sheet->setCellValue('I1', "chems_BTKL_barcode");
+                $sheet->setCellValue('J1', "chems_BTKL_deliver");
+                $sheet->setCellValue('K1', "chems_BBLK_barcode");
+                $sheet->setCellValue('L1', "chems_BBLK_deliver");
+                $sheet->setCellValue('M1', "micro_BTKL_barcode");
+                $sheet->setCellValue('N1', "micro_BTKL_deliver");
+                $sheet->setCellValue('O1', "micro_BBLK_barcode");
+                $sheet->setCellValue('P1', "micro_BBLK_deliver");
+            }
+            else {
+                $sheet->setCellValue('I1', "chems_WAF_barcode");
+                $sheet->setCellValue('J1', "chems_WAF_deliver");
+                $sheet->setCellValue('K1', "chems_Other_barcode");
+                $sheet->setCellValue('L1', "chems_Other_deliver");
+                $sheet->setCellValue('M1', "micro_WAF_barcode");
+                $sheet->setCellValue('N1', "micro_WAF_deliver");
+                $sheet->setCellValue('O1', "micro_Other_barcode");
+                $sheet->setCellValue('P1', "micro_Other_deliver");
+            }
             $sheet->setCellValue('Q1', "chemistry_comment");
             $sheet->setCellValue('R1', "endetec_in_barcode_sample");
             $sheet->setCellValue('S1', "endetec_in_date_conduct");
@@ -115,9 +115,16 @@ class REP_o2b extends CI_Controller
             $sheet->setCellValue('AV1', "idexx_out_ecoli_largewells");
             $sheet->setCellValue('AW1', "idexx_out_ecoli_smallwells");
             $sheet->setCellValue('AX1', "idexx_out_ecoli_mpn");
-            $sheet->setCellValue('AY1', "idexx_out_coliforms_largewells");
-            $sheet->setCellValue('AZ1', "idexx_out_coliforms_smallwells");
-            $sheet->setCellValue('BA1', "idexx_out_coliforms_mpn");
+            if ($rep == '6x2') {
+                $sheet->setCellValue('AY1', "idexx_out_faecal_coliforms_largewells");
+                $sheet->setCellValue('AZ1', "idexx_out_faecal_coliforms_smallwells");
+                $sheet->setCellValue('BA1', "idexx_out_faecal_coliforms_mpn");
+            }
+            else {
+                $sheet->setCellValue('AY1', "idexx_out_coliforms_largewells");
+                $sheet->setCellValue('AZ1', "idexx_out_coliforms_smallwells");
+                $sheet->setCellValue('BA1', "idexx_out_coliforms_mpn");                
+            }
             $sheet->setCellValue('BB1', "idexx_out_comments");
             $sheet->setCellValue('BC1', "idexx_out_date_conduct2");
             $sheet->setCellValue('BD1', "idexx_out_barcode_colilert2");
@@ -157,6 +164,10 @@ class REP_o2b extends CI_Controller
 
             $rdeliver = $this->REP_o2b_model->get_water($date1, $date2, $rep);
         
+            // echo "REP = ".$rep."<br>";
+            // echo "Jumlah data = ".count($rdeliver);
+            // exit;
+
             $numrow = 2; 
             foreach($rdeliver as $data){ 
                 $sheet->setCellValue('A'.$numrow, $this->cleanEnter($data->reception_date_arrival));
@@ -256,8 +267,11 @@ class REP_o2b extends CI_Controller
             if ($rep == '6') {
                 $fileName = 'O2B_water_report_'.$datenow.'.csv';
             }
-            else {
+            else if ($rep == '6x') {
                 $fileName = 'O2B_water_site0_report_'.$datenow.'.csv';
+            }
+            else {
+                $fileName = 'O2B_wetland_faecal_coliform_report_'.$datenow.'.csv';
             }
         }
         else if ($rep == 9) {
