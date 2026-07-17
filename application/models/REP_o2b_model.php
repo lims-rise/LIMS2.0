@@ -22,8 +22,12 @@ class REP_o2b_model extends CI_Model
         $this->datatables->join('ref_sampletype b', 'a.id_type2b = b.id_sampletype', 'left');
         if ($rep == '6x2') {
             $this->datatables->where('a.id_type2b', '6');
-            // $this->datatables->where("(LEFT(a.barcode_sample, 2) = 'N0' OR LEFT(a.barcode_sample, 2) = 'F0')");
-        }
+            $this->datatables->where("a.barcode_sample IN (
+                SELECT barcode_sample
+                FROM obj2b_idexx1
+                WHERE comments LIKE '%Faecal%'
+            )", NULL, FALSE);
+            }
         else if ($rep == '6x') {
             $this->datatables->where('a.id_type2b', '6');
             $this->datatables->where("(LEFT(a.barcode_sample, 2) = 'N0' OR LEFT(a.barcode_sample, 2) = 'F0')");
