@@ -63,9 +63,10 @@ class Welcome_model extends CI_Model
                 AND flag = 0 
         UNION ALL
         SELECT "Objective 2A" AS item, COUNT(*) AS val
-        FROM obj2a_receipt
-        WHERE lab = "'.$this->session->userdata('lab').'" 
-                AND flag = 0 
+        FROM obj2a_receipt a
+        LEFT JOIN obj2a_receipt_det b ON a.id_receipt = b.id_receipt
+        WHERE a.lab = "'.$this->session->userdata('lab').'" 
+                AND a.flag = 0 
         UNION ALL
         SELECT "Objective 2B" AS item, COUNT(*) AS val
         FROM obj2b_receipt
@@ -98,6 +99,7 @@ class Welcome_model extends CI_Model
         UNION ALL
         SELECT "O2A", a.sample_type AS "type", COUNT(*) AS val
         FROM obj2a_receipt a
+        LEFT JOIN obj2a_receipt_det b ON a.id_receipt = b.id_receipt
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
                 AND a.flag = 0 
         GROUP BY a.sample_type
@@ -109,7 +111,7 @@ class Welcome_model extends CI_Model
                 AND a.flag = 0 
         GROUP BY a.id_type2b             
         UNION ALL
-        SELECT "O2B", b.sampletype AS "type", COUNT(*) AS val
+        SELECT "NHMRC", b.sampletype AS "type", COUNT(*) AS val
         FROM nhmrc_receipt a
         LEFT JOIN ref_sampletype b ON a.id_type2b=b.id_sampletype
         WHERE a.lab = "'.$this->session->userdata('lab').'" 
