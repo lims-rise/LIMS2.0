@@ -40,41 +40,8 @@
         <!-- </div>         -->
     </div>
     </div>
-    
+
     </section>
-    <div class="box-body">
-        <div class="col-md-10 col-xs-12">
-            <div class="d-flex align-items-center gap-2" style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
-                <button type="button" class="btn btn-success btn-sm" id="btnExportAll" onclick="exportAllExcel()" style="white-space: nowrap;">
-                    <i class="fa fa-file-excel-o"></i><br /> Export All Data (63 files)
-                </button>
-                <a class="btn btn-success btn-sm" id="freezer_in" href="freezer_in/excel"><i class="fa fa-file-excel-o"></i><br /> Freezer IN</a>
-                <a class="btn btn-success btn-sm" id="dna_extraction" href="dna_extraction/excel"><i class="fa fa-file-excel-o"></i><br /> DNA Extraction</a>
-
-                <div class="alert alert-warning mb-0" style="margin: 0; padding: 6px 12px; font-size: 12px; border-left: 4px solid #f0ad4e;">
-                    <i class="fa fa-exclamation-triangle"></i> 
-                    <strong>Warning:</strong> This action will download all export files across all LIMS modules sequentially. 
-                    The process may take around minutes to complete—please click <strong>"Allow"</strong> if your browser prompts for multiple file downloads.
-                </div>
-            </div>
-
-            <!-- <div class="d-flex align-items-center gap-2" style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
-                <button type="button" class="btn btn-success btn-sm" id="btnExportZip" onclick="downloadAllZip()">
-                    <i class="fa fa-file-archive-o" id="iconExport"></i><br />
-                    <span id="textExport">Export All Data (ZIP)</span>
-                </button>
-
-                <div class="alert alert-warning mb-0" style="margin: 0; padding: 8px 12px; font-size: 12px; border-left: 4px solid #f0ad4e;">
-                    <i class="fa fa-exclamation-triangle"></i> 
-                    <strong>Warning:</strong> This action will process and compress all 64 LIMS modules into a single <strong>ZIP file</strong> on the server. 
-                    Due to large datasets (e.g. Freezer & DNA modules), this process may take 5–10 minutes. Please do not close or refresh this page.
-                </div>
-            </div> -->
-
-
-        </div>
-    </div> <!-- </box-body2 > -->
-
 </div>
 
 <script src="<?php echo base_url('assets/js/highcharts.js') ?>"></script>
@@ -217,93 +184,4 @@
                             }]
                     });                
             });
-
-
-// function downloadAllZip() {
-//     const btn = document.getElementById('btnExportZip');
-//     const icon = document.getElementById('iconExport');
-//     const text = document.getElementById('textExport');
-
-//     // Endpoint URL CodeIgniter Anda
-//     const exportUrl = '<?php // echo site_url("export_lims/excel_zip"); ?>';
-
-//     // Ubah UI ke status Loading
-//     btn.disabled = true;
-//     icon.className = 'fa fa-spinner fa-spin';
-//     text.innerText = 'Processing ZIP (Please wait)...';
-
-//     // Menggunakan iframe/direct link menghindari masalah fetch blob timeout
-//     const iframe = document.createElement('iframe');
-//     iframe.style.display = 'none';
-//     iframe.src = exportUrl;
-//     document.body.appendChild(iframe);
-
-//     // Kembalikan status tombol setelah 3 menit (atau setelah download tertrigger)
-//     setTimeout(() => {
-//         btn.disabled = false;
-//         icon.className = 'fa fa-file-archive-o';
-//         text.innerText = 'Export All Data (ZIP)';
-//         document.body.removeChild(iframe);
-//     }, 600000); // 3 menit
-// }
-
-function exportAllExcel() {
-    const urls = [
-        // Batch 1 (32 File Pertama)
-        "o3_sample_reception/excel", "o3_blood_centrifuge/excel", "o3_blood_edta/excel", "o3_blood_sst/excel",
-        "o3_filter_paper/excel", "o3_feces_kk1/excel", "o3_feces_aliquot/excel", "o3_feces_mac1/excel",
-        "o3_feces_mac2/excel", "o3_feces_kk2/excel", "O2B_sample_reception/excel", "O2b_bootsocks_stomacher/excel",
-        "O2b_bootsocks_before/excel", "O2b_bootsocks_after/excel", "O2b_sample_prep/excel", "O2b_other_lab/excel",
-        "O2b_blank_in/excel", "O2b_endetec_in/excel", "O2b_endetec_out_w/excel", "O2b_endetec_out_bs/excel",
-        "O2b_idexx_in/excel", "O2b_idexx_out/excel", "O2b_macconkey_in/excel", "O2b_macconkey_out/excel",
-        "O2b_metagenomics_wb/excel", "O2b_metagenomics_sf/excel", "O2b_moisture_initial/excel", "O2b_moisture_24/excel",
-        "O2b_moisture_48/excel", "O2b_moisture_72/excel", "o2a_sample_reception/excel", "o2a_sample_logging/excel",
-
-        // Batch 2 (31 File Sisanya)
-        "o2a_mosquito_identifications/excel", "nhmrc_sample_reception/excel", "nhmrc_bootsocks_before/excel", "nhmrc_bootsocks_after/excel",
-        "nhmrc_bootsocks_stomacher/excel", "nhmrc_sample_prep/excel", "nhmrc_blank_in/excel", "nhmrc_idexx_in/excel",
-        "nhmrc_idexx_out/excel", "nhmrc_macconkey_in/excel", "nhmrc_macconkey_out/excel", "nhmrc_metagenomics_br/excel",
-        "nhmrc_metagenomics_food/excel", "nhmrc_moisture_initial/excel", "nhmrc_moisture_24/excel", "nhmrc_moisture_48/excel",
-        "nhmrc_moisture_72/excel", "nhmrc_sample_entry/excel", 
-        "se_sample_reception/excel", "se_sample_analysis/excel", "se_sample_result/excel", "se_sample_ended/excel",
-        "se_sample_sent_other/excel", "freezer_out/excel_usedup", "dna_sample_control/excel", "dna_concentration/excel",
-        "dna_aliquotting/excel", "dna_sample_analysis/excel", "dna_nanopore_analysis/excel", "dna_nanopore_result/export_csv",
-        "freezer_out/excel"
-        // , "freezer_in/excel" , "dna_extraction/excel",
-    ];
-
-    const delay = 1000; // Jeda 400ms antar file
-    const batch1 = urls.slice(0, 32); // 32 file pertama
-    const batch2 = urls.slice(32);    // 32 file sisanya
-
-    // Fungsi helper untuk memicu download array URL
-    function triggerDownloads(list, onComplete) {
-        list.forEach((url, index) => {
-            setTimeout(() => {
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.src = url;
-                document.body.appendChild(iframe);
-
-                setTimeout(() => document.body.removeChild(iframe), 3000);
-
-                // Jalankan callback ketika file terakhir pada batch selesai dipicu
-                if (index === list.length - 1 && onComplete) {
-                    setTimeout(onComplete, 1400);
-                }
-            }, index * delay);
-        });
-    }
-
-    // Jalankan Batch 1
-    triggerDownloads(batch1, () => {
-        // Konfirmasi singkat agar browser menganggap ini sebagai interaksi baru pengguna
-        if (confirm("Batch 1 (first 32 files) downloaded successfully.\n\nClick OK to continue downloading Batch 2 (remaining 31 files).")) {
-            triggerDownloads(batch2, () => {
-                alert("All 63 files downloaded successfully!");
-            });
-        }
-    });
-}
-            
 </script>
