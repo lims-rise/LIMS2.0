@@ -523,7 +523,7 @@ class Ref_DNAcontrol_model extends CI_Model
                 AND a.flag = 0 
                 ORDER BY a.date_analysis ASC
                 ',
-                array('Barcode_DNA', 'Date_analysis', 'Lab_tech', 'Barcode_ID', 'Alias'),
+                array('Barcode_DNA', 'Date_analysis', 'Lab_tech', 'Barcode_ID'),
             ),
         );
 
