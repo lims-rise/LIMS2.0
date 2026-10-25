@@ -514,7 +514,7 @@ class Ref_DNAcontrol_model extends CI_Model
             array(
                 'DNA_Nanopore_Analysis',
                 'SELECT a.barcode_dna AS Barcode_DNA, a.date_analysis AS Date_analysis, b.initial AS Lab_tech,
-                a.barcode_ID AS Barcode_ID, TRIM(a.alias) AS Alias
+                a.barcode_ID AS Barcode_ID
                 FROM dna_nanopore_analysis a
                 LEFT JOIN ref_person b ON a.id_person = b.id_person         
                 WHERE (a.date_analysis >= "'.$date1.'"
