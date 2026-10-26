@@ -205,7 +205,7 @@ class REP_se extends CI_Controller
         
         // Set the HTTP headers to download the Excel file
         $datenow=date("Ymd");
-        $filename = 'ALL_DNA_reports_'.$datenow.'.xlsx';
+        $filename = 'ALL_SampleExternal_reports_'.$datenow.'.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
